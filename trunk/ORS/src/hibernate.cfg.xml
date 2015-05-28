@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:sqlserver://localhost:1433;databaseName=ors</property>
+        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
+        <property name="hibernate.connection.username">sa</property>
+        <property name="hibernate.connection.password">123456</property>
+        <mapping class="entity.Account"/>
+        <mapping class="entity.Amenity"/>
+        <mapping class="entity.Appointment"/>
+        <mapping class="entity.Category"/>
+        <mapping class="entity.Contract"/>
+        <mapping class="entity.Office"/>
+        <mapping class="entity.OfficeAmenity"/>
+        <mapping class="entity.OfficeStatus"/>
+        <mapping class="entity.PaymentTerm"/>
+        <mapping class="entity.PriceTerm"/>
+        <mapping class="entity.Profile"/>
+        <mapping class="entity.Repair"/>
+        <mapping class="entity.RequestAmenity"/>
+        <mapping class="entity.RequestOffice"/>
+        <mapping class="entity.Role"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>

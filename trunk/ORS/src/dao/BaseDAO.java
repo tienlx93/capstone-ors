@@ -33,7 +33,7 @@ public class BaseDAO<E, I extends Serializable> {
 
     }
 
-    public E get(String id) {
+    public E get(I id) {
         Transaction trans = null;
         try {
             trans = session.beginTransaction();

@@ -23,6 +23,7 @@ public class BaseDAO<E, I extends Serializable> {
         Transaction trans = null;
         try {
             trans = session.beginTransaction();
+
             return session.createCriteria(type).list();
         } catch (Exception e) {
             if (trans.isActive()) {
@@ -83,5 +84,9 @@ public class BaseDAO<E, I extends Serializable> {
 
         }
         return false;
+    }
+
+    public void test() {
+
     }
 }

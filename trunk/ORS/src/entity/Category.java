@@ -4,18 +4,17 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Category {
     private int id;
     private String name;
     private String description;
-    private Collection<Office> officesById;
     private Collection<RequestOffice> requestOfficesById;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -25,7 +24,7 @@ public class Category {
     }
 
     @Basic
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false, insertable = true, updatable = true)
     public String getName() {
         return name;
     }
@@ -35,7 +34,7 @@ public class Category {
     }
 
     @Basic
-    @Column(name = "Description")
+    @Column(name = "Description", nullable = false, insertable = true, updatable = true)
     public String getDescription() {
         return description;
     }
@@ -65,15 +64,6 @@ public class Category {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "categoryByCategoryId")
-    public Collection<Office> getOfficesById() {
-        return officesById;
-    }
-
-    public void setOfficesById(Collection<Office> officesById) {
-        this.officesById = officesById;
     }
 
     @OneToMany(mappedBy = "categoryByCategoryId")

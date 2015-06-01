@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Profile {
@@ -18,7 +18,7 @@ public class Profile {
     private Account accountByUsername;
 
     @Id
-    @Column(name = "Username")
+    @Column(name = "Username", nullable = false, insertable = true, updatable = true)
     public String getUsername() {
         return username;
     }
@@ -28,7 +28,7 @@ public class Profile {
     }
 
     @Basic
-    @Column(name = "Title")
+    @Column(name = "Title", nullable = false, insertable = true, updatable = true, length = 4)
     public String getTitle() {
         return title;
     }
@@ -38,7 +38,7 @@ public class Profile {
     }
 
     @Basic
-    @Column(name = "FullName")
+    @Column(name = "FullName", nullable = false, insertable = true, updatable = true)
     public String getFullName() {
         return fullName;
     }
@@ -48,7 +48,7 @@ public class Profile {
     }
 
     @Basic
-    @Column(name = "Company")
+    @Column(name = "Company", nullable = true, insertable = true, updatable = true)
     public String getCompany() {
         return company;
     }
@@ -58,7 +58,7 @@ public class Profile {
     }
 
     @Basic
-    @Column(name = "Phone")
+    @Column(name = "Phone", nullable = false, insertable = true, updatable = true, length = 15)
     public String getPhone() {
         return phone;
     }
@@ -68,7 +68,7 @@ public class Profile {
     }
 
     @Basic
-    @Column(name = "Address")
+    @Column(name = "Address", nullable = true, insertable = true, updatable = true)
     public String getAddress() {
         return address;
     }
@@ -78,7 +78,7 @@ public class Profile {
     }
 
     @Basic
-    @Column(name = "Birthday")
+    @Column(name = "Birthday", nullable = true, insertable = true, updatable = true)
     public Timestamp getBirthday() {
         return birthday;
     }

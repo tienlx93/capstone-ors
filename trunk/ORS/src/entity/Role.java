@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Role {
@@ -12,8 +12,8 @@ public class Role {
     private String roleName;
     private Collection<Account> accountsById;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -23,7 +23,7 @@ public class Role {
     }
 
     @Basic
-    @Column(name = "RoleName")
+    @Column(name = "RoleName", nullable = false, insertable = true, updatable = true)
     public String getRoleName() {
         return roleName;
     }

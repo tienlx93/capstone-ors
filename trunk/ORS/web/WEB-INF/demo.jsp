@@ -13,10 +13,26 @@
 </head>
 <body>
 <h1>Hello World</h1>
-<c:forEach var="item" items="${data}">
-  Username: <c:out value="${item.username}"/><br/>
-  Email: <c:out value="${item.email}"/><br/>
-  Role: <c:out value="${item.roleByRoleId.roleName}"/><br/>
-</c:forEach>
+<table>
+    <tr>
+        <td>Username</td>
+        <td>Email</td>
+        <td>Role</td>
+    </tr>
+    <c:forEach var="item" items="${data}">
+        <tr>
+            <td>${item.username}</td>
+            <td>${item.email}</td>
+            <td>${item.roleByRoleId.roleName}</td>
+        </tr>
+    </c:forEach>
+</table>
+
+<form action="demo2" method="post">
+    Username <input type="text" name="username"> <br>
+    Password <input type="password" name="password"> <br>
+    Email <input type="email" name="email"> <br>
+    <input type="submit" name="action" value="Save">
+</form>
 </body>
 </html>

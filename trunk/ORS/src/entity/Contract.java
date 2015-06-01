@@ -5,7 +5,7 @@ import java.sql.Date;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Contract {
@@ -16,15 +16,14 @@ public class Contract {
     private Date endDate;
     private int paymentFee;
     private int paymentTerm;
+    private int statusId;
     private Account accountByCustomerUsername;
-    private Office officeByOfficeId;
+    private ContractStatus contractStatusByStatusId;
     private PaymentTerm paymentTermByPaymentTerm;
     private Collection<Repair> repairsById;
-    private int statusId;
-    private ContractStatus contractStatusByStatusId;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -34,7 +33,7 @@ public class Contract {
     }
 
     @Basic
-    @Column(name = "CustomerUsername")
+    @Column(name = "CustomerUsername", nullable = false, insertable = true, updatable = true)
     public String getCustomerUsername() {
         return customerUsername;
     }
@@ -44,7 +43,7 @@ public class Contract {
     }
 
     @Basic
-    @Column(name = "OfficeId")
+    @Column(name = "OfficeId", nullable = false, insertable = true, updatable = true)
     public int getOfficeId() {
         return officeId;
     }
@@ -54,7 +53,7 @@ public class Contract {
     }
 
     @Basic
-    @Column(name = "StartDate")
+    @Column(name = "StartDate", nullable = false, insertable = true, updatable = true)
     public Date getStartDate() {
         return startDate;
     }
@@ -64,7 +63,7 @@ public class Contract {
     }
 
     @Basic
-    @Column(name = "EndDate")
+    @Column(name = "EndDate", nullable = false, insertable = true, updatable = true)
     public Date getEndDate() {
         return endDate;
     }
@@ -74,7 +73,7 @@ public class Contract {
     }
 
     @Basic
-    @Column(name = "PaymentFee")
+    @Column(name = "PaymentFee", nullable = false, insertable = true, updatable = true)
     public int getPaymentFee() {
         return paymentFee;
     }
@@ -84,13 +83,23 @@ public class Contract {
     }
 
     @Basic
-    @Column(name = "PaymentTerm")
+    @Column(name = "PaymentTerm", nullable = false, insertable = true, updatable = true)
     public int getPaymentTerm() {
         return paymentTerm;
     }
 
     public void setPaymentTerm(int paymentTerm) {
         this.paymentTerm = paymentTerm;
+    }
+
+    @Basic
+    @Column(name = "StatusId", nullable = false, insertable = true, updatable = true)
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
     }
 
     @Override
@@ -104,6 +113,7 @@ public class Contract {
         if (officeId != contract.officeId) return false;
         if (paymentFee != contract.paymentFee) return false;
         if (paymentTerm != contract.paymentTerm) return false;
+        if (statusId != contract.statusId) return false;
         if (customerUsername != null ? !customerUsername.equals(contract.customerUsername) : contract.customerUsername != null)
             return false;
         if (startDate != null ? !startDate.equals(contract.startDate) : contract.startDate != null) return false;
@@ -121,6 +131,7 @@ public class Contract {
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         result = 31 * result + paymentFee;
         result = 31 * result + paymentTerm;
+        result = 31 * result + statusId;
         return result;
     }
 
@@ -135,13 +146,13 @@ public class Contract {
     }
 
     @ManyToOne
-    @JoinColumn(name = "OfficeId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
-    public Office getOfficeByOfficeId() {
-        return officeByOfficeId;
+    @JoinColumn(name = "StatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public ContractStatus getContractStatusByStatusId() {
+        return contractStatusByStatusId;
     }
 
-    public void setOfficeByOfficeId(Office officeByOfficeId) {
-        this.officeByOfficeId = officeByOfficeId;
+    public void setContractStatusByStatusId(ContractStatus contractStatusByStatusId) {
+        this.contractStatusByStatusId = contractStatusByStatusId;
     }
 
     @ManyToOne
@@ -161,25 +172,5 @@ public class Contract {
 
     public void setRepairsById(Collection<Repair> repairsById) {
         this.repairsById = repairsById;
-    }
-
-    @Basic
-    @Column(name = "StatusId")
-    public int getStatusId() {
-        return statusId;
-    }
-
-    public void setStatusId(int statusId) {
-        this.statusId = statusId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "StatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
-    public ContractStatus getContractStatusByStatusId() {
-        return contractStatusByStatusId;
-    }
-
-    public void setContractStatusByStatusId(ContractStatus contractStatusByStatusId) {
-        this.contractStatusByStatusId = contractStatusByStatusId;
     }
 }

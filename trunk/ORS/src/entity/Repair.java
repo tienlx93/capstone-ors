@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Repair {
@@ -12,13 +12,13 @@ public class Repair {
     private String assignedStaff;
     private String type;
     private String description;
+    private int repairStatusId;
     private Account accountByAssignedStaff;
     private Contract contractByContractId;
-    private int repairStatusId;
     private RepairStatus repairStatusByRepairStatusId;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -28,7 +28,7 @@ public class Repair {
     }
 
     @Basic
-    @Column(name = "ContractId")
+    @Column(name = "ContractId", nullable = false, insertable = true, updatable = true)
     public int getContractId() {
         return contractId;
     }
@@ -38,7 +38,7 @@ public class Repair {
     }
 
     @Basic
-    @Column(name = "AssignedStaff")
+    @Column(name = "AssignedStaff", nullable = true, insertable = true, updatable = true)
     public String getAssignedStaff() {
         return assignedStaff;
     }
@@ -48,7 +48,7 @@ public class Repair {
     }
 
     @Basic
-    @Column(name = "Type")
+    @Column(name = "Type", nullable = false, insertable = true, updatable = true)
     public String getType() {
         return type;
     }
@@ -58,13 +58,23 @@ public class Repair {
     }
 
     @Basic
-    @Column(name = "Description")
+    @Column(name = "Description", nullable = false, insertable = true, updatable = true)
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "RepairStatusId", nullable = false, insertable = true, updatable = true)
+    public int getRepairStatusId() {
+        return repairStatusId;
+    }
+
+    public void setRepairStatusId(int repairStatusId) {
+        this.repairStatusId = repairStatusId;
     }
 
     @Override
@@ -76,6 +86,7 @@ public class Repair {
 
         if (id != repair.id) return false;
         if (contractId != repair.contractId) return false;
+        if (repairStatusId != repair.repairStatusId) return false;
         if (assignedStaff != null ? !assignedStaff.equals(repair.assignedStaff) : repair.assignedStaff != null)
             return false;
         if (type != null ? !type.equals(repair.type) : repair.type != null) return false;
@@ -91,6 +102,7 @@ public class Repair {
         result = 31 * result + (assignedStaff != null ? assignedStaff.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + repairStatusId;
         return result;
     }
 
@@ -112,16 +124,6 @@ public class Repair {
 
     public void setContractByContractId(Contract contractByContractId) {
         this.contractByContractId = contractByContractId;
-    }
-
-    @Basic
-    @Column(name = "RepairStatusId")
-    public int getRepairStatusId() {
-        return repairStatusId;
-    }
-
-    public void setRepairStatusId(int repairStatusId) {
-        this.repairStatusId = repairStatusId;
     }
 
     @ManyToOne

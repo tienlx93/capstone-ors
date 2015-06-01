@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Appointment {
@@ -15,10 +15,9 @@ public class Appointment {
     private Timestamp time;
     private Account accountByCustomerUsername;
     private Account accountByAssignedStaff;
-    private Office officeByOfficeId;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -28,7 +27,7 @@ public class Appointment {
     }
 
     @Basic
-    @Column(name = "CustomerUsername")
+    @Column(name = "CustomerUsername", nullable = false, insertable = true, updatable = true)
     public String getCustomerUsername() {
         return customerUsername;
     }
@@ -38,7 +37,7 @@ public class Appointment {
     }
 
     @Basic
-    @Column(name = "AssignedStaff")
+    @Column(name = "AssignedStaff", nullable = true, insertable = true, updatable = true)
     public String getAssignedStaff() {
         return assignedStaff;
     }
@@ -48,7 +47,7 @@ public class Appointment {
     }
 
     @Basic
-    @Column(name = "OfficeId")
+    @Column(name = "OfficeId", nullable = false, insertable = true, updatable = true)
     public int getOfficeId() {
         return officeId;
     }
@@ -58,7 +57,7 @@ public class Appointment {
     }
 
     @Basic
-    @Column(name = "Time")
+    @Column(name = "Time", nullable = false, insertable = true, updatable = true)
     public Timestamp getTime() {
         return time;
     }
@@ -113,15 +112,5 @@ public class Appointment {
 
     public void setAccountByAssignedStaff(Account accountByAssignedStaff) {
         this.accountByAssignedStaff = accountByAssignedStaff;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "OfficeId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
-    public Office getOfficeByOfficeId() {
-        return officeByOfficeId;
-    }
-
-    public void setOfficeByOfficeId(Office officeByOfficeId) {
-        this.officeByOfficeId = officeByOfficeId;
     }
 }

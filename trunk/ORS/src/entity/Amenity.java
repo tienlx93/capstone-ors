@@ -4,19 +4,19 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Amenity {
     private int id;
     private String name;
     private String description;
+    private Integer hitCount;
     private Collection<OfficeAmenity> officeAmenitiesById;
     private Collection<RequestAmenity> requestAmenitiesById;
-    private Integer hitCount;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -26,7 +26,7 @@ public class Amenity {
     }
 
     @Basic
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false, insertable = true, updatable = true)
     public String getName() {
         return name;
     }
@@ -36,13 +36,23 @@ public class Amenity {
     }
 
     @Basic
-    @Column(name = "Description")
+    @Column(name = "Description", nullable = true, insertable = true, updatable = true)
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    @Basic
+    @Column(name = "HitCount", nullable = true, insertable = true, updatable = true)
+    public Integer getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(Integer hitCount) {
+        this.hitCount = hitCount;
     }
 
     @Override
@@ -55,6 +65,7 @@ public class Amenity {
         if (id != amenity.id) return false;
         if (name != null ? !name.equals(amenity.name) : amenity.name != null) return false;
         if (description != null ? !description.equals(amenity.description) : amenity.description != null) return false;
+        if (hitCount != null ? !hitCount.equals(amenity.hitCount) : amenity.hitCount != null) return false;
 
         return true;
     }
@@ -64,6 +75,7 @@ public class Amenity {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (hitCount != null ? hitCount.hashCode() : 0);
         return result;
     }
 
@@ -83,15 +95,5 @@ public class Amenity {
 
     public void setRequestAmenitiesById(Collection<RequestAmenity> requestAmenitiesById) {
         this.requestAmenitiesById = requestAmenitiesById;
-    }
-
-    @Basic
-    @Column(name = "HitCount")
-    public Integer getHitCount() {
-        return hitCount;
-    }
-
-    public void setHitCount(Integer hitCount) {
-        this.hitCount = hitCount;
     }
 }

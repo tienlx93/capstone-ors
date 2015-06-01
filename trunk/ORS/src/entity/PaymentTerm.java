@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class PaymentTerm {
@@ -14,8 +14,8 @@ public class PaymentTerm {
     private String description;
     private Collection<Contract> contractsById;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -25,7 +25,7 @@ public class PaymentTerm {
     }
 
     @Basic
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false, insertable = true, updatable = true)
     public String getName() {
         return name;
     }
@@ -35,7 +35,7 @@ public class PaymentTerm {
     }
 
     @Basic
-    @Column(name = "PaymentTime")
+    @Column(name = "PaymentTime", nullable = false, insertable = true, updatable = true)
     public int getPaymentTime() {
         return paymentTime;
     }
@@ -45,7 +45,7 @@ public class PaymentTerm {
     }
 
     @Basic
-    @Column(name = "Description")
+    @Column(name = "Description", nullable = true, insertable = true, updatable = true)
     public String getDescription() {
         return description;
     }

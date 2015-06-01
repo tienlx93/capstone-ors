@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class OfficeAmenity {
@@ -11,10 +11,9 @@ public class OfficeAmenity {
     private int officeId;
     private int amenityId;
     private Amenity amenityByAmenityId;
-    private Office officeByOfficeId;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -24,7 +23,7 @@ public class OfficeAmenity {
     }
 
     @Basic
-    @Column(name = "OfficeId")
+    @Column(name = "OfficeId", nullable = false, insertable = true, updatable = true)
     public int getOfficeId() {
         return officeId;
     }
@@ -34,7 +33,7 @@ public class OfficeAmenity {
     }
 
     @Basic
-    @Column(name = "AmenityId")
+    @Column(name = "AmenityId", nullable = false, insertable = true, updatable = true)
     public int getAmenityId() {
         return amenityId;
     }
@@ -73,15 +72,5 @@ public class OfficeAmenity {
 
     public void setAmenityByAmenityId(Amenity amenityByAmenityId) {
         this.amenityByAmenityId = amenityByAmenityId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "OfficeId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
-    public Office getOfficeByOfficeId() {
-        return officeByOfficeId;
-    }
-
-    public void setOfficeByOfficeId(Office officeByOfficeId) {
-        this.officeByOfficeId = officeByOfficeId;
     }
 }

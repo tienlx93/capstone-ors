@@ -1,43 +1,16 @@
 package entity;
 
 import javax.persistence.*;
-import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Office {
     private int id;
-    private String name;
-    private String managerAccount;
-    private int categoryId;
-    private int statusId;
-    private String description;
-    private Long price;
-    private int priceTerm;
-    private int floorNumber;
-    private double area;
-    private String imageUrls;
-    private String otherDetail;
-    private String address;
-    private Double latitude;
-    private Double longitude;
-    private String district;
-    private String city;
-    private Integer parentOfficeId;
-    private Collection<Appointment> appointmentsById;
-    private Collection<Contract> contractsById;
-    private Account accountByManagerAccount;
-    private Category categoryByCategoryId;
-    private Office officeByParentOfficeId;
-    private Collection<Office> officesById;
-    private OfficeStatus officeStatusByStatusId;
-    private PriceTerm priceTermByPriceTerm;
-    private Collection<OfficeAmenity> officeAmenitiesById;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @javax.persistence.Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -46,8 +19,10 @@ public class Office {
         this.id = id;
     }
 
+    private String name;
+
     @Basic
-    @Column(name = "Name")
+    @javax.persistence.Column(name = "Name", nullable = false, insertable = true, updatable = true)
     public String getName() {
         return name;
     }
@@ -56,8 +31,10 @@ public class Office {
         this.name = name;
     }
 
+    private String managerAccount;
+
     @Basic
-    @Column(name = "ManagerAccount")
+    @javax.persistence.Column(name = "ManagerAccount", nullable = false, insertable = true, updatable = true)
     public String getManagerAccount() {
         return managerAccount;
     }
@@ -66,8 +43,10 @@ public class Office {
         this.managerAccount = managerAccount;
     }
 
+    private int categoryId;
+
     @Basic
-    @Column(name = "CategoryId")
+    @javax.persistence.Column(name = "CategoryId", nullable = false, insertable = true, updatable = true)
     public int getCategoryId() {
         return categoryId;
     }
@@ -76,8 +55,10 @@ public class Office {
         this.categoryId = categoryId;
     }
 
+    private int statusId;
+
     @Basic
-    @Column(name = "StatusId")
+    @javax.persistence.Column(name = "StatusId", nullable = false, insertable = true, updatable = true)
     public int getStatusId() {
         return statusId;
     }
@@ -86,8 +67,10 @@ public class Office {
         this.statusId = statusId;
     }
 
+    private String description;
+
     @Basic
-    @Column(name = "Description")
+    @javax.persistence.Column(name = "Description", nullable = false, insertable = true, updatable = true)
     public String getDescription() {
         return description;
     }
@@ -96,8 +79,10 @@ public class Office {
         this.description = description;
     }
 
+    private Long price;
+
     @Basic
-    @Column(name = "Price")
+    @javax.persistence.Column(name = "Price", nullable = true, insertable = true, updatable = true)
     public Long getPrice() {
         return price;
     }
@@ -106,8 +91,10 @@ public class Office {
         this.price = price;
     }
 
+    private int priceTerm;
+
     @Basic
-    @Column(name = "PriceTerm")
+    @javax.persistence.Column(name = "PriceTerm", nullable = false, insertable = true, updatable = true)
     public int getPriceTerm() {
         return priceTerm;
     }
@@ -116,8 +103,10 @@ public class Office {
         this.priceTerm = priceTerm;
     }
 
+    private int floorNumber;
+
     @Basic
-    @Column(name = "FloorNumber")
+    @javax.persistence.Column(name = "FloorNumber", nullable = false, insertable = true, updatable = true)
     public int getFloorNumber() {
         return floorNumber;
     }
@@ -126,8 +115,10 @@ public class Office {
         this.floorNumber = floorNumber;
     }
 
+    private double area;
+
     @Basic
-    @Column(name = "Area")
+    @javax.persistence.Column(name = "Area", nullable = false, insertable = true, updatable = true, precision = 0)
     public double getArea() {
         return area;
     }
@@ -136,8 +127,10 @@ public class Office {
         this.area = area;
     }
 
+    private String imageUrls;
+
     @Basic
-    @Column(name = "ImageUrls")
+    @javax.persistence.Column(name = "ImageUrls", nullable = false, insertable = true, updatable = true, length = 2147483647)
     public String getImageUrls() {
         return imageUrls;
     }
@@ -146,8 +139,10 @@ public class Office {
         this.imageUrls = imageUrls;
     }
 
+    private String otherDetail;
+
     @Basic
-    @Column(name = "OtherDetail")
+    @javax.persistence.Column(name = "OtherDetail", nullable = true, insertable = true, updatable = true)
     public String getOtherDetail() {
         return otherDetail;
     }
@@ -156,8 +151,10 @@ public class Office {
         this.otherDetail = otherDetail;
     }
 
+    private String address;
+
     @Basic
-    @Column(name = "Address")
+    @javax.persistence.Column(name = "Address", nullable = false, insertable = true, updatable = true)
     public String getAddress() {
         return address;
     }
@@ -166,8 +163,10 @@ public class Office {
         this.address = address;
     }
 
+    private Double latitude;
+
     @Basic
-    @Column(name = "Latitude")
+    @javax.persistence.Column(name = "Latitude", nullable = true, insertable = true, updatable = true, precision = 0)
     public Double getLatitude() {
         return latitude;
     }
@@ -176,8 +175,10 @@ public class Office {
         this.latitude = latitude;
     }
 
+    private Double longitude;
+
     @Basic
-    @Column(name = "Longitude")
+    @javax.persistence.Column(name = "Longitude", nullable = true, insertable = true, updatable = true, precision = 0)
     public Double getLongitude() {
         return longitude;
     }
@@ -186,8 +187,10 @@ public class Office {
         this.longitude = longitude;
     }
 
+    private String district;
+
     @Basic
-    @Column(name = "District")
+    @javax.persistence.Column(name = "District", nullable = true, insertable = true, updatable = true)
     public String getDistrict() {
         return district;
     }
@@ -196,8 +199,10 @@ public class Office {
         this.district = district;
     }
 
+    private String city;
+
     @Basic
-    @Column(name = "City")
+    @javax.persistence.Column(name = "City", nullable = true, insertable = true, updatable = true)
     public String getCity() {
         return city;
     }
@@ -206,8 +211,10 @@ public class Office {
         this.city = city;
     }
 
+    private Integer parentOfficeId;
+
     @Basic
-    @Column(name = "ParentOfficeId")
+    @javax.persistence.Column(name = "ParentOfficeId", nullable = true, insertable = true, updatable = true)
     public Integer getParentOfficeId() {
         return parentOfficeId;
     }
@@ -271,91 +278,5 @@ public class Office {
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (parentOfficeId != null ? parentOfficeId.hashCode() : 0);
         return result;
-    }
-
-    @OneToMany(mappedBy = "officeByOfficeId")
-    public Collection<Appointment> getAppointmentsById() {
-        return appointmentsById;
-    }
-
-    public void setAppointmentsById(Collection<Appointment> appointmentsById) {
-        this.appointmentsById = appointmentsById;
-    }
-
-    @OneToMany(mappedBy = "officeByOfficeId")
-    public Collection<Contract> getContractsById() {
-        return contractsById;
-    }
-
-    public void setContractsById(Collection<Contract> contractsById) {
-        this.contractsById = contractsById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "ManagerAccount", referencedColumnName = "Username", nullable = false, insertable = false, updatable = false)
-    public Account getAccountByManagerAccount() {
-        return accountByManagerAccount;
-    }
-
-    public void setAccountByManagerAccount(Account accountByManagerAccount) {
-        this.accountByManagerAccount = accountByManagerAccount;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "CategoryId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
-    public Category getCategoryByCategoryId() {
-        return categoryByCategoryId;
-    }
-
-    public void setCategoryByCategoryId(Category categoryByCategoryId) {
-        this.categoryByCategoryId = categoryByCategoryId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "ParentOfficeId", referencedColumnName = "Id", insertable = false, updatable = false)
-    public Office getOfficeByParentOfficeId() {
-        return officeByParentOfficeId;
-    }
-
-    public void setOfficeByParentOfficeId(Office officeByParentOfficeId) {
-        this.officeByParentOfficeId = officeByParentOfficeId;
-    }
-
-    @OneToMany(mappedBy = "officeByParentOfficeId")
-    public Collection<Office> getOfficesById() {
-        return officesById;
-    }
-
-    public void setOfficesById(Collection<Office> officesById) {
-        this.officesById = officesById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "StatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
-    public OfficeStatus getOfficeStatusByStatusId() {
-        return officeStatusByStatusId;
-    }
-
-    public void setOfficeStatusByStatusId(OfficeStatus officeStatusByStatusId) {
-        this.officeStatusByStatusId = officeStatusByStatusId;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "PriceTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
-    public PriceTerm getPriceTermByPriceTerm() {
-        return priceTermByPriceTerm;
-    }
-
-    public void setPriceTermByPriceTerm(PriceTerm priceTermByPriceTerm) {
-        this.priceTermByPriceTerm = priceTermByPriceTerm;
-    }
-
-    @OneToMany(mappedBy = "officeByOfficeId")
-    public Collection<OfficeAmenity> getOfficeAmenitiesById() {
-        return officeAmenitiesById;
-    }
-
-    public void setOfficeAmenitiesById(Collection<OfficeAmenity> officeAmenitiesById) {
-        this.officeAmenitiesById = officeAmenitiesById;
     }
 }

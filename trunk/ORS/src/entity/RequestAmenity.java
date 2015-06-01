@@ -3,7 +3,7 @@ package entity;
 import javax.persistence.*;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class RequestAmenity {
@@ -13,8 +13,8 @@ public class RequestAmenity {
     private Amenity amenityByAmenityId;
     private RequestOffice requestOfficeByRequestOfficeId;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -24,7 +24,7 @@ public class RequestAmenity {
     }
 
     @Basic
-    @Column(name = "RequestOfficeId")
+    @Column(name = "RequestOfficeId", nullable = false, insertable = true, updatable = true)
     public int getRequestOfficeId() {
         return requestOfficeId;
     }
@@ -34,7 +34,7 @@ public class RequestAmenity {
     }
 
     @Basic
-    @Column(name = "AmenityId")
+    @Column(name = "AmenityId", nullable = false, insertable = true, updatable = true)
     public int getAmenityId() {
         return amenityId;
     }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class Account {
@@ -16,13 +16,12 @@ public class Account {
     private Collection<Appointment> appointmentsByUsername;
     private Collection<Appointment> appointmentsByUsername_0;
     private Collection<Contract> contractsByUsername;
-    private Collection<Office> officesByUsername;
     private Profile profileByUsername;
     private Collection<Repair> repairsByUsername;
     private Collection<RequestOffice> requestOfficesByUsername;
 
     @Id
-    @Column(name = "Username")
+    @Column(name = "Username", nullable = false, insertable = true, updatable = true)
     public String getUsername() {
         return username;
     }
@@ -32,7 +31,7 @@ public class Account {
     }
 
     @Basic
-    @Column(name = "Password")
+    @Column(name = "Password", nullable = false, insertable = true, updatable = true, length = 50)
     public String getPassword() {
         return password;
     }
@@ -42,7 +41,7 @@ public class Account {
     }
 
     @Basic
-    @Column(name = "Email")
+    @Column(name = "Email", nullable = false, insertable = true, updatable = true, length = 50)
     public String getEmail() {
         return email;
     }
@@ -52,7 +51,7 @@ public class Account {
     }
 
     @Basic
-    @Column(name = "RoleId")
+    @Column(name = "RoleId", nullable = false, insertable = true, updatable = true)
     public int getRoleId() {
         return roleId;
     }
@@ -120,15 +119,6 @@ public class Account {
 
     public void setContractsByUsername(Collection<Contract> contractsByUsername) {
         this.contractsByUsername = contractsByUsername;
-    }
-
-    @OneToMany(mappedBy = "accountByManagerAccount")
-    public Collection<Office> getOfficesByUsername() {
-        return officesByUsername;
-    }
-
-    public void setOfficesByUsername(Collection<Office> officesByUsername) {
-        this.officesByUsername = officesByUsername;
     }
 
     @OneToOne(mappedBy = "accountByUsername")

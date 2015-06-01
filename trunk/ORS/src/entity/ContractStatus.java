@@ -13,8 +13,8 @@ public class ContractStatus {
     private String description;
     private Collection<Contract> contractsById;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -24,7 +24,7 @@ public class ContractStatus {
     }
 
     @Basic
-    @Column(name = "Name")
+    @Column(name = "Name", nullable = false, insertable = true, updatable = true)
     public String getName() {
         return name;
     }
@@ -34,7 +34,7 @@ public class ContractStatus {
     }
 
     @Basic
-    @Column(name = "Description")
+    @Column(name = "Description", nullable = true, insertable = true, updatable = true)
     public String getDescription() {
         return description;
     }

@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 6/1/2015.
  */
 @Entity
 public class RequestOffice {
@@ -18,8 +18,8 @@ public class RequestOffice {
     private Account accountByCustomerUsername;
     private Category categoryByCategoryId;
 
-    @Id
-    @Column(name = "Id")
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
     }
@@ -29,7 +29,7 @@ public class RequestOffice {
     }
 
     @Basic
-    @Column(name = "CustomerUsername")
+    @Column(name = "CustomerUsername", nullable = false, insertable = true, updatable = true)
     public String getCustomerUsername() {
         return customerUsername;
     }
@@ -39,7 +39,7 @@ public class RequestOffice {
     }
 
     @Basic
-    @Column(name = "CategoryId")
+    @Column(name = "CategoryId", nullable = false, insertable = true, updatable = true)
     public int getCategoryId() {
         return categoryId;
     }
@@ -49,7 +49,7 @@ public class RequestOffice {
     }
 
     @Basic
-    @Column(name = "Price")
+    @Column(name = "Price", nullable = true, insertable = true, updatable = true)
     public Integer getPrice() {
         return price;
     }
@@ -59,7 +59,7 @@ public class RequestOffice {
     }
 
     @Basic
-    @Column(name = "Area")
+    @Column(name = "Area", nullable = true, insertable = true, updatable = true, precision = 0)
     public Double getArea() {
         return area;
     }
@@ -69,7 +69,7 @@ public class RequestOffice {
     }
 
     @Basic
-    @Column(name = "Address")
+    @Column(name = "Address", nullable = true, insertable = true, updatable = true)
     public String getAddress() {
         return address;
     }

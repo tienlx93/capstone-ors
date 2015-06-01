@@ -77,20 +77,20 @@
       <column name="ImageUrls" sqlType="text" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
       <column name="OtherDetail" sqlType="ntext" precision="1073741823" scale="0" nullable="true" jdbcType="-16"/>
       <column name="Address" sqlType="nvarchar" precision="150" scale="0" nullable="false" jdbcType="-9"/>
-      <column name="Latitute" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
-      <column name="Longtitute" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
+      <column name="Latitude" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
+      <column name="Longitude" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
       <column name="District" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
       <column name="City" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
-      <column name="ParrentOfficeId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ParentOfficeId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PK_Office" columns="Id"/>
       <foreign-key name="FK_Office_Account" columns="ManagerAccount" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_Category" columns="CategoryId" ref-table="Category" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK_Office_Office" columns="ParrentOfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK_Office_Office" columns="ParentOfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_OfficeStatus" columns="StatusId" ref-table="OfficeStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_PriceTerm" columns="PriceTerm" ref-table="PriceTerm" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <exported-key name="FK_Appointment_Office" table="Appointment" schema="dbo" catalog="ors" columns="OfficeId"/>
       <exported-key name="FK_Contract_Office" table="Contract" schema="dbo" catalog="ors" columns="OfficeId"/>
-      <exported-key name="FK_Office_Office" table="Office" schema="dbo" catalog="ors" columns="ParrentOfficeId"/>
+      <exported-key name="FK_Office_Office" table="Office" schema="dbo" catalog="ors" columns="ParentOfficeId"/>
       <exported-key name="FK_OfficeAmenity_Office" table="OfficeAmenity" schema="dbo" catalog="ors" columns="OfficeId"/>
     </table>
     <table name="OfficeAmenity" schema="dbo" catalog="ors" type="TABLE">

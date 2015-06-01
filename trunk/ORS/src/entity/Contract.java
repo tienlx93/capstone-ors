@@ -145,7 +145,7 @@ public class Contract {
     }
 
     @ManyToOne
-    @JoinColumns({@JoinColumn(name = "PaymentTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false), @JoinColumn(name = "PaymentTerm", referencedColumnName = "Id", nullable = false)})
+    @JoinColumn(name = "PaymentTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
     public PaymentTerm getPaymentTermByPaymentTerm() {
         return paymentTermByPaymentTerm;
     }

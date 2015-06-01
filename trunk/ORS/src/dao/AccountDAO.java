@@ -8,6 +8,7 @@ import org.hibernate.Query;
  */
 public class AccountDAO  extends BaseDAO<Account, String> {
 
+    //Constructor
     public AccountDAO() {
         super(Account.class);
     }

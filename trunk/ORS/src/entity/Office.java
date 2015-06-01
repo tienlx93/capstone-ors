@@ -341,7 +341,7 @@ public class Office {
     }
 
     @ManyToOne
-    @JoinColumn(name = "PriceTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    @JoinColumns({@JoinColumn(name = "PriceTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false), @JoinColumn(name = "PriceTerm", referencedColumnName = "Id", nullable = false)})
     public PriceTerm getPriceTermByPriceTerm() {
         return priceTermByPriceTerm;
     }

@@ -24,6 +24,8 @@
         <mapping class="entity.RequestAmenity"/>
         <mapping class="entity.RequestOffice"/>
         <mapping class="entity.Role"/>
+        <mapping class="entity.ContractStatus"/>
+        <mapping class="entity.RepairStatus"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

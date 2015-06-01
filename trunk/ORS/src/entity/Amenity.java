@@ -13,6 +13,7 @@ public class Amenity {
     private String description;
     private Collection<OfficeAmenity> officeAmenitiesById;
     private Collection<RequestAmenity> requestAmenitiesById;
+    private Integer hitCount;
 
     @Id
     @Column(name = "Id")
@@ -82,5 +83,15 @@ public class Amenity {
 
     public void setRequestAmenitiesById(Collection<RequestAmenity> requestAmenitiesById) {
         this.requestAmenitiesById = requestAmenitiesById;
+    }
+
+    @Basic
+    @Column(name = "HitCount")
+    public Integer getHitCount() {
+        return hitCount;
+    }
+
+    public void setHitCount(Integer hitCount) {
+        this.hitCount = hitCount;
     }
 }

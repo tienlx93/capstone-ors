@@ -20,6 +20,8 @@ public class Contract {
     private Office officeByOfficeId;
     private PaymentTerm paymentTermByPaymentTerm;
     private Collection<Repair> repairsById;
+    private int statusId;
+    private ContractStatus contractStatusByStatusId;
 
     @Id
     @Column(name = "Id")
@@ -143,7 +145,7 @@ public class Contract {
     }
 
     @ManyToOne
-    @JoinColumn(name = "PaymentTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    @JoinColumns({@JoinColumn(name = "PaymentTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false), @JoinColumn(name = "PaymentTerm", referencedColumnName = "Id", nullable = false)})
     public PaymentTerm getPaymentTermByPaymentTerm() {
         return paymentTermByPaymentTerm;
     }
@@ -159,5 +161,25 @@ public class Contract {
 
     public void setRepairsById(Collection<Repair> repairsById) {
         this.repairsById = repairsById;
+    }
+
+    @Basic
+    @Column(name = "StatusId")
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "StatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public ContractStatus getContractStatusByStatusId() {
+        return contractStatusByStatusId;
+    }
+
+    public void setContractStatusByStatusId(ContractStatus contractStatusByStatusId) {
+        this.contractStatusByStatusId = contractStatusByStatusId;
     }
 }

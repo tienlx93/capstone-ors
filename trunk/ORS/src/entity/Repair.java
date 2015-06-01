@@ -14,6 +14,8 @@ public class Repair {
     private String description;
     private Account accountByAssignedStaff;
     private Contract contractByContractId;
+    private int repairStatusId;
+    private RepairStatus repairStatusByRepairStatusId;
 
     @Id
     @Column(name = "Id")
@@ -110,5 +112,25 @@ public class Repair {
 
     public void setContractByContractId(Contract contractByContractId) {
         this.contractByContractId = contractByContractId;
+    }
+
+    @Basic
+    @Column(name = "RepairStatusId")
+    public int getRepairStatusId() {
+        return repairStatusId;
+    }
+
+    public void setRepairStatusId(int repairStatusId) {
+        this.repairStatusId = repairStatusId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "RepairStatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public RepairStatus getRepairStatusByRepairStatusId() {
+        return repairStatusByRepairStatusId;
+    }
+
+    public void setRepairStatusByRepairStatusId(RepairStatus repairStatusByRepairStatusId) {
+        this.repairStatusByRepairStatusId = repairStatusByRepairStatusId;
     }
 }

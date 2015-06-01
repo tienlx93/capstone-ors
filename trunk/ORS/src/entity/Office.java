@@ -21,16 +21,16 @@ public class Office {
     private String imageUrls;
     private String otherDetail;
     private String address;
-    private Double latitute;
-    private Double longtitute;
+    private Double latitude;
+    private Double longitude;
     private String district;
     private String city;
-    private Integer parrentOfficeId;
+    private Integer parentOfficeId;
     private Collection<Appointment> appointmentsById;
     private Collection<Contract> contractsById;
     private Account accountByManagerAccount;
     private Category categoryByCategoryId;
-    private Office officeByParrentOfficeId;
+    private Office officeByParentOfficeId;
     private Collection<Office> officesById;
     private OfficeStatus officeStatusByStatusId;
     private PriceTerm priceTermByPriceTerm;
@@ -167,23 +167,23 @@ public class Office {
     }
 
     @Basic
-    @Column(name = "Latitute")
-    public Double getLatitute() {
-        return latitute;
+    @Column(name = "Latitude")
+    public Double getLatitude() {
+        return latitude;
     }
 
-    public void setLatitute(Double latitute) {
-        this.latitute = latitute;
+    public void setLatitude(Double latitude) {
+        this.latitude = latitude;
     }
 
     @Basic
-    @Column(name = "Longtitute")
-    public Double getLongtitute() {
-        return longtitute;
+    @Column(name = "Longitude")
+    public Double getLongitude() {
+        return longitude;
     }
 
-    public void setLongtitute(Double longtitute) {
-        this.longtitute = longtitute;
+    public void setLongitude(Double longitude) {
+        this.longitude = longitude;
     }
 
     @Basic
@@ -207,13 +207,13 @@ public class Office {
     }
 
     @Basic
-    @Column(name = "ParrentOfficeId")
-    public Integer getParrentOfficeId() {
-        return parrentOfficeId;
+    @Column(name = "ParentOfficeId")
+    public Integer getParentOfficeId() {
+        return parentOfficeId;
     }
 
-    public void setParrentOfficeId(Integer parrentOfficeId) {
-        this.parrentOfficeId = parrentOfficeId;
+    public void setParentOfficeId(Integer parentOfficeId) {
+        this.parentOfficeId = parentOfficeId;
     }
 
     @Override
@@ -237,11 +237,11 @@ public class Office {
         if (imageUrls != null ? !imageUrls.equals(office.imageUrls) : office.imageUrls != null) return false;
         if (otherDetail != null ? !otherDetail.equals(office.otherDetail) : office.otherDetail != null) return false;
         if (address != null ? !address.equals(office.address) : office.address != null) return false;
-        if (latitute != null ? !latitute.equals(office.latitute) : office.latitute != null) return false;
-        if (longtitute != null ? !longtitute.equals(office.longtitute) : office.longtitute != null) return false;
+        if (latitude != null ? !latitude.equals(office.latitude) : office.latitude != null) return false;
+        if (longitude != null ? !longitude.equals(office.longitude) : office.longitude != null) return false;
         if (district != null ? !district.equals(office.district) : office.district != null) return false;
         if (city != null ? !city.equals(office.city) : office.city != null) return false;
-        if (parrentOfficeId != null ? !parrentOfficeId.equals(office.parrentOfficeId) : office.parrentOfficeId != null)
+        if (parentOfficeId != null ? !parentOfficeId.equals(office.parentOfficeId) : office.parentOfficeId != null)
             return false;
 
         return true;
@@ -265,11 +265,11 @@ public class Office {
         result = 31 * result + (imageUrls != null ? imageUrls.hashCode() : 0);
         result = 31 * result + (otherDetail != null ? otherDetail.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
-        result = 31 * result + (latitute != null ? latitute.hashCode() : 0);
-        result = 31 * result + (longtitute != null ? longtitute.hashCode() : 0);
+        result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
+        result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
         result = 31 * result + (district != null ? district.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (parrentOfficeId != null ? parrentOfficeId.hashCode() : 0);
+        result = 31 * result + (parentOfficeId != null ? parentOfficeId.hashCode() : 0);
         return result;
     }
 
@@ -312,16 +312,16 @@ public class Office {
     }
 
     @ManyToOne
-    @JoinColumn(name = "ParrentOfficeId", referencedColumnName = "Id", insertable = false, updatable = false)
-    public Office getOfficeByParrentOfficeId() {
-        return officeByParrentOfficeId;
+    @JoinColumn(name = "ParentOfficeId", referencedColumnName = "Id", insertable = false, updatable = false)
+    public Office getOfficeByParentOfficeId() {
+        return officeByParentOfficeId;
     }
 
-    public void setOfficeByParrentOfficeId(Office officeByParrentOfficeId) {
-        this.officeByParrentOfficeId = officeByParrentOfficeId;
+    public void setOfficeByParentOfficeId(Office officeByParentOfficeId) {
+        this.officeByParentOfficeId = officeByParentOfficeId;
     }
 
-    @OneToMany(mappedBy = "officeByParrentOfficeId")
+    @OneToMany(mappedBy = "officeByParentOfficeId")
     public Collection<Office> getOfficesById() {
         return officesById;
     }
@@ -341,7 +341,7 @@ public class Office {
     }
 
     @ManyToOne
-    @JoinColumn(name = "PriceTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    @JoinColumns({@JoinColumn(name = "PriceTerm", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false), @JoinColumn(name = "PriceTerm", referencedColumnName = "Id", nullable = false)})
     public PriceTerm getPriceTermByPriceTerm() {
         return priceTermByPriceTerm;
     }

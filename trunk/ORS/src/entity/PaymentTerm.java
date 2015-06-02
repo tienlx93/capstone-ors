@@ -14,7 +14,8 @@ public class PaymentTerm {
     private String description;
     private Collection<Contract> contractsById;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;

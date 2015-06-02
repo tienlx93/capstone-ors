@@ -15,8 +15,10 @@ public class Appointment {
     private Timestamp time;
     private Account accountByCustomerUsername;
     private Account accountByAssignedStaff;
+    private Office officeByOfficeId;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -112,5 +114,15 @@ public class Appointment {
 
     public void setAccountByAssignedStaff(Account accountByAssignedStaff) {
         this.accountByAssignedStaff = accountByAssignedStaff;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "OfficeId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public Office getOfficeByOfficeId() {
+        return officeByOfficeId;
+    }
+
+    public void setOfficeByOfficeId(Office officeByOfficeId) {
+        this.officeByOfficeId = officeByOfficeId;
     }
 }

@@ -11,8 +11,10 @@ public class OfficeAmenity {
     private int officeId;
     private int amenityId;
     private Amenity amenityByAmenityId;
+    private Office officeByOfficeId;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -72,5 +74,15 @@ public class OfficeAmenity {
 
     public void setAmenityByAmenityId(Amenity amenityByAmenityId) {
         this.amenityByAmenityId = amenityByAmenityId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "OfficeId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public Office getOfficeByOfficeId() {
+        return officeByOfficeId;
+    }
+
+    public void setOfficeByOfficeId(Office officeByOfficeId) {
+        this.officeByOfficeId = officeByOfficeId;
     }
 }

@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by ASUS on 6/1/2015.
@@ -10,8 +11,10 @@ public class OfficeStatus {
     private int id;
     private String name;
     private String description;
+    private Collection<Office> officesById;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -61,5 +64,14 @@ public class OfficeStatus {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "officeStatusByStatusId")
+    public Collection<Office> getOfficesById() {
+        return officesById;
+    }
+
+    public void setOfficesById(Collection<Office> officesById) {
+        this.officesById = officesById;
     }
 }

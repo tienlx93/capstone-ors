@@ -12,8 +12,10 @@ public class Category {
     private String name;
     private String description;
     private Collection<RequestOffice> requestOfficesById;
+    private Collection<Office> officesById;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -73,5 +75,14 @@ public class Category {
 
     public void setRequestOfficesById(Collection<RequestOffice> requestOfficesById) {
         this.requestOfficesById = requestOfficesById;
+    }
+
+    @OneToMany(mappedBy = "categoryByCategoryId")
+    public Collection<Office> getOfficesById() {
+        return officesById;
+    }
+
+    public void setOfficesById(Collection<Office> officesById) {
+        this.officesById = officesById;
     }
 }

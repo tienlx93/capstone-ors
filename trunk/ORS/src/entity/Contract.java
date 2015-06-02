@@ -21,8 +21,10 @@ public class Contract {
     private ContractStatus contractStatusByStatusId;
     private PaymentTerm paymentTermByPaymentTerm;
     private Collection<Repair> repairsById;
+    private Office officeByOfficeId;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -172,5 +174,15 @@ public class Contract {
 
     public void setRepairsById(Collection<Repair> repairsById) {
         this.repairsById = repairsById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "OfficeId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public Office getOfficeByOfficeId() {
+        return officeByOfficeId;
+    }
+
+    public void setOfficeByOfficeId(Office officeByOfficeId) {
+        this.officeByOfficeId = officeByOfficeId;
     }
 }

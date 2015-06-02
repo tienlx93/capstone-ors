@@ -17,7 +17,8 @@ public class Repair {
     private Contract contractByContractId;
     private RepairStatus repairStatusByRepairStatusId;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;

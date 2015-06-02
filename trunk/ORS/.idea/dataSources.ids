@@ -84,7 +84,7 @@
       <column name="PriceTerm" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="FloorNumber" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Area" sqlType="float" precision="53" scale="0" nullable="false" jdbcType="8"/>
-      <column name="ImageUrls" sqlType="text" precision="2147483647" scale="0" nullable="false" jdbcType="-1"/>
+      <column name="ImageUrls" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
       <column name="OtherDetail" sqlType="ntext" precision="1073741823" scale="0" nullable="true" jdbcType="-16"/>
       <column name="Address" sqlType="nvarchar" precision="150" scale="0" nullable="false" jdbcType="-9"/>
       <column name="Latitude" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>

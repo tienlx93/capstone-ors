@@ -15,7 +15,8 @@ public class Amenity {
     private Collection<OfficeAmenity> officeAmenitiesById;
     private Collection<RequestAmenity> requestAmenitiesById;
 
-    @Id @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;

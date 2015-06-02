@@ -1,10 +1,7 @@
 package controller;
 
 import dao.AccountDAO;
-import dao.BaseDAO;
-import dao.RoleDAO;
 import entity.Account;
-import entity.Role;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,27 +13,12 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created by ASUS on 5/28/2015.
+ * Created by ASUS on 02/06/2015.
  */
-@WebServlet(name = "DemoJspController", urlPatterns = {"/demo2"})
-public class DemoJspController extends HttpServlet {
+@WebServlet(name = "ViewUserController",urlPatterns = {"/viewUser"})
+public class ViewUserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String action = request.getParameter("action");
-        AccountDAO dao = new AccountDAO();
-        if (action.equals("Save")) {
-            Account acc = new Account();
-            acc.setUsername(request.getParameter("username"));
-            acc.setPassword(request.getParameter("password"));
-            acc.setEmail(request.getParameter("email"));
-            acc.setRoleId(4);
-            dao.save(acc);
-        }
-        /*Role role = new Role();
-        role.setRoleName("New ROle");
-        RoleDAO dao2 = new RoleDAO();
-        dao2.save(role);*/
-        response.sendRedirect("/demo3");
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

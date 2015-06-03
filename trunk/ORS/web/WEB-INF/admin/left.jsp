@@ -20,7 +20,7 @@
             Văn phòng
             <span class="label label-default">19</span></a>
         </li>
-        <li><a href="">
+        <li><a href="${pageContext.request.contextPath}/viewUser">
             <span class="icon color6"><i class="fa fa-user"></i></span>
             Người dùng
             <span class="label label-default">19</span></a>
@@ -30,7 +30,7 @@
             Hợp đồng
             <span class="label label-default">19</span></a>
         </li>
-        <li><a href="">
+        <li><a href="${pageContext.request.contextPath}/Repair">
             <span class="icon color6"><i class="fa fa-wrench"></i></span>
             Sửa chữa
             <span class="label label-default">19</span></a>

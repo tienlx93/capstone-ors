@@ -25,7 +25,7 @@
             Người dùng
             <span class="label label-default">19</span></a>
         </li>
-        <li><a href="">
+        <li><a href="${pageContext.request.contextPath}/admin/contract">
             <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
             Hợp đồng
             <span class="label label-default">19</span></a>

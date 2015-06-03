@@ -22,11 +22,11 @@
     <!-- End Searchbox -->
 
     <!-- Start Top Menu -->
-    <ul class="topmenu">
+    <%--<ul class="topmenu">
         <li><a href="#">Files</a></li>
         <li><a href="#">Authors</a></li>
 
-    </ul>
+    </ul>--%>
     <!-- End Top Menu -->
 
 
@@ -34,6 +34,9 @@
     <ul class="top-right">
         <li class="link">
             <a href="#" class="notifications">6</a>
+        </li>
+        <li class="link">
+            <a href="#">Logout</a>
         </li>
     </ul>
     <!-- End Top Right -->

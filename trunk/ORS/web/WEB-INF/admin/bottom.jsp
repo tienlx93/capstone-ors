@@ -8,9 +8,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <div class="row footer">
   <div class="col-md-6 text-left">
-    Copyright © 2015 <a href="" target="_blank">Egemem</a> All rights reserved.
+    Capstone project - Office Rental Service
   </div>
   <div class="col-md-6 text-right">
-    Design and Developed by <a href="" target="_blank">Egemem</a>
+    Template by <a href="" target="_blank">Egemem</a>
   </div>
 </div>

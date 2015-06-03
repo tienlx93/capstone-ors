@@ -66,8 +66,8 @@
                   <td>${item.startDate}</td>
                   <td>${item.endDate}</td>
                   <td>${item.paymentFee}</td>
-                  <td>${item.paymentTermByPaymentTerm.id}</td>
-                  <td>${item.statusId}</td>
+                  <td>${item.paymentTermByPaymentTerm.description}</td>
+                  <td>${item.contractStatusByStatusId.description}</td>
                 </tr>
               </c:forEach>
               </tbody>

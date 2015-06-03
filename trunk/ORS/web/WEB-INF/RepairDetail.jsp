@@ -49,19 +49,19 @@
                         Thêm mới văn phòng
                     </div>--%>
                     <div>
-                        <form action="office" method="post">
-                            <div class="form-group">
+                        <form action="Repair?action=editing" method="post">
+                            <%--<div class="form-group">
                                 <label for="id">Id</label>
-                                <%--<input type="text" name="name" class="" id="id" value="${office.name}">--%>
+                                &lt;%&ndash;<input type="text" name="name" class="" id="id" value="${office.name}">&ndash;%&gt;
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
 
                             <div class="form-group">
                                 <label for="contractId">Hợp đồng</label>
-                                <%--<input type="text" name="address" class="" id="contractId" value="${office.address}">--%>
+                                &lt;%&ndash;<input type="text" name="address" class="" id="contractId" value="${office.address}">&ndash;%&gt;
                                 ${info.contractId}<input type="hidden" name="contractId" id="contractId"
                                                          value="${info.contractId}">
-                            </div>
+                            </div>--%>
                             <div class="form-group">
                                 <label for="assignedStaff">Nhân viên được giao</label>
                                 <%--<select name="category" class="" id="category">
@@ -80,13 +80,21 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="description">Mô tả</label>
+                                <label for="type">Loại yêu cầu</label>
                                 <%--<textarea name="description" class="" id="description">${office.description}</textarea>--%>
-                                <textarea type="text" name="description" id="description" value="${info.description}"></textarea>
+                                <%--<textarea type="text" name="description" id="description">${info.description}</textarea>--%>
+                                <input type="text" name="type" id="type" value="${info.type}">
                             </div>
 
                             <div class="form-group">
-                                <label for="repairStatusId">Nhân viên được giao</label>
+                                <label for="description">Mô tả</label>
+                                <%--<textarea name="description" class="" id="description">${office.description}</textarea>--%>
+                                <textarea type="text" name="description" id="description">${info.description}</textarea>
+                                <%--<input type="text" name="description" value="${info.description}">--%>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="repairStatusId">Tình trạng</label>
                                 <% RepairStatusDAO dao = new RepairStatusDAO();
                                     List<RepairStatus> list = dao.findAll();%>
                                 <select name="repairStatusId" id="repairStatusId">
@@ -132,7 +140,8 @@
 
                             <div class="button-post">
                                 <%--<input type="hidden" id="imageUrls" name="imageUrls">--%>
-                                <button type="submit" value="save" name="action">Tạo mới</button>
+                                <button type="submit" name="action">Lưu</button>
+                                <%--<input type="submit" value="save">--%>
 
                             </div>
                         </form>

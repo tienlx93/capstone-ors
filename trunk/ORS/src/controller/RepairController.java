@@ -17,27 +17,29 @@ import java.io.IOException;
 @WebServlet(name = "RepairController", urlPatterns = "/Repair" )
 public class RepairController extends HttpServlet {
 
-    RepairDAO dao = new RepairDAO();
-
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        RepairDAO dao = new RepairDAO();
         if (action.equals("editing")) {
-            Repair rp = new Repair();
+            /*Repair rp = new Repair();
             rp.setId(Integer.parseInt(request.getParameter("id")));
             rp.setContractId(Integer.parseInt((request.getParameter("contractId"))));
             rp.setAssignedStaff(request.getParameter("assignedStaff"));
             rp.setType(request.getParameter("type"));
             rp.setDescription(request.getParameter("description"));
-            rp.setRepairStatusId(Integer.parseInt(request.getParameter("repairStatusId")));
-            dao.save(rp);
-            response.sendRedirect("/WEB-INF/Repair.jsp");
+            rp.setRepairStatusId(Integer.parseInt(request.getParameter("repairStatusId")));*/
+            dao.update(Integer.parseInt(request.getParameter("id")),Integer.parseInt((request.getParameter("contractId"))),
+                    request.getParameter("assignedStaff"),request.getParameter("type"),request.getParameter("description"),
+                    Integer.parseInt(request.getParameter("repairStatusId")));
+            response.sendRedirect("/Repair");
         }
 
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        RepairDAO dao = new RepairDAO();
         String action = request.getParameter("action");
         if (action == null) {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Repair.jsp");

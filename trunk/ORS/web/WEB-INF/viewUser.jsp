@@ -9,23 +9,66 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <title></title>
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css" type="text/css">
+
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+
+  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+  <title>Office Rental Service</title>
 </head>
 <body>
-<h1>Hello World</h1>
-<table>
-  <tr>
-    <td>Username</td>
-    <td>Email</td>
-    <td>Role</td>
-  </tr>
-  <c:forEach var="item" items="${data}">
-    <tr>
-      <td>${item.username}</td>
-      <td>${item.email}</td>
-      <td>${item.roleByRoleId.roleName}</td>
-    </tr>
-  </c:forEach>
-</table>
+<jsp:include page="/WEB-INF/admin/top.jsp"/>
+
+<jsp:include page="/WEB-INF/admin/left.jsp"/>
+
+<div class="content">
+  <div class="page-header">
+    <h1 class="title">Quản lí văn phòng</h1>
+  </div>
+
+  <div class="container-padding">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="panel panel-default">
+          <div class="panel-title">
+            Danh sách văn phòng
+          </div>
+          <div>
+            <a class="btn" href="${pageContext.request.contextPath}viewUser?action=new">
+              <span class="icon color5"><i class="fa fa-plus"></i></span>
+              Thêm mới tài khoản
+            </a>
+          </div>
+          <div>
+            <table class="table">
+              <thead>
+              <tr>
+                <td>Tên đăng nhập</td>
+                <td>Email</td>
+                <td>Chức vụ</td>
+              </tr>
+              </thead>
+              <tbody>
+              <c:forEach var="item" items="${data}">
+                <tr>
+                  <td>${item.username}</td>
+                  <td>${item.email}</td>
+                  <td>${item.roleByRoleId.roleName}</td>
+                </tr>
+              </c:forEach>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
+</div>
 </body>
 </html>

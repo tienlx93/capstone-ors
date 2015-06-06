@@ -1,0 +1,112 @@
+div.main {
+    height: auto;
+    width: auto;
+    position: static;
+}
+
+div.trai {
+    background-color: red;
+    width: 28%;
+    float: left;
+    padding: 1%;
+}
+
+div.trai #up {
+    background-color: skyblue;
+    float: left;
+    width: 100%;
+    padding: 1%;
+
+}
+
+div.trai #mid {
+    background-color: yellow;
+    float: left;
+    width: 100%;
+    padding-bottom: 1%;
+}
+
+div.trai #down {
+    background-color: pink;
+    width: 100%;
+    float: left;
+    padding: 1%;
+    text-align: center;
+
+}
+
+div.phai {
+    width: 68%;
+    height: auto;
+    background-color: green;
+    float: right;
+    padding: 1%;
+}
+
+div.phai #image {
+    width: 98%;
+    background-color: lightgray;
+    float: left;
+    text-align: center;
+    padding: 1%;
+}
+
+div.phai #amenity {
+    width: 98%;
+    background-color: sandybrown;
+    float: left;
+    padding: 1%;
+    text-align: center;
+}
+
+div.phai #amenity li {
+    width: 20%;
+    float: left;
+    padding: 1%;
+}
+
+div.phai #intro {
+    width: 98%;
+    background-color: lightgreen;
+    float: left;
+    padding: 1%;
+}
+
+div.location {
+    width: 98%;
+    background-color: blue;
+    float: left;
+    padding: 1%;
+
+}
+
+#map-canvas {
+    height: 500px;
+    padding: 1%;
+}
+
+hr.line {
+    width: 80%;
+    text-align: center;
+}
+
+
+.item{
+    background: #333;
+    text-align: center;
+    height: 300px !important;
+}
+.carousel{
+    margin-top: 20px;
+}
+.bs-example{
+    margin: 20px;
+}
+
+h2{
+    margin: 0;
+    color: #666;
+    padding-top: 90px;
+    font-size: 52px;
+    font-family: "trebuchet ms", sans-serif;
+}

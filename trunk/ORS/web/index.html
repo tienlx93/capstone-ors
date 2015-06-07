@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html ng-app="ors">
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+
+    <link href="/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/lib/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
+
+    <link href="/css/core.css" rel="stylesheet"/>
+    <link href="/css/home.css" rel="stylesheet"/>
+
+    <script src="/lib/jquery-1.11.3.min.js" type="application/javascript"></script>
+    <script src="/lib/angularjs/angular.min.js" type="application/javascript"></script>
+    <script type="text/javascript" src="lib/angularjs/angular-route.min.js"></script>
+    <script type="text/javascript" src="lib/angularjs/angular-animate.min.js"></script>
+    <script type="text/javascript" src="lib/angularjs/ui-bootstrap-0.13.0.min.js"></script>
+    <script src="/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js" type="application/javascript"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqyea-vS2GTEOV_z23da9gN-sp2LoiGvI">
+    </script>
+
+    <script src="/javascript/app.js" type="application/javascript"></script>
+    <script src="/javascript/controller/DetailController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/RequestController.js" type="application/javascript"></script>
+</head>
+<body>
+<header>
+    <div class="container container-100 header-wrapper">
+        <div class="logo-service left">Office Rental Service</div>
+        <div class="request-office right">
+            <a href="">Đặt văn phòng</a>
+        </div>
+        <div class="middle-header">
+            <i class="icon-phone"></i>
+
+            <div class="phone-number">0123456789</div>
+        </div>
+    </div>
+</header>
+<nav>
+    <div class="container container-100 navigation-wrapper">
+        <ul class="left menu-wrapper">
+            <li>
+                <a href="#/">Tìm văn phòng</a>
+            </li>
+        </ul>
+        <ul class="right login-wrapper">
+            <li>
+                <a href="">Đăng nhập</a>
+            </li>
+            <li>
+                <a href="">Đăng ký</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+<div class="">
+    <div ng-view></div>
+</div>
+
+<footer>
+    <div class="container container-100 footer-wrapper">
+        <div class="logo-service left">Office Rental Service</div>
+        <div class="footer-contact right">
+            <div>
+                <i class="icon-phone"></i>
+
+                <div class="phone-number">0123456789</div>
+            </div>
+            <div class="social-wrapper">
+                <ul>
+                    <li>
+                        <img src="../img/icon-facebook.png">
+                    </li>
+                    <li>
+                        <img src="../img/icon-google.png">
+                    </li>
+                    <li>
+                        <img src="../img/icon-linkedin.png">
+                    </li>
+                    <li>
+                        <img src="../img/icon-twiter.png">
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

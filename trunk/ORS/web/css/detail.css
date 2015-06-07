@@ -5,7 +5,7 @@ div.main {
 }
 
 div.trai {
-    background-color: red;
+    /*background-color: rgba(255, 0, 0, 0.42);*/
     width: 28%;
     float: left;
     padding: 1%;
@@ -20,7 +20,7 @@ div.trai #up {
 }
 
 div.trai #mid {
-    background-color: yellow;
+    background-color: rgba(255, 255, 0, 0.49);
     float: left;
     width: 100%;
     padding-bottom: 1%;
@@ -38,7 +38,7 @@ div.trai #down {
 div.phai {
     width: 68%;
     height: auto;
-    background-color: green;
+    /*background-color: green;*/
     float: right;
     padding: 1%;
 }
@@ -74,7 +74,7 @@ div.phai #intro {
 
 div.location {
     width: 98%;
-    background-color: blue;
+    background-color: rgba(0, 0, 255, 0.38);
     float: left;
     padding: 1%;
 

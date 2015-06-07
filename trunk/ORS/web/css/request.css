@@ -1,0 +1,48 @@
+.container {
+    width: 1000px;
+    margin: auto;
+    padding: 10px;
+}
+.left-request {
+    padding: 10px;
+    width: 480px;
+    float: left;
+}
+.right-request {
+    padding: 20px;
+    float: left;
+    width: 480px;
+    border-left: 1px solid #b5b5b5;
+}
+.title {
+    font-size: larger;
+    font-weight: bold;
+    padding: 0 10px;
+}
+.office {
+    padding: 0 10px;
+}
+.office .img {
+    float: left;
+    width: 150px;
+    height: 150px;
+    padding: 10px;
+}
+.office .img img {
+    width: 100%;
+}
+.office-title {
+    float: left;
+    padding: 10px;
+}
+.info {
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #b5b5b5;
+}
+.info p {
+    line-height: 2.3rem;
+    font-weight: 300;
+    color: #1d1d1d;
+    margin-bottom: 0.8rem;
+}

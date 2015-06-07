@@ -1,0 +1,247 @@
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    background-color: white;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+/* Header CSS */
+
+.header-wrapper {
+    background-color: #ffffff;
+    border-top: 10px solid #F4F4F4;
+    font-size: 24px;
+    padding: 25px 40px;
+}
+
+.header-wrapper .logo-service {
+    padding: 10px;
+    font-size: 30px;
+    font-weight: 500;
+    font-family: fantasy;
+}
+
+.header-wrapper .request-office {
+    padding: 10px 15px;
+    background-color: #b5d334;
+}
+
+.header-wrapper .request-office a {
+    color: #000000;
+}
+
+.header-wrapper .middle-header {
+    text-align: center;
+    color: #b5d334;
+    padding: 10px;
+}
+
+/* End Header CSS */
+
+/* Navigation CSS */
+
+.navigation-wrapper {
+    padding: 15px 40px;
+    color: white;
+    background-color: black;
+}
+
+.navigation-wrapper ul li {
+    display: inline-block;
+}
+
+.navigation-wrapper ul li a {
+    text-decoration: none;
+    color: white;
+}
+
+.navigation-wrapper .login-wrapper li {
+    border: 1px solid white;
+    padding: 5px 10px;
+}
+
+.navigation-wrapper .menu-wrapper {
+    padding: 5px 10px;
+    font-size: 18px;
+}
+
+/* End Navigation CSS */
+
+/* Footer CSS */
+
+.footer-wrapper {
+    padding: 15px 40px;
+    color: white;
+    background-color: black;
+}
+
+.footer-wrapper .logo-service {
+    color: white;
+    padding: 10px;
+    font-size: 30px;
+    font-weight: 500;
+    font-family: sans-serif;
+}
+
+.footer-wrapper .footer-contact {
+    color: #b5d334;
+    font-size: 20px;
+}
+
+.footer-wrapper .footer-contact .social-wrapper {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+.footer-wrapper .footer-contact .social-wrapper ul li{
+    display: inline-block;
+}
+
+/* End Footer CSS */
+
+.home-wrapper {
+
+}
+
+.home-wrapper .search-wrapper {
+    background-image: url(../img/officespace.jpg);
+    background-position: center;
+    background-size: cover;
+    padding: 60px 50px;
+}
+
+.home-wrapper .search-wrapper .container {
+    text-align: center;
+}
+
+.home-wrapper .search-wrapper .container .search-title {
+    font-size: 4.4rem;
+    margin-bottom: 40px;
+    color: #000;
+    font-weight: 300;
+    margin-top: 55px;
+}
+
+.home-wrapper .search-wrapper .container .search-field {
+    margin-top: 25px;
+    display: inline-block;
+    width: 100%;
+    max-width: 520px;
+    min-width: 100px;
+}
+
+.home-wrapper .search-wrapper .container .search-field .search-line{
+    margin-bottom: 15px;
+    text-align: left;
+    position: relative;
+}
+
+.home-wrapper .new-office-wrapper {
+    padding: 15px 40px;
+    background-color: #F4F4F4;
+}
+
+.home-wrapper .new-office-wrapper .title {
+    font-size: 30px;
+    color: #1d1d1d;
+    font-weight: 300;
+    padding: 0 0 10px 0;
+    display: inline-block;
+    border-bottom: 2px solid #b5d334;
+    margin-bottom: 40px;
+}
+
+.home-wrapper .new-office-wrapper .first-row .item, .home-wrapper .new-office-wrapper .second-row .item{
+    display: inline;
+    position: relative;
+    cursor: pointer;
+}
+
+.home-wrapper .new-office-wrapper .item-detail {
+    position: absolute;
+    background-color: rgba(0,0,0, 0.5);
+    color: white;
+    padding: 10px;
+    text-align: left;
+    bottom: 2px;
+}
+
+.home-wrapper .new-office-wrapper .item:hover .item-detail, .home-wrapper .new-office-wrapper .large-item:hover .item-detail{
+    height: 215px;
+}
+
+.home-wrapper .new-office-wrapper .item:hover .item-description, .home-wrapper .new-office-wrapper .large-item:hover .item-description {
+    display: block;
+}
+
+.item-detail .item-city {
+    font-size: 20px;
+    font-family: "Bookman", Georgia, "Times New Roman", serif;
+}
+
+.item-detail .item-district {
+
+}
+
+.item-detail .item-description {
+    display: none
+}
+
+.home-wrapper .new-office-wrapper .large-item {
+    position: relative;
+    cursor: pointer;
+}
+
+.home-wrapper .new-office-wrapper .large-item .item-detail {
+    position: absolute;
+    background-color: rgba(0,0,0, 0.5);
+    color: white;
+    padding: 10px;
+    text-align: left;
+    bottom: 7px;
+    width: 92%;
+    transition: all 1s ease;
+    -o-transition:all 1s ease;
+    -ms-transition:all 1s ease;
+    -moz-transition:all 1s ease;
+    -webkit-transition:all 1s ease;
+}
+
+.search-lable {
+    width: 80px;
+    height: 35px;
+    line-height: 34px;
+    display: block;
+    float: left;
+    font-size: 15px;
+    color: #fff;
+    text-align: center;
+    background: #333;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.search-input {
+    height: 35px;
+    position: relative;
+    width: 100%;
+    padding-left: 80px;
+    float: left;
+}
+
+.btn-green {
+    background: #b5d334;
+    color: #333;
+    font-weight: 600;
+}

@@ -14,6 +14,7 @@ public class Amenity {
     private Integer hitCount;
     private Collection<OfficeAmenity> officeAmenitiesById;
     private Collection<RequestAmenity> requestAmenitiesById;
+    private Collection<RepairDetail> repairDetailsById;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -96,5 +97,14 @@ public class Amenity {
 
     public void setRequestAmenitiesById(Collection<RequestAmenity> requestAmenitiesById) {
         this.requestAmenitiesById = requestAmenitiesById;
+    }
+
+    @OneToMany(mappedBy = "amenityByAmenityId")
+    public Collection<RepairDetail> getRepairDetailsById() {
+        return repairDetailsById;
+    }
+
+    public void setRepairDetailsById(Collection<RepairDetail> repairDetailsById) {
+        this.repairDetailsById = repairDetailsById;
     }
 }

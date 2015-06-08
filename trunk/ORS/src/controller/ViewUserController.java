@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by ASUS on 02/06/2015.
  */
-@WebServlet(name = "ViewUserController",urlPatterns = {"/viewUser"})
+@WebServlet(name = "ViewUserController",urlPatterns = {"/admin/viewUser"})
 public class ViewUserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -25,7 +25,7 @@ public class ViewUserController extends HttpServlet {
         AccountDAO dao = new AccountDAO();
         List<Account> list = dao.findAll();
         request.setAttribute("data", list);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/viewUser.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/viewUser.jsp");
         rd.forward(request, response);
     }
 }

@@ -50,7 +50,6 @@
                             <tr>
                                 <th>Hợp đồng</th>
                                 <th>Nhân viên được giao</th>
-                                <th>Loại yêu cầu</th>
                                 <th>Mô tả</th>
                                 <th>Tình trạng</th>
                                 <th></th>
@@ -61,7 +60,6 @@
                                 <tr>
                                     <td>${item.contractId}</td>
                                     <td>${item.assignedStaff}</td>
-                                    <td>${item.type}</td>
                                     <td>${item.description}</td>
                                     <td>${item.repairStatusByRepairStatusId.description}</td>
                                     <td><a href="Repair?action=edit&id=${item.id}">Chỉnh sửa</a></td>

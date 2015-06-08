@@ -4,18 +4,16 @@ import javax.persistence.*;
 import java.util.Collection;
 
 /**
- * Created by ASUS on 6/1/2015.
+ * Created by ASUS on 6/8/2015.
  */
 @Entity
-public class RepairStatus {
+public class AccountStatus {
     private int id;
     private String name;
     private String description;
-    private Collection<Repair> repairsById;
-    private Collection<Rental> rentalsById;
+    private Collection<Account> accountsById;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -50,7 +48,7 @@ public class RepairStatus {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RepairStatus that = (RepairStatus) o;
+        AccountStatus that = (AccountStatus) o;
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -67,21 +65,12 @@ public class RepairStatus {
         return result;
     }
 
-    @OneToMany(mappedBy = "repairStatusByRepairStatusId")
-    public Collection<Repair> getRepairsById() {
-        return repairsById;
+    @OneToMany(mappedBy = "accountStatusByStatusId")
+    public Collection<Account> getAccountsById() {
+        return accountsById;
     }
 
-    public void setRepairsById(Collection<Repair> repairsById) {
-        this.repairsById = repairsById;
-    }
-
-    @OneToMany(mappedBy = "repairStatusByStatusId")
-    public Collection<Rental> getRentalsById() {
-        return rentalsById;
-    }
-
-    public void setRentalsById(Collection<Rental> rentalsById) {
-        this.rentalsById = rentalsById;
+    public void setAccountsById(Collection<Account> accountsById) {
+        this.accountsById = accountsById;
     }
 }

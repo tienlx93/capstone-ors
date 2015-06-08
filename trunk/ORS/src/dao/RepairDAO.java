@@ -19,7 +19,6 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
             Repair rp = (Repair)session.get(Repair.class,id);
             rp.setContractId(contractId);
             rp.setAssignedStaff(assignedStaff);
-            rp.setType(type);
             rp.setDescription(description);
             rp.setRepairStatusId(repairStatusId);
             session.update(rp);

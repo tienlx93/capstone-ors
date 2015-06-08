@@ -15,7 +15,7 @@ import java.util.List;
 /**
  * Created by ASUS on 02/06/2015.
  */
-@WebServlet(name = "AddUserController",urlPatterns = {"/addUser"})
+@WebServlet(name = "AddUserController",urlPatterns = {"/admin/addUser"})
 public class AddUserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -33,14 +33,14 @@ public class AddUserController extends HttpServlet {
         role.setRoleName("New ROle");
         RoleDAO dao2 = new RoleDAO();
         dao2.save(role);*/
-        response.sendRedirect("/addUser");
+        response.sendRedirect("/admin/addUser");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AccountDAO dao = new AccountDAO();
         List<Account> list = dao.findAll();
         request.setAttribute("data", list);
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/addUser.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/addUser.jsp");
         rd.forward(request, response);
     }
 }

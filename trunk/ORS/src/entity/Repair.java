@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by ASUS on 6/1/2015.
@@ -10,12 +11,12 @@ public class Repair {
     private int id;
     private int contractId;
     private String assignedStaff;
-    private String type;
     private String description;
     private int repairStatusId;
     private Account accountByAssignedStaff;
     private Contract contractByContractId;
     private RepairStatus repairStatusByRepairStatusId;
+    private Collection<RepairDetail> repairDetailsById;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -46,16 +47,6 @@ public class Repair {
 
     public void setAssignedStaff(String assignedStaff) {
         this.assignedStaff = assignedStaff;
-    }
-
-    @Basic
-    @Column(name = "Type", nullable = false, insertable = true, updatable = true)
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     @Basic
@@ -90,7 +81,6 @@ public class Repair {
         if (repairStatusId != repair.repairStatusId) return false;
         if (assignedStaff != null ? !assignedStaff.equals(repair.assignedStaff) : repair.assignedStaff != null)
             return false;
-        if (type != null ? !type.equals(repair.type) : repair.type != null) return false;
         if (description != null ? !description.equals(repair.description) : repair.description != null) return false;
 
         return true;
@@ -101,7 +91,6 @@ public class Repair {
         int result = id;
         result = 31 * result + contractId;
         result = 31 * result + (assignedStaff != null ? assignedStaff.hashCode() : 0);
-        result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + repairStatusId;
         return result;
@@ -135,5 +124,14 @@ public class Repair {
 
     public void setRepairStatusByRepairStatusId(RepairStatus repairStatusByRepairStatusId) {
         this.repairStatusByRepairStatusId = repairStatusByRepairStatusId;
+    }
+
+    @OneToMany(mappedBy = "repairByRepairId")
+    public Collection<RepairDetail> getRepairDetailsById() {
+        return repairDetailsById;
+    }
+
+    public void setRepairDetailsById(Collection<RepairDetail> repairDetailsById) {
+        this.repairDetailsById = repairDetailsById;
     }
 }

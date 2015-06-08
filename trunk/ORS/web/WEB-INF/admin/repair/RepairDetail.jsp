@@ -79,12 +79,7 @@
                                     </c:forEach>
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label for="type">Loại yêu cầu</label>
-                                <%--<textarea name="description" class="" id="description">${office.description}</textarea>--%>
-                                <%--<textarea type="text" name="description" id="description">${info.description}</textarea>--%>
-                                <input type="text" name="type" id="type" value="${info.type}">
-                            </div>
+
 
                             <div class="form-group">
                                 <label for="description">Mô tả</label>

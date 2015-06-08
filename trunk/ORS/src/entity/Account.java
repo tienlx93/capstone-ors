@@ -20,6 +20,9 @@ public class Account {
     private Collection<Repair> repairsByUsername;
     private Collection<RequestOffice> requestOfficesByUsername;
     private Collection<Office> officesByUsername;
+    private int statusId;
+    private AccountStatus accountStatusByStatusId;
+    private Collection<Rental> rentalsByUsername;
 
     @Id
     @Column(name = "Username", nullable = false, insertable = true, updatable = true)
@@ -156,5 +159,34 @@ public class Account {
 
     public void setOfficesByUsername(Collection<Office> officesByUsername) {
         this.officesByUsername = officesByUsername;
+    }
+
+    @Basic
+    @Column(name = "StatusId", nullable = false, insertable = true, updatable = true)
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "StatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public AccountStatus getAccountStatusByStatusId() {
+        return accountStatusByStatusId;
+    }
+
+    public void setAccountStatusByStatusId(AccountStatus accountStatusByStatusId) {
+        this.accountStatusByStatusId = accountStatusByStatusId;
+    }
+
+    @OneToMany(mappedBy = "accountByAssignStaff")
+    public Collection<Rental> getRentalsByUsername() {
+        return rentalsByUsername;
+    }
+
+    public void setRentalsByUsername(Collection<Rental> rentalsByUsername) {
+        this.rentalsByUsername = rentalsByUsername;
     }
 }

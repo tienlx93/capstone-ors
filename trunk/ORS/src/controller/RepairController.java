@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Th�nh on 01/06/2015.
  */
-@WebServlet(name = "RepairController", urlPatterns = "/Repair" )
+@WebServlet(name = "RepairController", urlPatterns = "/admin/Repair" )
 public class RepairController extends HttpServlet {
 
 
@@ -33,7 +33,7 @@ public class RepairController extends HttpServlet {
             dao.update(Integer.parseInt(request.getParameter("id")),Integer.parseInt((request.getParameter("contractId"))),
                     request.getParameter("assignedStaff"),request.getParameter("type"),request.getParameter("description"),
                     Integer.parseInt(request.getParameter("repairStatusId")));
-            response.sendRedirect("/Repair");
+            response.sendRedirect("/admin/Repair");
         }
 
     }
@@ -42,11 +42,11 @@ public class RepairController extends HttpServlet {
         RepairDAO dao = new RepairDAO();
         String action = request.getParameter("action");
         if (action == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/Repair.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/Repair.jsp");
             rd.forward(request, response);
         } else if (action.equals("edit")) {
             request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-            request.getRequestDispatcher("/WEB-INF/RepairDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/repair/RepairDetail.jsp").forward(request, response);
 
         }
     }

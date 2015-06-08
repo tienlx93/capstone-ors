@@ -22,6 +22,7 @@ public class Contract {
     private PaymentTerm paymentTermByPaymentTerm;
     private Collection<Repair> repairsById;
     private Office officeByOfficeId;
+    private Collection<Rental> rentalsById;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -184,5 +185,14 @@ public class Contract {
 
     public void setOfficeByOfficeId(Office officeByOfficeId) {
         this.officeByOfficeId = officeByOfficeId;
+    }
+
+    @OneToMany(mappedBy = "contractByContractId")
+    public Collection<Rental> getRentalsById() {
+        return rentalsById;
+    }
+
+    public void setRentalsById(Collection<Rental> rentalsById) {
+        this.rentalsById = rentalsById;
     }
 }

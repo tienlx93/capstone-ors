@@ -26,6 +26,11 @@
         <mapping class="entity.Role"/>
         <mapping class="entity.ContractStatus"/>
         <mapping class="entity.RepairStatus"/>
+        <mapping class="entity.AccountStatus"/>
+        <mapping class="entity.Rental"/>
+        <mapping class="entity.RentalDetail"/>
+        <mapping class="entity.RentalItem"/>
+        <mapping class="entity.RepairDetail"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

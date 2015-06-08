@@ -1,18 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/request.css"/>
-    <link rel="stylesheet" type="text/css" href="../lib/bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
 
-    <script src="/lib/jquery-1.11.3.min.js" type="application/javascript"></script>
-    <script src="/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js" type="application/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="/css/request.css"/>
+
     <script src="/javascript/request.js" type="application/javascript"></script>
 
-    <title></title>
-</head>
-<body>
-<div class="container clearfix">
+<div class="container">
     <div class="left-request">
         <div class="title">
             Đặt lịch hẹn xem văn phòng
@@ -33,12 +24,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <a data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed" aria-expanded="true" aria-controls="collapseOne">
                             Đã có tài khoản
                         </a>
                     </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" collapse="isCollapsed">
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
@@ -60,12 +51,12 @@
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingTwo">
                     <h4 class="panel-title">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed" aria-expanded="false" aria-controls="collapseTwo">
                             Chưa có tài khoản
                         </a>
                     </h4>
                 </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" collapse="!isCollapsed">
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
@@ -140,6 +131,3 @@
         </div>
     </div>
 </div>
-
-</body>
-</html>

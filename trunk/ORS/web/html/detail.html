@@ -1,36 +1,13 @@
-<!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
-    <link rel="stylesheet" type="text/css" href="/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css"/>
 
-    <script type="text/javascript"
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqyea-vS2GTEOV_z23da9gN-sp2LoiGvI">
-    </script>
-    <script type="text/javascript">
-        function initialize() {
-            var mapOptions = {
-                center: {lat: 10.776083, lng: 106.70095},
-                zoom: 16
-            };
-            var map = new google.maps.Map(document.getElementById('map-canvas'),
-                    mapOptions);
-        }
-        google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
-
-    <title></title>
-</head>
-<body>
-<div class="main">
-    <div class="trai">
-        <div class="trai" id="up">
+<link rel="stylesheet" type="text/css" href="../css/detail.css"/>
+<div class="container">
+    <div id="left">
+        <div id="up">
             <h1>Office Space: Le Thanh Ton, District 1, Ho Chi Minh
                 <hr class="line"/>
             </h1>
         </div>
-        <div class="trai" id="mid">
+        <div id="mid">
             <p>Serviced Offices From<br/>
                 ₫20580000<br/>
                 per person<br/>
@@ -41,36 +18,31 @@
             <hr class="line"/>
             </p>
         </div>
-        <div class="trai" id="down">
+        <div id="down">
             <!--<input type="button" value="Request"/>-->
-            <a href="request.html" class="btn btn-default">Request</a>
+            <a href="#/request" class="btn btn-default">Request</a>
         </div>
     </div>
-    <div class="phai">
-        <div class="phai" id="image">
+    <div id="right">
+        <div id="image">
             <img src="../img/office.jpg">
 
         </div>
-        <div class="phai" id="amenity">
+        <div id="amenity">
             <ul>
-                <li>v</li>
-                <li>s</li>
-                <li>g</li>
-                <li>f</li>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>5</li>
-                <li>y</li>
-                <li>e</li>
-                <li>a</li>
-                <li>h</li>
+                <li>Telephone answering </li>
+                <li>Air-conditioning </li>
+                <li>Security system </li>
+                <li>Meeting rooms </li>
+                <li>IT support</li>
+                <li>Reception services </li>
+                <li>AV equipment </li>
+                <li>Videoconferencing</li>
+
             </ul>
         </div>
-        <div class="phai" id="intro">
-            <h1>The space
-                <hr/>
-            </h1>
+        <div id="intro">
+            <h1 class="detail">The space</h1>
             <p>This serviced office is located in a prestigious building, which contains office facilities, a shopping
                 mall
                 and restaurant district, and a luxurious condominium.</p>
@@ -81,12 +53,10 @@
                 Japanese
                 fluently, so a translation/interpretation service is also available at this facility.</p>
         </div>
-        <div class="location">
-            <h1>Location</h1>
+        <div id="location">
+            <h1 class="detail">Location</h1>
             <div id="map-canvas"></div>
         </div>
 
     </div>
 </div>
-</body>
-</html>

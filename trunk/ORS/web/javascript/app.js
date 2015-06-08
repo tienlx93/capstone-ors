@@ -13,19 +13,19 @@ app.config(['$routeProvider', '$httpProvider',
 
         $routeProvider.
             when('/home', {
-                templateUrl: 'html/home1.html',
+                templateUrl: 'html/home.html',
                 controller: ''
             }).
             when('/list', {
-                templateUrl: 'html/office-list.html',
+                templateUrl: 'html/officeList.html',
                 controller: ''
             }).
             when('/detail', {
-                templateUrl: 'html/detail1.html',
+                templateUrl: 'html/detail.html',
                 controller: 'DetailController'
             }).
             when('/request', {
-                templateUrl: 'html/request1.html',
+                templateUrl: 'html/request.html',
                 controller: 'RequestController'
             }).
             otherwise({

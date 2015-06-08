@@ -4,30 +4,30 @@ div.main {
     position: static;
 }
 
-div.trai {
+div.left {
     /*background-color: rgba(255, 0, 0, 0.42);*/
     width: 28%;
     float: left;
     padding: 1%;
 }
 
-div.trai #up {
-    background-color: skyblue;
+div.left #up {
+
     float: left;
     width: 100%;
     padding: 1%;
 
 }
 
-div.trai #mid {
-    background-color: rgba(255, 255, 0, 0.49);
+div.left #mid {
+
     float: left;
     width: 100%;
     padding-bottom: 1%;
 }
 
-div.trai #down {
-    background-color: pink;
+div.left #down {
+
     width: 100%;
     float: left;
     padding: 1%;
@@ -35,7 +35,7 @@ div.trai #down {
 
 }
 
-div.phai {
+div.right {
     width: 68%;
     height: auto;
     /*background-color: green;*/
@@ -43,38 +43,44 @@ div.phai {
     padding: 1%;
 }
 
-div.phai #image {
+div.right #image {
     width: 98%;
-    background-color: lightgray;
+
+    border-left: 1px solid;
     float: left;
     text-align: center;
     padding: 1%;
 }
 
-div.phai #amenity {
+div.right #amenity {
     width: 98%;
-    background-color: sandybrown;
+    background-color: #B5B5B5;
+    border-top: 1px solid;
+    border-left: 1px solid;
     float: left;
     padding: 1%;
     text-align: center;
 }
 
-div.phai #amenity li {
-    width: 20%;
+div.right #amenity li {
+    width: 25%;
     float: left;
     padding: 1%;
+    text-align: left;
 }
 
-div.phai #intro {
+div.right #intro {
     width: 98%;
-    background-color: lightgreen;
+    border-top: 1px solid;
+    border-left: 1px solid;
     float: left;
     padding: 1%;
 }
 
 div.location {
     width: 98%;
-    background-color: rgba(0, 0, 255, 0.38);
+    border-top: 1px solid;
+    border-left: 1px solid;
     float: left;
     padding: 1%;
 

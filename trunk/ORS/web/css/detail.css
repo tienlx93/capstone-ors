@@ -4,14 +4,14 @@ div.main {
     position: static;
 }
 
-div.left {
+#left {
     /*background-color: rgba(255, 0, 0, 0.42);*/
     width: 28%;
     float: left;
     padding: 1%;
 }
 
-div.left #up {
+#up {
 
     float: left;
     width: 100%;
@@ -19,14 +19,14 @@ div.left #up {
 
 }
 
-div.left #mid {
+#mid {
 
     float: left;
     width: 100%;
     padding-bottom: 1%;
 }
 
-div.left #down {
+#down {
 
     width: 100%;
     float: left;
@@ -35,7 +35,7 @@ div.left #down {
 
 }
 
-div.right {
+#right {
     width: 68%;
     height: auto;
     /*background-color: green;*/
@@ -43,7 +43,7 @@ div.right {
     padding: 1%;
 }
 
-div.right #image {
+#image {
     width: 98%;
 
     border-left: 1px solid;
@@ -52,7 +52,7 @@ div.right #image {
     padding: 1%;
 }
 
-div.right #amenity {
+#amenity {
     width: 98%;
     background-color: #B5B5B5;
     border-top: 1px solid;
@@ -62,14 +62,14 @@ div.right #amenity {
     text-align: center;
 }
 
-div.right #amenity li {
+#amenity li {
     width: 25%;
     float: left;
     padding: 1%;
     text-align: left;
 }
 
-div.right #intro {
+#intro {
     width: 98%;
     border-top: 1px solid;
     border-left: 1px solid;
@@ -77,7 +77,7 @@ div.right #intro {
     padding: 1%;
 }
 
-div.location {
+#location {
     width: 98%;
     border-top: 1px solid;
     border-left: 1px solid;
@@ -115,4 +115,9 @@ h2{
     padding-top: 90px;
     font-size: 52px;
     font-family: "trebuchet ms", sans-serif;
+}
+
+h1.detail {
+    padding-bottom: 15px;
+
 }

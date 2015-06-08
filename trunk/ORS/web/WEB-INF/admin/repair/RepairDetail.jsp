@@ -49,19 +49,19 @@
                         Thêm mới văn phòng
                     </div>--%>
                     <div>
-                        <form action="Repair?action=editing" method="post">
-                            <%--<div class="form-group">
+                        <form action="repair?action=editing" method="post">
+                            <div class="form-group" hidden>
                                 <label for="id">Id</label>
-                                &lt;%&ndash;<input type="text" name="name" class="" id="id" value="${office.name}">&ndash;%&gt;
+                                <%--<input type="text" name="name" class="" id="id" value="${office.name}">--%>
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
 
                             <div class="form-group">
                                 <label for="contractId">Hợp đồng</label>
-                                &lt;%&ndash;<input type="text" name="address" class="" id="contractId" value="${office.address}">&ndash;%&gt;
+                                <%--<input type="text" name="address" class="" id="contractId" value="${office.address}">--%>
                                 ${info.contractId}<input type="hidden" name="contractId" id="contractId"
                                                          value="${info.contractId}">
-                            </div>--%>
+                            </div>
                             <div class="form-group">
                                 <label for="assignedStaff">Nhân viên được giao</label>
                                 <%--<select name="category" class="" id="category">
@@ -75,7 +75,8 @@
                                     List<Account> listAcc = acc.findAll();%>
                                 <select name="assignedStaff" id="assignedStaff">
                                     <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                        <option value="${itemAcc.username}">${itemAcc.username}</option>
+                                        <option value="${itemAcc.username}"
+                                                <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -94,7 +95,9 @@
                                     List<RepairStatus> list = dao.findAll();%>
                                 <select name="repairStatusId" id="repairStatusId">
                                     <c:forEach var="item" items="<%= list %>">
-                                        <option value="${item.id}">${item.description}</option>
+                                        <option value="${item.id}"
+                                                <c:if test="${info.repairStatusId==item.id}">selected</c:if>
+                                                >${item.description}</option>
                                     </c:forEach>
                                 </select>
                             </div>

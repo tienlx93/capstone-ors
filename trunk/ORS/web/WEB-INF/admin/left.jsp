@@ -30,9 +30,14 @@
             Hợp đồng
             <span class="label label-default">19</span></a>
         </li>
-        <li><a href="${pageContext.request.contextPath}/admin/Repair">
+        <li><a href="${pageContext.request.contextPath}/admin/repair">
             <span class="icon color6"><i class="fa fa-wrench"></i></span>
             Sửa chữa
+            <span class="label label-default">19</span></a>
+        </li>
+        <li><a href="${pageContext.request.contextPath}/admin/rental">
+            <span class="icon color6"><i class="fa fa-wrench"></i></span>
+            Thuê thiết bị
             <span class="label label-default">19</span></a>
         </li>
     </ul>

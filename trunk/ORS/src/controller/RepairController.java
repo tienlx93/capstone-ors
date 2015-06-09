@@ -42,11 +42,11 @@ public class RepairController extends HttpServlet {
         RepairDAO dao = new RepairDAO();
         String action = request.getParameter("action");
         if (action == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/Repair.jsp");
             rd.forward(request, response);
         } else if (action.equals("edit")) {
             request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-            request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/admin/repair/RepairDetail.jsp").forward(request, response);
 
         }
     }

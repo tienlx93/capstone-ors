@@ -19,7 +19,6 @@ public class Account {
     private Profile profileByUsername;
     private Collection<Repair> repairsByUsername;
     private Collection<RequestOffice> requestOfficesByUsername;
-    private Collection<Office> officesByUsername;
     private int statusId;
     private AccountStatus accountStatusByStatusId;
     private Collection<Rental> rentalsByUsername;
@@ -150,15 +149,6 @@ public class Account {
 
     public void setRequestOfficesByUsername(Collection<RequestOffice> requestOfficesByUsername) {
         this.requestOfficesByUsername = requestOfficesByUsername;
-    }
-
-    @OneToMany(mappedBy = "accountByManagerAccount")
-    public Collection<Office> getOfficesByUsername() {
-        return officesByUsername;
-    }
-
-    public void setOfficesByUsername(Collection<Office> officesByUsername) {
-        this.officesByUsername = officesByUsername;
     }
 
     @Basic

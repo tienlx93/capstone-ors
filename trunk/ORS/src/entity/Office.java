@@ -10,7 +10,6 @@ import java.util.Collection;
 public class Office {
     private int id;
     private String name;
-    private String managerAccount;
     private int categoryId;
     private int statusId;
     private String description;
@@ -28,7 +27,6 @@ public class Office {
     private Integer parentOfficeId;
     private Collection<Appointment> appointmentsById;
     private Collection<Contract> contractsById;
-    private Account accountByManagerAccount;
     private Category categoryByCategoryId;
     private Office officeByParentOfficeId;
     private Collection<Office> officesById;
@@ -55,16 +53,6 @@ public class Office {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    @Basic
-    @Column(name = "ManagerAccount", nullable = false, insertable = true, updatable = true)
-    public String getManagerAccount() {
-        return managerAccount;
-    }
-
-    public void setManagerAccount(String managerAccount) {
-        this.managerAccount = managerAccount;
     }
 
     @Basic
@@ -231,8 +219,6 @@ public class Office {
         if (floorNumber != office.floorNumber) return false;
         if (Double.compare(office.area, area) != 0) return false;
         if (name != null ? !name.equals(office.name) : office.name != null) return false;
-        if (managerAccount != null ? !managerAccount.equals(office.managerAccount) : office.managerAccount != null)
-            return false;
         if (description != null ? !description.equals(office.description) : office.description != null) return false;
         if (price != null ? !price.equals(office.price) : office.price != null) return false;
         if (imageUrls != null ? !imageUrls.equals(office.imageUrls) : office.imageUrls != null) return false;
@@ -254,7 +240,6 @@ public class Office {
         long temp;
         result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (managerAccount != null ? managerAccount.hashCode() : 0);
         result = 31 * result + categoryId;
         result = 31 * result + statusId;
         result = 31 * result + (description != null ? description.hashCode() : 0);
@@ -290,16 +275,6 @@ public class Office {
 
     public void setContractsById(Collection<Contract> contractsById) {
         this.contractsById = contractsById;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "ManagerAccount", referencedColumnName = "Username", nullable = false, insertable = false, updatable = false)
-    public Account getAccountByManagerAccount() {
-        return accountByManagerAccount;
-    }
-
-    public void setAccountByManagerAccount(Account accountByManagerAccount) {
-        this.accountByManagerAccount = accountByManagerAccount;
     }
 
     @ManyToOne

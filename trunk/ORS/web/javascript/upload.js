@@ -1,15 +1,14 @@
-
-var removeImg = function(img){
+var removeImg = function (img) {
     var location = imageUrls.lastIndexOf(img);
     imageUrls = imageUrls.substring(0, location) + imageUrls.substring(location + img.length + 1);
     var list = imageUrls.split(",");
     $('#images').html("");
     for (var i = 0; i < list.length; i++) {
         var img = list[i];
-        if (img){
+        if (img) {
             $('#images').append('<div class="upload-img">' +
-            '<div class="img"><img src="'+img+'"></div>' +
-            '<div class="remove" onclick="removeImg(\''+img+'\')">' +
+            '<div class="img"><img src="' + img + '"></div>' +
+            '<div class="remove" onclick="removeImg(\'' + img + '\')">' +
             '<i class="fa fa-minus-circle"></i>Xóa' +
             '</div>' +
             '</div>');
@@ -18,11 +17,11 @@ var removeImg = function(img){
 };
 var imageUrls = "";
 $(document).ready(function () {
-
+    var time = new Date().getTime();
     $('input[type="file"]').ajaxfileupload({
         'action': '/upload',
         'params': {
-            'office': '1'
+            'office': time
         },
         'onComplete': function (response) {
 
@@ -31,8 +30,8 @@ $(document).ready(function () {
                 imageUrls += response + ",";
 
                 $('#images').append('<div class="upload-img">' +
-                '<div class="img"><img src="'+response+'"></div>' +
-                '<div class="remove" onclick="removeImg(\''+response+'\')">' +
+                '<div class="img"><img src="' + response + '"></div>' +
+                '<div class="remove" onclick="removeImg(\'' + response + '\')">' +
                 '<i class="fa fa-minus-circle"></i>Xóa' +
                 '</div>' +
                 '</div>');
@@ -47,4 +46,102 @@ $(document).ready(function () {
             $('#upload').show();
         }
     });
+
+
+});
+var amenityList = [];
+function deleteAmenity(amenity) {
+    for (var i = 0; i < amenityList.length; i++) {
+        if (amenityList[i] == amenity) {
+            amenityList.splice(i, 1);
+        }
+    }
+    $("#amenity-list").html("");
+    for (var i = 0; i < amenityList.length; i++) {
+        $("#amenity-list").append('<div>' + amenityList[i] + ' <span class="color10 fa fa-remove" onclick="deleteAmenity(\'' + amenityList[i] + '\')"></span></div>');
+    }
+    $("#amenityList").val(amenityList);
+}
+function addAmenity() {
+    var amenity = $("#amenity").val();
+    amenityList.push(amenity);
+    $("#amenity-list").append('<div>' + amenity + ' <span class="color10 fa fa-remove" onclick="deleteAmenity(\'' + amenity + '\')"></span></div>');
+    $("#amenity").val("");
+    $("#amenityList").val(amenityList);
+}
+
+$("#amenity").keyup(function (event) {
+    if (event.keyCode == 13) {
+        event.preventDefault();
+        addAmenity();
+    }
+});
+
+var exp = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
+
+$.ajax({url: "/api/amenity", success: function(result){
+    var data = new Bloodhound({
+        datumTokenizer: Bloodhound.tokenizers.whitespace,
+        queryTokenizer: Bloodhound.tokenizers.whitespace,
+        local: result
+    });
+    $('input.typeahead').typeahead({
+        hint: true,
+        highlight: true,
+        minLength: 1
+    }, {
+        name: 'amenity',
+        source: data,
+        limit: 5
+    });
+}});
+
+$("#area, #floor ").keydown(function (e) {
+    // Allow: backspace, delete, tab, escape, enter and .
+    if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+            // Allow: Ctrl+A
+        (e.keyCode == 65 && e.ctrlKey === true) ||
+            // Allow: Ctrl+C
+        (e.keyCode == 67 && e.ctrlKey === true) ||
+            // Allow: Ctrl+X
+        (e.keyCode == 88 && e.ctrlKey === true) ||
+            // Allow: home, end, left, right
+        (e.keyCode >= 35 && e.keyCode <= 39)) {
+        // let it happen, don't do anything
+        return;
+    }
+    // Ensure that it is a number and stop the keypress
+    if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+        e.preventDefault();
+    }
+});
+var dropdown = $("#priceTerm");
+dropdown.find("option[value=1]").show();
+dropdown.find("option[value=2]").hide();
+dropdown.find("option[value=3]").hide();
+dropdown.find("option[value=4]").show();
+$("#category").change(function(){
+    if ($("#category").val() == 1) {
+        dropdown[0].selectedIndex = 1;
+        dropdown.find("option[value=1]").show();
+        dropdown.find("option[value=2]").hide();
+        dropdown.find("option[value=3]").hide();
+        dropdown.find("option[value=4]").show();
+
+    } else {
+        dropdown[0].selectedIndex = 2;
+        dropdown.find("option[value=1]").hide();
+        dropdown.find("option[value=2]").show();
+        dropdown.find("option[value=3]").show();
+        dropdown.find("option[value=4]").show();
+    }
+});
+
+dropdown.change(function(){
+    if (dropdown[0].selectedIndex == 3) {
+        $("#price").val("");
+        $("#price")[0].disabled = true;
+    } else {
+        $("#price")[0].disabled = false;
+    }
 });

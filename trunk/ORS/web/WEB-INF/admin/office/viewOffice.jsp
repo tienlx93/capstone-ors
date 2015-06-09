@@ -47,7 +47,6 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Tên văn phòng</th>
                                     <th>Loại văn phòng</th>
                                     <th>Giá</th>
@@ -59,7 +58,6 @@
                                 <tbody>
                                 <c:forEach items="${data}" var="item">
                                     <tr>
-                                        <td>${item.id}</td>
                                         <td>${item.name}</td>
                                         <td>${item.categoryByCategoryId.description}</td>
                                         <td>${item.price}</td>

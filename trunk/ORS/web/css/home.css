@@ -31,6 +31,10 @@ body {
     font-family: fantasy;
 }
 
+.header-wrapper .logo-service img {
+    height: 30px;
+}
+
 .header-wrapper .request-office {
     padding: 10px 15px;
     background-color: #b5d334;

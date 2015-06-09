@@ -28,11 +28,16 @@
             <%--TODO: số lượng hợp đồng chưa xử lí--%>
             <span class="label label-default">1</span></a>
         </li>
-        <li><a href="${pageContext.request.contextPath}/admin/Repair">
+        <li><a href="${pageContext.request.contextPath}/admin/repair">
             <span class="icon color6"><i class="fa fa-wrench"></i></span>
             Sửa chữa
             <%--TODO: số lượng repair chưa xử lí--%>
             <span class="label label-default">3</span></a>
+        </li>
+        <li><a href="${pageContext.request.contextPath}/admin/rental">
+            <span class="icon color6"><i class="fa fa-wrench"></i></span>
+            Thuê thiết bị
+            <span class="label label-default">19</span></a>
         </li>
     </ul>
 

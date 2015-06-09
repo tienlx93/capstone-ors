@@ -1,4 +1,3 @@
-
 <link rel="stylesheet" type="text/css" href="../css/detail.css"/>
 <div class="container">
     <div id="left">
@@ -8,44 +7,52 @@
             </h1>
         </div>
         <div id="mid">
-            <p>{{officeDetail.title[0]}}<br/>
-                {{officeDetail.price}}<br/>
-                {{officeDetail.unit[0]}}<br/>
-                {{officeDetail.unit[1]}}<br/>
-                {{officeDetail.unit[2]}}<br/>
-                {{officeDetail.unit[3]}}
+            <h4 style="padding-bottom: 10px">Mẫu dịch vụ văn phòng</h4>
+            Giá: {{officeDetail.price}}<br/>
+            Đơn vị: {{officeDetail.priceTerm}}<br/>
+            Loại: {{officeDetail.category}}<br/>
+            Tầng: {{officeDetail.floorNumber}}<br/>
+            Diện tích: {{officeDetail.area}} m2<br/>
+            Địa chỉ: {{officeDetail.address}}<br/>
+            Tình trạng: {{officeDetail.status}}
             <hr class="line"/>
-            </p>
+
         </div>
         <div id="down">
             <!--<input type="button" value="Request"/>-->
-            <a href="#/request" class="btn btn-default">{{officeDetail.title[1]}}</a>
+            <a href="#/request" class="btn btn-default">Gửi yêu cầu</a>
         </div>
     </div>
     <div id="right">
-        <div id="image">
-            <img src="../img/office.jpg">
+        <div id="image" >
+            <!--<img src="../img/office.jpg">-->
+
+            <carousel interval="myInterval">
+                <slide ng-repeat="slide in slides" active="slide.active">
+                    <img ng-src="{{slide.image}}" style="margin:auto;">
+                    <div class="carousel-caption">
+                        <!--<h4>Slide {{$index}}</h4>
+                        <p>{{slide.text}}</p>-->
+                    </div>
+                </slide>
+            </carousel>
+
 
         </div>
         <div id="amenity">
             <ul>
-                <li>{{officeDetail.amenity[0]}}</li>
-                <li>{{officeDetail.amenity[1]}}</li>
-                <li>{{officeDetail.amenity[2]}}</li>
-                <li>{{officeDetail.amenity[3]}}</li>
-                <li>{{officeDetail.amenity[4]}}</li>
-                <li>{{officeDetail.amenity[5]}}</li>
-                <li>{{officeDetail.amenity[6]}}</li>
-                <li>{{officeDetail.amenity[7]}}</li>
+                <li ng-repeat="amenity in amenities">{{amenity.amenityName}}</li>
             </ul>
         </div>
-        <div id="intro">
-            <h1 class="detail">{{officeDetail.title[2]}}</h1>
-            <p>{{officeDetail.intro[0]}}</p>
-            <p>{{officeDetail.intro[1]}}</p>
+        <div id="description">
+            <h1 class="detail">Mô tả</h1>
+
+            <p>{{officeDetail.description}}</p>
+
         </div>
         <div id="location">
-            <h1 class="detail">{{officeDetail.title[3]}}</h1>
+            <h1 class="detail">Vị trí bản đồ</h1>
+
             <div id="map-canvas"></div>
         </div>
 

@@ -1,8 +1,9 @@
 package controller;
 
 import dao.ContractDAO;
-import dao.PriceTermDAO;
+import dao.PaymentTermDAO;
 import entity.Contract;
+import entity.PaymentTerm;
 import entity.PriceTerm;
 
 import javax.servlet.RequestDispatcher;
@@ -59,9 +60,9 @@ public class ContractController extends HttpServlet {
         } else if (action.equals("new")){
 
 
-            PriceTermDAO ptDao = new PriceTermDAO();
-            List<PriceTerm> priceTermList = ptDao.findAll();
-            request.setAttribute("priceTermList", priceTermList);
+            PaymentTermDAO ptDao = new PaymentTermDAO();
+            List<PaymentTerm> paymentTermList = ptDao.findAll();
+            request.setAttribute("paymentTermList", paymentTermList);
 
             rd = request.getRequestDispatcher("/WEB-INF/admin/contract/newContract.jsp");
             rd.forward(request, response);

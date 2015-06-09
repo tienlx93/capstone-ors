@@ -60,11 +60,11 @@
                 <input type="text" name="endDate" class="" id="endDate" value="${contract.endDate}">
               </div>
               <div class="form-group">
-                <label for="priceTerm">Đơn vị giá</label>
-                <select name="priceTerm" class="" id="priceTerm">
-                  <c:forEach var="item" items="${priceTermList}">
+                <label for="paymentTerm">Thời hạn thanh toán</label>
+                <select name="paymentTerm" class="" id="paymentTerm">
+                  <c:forEach var="item" items="${paymentTermList}">
                     <option value="${item.id}"
-                            <c:if test="${office.priceTerm==item.id}">selected</c:if> >
+                            <c:if test="${office.paymentTermList  ==item.id}">selected</c:if> >
                         ${item.description}</option>
                   </c:forEach>
                 </select>

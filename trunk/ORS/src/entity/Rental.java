@@ -17,6 +17,7 @@ public class Rental {
     private Contract contractByContractId;
     private RepairStatus repairStatusByStatusId;
     private Collection<RentalDetail> rentalDetailsById;
+    private RentalStatus rentalStatusByStatusId;
 
     @Id
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
@@ -131,5 +132,15 @@ public class Rental {
 
     public void setRentalDetailsById(Collection<RentalDetail> rentalDetailsById) {
         this.rentalDetailsById = rentalDetailsById;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "StatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public RentalStatus getRentalStatusByStatusId() {
+        return rentalStatusByStatusId;
+    }
+
+    public void setRentalStatusByStatusId(RentalStatus rentalStatusByStatusId) {
+        this.rentalStatusByStatusId = rentalStatusByStatusId;
     }
 }

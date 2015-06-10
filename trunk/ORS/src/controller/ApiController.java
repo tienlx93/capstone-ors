@@ -7,6 +7,7 @@ import entity.Account;
 import entity.Office;
 import json.AccountJSON;
 import json.OfficeJSON;
+import json.OfficeListDetail;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -50,6 +51,15 @@ public class ApiController extends HttpServlet {
             } else {
                 out.print(gson.toJson("Missing officeId"));
             }
+        } else if (action.equals("getAllOffice")) {
+            List<OfficeListDetail> officeList = new ArrayList<>();
+            OfficeDAO dao = new OfficeDAO();
+            for (Office office : dao.findAll()) {
+                officeList.add(new OfficeListDetail(office));
+            }
+
+            out.print(gson.toJson(officeList));
+
         }
 
         out.flush();

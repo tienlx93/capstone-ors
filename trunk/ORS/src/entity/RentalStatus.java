@@ -1,20 +1,20 @@
 package entity;
 
-import javax.persistence.*;
-import java.util.Collection;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
- * Created by ASUS on 6/1/2015.
+ * Created by ASUS on 6/10/2015.
  */
 @Entity
-public class RepairStatus {
+public class RentalStatus {
     private int id;
     private String name;
     private String description;
-    private Collection<Repair> repairsById;
 
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;
@@ -49,7 +49,7 @@ public class RepairStatus {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RepairStatus that = (RepairStatus) o;
+        RentalStatus that = (RentalStatus) o;
 
         if (id != that.id) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
@@ -65,14 +65,4 @@ public class RepairStatus {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
-
-    @OneToMany(mappedBy = "repairStatusByRepairStatusId")
-    public Collection<Repair> getRepairsById() {
-        return repairsById;
-    }
-
-    public void setRepairsById(Collection<Repair> repairsById) {
-        this.repairsById = repairsById;
-    }
-
 }

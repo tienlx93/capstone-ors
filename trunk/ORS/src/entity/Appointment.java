@@ -16,6 +16,8 @@ public class Appointment {
     private Account accountByCustomerUsername;
     private Account accountByAssignedStaff;
     private Office officeByOfficeId;
+    private int statusId;
+    private AppointmentStatus appointmentStatusByStatusId;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -124,5 +126,25 @@ public class Appointment {
 
     public void setOfficeByOfficeId(Office officeByOfficeId) {
         this.officeByOfficeId = officeByOfficeId;
+    }
+
+    @Basic
+    @Column(name = "StatusId", nullable = false, insertable = true, updatable = true)
+    public int getStatusId() {
+        return statusId;
+    }
+
+    public void setStatusId(int statusId) {
+        this.statusId = statusId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "StatusId", referencedColumnName = "Id", nullable = false, insertable = false, updatable = false)
+    public AppointmentStatus getAppointmentStatusByStatusId() {
+        return appointmentStatusByStatusId;
+    }
+
+    public void setAppointmentStatusByStatusId(AppointmentStatus appointmentStatusByStatusId) {
+        this.appointmentStatusByStatusId = appointmentStatusByStatusId;
     }
 }

@@ -47,10 +47,19 @@
       <column name="AssignedStaff" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
       <column name="OfficeId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Time" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
+      <column name="StatusId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <primary-key name="PK_Appointment" columns="Id"/>
       <foreign-key name="FK_Appointment_Account" columns="CustomerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Appointment_Account1" columns="AssignedStaff" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK_Appointment_AppointmentStatus" columns="StatusId" ref-table="AppointmentStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Appointment_Office" columns="OfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
+    </table>
+    <table name="AppointmentStatus" schema="dbo" catalog="ors" type="TABLE">
+      <column name="Id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Name" sqlType="nvarchar" precision="50" scale="0" nullable="false" jdbcType="-9"/>
+      <column name="Description" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
+      <primary-key name="PK_AppointmentStatus" columns="Id"/>
+      <exported-key name="FK_Appointment_AppointmentStatus" table="Appointment" schema="dbo" catalog="ors" columns="StatusId"/>
     </table>
     <table name="Category" schema="dbo" catalog="ors" type="TABLE">
       <column name="Id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -163,7 +172,7 @@
       <primary-key name="PK_Rental" columns="Id"/>
       <foreign-key name="FK_Rental_Account" columns="AssignStaff" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Rental_Contract" columns="ContractId" ref-table="Contract" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK_Rental_RepairStatus" columns="StatusId" ref-table="RepairStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK_Rental_RentalStatus" columns="StatusId" ref-table="RentalStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <exported-key name="FK_RentalDetail_Rental" table="RentalDetail" schema="dbo" catalog="ors" columns="RentalId"/>
     </table>
     <table name="RentalDetail" schema="dbo" catalog="ors" type="TABLE">
@@ -184,6 +193,13 @@
       <column name="Quantity" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PK_RentalItem" columns="Id"/>
       <exported-key name="FK_RentalDetail_RentalItem" table="RentalDetail" schema="dbo" catalog="ors" columns="RentalItemId"/>
+    </table>
+    <table name="RentalStatus" schema="dbo" catalog="ors" type="TABLE">
+      <column name="Id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Name" sqlType="nvarchar" precision="50" scale="0" nullable="false" jdbcType="-9"/>
+      <column name="Description" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
+      <primary-key name="PK_RentalStatus" columns="Id"/>
+      <exported-key name="FK_Rental_RentalStatus" table="Rental" schema="dbo" catalog="ors" columns="StatusId"/>
     </table>
     <table name="Repair" schema="dbo" catalog="ors" type="TABLE">
       <column name="Id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -210,7 +226,6 @@
       <column name="Name" sqlType="nvarchar" precision="50" scale="0" nullable="false" jdbcType="-9"/>
       <column name="Description" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
       <primary-key name="PK_RepairStatus" columns="Id"/>
-      <exported-key name="FK_Rental_RepairStatus" table="Rental" schema="dbo" catalog="ors" columns="StatusId"/>
       <exported-key name="FK_Repair_RepairStatus" table="Repair" schema="dbo" catalog="ors" columns="RepairStatusId"/>
     </table>
     <table name="RequestAmenity" schema="dbo" catalog="ors" type="TABLE">

@@ -47,20 +47,18 @@
             <table class="table">
               <thead>
               <tr>
-                <th>ID</th>
                 <th>Khách hàng</th>
                 <th>Văn phòng</th>
                 <th>Ngày bắt đầu</th>
                 <th>Ngày kết thúc</th>
                 <th>Giá</th>
-                <th>Đơn vị giá</th>
+                <th>Thời hạn thanh toán</th>
                 <th>Trạng thái</th>
               </tr>
               </thead>
               <tbody>
               <c:forEach items="${data}" var="item">
                 <tr>
-                  <td>${item.id}</td>
                   <td>${item.accountByCustomerUsername.username}</td>
                   <td>${item.officeByOfficeId.id}</td>
                   <td>${item.startDate}</td>

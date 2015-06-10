@@ -12,7 +12,7 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         super(Repair.class);
     }
 
-    public void update(Integer id, int contractId, String assignedStaff, String type, String description, int repairStatusId) {
+    public void update(Integer id, int contractId, String assignedStaff, String description, int repairStatusId) {
 
         Transaction trans = session.beginTransaction();
         try {

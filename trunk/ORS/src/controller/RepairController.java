@@ -31,7 +31,7 @@ public class RepairController extends HttpServlet {
             rp.setDescription(request.getParameter("description"));
             rp.setRepairStatusId(Integer.parseInt(request.getParameter("repairStatusId")));*/
             dao.update(Integer.parseInt(request.getParameter("id")),Integer.parseInt((request.getParameter("contractId"))),
-                    request.getParameter("assignedStaff"),request.getParameter("type"),request.getParameter("description"),
+                    request.getParameter("assignedStaff"),request.getParameter("description"),
                     Integer.parseInt(request.getParameter("repairStatusId")));
             response.sendRedirect("/admin/repair");
         }
@@ -42,11 +42,11 @@ public class RepairController extends HttpServlet {
         RepairDAO dao = new RepairDAO();
         String action = request.getParameter("action");
         if (action == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/Repair.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
             rd.forward(request, response);
         } else if (action.equals("edit")) {
             request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-            request.getRequestDispatcher("/WEB-INF/admin/repair/RepairDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
 
         }
     }

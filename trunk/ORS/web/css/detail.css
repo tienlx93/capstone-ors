@@ -45,7 +45,7 @@ div.main {
 
 #image {
     width: 98%;
-
+    height: 330px;
     border-left: 1px solid;
     float: left;
     text-align: center;
@@ -69,7 +69,7 @@ div.main {
     text-align: left;
 }
 
-#intro {
+#description {
     width: 98%;
     border-top: 1px solid;
     border-left: 1px solid;

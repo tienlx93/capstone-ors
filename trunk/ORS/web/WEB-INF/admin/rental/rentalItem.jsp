@@ -1,17 +1,16 @@
+<%@ page import="dao.RentalItemDAO" %>
+<%@ page import="entity.RentalItem" %>
 <%@ page import="java.util.List" %>
-<%@ page import="dao.RentalDAO" %>
-<%@ page import="entity.Rental" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Thành
-  Date: 08/06/2015
-  Time: 10:31 CH
+  Date: 10/06/2015
+  Time: 10:54 SA
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css"
           type="text/css">
@@ -34,7 +33,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="title">Quản lý yêu cầu thuê thiết bị của khách hàng</h1>
+        <h1 class="title">Quản lý thiết bị</h1>
     </div>
 
     <div class="container-padding">
@@ -42,29 +41,35 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Danh sách thuê thiết bị
+                        Danh sách thiết bị
                     </div>
-                    <% RentalDAO dao = new RentalDAO();
-                        List<Rental> list = dao.findAll();%>
+                    <div>
+                        <a class="btn" href="${pageContext.request.contextPath}/admin/rental?action=new">
+                            <span class="icon color5"><i class="fa fa-plus"></i></span>
+                            Thêm mới thiết bị
+                        </a>
+                    </div>
+                    <% RentalItemDAO dao = new RentalItemDAO();
+                        List<RentalItem> list = dao.findAll();%>
                     <div>
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Hợp đồng</th>
-                                <th>Nhân viên được giao</th>
+                                <th>Tên</th>
                                 <th>Mô tả</th>
-                                <th>Tình trạng</th>
+                                <th>Giá (VNĐ)</th>
+                                <th>Số lượng (cái)</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
                             <c:forEach var="item" items="<%= list %>">
                                 <tr>
-                                    <td>${item.contractId}</td>
-                                    <td>${item.assignStaff}</td>
+                                    <td>${item.name}</td>
                                     <td>${item.description}</td>
-                                    <td>${item.repairStatusByStatusId.description}</td>
-                                    <td><a href="rental?action=edit&id=${item.id}">Chỉnh sửa</a></td>
+                                    <td>${item.price}</td>
+                                    <td>${item.quantity}</td>
+                                    <td><a href="rentalItem?action=edit&id=${item.id}">Chỉnh sửa</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

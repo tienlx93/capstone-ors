@@ -1,6 +1,6 @@
 package controller;
 
-import dao.RentalDAO;
+import dao.RentalItemDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,30 +11,30 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Created by Thành on 08/06/2015.
+ * Created by Thành on 10/06/2015.
  */
-@WebServlet(name = "RentalController", urlPatterns = "/admin/rental")
-public class RentalController extends HttpServlet {
+@WebServlet(name = "RentalItemController", urlPatterns = "/admin/rentalItem")
+public class RentalItemController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        RentalDAO dao = new RentalDAO();
+        RentalItemDAO dao = new RentalItemDAO();
         if (action.equals("editing")) {
-            dao.update(Integer.parseInt(request.getParameter("id")),Integer.parseInt((request.getParameter("contractId"))),
-                    request.getParameter("assignStaff"),Integer.parseInt(request.getParameter("statusId")), request.getParameter("description"));
-            response.sendRedirect("/admin/rental");
+            dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("name"),
+                    request.getParameter("description"), request.getParameter("price"), request.getParameter("quantity"));
+            response.sendRedirect("/admin/rentalItem");
         }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RentalDAO dao = new RentalDAO();
+        RentalItemDAO dao = new RentalItemDAO();
         String action = request.getParameter("action");
         if (action == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/rental/rental.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/rental/rentalItem.jsp");
             rd.forward(request, response);
         } else if (action.equals("edit")) {
             request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-            request.getRequestDispatcher("/WEB-INF/admin/rental/rentalDetail.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/admin/rental/rentalItemDetail.jsp").forward(request, response);
 
         } else if (action.equals("new")) {
 

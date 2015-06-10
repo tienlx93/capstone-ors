@@ -39,6 +39,11 @@
             Thuê thiết bị
             <span class="label label-default">19</span></a>
         </li>
+        <li><a href="${pageContext.request.contextPath}/admin/rentalItem">
+            <span class="icon color6"><i class="fa fa-wrench"></i></span>
+            Quản lý thiết bị
+            <span class="label label-default">9</span></a>
+        </li>
     </ul>
 
 

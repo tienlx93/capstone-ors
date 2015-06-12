@@ -32,7 +32,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="title">Quản lý yêu cầu sửa chữa của khách hàng</h1>
+        <h1 class="title">Quản lý yêu cầu sửa chữa</h1>
     </div>
 
     <div class="container-padding">
@@ -48,7 +48,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th>Hợp đồng</th>
+                                <th>Tên văn phòng</th>
+                                <th>Khách hàng</th>
                                 <th>Nhân viên được giao</th>
                                 <th>Mô tả</th>
                                 <th>Tình trạng</th>
@@ -58,11 +59,12 @@
                             <tbody>
                             <c:forEach var="item" items="<%= list %>">
                                 <tr>
-                                    <td>${item.contractId}</td>
+                                    <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                    <td>${item.contractByContractId.customerUsername}</td>
                                     <td>${item.assignedStaff}</td>
                                     <td>${item.description}</td>
                                     <td>${item.repairStatusByRepairStatusId.description}</td>
-                                    <td><a href="repair?action=edit&id=${item.id}">Chỉnh sửa</a></td>
+                                    <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

@@ -37,7 +37,7 @@ public class RentalController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/rental/rentalDetail.jsp").forward(request, response);
 
         } else if (action.equals("new")) {
-
+            request.getRequestDispatcher("/WEB-INF/admin/rental/newRentalItem.jsp").forward(request, response);
         }
     }
 }

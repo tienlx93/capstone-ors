@@ -22,7 +22,7 @@
           type="text/css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
-    <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/header.less" type="text/css">
+    <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
@@ -37,14 +37,16 @@
 <jsp:include page="/WEB-INF/admin/left.jsp"/>
 <div class="content">
     <div class="page-header">
-        <h1 class="title">Chỉnh sửa yêu cầu</h1>
+        <h1 class="title">Quản lý yêu cầu thuê thiết bị</h1>
     </div>
 
     <div class="container-padding">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-
+                    <div class="panel-title">
+                        Xem chi tiết
+                    </div>
                     <div>
                         <form action="rental?action=editing" method="post">
                             <div class="form-group" hidden>
@@ -92,7 +94,7 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="list">Thông tin chi tiết</label>
+                                <label for="list">Thông tin thiết bị</label>
                                 <% RentalDetailDAO rdd = new RentalDetailDAO();
                                     List<RentalDetail> detailList = rdd.findAll();%>
                                 <div>
@@ -113,7 +115,7 @@
                                                 <td>${item.unitPrice} VNĐ</td>
                                                 <td>${item.quantity} (cái)</td>
                                                 <td>${item.unitPrice * item.quantity} VNĐ</td>
-                                                <%--<td><a href="repair?action=edit&id=${item.id}">Chỉnh sửa</a></td>--%>
+                                                    <%--<td><a href="repair?action=edit&id=${item.id}">Chỉnh sửa</a></td>--%>
                                             </tr>
                                         </c:forEach>
                                         </tbody>

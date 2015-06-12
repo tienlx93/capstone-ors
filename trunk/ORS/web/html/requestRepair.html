@@ -1,0 +1,40 @@
+<link rel="stylesheet" type="text/css" href="../css/requestrepair.css"/>
+<link rel="stylesheet" type="text/css" href="../lib/bootstrap-3.3.4-dist/css/bootstrap.css"/>
+<div class="container" id="descriptionRepair">
+    <h2 class="descriptionRepair">Yêu cầu sửa chữa</h2>
+
+    <div class="descriptionRepair">
+        <label class="labelleft">Tên office:</label>
+        <span class="spanleft">{{officeName}}</span>
+    </div>
+    <div hidden>{{assignedStaff}}
+    </div>
+    <div class="descriptionRepair" hidden>
+        <label class="labelleft">Sửa chữa:</label>
+        <span class="spanleft">
+            <select>
+                <option>Thiết bị thuê thêm</option>
+                <option>Tiện ích văn phòng</option>
+            </select>
+        </span>
+    </div>
+    <div class="descriptionRepair">
+        <label class="labelleft">Sửa chữa:</label>
+        <span class="spanleft">
+            <div class="checkbox" ng-repeat="amenity in amenities">
+                <label><input type="checkbox" >{{amenity.option}}</label>
+            </div>
+        </span>
+    </div>
+    <div class="descriptionRepair">
+        <label class="labelleft">Mô tả yêu cầu sửa chữa:</label>
+        <span class="spanleft"><textarea>{{description}}</textarea></span>
+    </div>
+    <div hidden>{{repairStatusId}}
+    </div>
+    <div class="descriptionRepair">
+        <a href="#/home" class="btn btn-default">Gửi yêu cầu</a>
+    </div>
+
+
+</div>

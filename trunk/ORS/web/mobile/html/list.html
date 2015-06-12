@@ -1,0 +1,27 @@
+<div ng-include="'html/header.html'"></div>
+<div class="content">
+    <div class="legend">
+        <div class="legend-icon fa fa-question-circle fa-3x" ng-click="showLegend = !showLegend"></div>
+    </div>
+    <div class="popup" ng-class="{'show' : showLegend}">
+        <div ng-repeat="item in legends" class="item">
+            <div class="color" ng-class="item.name"></div>
+            <div class="description">{{item.description}}</div>
+        </div>
+    </div>
+    <div ng-click="showLegend=false">
+        <div class="list-item" ng-click="goto(item.id)" ng-repeat="item in data track by $index">
+            <div class="title">
+                {{item.officeName}} - <span class="address">{{item.address}}</span>
+            </div>
+            <div class="detail">
+                {{item.detail}}
+            </div>
+            <div class="date">
+                {{item.date}}
+            </div>
+            <div class="status" ng-class="item.statusName"></div>
+        </div>
+    </div>
+
+</div>

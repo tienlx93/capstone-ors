@@ -1,0 +1,17 @@
+<div class="black">
+    <img class='logo' src='/img/logo-white.png' />
+    <form name="form" class='login clearfix' ng-submit="login(form)">
+
+        <p class='large'>Office Rental Service</p>
+
+        <input type='text' placeholder='Username' autofocus required ng-model="account.username"/>
+
+        <input type='password' placeholder='Password' required ng-model="account.password"/>
+
+        <div ng-show="error!=null" class="error">{{error}}</div>
+        <div style="text-align: center">
+            <button class='clearfix' ng-click='login(form)'>Đăng nhập</button>
+        </div>
+
+    </form>
+</div>

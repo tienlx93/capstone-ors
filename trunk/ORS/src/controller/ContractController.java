@@ -1,7 +1,9 @@
 package controller;
 
+import dao.AppointmentDAO;
 import dao.ContractDAO;
 import dao.PaymentTermDAO;
+import entity.Appointment;
 import entity.Contract;
 import entity.PaymentTerm;
 import entity.PriceTerm;
@@ -59,6 +61,8 @@ public class ContractController extends HttpServlet {
             rd.forward(request, response);
         } else if (action.equals("new")){
 
+            AppointmentDAO appointmentDao = new AppointmentDAO();
+            request.setAttribute("appointmentList", appointmentDao.get(Integer.parseInt(request.getParameter("id"))));
 
             PaymentTermDAO ptDao = new PaymentTermDAO();
             List<PaymentTerm> paymentTermList = ptDao.findAll();

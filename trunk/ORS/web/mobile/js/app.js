@@ -8,9 +8,10 @@ var app = angular.module("orsMobile", [
 
 var controllers = angular.module('controllers', []);
 
-app.config(['$routeProvider', '$httpProvider',
-    function ($routeProvider, $httpProvider) {
+app.config(['$routeProvider', '$httpProvider', '$compileProvider',
+    function ($routeProvider, $httpProvider, $compileProvider) {
         $httpProvider.defaults.withCredentials = true;
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|geo):/);
 
         $routeProvider.
             when('/login', {
@@ -27,7 +28,7 @@ app.config(['$routeProvider', '$httpProvider',
             }).
             when('/home/:function/:id', {
                 templateUrl: 'html/detail.html',
-                controller: ''
+                controller: 'DetailController'
             }).
             otherwise({
                 redirectTo: '/login'

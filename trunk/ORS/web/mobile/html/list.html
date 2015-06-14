@@ -10,7 +10,10 @@
         </div>
     </div>
     <div ng-click="showLegend=false">
-        <div class="list-item" ng-click="goto(item.id)" ng-repeat="item in data track by $index">
+        <div ng-if="data.length == 0" style="font-style: italic;">
+            {{title}} rỗng
+        </div>
+        <div class="list-item" ng-click="direction();goto(item.id)" ng-repeat="item in data track by $index">
             <div class="title">
                 {{item.officeName}} - <span class="address">{{item.address}}</span>
             </div>
@@ -18,7 +21,7 @@
                 {{item.detail}}
             </div>
             <div class="date">
-                {{item.date}}
+                {{item.date | toLocaleDate}}
             </div>
             <div class="status" ng-class="item.statusName"></div>
         </div>

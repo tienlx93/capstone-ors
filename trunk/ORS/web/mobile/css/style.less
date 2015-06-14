@@ -6,7 +6,6 @@
 
 * {
   margin: 0;
-  padding: 0;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
@@ -69,6 +68,7 @@ body {
 
 .screen {
   color: @black;
+  background: @background;
   .black {
     background: @black;
     color: @white;
@@ -172,6 +172,7 @@ label.small:hover {
 }
 
 .header {
+  z-index: 2;
   position: fixed;
   top: 0;
   width: 100%;
@@ -232,6 +233,7 @@ label.small:hover {
     padding: 20px 10px;
     border-radius: 5px;
     -webkit-box-shadow: 0 0 10px -1px @black;
+    box-shadow: 0 0 10px -1px @black;
     .title {
       margin-left: 15px;
       height: 55px;
@@ -288,7 +290,7 @@ label.small:hover {
 .Accepted, .WaitingConfirm {
   background-color: green;
 }
-.Cancel, .Rejected {
+.Canceled, .Rejected {
   background-color: darkgray;
 }
 .Done {
@@ -332,28 +334,116 @@ label.small:hover {
 .popup {
   position: fixed;
   right: 21px;
-  bottom: 60px;
-  width: 130px;
+  //right: -200px;
+  bottom: -260px;
   background-color: white;
   padding: 5px;
   border-radius: 5px;
   -webkit-box-shadow: 0 0 10px;
+  box-shadow: 0 0 10px;
   opacity: 0;
-  z-index: -1;
+  z-index: 1;
+  -webkit-transition: 0.25s linear;
+  transition: 0.25s linear;
   &.show {
+    -webkit-transform: translateY(-325px);
+    transform: translateY(-325x);
+    //right: 21px;
     opacity: 1;
-    z-index: 1;
+    //z-index: 1;
   }
-  .item {
-    padding: 3px;
-    .color {
-      width: 5px;
-      height: 20px;
-      display: inline-block;
-    }
-    .description {
-      line-height: 20px;
-      display: inline-block;
+
+}
+.item {
+  &.inline {
+    display: inline-block;
+  }
+  padding: 3px;
+  .color {
+    width: 5px;
+    height: 20px;
+    display: inline-block;
+  }
+  .description {
+    line-height: 20px;
+    display: inline-block;
+    font-weight: normal;
+  }
+}
+.item-detail {
+  div {
+    font-weight: bold;
+    padding: 8px 0 0 0;
+    span {
+      font-weight: normal;
     }
   }
+  li {
+    padding: auto;
+  }
+  button {
+    color: white;
+    border-radius: 4px;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+    margin: 5px;
+    padding: 5px;
+  }
+}
+
+.slide-left .ng-enter,
+.slide-left .ng-leave,
+.slide-right .ng-enter,
+.slide-right .ng-leave {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: inherit;
+  -webkit-transition: 0.25s linear;
+  transition: 0.25s linear;
+}
+
+.slide-left .ng-enter {
+  z-index: 101;
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+.slide-left .ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-left .ng-leave {
+  z-index: 100;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-left .ng-leave.ng-leave-active {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.slide-right .ng-enter {
+  z-index: 100;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.slide-right .ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-right .ng-leave {
+  z-index: 101;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-right .ng-leave.ng-leave-active {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
 }

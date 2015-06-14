@@ -23,73 +23,75 @@ app.factory("Api", ['$http',
                 })
         };
 
-        var appointmentList = [{
-            'id': 1,
-            'officeName': 'Văn phòng 1',
-            'address': 'Địa chỉ 1, đường Quang Trung, quận 12, TP Hồ Chí Minh',
-            'detail': 'Ông Nguyễn Văn A',
-            'date': '12/03/2015',
-            'status': 2
-        }, {
-            'id': 2,
-            'officeName': 'Văn phòng 2',
-            'address': 'Địa chỉ 1, đường Quang Trung, quận 12, TP Hồ Chí Minh',
-            'detail': 'Ông Nguyễn Văn A',
-            'date': '12/03/2015',
-            'status': 3
-        }, {
-            'id': 3,
-            'officeName': 'Văn phòng 3',
-            'address': 'Địa chỉ 1, đường Quang Trung, quận 12, TP Hồ Chí Minh',
-            'detail': 'Ông Nguyễn Văn A',
-            'date': '12/03/2015',
-            'status': 4
-        }, {
-            'id': 4,
-            'officeName': 'Văn phòng 4',
-            'address': 'Địa chỉ 1, đường Quang Trung, quận 12, TP Hồ Chí Minh',
-            'detail': 'Ông Nguyễn Văn A',
-            'date': '12/03/2015',
-            'status': 5
-        }, {
-            'id': 5,
-            'officeName': 'Văn phòng 5',
-            'address': 'Địa chỉ 1, đường Quang Trung, quận 12, TP Hồ Chí Minh',
-            'detail': 'Ông Nguyễn Văn A',
-            'date': '12/03/2015',
-            'status': 5
-        }];
+        services.getList = function (type, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'listMobile',
+                    'type': type
+                }
+            })
+                .success(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        if (type == 'appointment') {
+                            data[i].statusName = APPOINTMENT_STATUS[data[i].status - 1].name;
+                        } else {
+                            data[i].statusName = REPAIR_STATUS[data[i].status - 1].name;
+                        }
+                    }
 
-        var repairList = [{
-            'id': 1,
-            'officeName': 'Văn phòng 1',
-            'address': 'Địa chỉ 1, đường Quang Trung, quận 12, TP Hồ Chí Minh',
-            'detail': 'Sửa ống nước',
-            'date': '12/03/2015',
-            'status': 2
-        }];
-
-        var rentalList = [];
-
-        services.getAppointmentList = function (callback) {
-            for (var i = 0; i < appointmentList.length; i++) {
-                appointmentList[i].statusName = APPOINTMENT_STATUS[appointmentList[i].status - 1].name;
-            }
-            callback(appointmentList);
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
         };
 
-        services.getRepairList = function (callback) {
-            for (var i = 0; i < repairList.length; i++) {
-                repairList[i].statusName = REPAIR_STATUS[repairList[i].status - 1].name;
-            }
-            callback(repairList);
+
+        services.getDetail = function (type, id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'detailMobile',
+                    'type': type,
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    if (type == 'appointment') {
+                        data.statusClass = APPOINTMENT_STATUS[data.status - 1].name;
+                        data.statusName = APPOINTMENT_STATUS[data.status - 1].description;
+                    } else {
+                        data.statusClass = REPAIR_STATUS[data.status - 1].name;
+                        data.statusName = REPAIR_STATUS[data.status - 1].description;
+                    }
+
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
         };
 
-        services.getRentalList = function (callback) {
-            for (var i = 0; i < rentalList.length; i++) {
-                rentalList[i].statusName = REPAIR_STATUS[rentalList[i].status - 1].name;
-            }
-            callback(rentalList);
+        services.changeStatus = function (type, id, status, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'changeStatus',
+                    'type': type,
+                    'id': id,
+                    'status': status
+                }
+            })
+                .success(function () {
+                    callback("Success");
+                })
+                .error(function () {
+                    callback("Error");
+                })
         };
 
         return services;

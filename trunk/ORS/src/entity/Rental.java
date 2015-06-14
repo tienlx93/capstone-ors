@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -142,5 +143,27 @@ public class Rental {
 
     public void setRentalStatusByStatusId(RentalStatus rentalStatusByStatusId) {
         this.rentalStatusByStatusId = rentalStatusByStatusId;
+    }
+
+    private Timestamp createTime;
+
+    @Basic
+    @Column(name = "CreateTime", nullable = false, insertable = true, updatable = true)
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }    private Timestamp updateTime;
+
+    @Basic
+    @Column(name = "UpdateTime", nullable = true, insertable = true, updatable = true)
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 }

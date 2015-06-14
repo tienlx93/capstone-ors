@@ -3,14 +3,27 @@
  */
 var app = angular.module("orsMobile", [
     'ngRoute', 'ngAnimate',
-    'controllers'
+    'controllers', 'filters'
 ]);
 
 var controllers = angular.module('controllers', []);
 
-app.config(['$routeProvider', '$httpProvider',
-    function ($routeProvider, $httpProvider) {
+app.factory("timeoutService", function ($q, $timeout) {
+    return {
+        timeout: function () {
+            var deferred = $q.defer();
+            $timeout(function () {
+                deferred.resolve("done");
+            }, 250);
+            return deferred.promise;
+        }
+    }
+});
+
+app.config(['$routeProvider', '$httpProvider', '$compileProvider',
+    function ($routeProvider, $httpProvider, $compileProvider) {
         $httpProvider.defaults.withCredentials = true;
+        $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|ftp|mailto|geo):/);
 
         $routeProvider.
             when('/login', {
@@ -19,20 +32,46 @@ app.config(['$routeProvider', '$httpProvider',
             }).
             when('/home', {
                 templateUrl: 'html/home.html',
-                controller: 'HomeController'
+                controller: 'HomeController',
+                resolve: {
+                    timeout: function (timeoutService) {
+                        return timeoutService.timeout();
+                    }
+                }
             }).
             when('/home/:function', {
                 templateUrl: 'html/list.html',
-                controller: 'ListController'
+                controller: 'ListController',
+                resolve: {
+                    timeout: function (timeoutService) {
+                        return timeoutService.timeout();
+                    }
+                }
             }).
             when('/home/:function/:id', {
                 templateUrl: 'html/detail.html',
-                controller: ''
+                controller: 'DetailController',
+                resolve: {
+                    timeout: function (timeoutService) {
+                        return timeoutService.timeout();
+                    }
+                }
             }).
             otherwise({
                 redirectTo: '/login'
             });
     }]);
+
+angular.module('filters', []).filter('encode', function () {
+    return function (input) {
+        encodeURI(input);
+    };
+}).filter('toLocaleDate', function () {
+    return function (input) {
+        var date = new Date(input);
+        return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    };
+});
 
 var BACK_END_URL = "";
 var APPOINTMENT_STATUS = [{
@@ -77,14 +116,26 @@ var REPAIR_STATUS = [{
     'name': 'WaitingConfirm',
     'description': 'Chờ khách hàng xác nhận'
 }];
-
-controllers.controller('MainController', ['$scope', '$location',
-    function ($scope, $location) {
+var url = "";
+controllers.controller('MainController', ['$scope', '$location', '$rootScope',
+    function ($scope, $location, $rootScope) {
         $scope.back = function () {
             if ($location.path().lastIndexOf("home/") < 0) {
                 $location.replace();
             } else {
                 window.history.back();
             }
-        }
+        };
+        window.onhashchange = function () {
+            var newUrl = $location.path();
+            if (newUrl.length < url.length) {
+                $scope.$apply(function () {
+                    $rootScope.slide = 'slide-right';
+                });
+            }
+            url = newUrl;
+        };
+        $scope.direction = function () {
+            $rootScope.slide = 'slide-left';
+        };
     }]);

@@ -1,4 +1,44 @@
 <div ng-include="'html/header.html'"></div>
 <div class="content">
-
+    <div class="item-detail">
+        <div>Tên văn phòng: <span>{{data.officeName}}</span></div>
+        <div>Địa chỉ: <span>{{data.address}}</span></div>
+        <a href="geo:{{data.latitude}},{{data.longitude}}?q={{data.latitude}},{{data.longitude}}({{data.address | encode}})">Mở trên ứng dụng bản đồ</a> <br>
+        <!--<a href="" onclick='window.open("https://www.google.com/maps/place/Tr%C6%B0%E1%BB%9Dng+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+C%C3%B4ng+ngh%E1%BB%87+TP.HCM/@10.8023066,106.7149526,17z" , "_system");'>Mở trên ứng dụng bản đồ</a> <br>-->
+        <div>Khách hàng: <span>{{data.customerName}}</span></div>
+        <div ng-show="type!='lịch hẹn'">Chi tiết {{type}}: <span>{{data.description}}</span></div>
+        <div>Thời gian: <span>{{data.date | toLocaleDate}}</span></div>
+    </div>
+    <div ng-show="type!='lịch hẹn'" class="item-detail">
+        <div>Danh sách {{type}}:</div>
+        <ul>
+            <li ng-repeat="item in data.list">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+    <div class="item-detail" >
+        <div>Trạng thái:
+            <div class="item inline">
+                <div class="color" ng-class="data.statusClass"></div>
+                <div class="description">{{data.statusName}}</div>
+            </div>
+        </div>
+        <div ng-show="type=='lịch hẹn'" class="appointment">
+            <div ng-show="data.status==2">
+                <button class="Accepted" ng-click="change(3)">Khách hàng đồng ý ký hợp đồng</button>
+                <button class="Rejected" ng-click="change(5)">Khách hàng không đồng ý ký hợp đồng</button><br>
+            </div>
+        </div>
+        <div ng-show="type!='lịch hẹn'" class="repair">
+            <div ng-show="data.status==2">
+                <button class="WaitingConfirm" ng-click="change(5)">Đồng ý sửa chữa</button><br>
+                <button class="Requested" ng-click="change(1)">Không đồng ý sửa chữa</button>
+            </div>
+            <div ng-show="data.status==5">
+                <button class="Done" ng-click="change(3)">Khách hàng hài lòng</button><br>
+                <button class="Requested" ng-click="change(1)">Khách hàng không hài lòng</button>
+            </div>
+        </div>
+    </div>
 </div>

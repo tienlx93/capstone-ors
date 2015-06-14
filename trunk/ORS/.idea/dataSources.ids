@@ -48,6 +48,8 @@
       <column name="OfficeId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Time" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
       <column name="StatusId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="CreateTime" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
+      <column name="UpdateTime" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <primary-key name="PK_Appointment" columns="Id"/>
       <foreign-key name="FK_Appointment_Account" columns="CustomerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Appointment_Account1" columns="AssignedStaff" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
@@ -169,6 +171,8 @@
       <column name="AssignStaff" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
       <column name="StatusId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Description" sqlType="ntext" precision="1073741823" scale="0" nullable="true" jdbcType="-16"/>
+      <column name="CreateTime" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
+      <column name="UpdateTime" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <primary-key name="PK_Rental" columns="Id"/>
       <foreign-key name="FK_Rental_Account" columns="AssignStaff" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Rental_Contract" columns="ContractId" ref-table="Contract" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
@@ -207,6 +211,8 @@
       <column name="AssignedStaff" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
       <column name="Description" sqlType="ntext" precision="1073741823" scale="0" nullable="false" jdbcType="-16"/>
       <column name="RepairStatusId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="CreateTime" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
+      <column name="UpdateTime" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
       <primary-key name="PK_Repair" columns="Id"/>
       <foreign-key name="FK_Repair_Account" columns="AssignedStaff" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Repair_Contract" columns="ContractId" ref-table="Contract" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>

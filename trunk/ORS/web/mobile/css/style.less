@@ -233,6 +233,7 @@ label.small:hover {
     padding: 20px 10px;
     border-radius: 5px;
     -webkit-box-shadow: 0 0 10px -1px @black;
+    box-shadow: 0 0 10px -1px @black;
     .title {
       margin-left: 15px;
       height: 55px;
@@ -333,16 +334,23 @@ label.small:hover {
 .popup {
   position: fixed;
   right: 21px;
-  bottom: 60px;
+  //right: -200px;
+  bottom: -260px;
   background-color: white;
   padding: 5px;
   border-radius: 5px;
   -webkit-box-shadow: 0 0 10px;
+  box-shadow: 0 0 10px;
   opacity: 0;
-  z-index: -1;
+  z-index: 1;
+  -webkit-transition: 0.25s linear;
+  transition: 0.25s linear;
   &.show {
+    -webkit-transform: translateY(-325px);
+    transform: translateY(-325x);
+    //right: 21px;
     opacity: 1;
-    z-index: 1;
+    //z-index: 1;
   }
 
 }
@@ -365,6 +373,7 @@ label.small:hover {
 .item-detail {
   div {
     font-weight: bold;
+    padding: 8px 0 0 0;
     span {
       font-weight: normal;
     }
@@ -379,4 +388,62 @@ label.small:hover {
     margin: 5px;
     padding: 5px;
   }
+}
+
+.slide-left .ng-enter,
+.slide-left .ng-leave,
+.slide-right .ng-enter,
+.slide-right .ng-leave {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: inherit;
+  -webkit-transition: 0.25s linear;
+  transition: 0.25s linear;
+}
+
+.slide-left .ng-enter {
+  z-index: 101;
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
+}
+
+.slide-left .ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-left .ng-leave {
+  z-index: 100;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-left .ng-leave.ng-leave-active {
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.slide-right .ng-enter {
+  z-index: 100;
+  -webkit-transform: translateX(-100%);
+  transform: translateX(-100%);
+}
+
+.slide-right .ng-enter.ng-enter-active {
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-right .ng-leave {
+  z-index: 101;
+  -webkit-transform: translateX(0);
+  transform: translateX(0);
+}
+
+.slide-right .ng-leave.ng-leave-active {
+  -webkit-transform: translateX(100%);
+  transform: translateX(100%);
 }

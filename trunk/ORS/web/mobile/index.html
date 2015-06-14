@@ -26,8 +26,10 @@
 
 </head>
 <body>
-<div class='screen'>
-    <div ng-view></div>
+<div class='screen' ng-controller="MainController">
+    <div ng-class="slide">
+        <div ng-view></div>
+    </div>
 </div>
 </body>
 </html>

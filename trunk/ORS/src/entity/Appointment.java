@@ -18,6 +18,8 @@ public class Appointment {
     private Office officeByOfficeId;
     private int statusId;
     private AppointmentStatus appointmentStatusByStatusId;
+    private Timestamp createTime;
+    private Timestamp updateTime;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -146,5 +148,25 @@ public class Appointment {
 
     public void setAppointmentStatusByStatusId(AppointmentStatus appointmentStatusByStatusId) {
         this.appointmentStatusByStatusId = appointmentStatusByStatusId;
+    }
+
+    @Basic
+    @Column(name = "CreateTime", nullable = false, insertable = true, updatable = true)
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    @Basic
+    @Column(name = "UpdateTime", nullable = true, insertable = true, updatable = true)
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 }

@@ -31,4 +31,19 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         }
     }
 
+    public void updateDone(int id, int statusId) {
+
+        Transaction trans = session.beginTransaction();
+        try {
+            Appointment appointment = (Appointment)session.get(Appointment.class,id);
+            appointment.setStatusId(statusId);
+            session.update(appointment);
+            trans.commit();
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+    }
 }

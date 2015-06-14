@@ -13,7 +13,8 @@
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
           type="text/css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+          type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
@@ -22,6 +23,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -43,39 +46,41 @@
                     </div>
                     <div>
                         <form action="contract" method="post">
-                            <%--<div class="form-group">--%>
-                            <%--<label for="customerName">Tên khách hàng</label>--%>
-                            <%--<input type="text" name="customerName" class="" id="customerName" value="${contract.customerName}">--%>
-                            <%--</div>--%>
+                            <div class="form-group" hidden>
+                                <label for="appointmentID">Id</label>
+                                ${appointmentList.id}<input type="hidden" name="appointmentID" id="appointmentID" value="${appointmentList.id}">
+                            </div>
 
                             <div class="form-group">
                                 <label for="customerName">Khách hàng</label>
                                 ${appointmentList.accountByCustomerUsername.username}
-                                <input type="hidden" id="customerName"
+                                <input type="hidden" id="customerName" name="customerName"
                                        value="${appointmentList.accountByCustomerUsername.username}">
                             </div>
 
-                            <%--<div class="form-group">--%>
-                                <%--<label for="office">Văn phòng</label>--%>
-                                <%--<input type="text" name="office" class="" id="office" value="${contract.officeID}">--%>
-                            <%--</div>--%>
-
                             <div class="form-group">
-                                <label for="nameOfiice">Tên văn phòng</label>
+                                <label for="officeID">Tên văn phòng</label>
                                 ${appointmentList.officeByOfficeId.name}
-                                <input type="hidden" id="nameOfiice"
-                                       value="${appointmentList.officeByOfficeId.name}">
+                                <input type="hidden" id="officeID" name="officeID"
+                                       value="${appointmentList.officeByOfficeId.id}">
                             </div>
-
 
                             <div class="form-group">
                                 <label for="startDate">Ngày bắt đầu</label>
-                                <input type="text" name="startDate" class="" id="startDate"
-                                       value="${contract.startDate}">
+                                <input style="display: inline-block" type='text' class="form-control" name="startDate"
+                                       id="startDate"
+                                       value="${contract.startDate}"/>
                             </div>
+
+                            <%--<div class="form-group">--%>
+                            <%--<label for="endDate">Ngày kết thúc</label>--%>
+                            <%--<input type="text" name="endDate" class="" id="endDate" value="${contract.endDate}">--%>
+                            <%--</div>--%>
                             <div class="form-group">
                                 <label for="endDate">Ngày kết thúc</label>
-                                <input type="text" name="endDate" class="" id="endDate" value="${contract.endDate}">
+                                <input style="display: inline-block" type='text' class="form-control" name="endDate"
+                                       id="endDate"
+                                       value="${contract.endDate}"/>
                             </div>
 
                             <div class="form-group">
@@ -88,23 +93,54 @@
                                     </c:forEach>
                                 </select>
                             </div>
+
                             <div class="button-post">
                                 <button type="button" value="cancel" name="action">Hủy</button>
                                 <button type="submit" value="save" name="action">Tạo mới</button>
 
                             </div>
+
                         </form>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
-
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        var start = $('#startDate').datepicker({
+            format: 'yyyy-mm-dd',
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            if (ev.date.valueOf() > checkout.date.valueOf()) {
+                var newDate = new Date(ev.date);
+                newDate.setDate(newDate.getDate() + 1);
+                end.setValue(newDate);
+            }
+            start.hide();
+            $('#endDate')[0].focus();
+        }).data('datepicker');
+
+        var end = $('#endDate').datepicker({
+            format: 'yyyy-mm-dd',
+            onRender: function (date) {
+                return date.valueOf() <= start.date.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            end.hide();
+        }).data('datepicker');
+    });
+</script>
 
 </body>
 </html>

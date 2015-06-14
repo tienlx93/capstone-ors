@@ -29,12 +29,17 @@ public class ContractController extends HttpServlet {
             ContractDAO dao = new ContractDAO();
             Contract contract = new Contract();
 
+            AppointmentDAO appointmentDao = new AppointmentDAO();
+            String appointmentID = request.getParameter("appointmentID");
+
+            appointmentDao.updateDone(Integer.parseInt(appointmentID),4);
+
             String customerName = request.getParameter("customerName");
             String officeID = request.getParameter("officeID");
             String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
             String paymentTerm = request.getParameter("paymentTerm");
-            String paymentFee = request.getParameter("paymentFee");
+//            String paymentFee = request.getParameter("paymentFee");
 
 
             contract.setStatusId(1);
@@ -42,7 +47,7 @@ public class ContractController extends HttpServlet {
             contract.setOfficeId(Integer.parseInt(officeID));
             contract.setStartDate(java.sql.Date.valueOf(startDateStr));
             contract.setEndDate(java.sql.Date.valueOf(endDateStr));
-            contract.setPaymentFee(Integer.parseInt(paymentFee));
+//            contract.setPaymentFee(Integer.parseInt(paymentFee));
             contract.setPaymentTerm(Integer.parseInt(paymentTerm));
 
             dao.save(contract);

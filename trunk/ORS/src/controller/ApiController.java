@@ -3,9 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import dao.AccountDAO;
 import dao.OfficeDAO;
-import entity.Account;
 import entity.Office;
-import json.AccountJSON;
 import json.OfficeJSON;
 import json.OfficeListDetail;
 
@@ -60,6 +58,20 @@ public class ApiController extends HttpServlet {
 
             out.print(gson.toJson(officeList));
 
+        } else if (action.equals("login")) {
+            String username = request.getParameter("username");
+            String password = request.getParameter("password");
+            if (username != null && password != null) {
+
+                AccountDAO dao = new AccountDAO();
+                if (dao.isValid(username, password)) {
+                    out.print(gson.toJson("Success"));
+                } else {
+                    out.print(gson.toJson("Error"));
+                }
+            } else {
+                out.print(gson.toJson("Error"));
+            }
         }
 
         out.flush();

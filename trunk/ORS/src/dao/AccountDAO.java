@@ -34,4 +34,27 @@ public class AccountDAO  extends BaseDAO<Account, String> {
         }
         return null;
     }
+
+    public boolean isValid(String username, String password) {
+        try {
+            session.getTransaction().begin();
+            String sql = "from Account where username = ? and password = ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, username);
+            query.setString(1, password);
+            entity.Account account = (Account) query.uniqueResult();
+
+            if (account != null) {
+                return true;
+            }
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+
+        return false;
+    }
 }

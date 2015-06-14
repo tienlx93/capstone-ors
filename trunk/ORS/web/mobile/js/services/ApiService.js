@@ -87,8 +87,6 @@ app.factory("Api", ['$http',
                 }
             })
                 .success(function () {
-                    appointmentDetail.status = status;
-                    repairDetail.status = status;
                     callback("Success");
                 })
                 .error(function () {

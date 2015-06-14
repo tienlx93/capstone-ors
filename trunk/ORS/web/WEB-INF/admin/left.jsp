@@ -18,7 +18,7 @@
             <span class="icon color6"><i class="fa fa-building-o"></i></span>
             Văn phòng</a>
         </li>
-        <li><a href="${pageContext.request.contextPath}/admin/viewUser">
+        <li><a href="${pageContext.request.contextPath}/admin/user">
             <span class="icon color6"><i class="fa fa-user"></i></span>
             Người dùng</a>
         </li>

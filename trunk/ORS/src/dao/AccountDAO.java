@@ -29,12 +29,12 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return null;
     }
 
-    public Account login(String email, String password) { //TESTED OK
+    public Account login(String username, String password) { //TESTED OK
         try {
             session.getTransaction().begin();
-            String sql = "from Account where email = ? and password = ?";
+            String sql = "from Account where username = ? and password = ?";
             Query query = session.createQuery(sql);
-            query.setString(0, email);
+            query.setString(0, username);
             query.setString(1, password);
             entity.Account account = (Account) query.uniqueResult();
 

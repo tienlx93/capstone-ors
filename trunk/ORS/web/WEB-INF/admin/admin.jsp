@@ -40,10 +40,10 @@
     </head>
     <body>
         <div id="formContainer">
-            <form id="login" action="Controller" method="post" onsubmit="return validateForm()">
+            <form id="login" action="${pageContext.request.contextPath}/admin" method="post" onsubmit="return validateForm()">
                 <input type="text" name="txtUsername" id="loginEmail" value placeholder="UserName" />
                 <input type="password" name="txtPassword" id="loginPass" value placeholder="Password" />
-                <input type="submit" name="btAction" value="Login" />
+                <input type="submit" name="action" value="login" />
                 <input type="reset" name="123" value="Reset" />
             </form>
         </div>

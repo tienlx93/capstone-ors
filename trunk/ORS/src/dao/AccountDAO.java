@@ -17,12 +17,25 @@ public class AccountDAO extends BaseDAO<Account, String> {
         super(Account.class);
     }
 
-    public Account login(String email, String password) { //TESTED OK
+    public List<Account> getAccountList() {
+        try {
+            String sql = "from Account  where statusId != 3 ";
+            Query query = session.createQuery(sql);
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public Account login(String username, String password) { //TESTED OK
         try {
             session.getTransaction().begin();
-            String sql = "from Account where email = ? and password = ?";
+            String sql = "from Account where username = ? and password = ?";
             Query query = session.createQuery(sql);
-            query.setString(0, email);
+            query.setString(0, username);
             query.setString(1, password);
             entity.Account account = (Account) query.uniqueResult();
 
@@ -37,6 +50,42 @@ public class AccountDAO extends BaseDAO<Account, String> {
             return null;
         }
         return null;
+    }
+
+    public boolean update(String username, Account newAccount) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Account account = (Account) session.get(Account.class, username);
+            account.setPassword(newAccount.getPassword());
+            account.setEmail(newAccount.getEmail());
+            account.setStatusId(newAccount.getStatusId());
+            account.setRoleId(newAccount.getRoleId());
+
+            session.update(account);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
+    }
+
+    public boolean delete(String username) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Account account = (Account) session.get(Account.class, username);
+            account.setStatusId(3);
+            session.update(account);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
     }
 
     public boolean isValid(String username, String password) {
@@ -58,7 +107,6 @@ public class AccountDAO extends BaseDAO<Account, String> {
             e.printStackTrace();
             return false;
         }
-
         return false;
     }
 

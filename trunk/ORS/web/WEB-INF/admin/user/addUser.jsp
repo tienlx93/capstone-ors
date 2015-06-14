@@ -42,11 +42,35 @@
                         Thêm tài khoản mới
                     </div>
                     <div>
-                        <form action="new" method="post">
-                            Username <input type="text" name="username"> <br>
-                            Password <input type="password" name="password"> <br>
-                            Email <input type="email" name="email"> <br>
-                            <input type="submit" name="action" value="Save">
+                        <form action="${pageContext.request.contextPath}/admin/user" method="post">
+                            <div class="form-group">
+                                <label for="username">Tên tài khoản</label>
+                                <input type="text" name="username" class="" id="username">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="password">Mật khẩu</label>
+                                <input type="password" name="password" class="" id="password">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" name="email" class="" id="email">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="role">Chức vụ</label>
+                                <select name="role" class="" id="role">
+                                    <c:forEach var="item" items="${roleList}">
+                                        <option value="${item.id}">${item.roleName}</option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+
+                            <div class="button-post">
+                                <button type="button" value="cancel" name="action">Hủy</button>
+                                <button type="submit" value="save" name="action">Tạo mới</button>
+                            </div>
                         </form>
                     </div>
 
@@ -62,11 +86,6 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
 
-<form action="viewUser" method="post">
-  Username <input type="text" name="username"> <br>
-  Password <input type="password" name="password"> <br>
-  Email <input type="email" name="email"> <br>
-  <input type="submit" name="action" value="Save">
-</form>
+
 </body>
 </html>

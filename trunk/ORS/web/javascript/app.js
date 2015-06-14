@@ -32,6 +32,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/requestRepair.html',
                 controller: 'RequestRepairController'
             }).
+            when('/login', {
+                templateUrl: 'html/login.html',
+                controller: 'LoginController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });

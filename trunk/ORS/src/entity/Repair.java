@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -17,6 +18,8 @@ public class Repair {
     private Contract contractByContractId;
     private RepairStatus repairStatusByRepairStatusId;
     private Collection<RepairDetail> repairDetailsById;
+    private Timestamp createTime;
+    private Timestamp updateTime;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -133,5 +136,25 @@ public class Repair {
 
     public void setRepairDetailsById(Collection<RepairDetail> repairDetailsById) {
         this.repairDetailsById = repairDetailsById;
+    }
+
+    @Basic
+    @Column(name = "CreateTime", nullable = false, insertable = true, updatable = true)
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
+    @Basic
+    @Column(name = "UpdateTime", nullable = true, insertable = true, updatable = true)
+    public Timestamp getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Timestamp updateTime) {
+        this.updateTime = updateTime;
     }
 }

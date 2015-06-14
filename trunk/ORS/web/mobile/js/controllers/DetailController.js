@@ -3,49 +3,41 @@
  */
 controllers.controller('DetailController', ['$scope', '$location', '$routeParams', '$route', 'Api',
     function ($scope, $location, $routeParams, $route, Api) {
-        var func = $routeParams.function;
+        var type = $routeParams.function;
         var id = $routeParams.id;
         $scope.data = {};
+
+        //get data
+        Api.getDetail(type, id, function (data) {
+            if (data == "Error") {
+                $scope.error = true;
+            } else {
+                $scope.data = data;
+            }
+        });
+
         $scope.goto = function (item) {
             if (!$scope.showLegend) {
-                $location.path("/home/" + func + "/" + item);
+                $location.path("/home/" + type + "/" + item);
             }
         };
         //switch state
-        if (func == 'appointment') {
+        if (type == 'appointment') {
             $scope.type = "lịch hẹn";
-            Api.getAppointmentDetail(id, function (data) {
-                if (data == "Error") {
-                    $scope.error = true;
-                } else {
-                    $scope.data = data;
-                }
-            })
-
-        } else if (func == 'repair') {
+        } else if (type == 'repair') {
             $scope.type = "sửa chữa";
-            Api.getRepairDetail(id, function (data) {
-                if (data == "Error") {
-                    $scope.error = true;
-                } else {
-                    $scope.data = data;
-                }
-            })
-        } else if (func == 'rental') {
+        } else if (type == 'rental') {
             $scope.type = "thuê thiết bị";
-            Api.getRentalDetail(id, function (data) {
-                if (data == "Error") {
-                    $scope.error = true;
-                } else {
-                    $scope.data = data;
-                }
-            })
         }
         $scope.title = "Chi tiết " + $scope.type;
+        $scope.encodeURI = function(data) {
+            return encodeURI(data);
+        };
+
 
         //Change status
         $scope.change = function (status) {
-            Api.changeStatus(func, id, status, function() {
+            Api.changeStatus(type, id, status, function() {
                 $route.reload();
             });
         }

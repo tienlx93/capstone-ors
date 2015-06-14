@@ -28,7 +28,7 @@ public class AppointmentController extends HttpServlet {
                     Timestamp.valueOf(request.getParameter("time")),
                     Integer.parseInt(request.getParameter("appointmentStatusId"))
             );
-            response.sendRedirect("/admin/viewAppointment.jsp");
+            response.sendRedirect("/admin/appointment");
         }
     }
 

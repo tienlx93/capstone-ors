@@ -96,9 +96,7 @@
                            value="${info.time}">
                   </c:when>
                   <c:otherwise>
-                    <select name="time" id="time">
                         <textarea type="text" name="time" id="time">${info.time}</textarea>
-                    </select>
                   </c:otherwise>
                 </c:choose>
 

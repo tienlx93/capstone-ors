@@ -22,6 +22,10 @@
             <span class="icon color6"><i class="fa fa-user"></i></span>
             Người dùng</a>
         </li>
+        <li><a href="${pageContext.request.contextPath}/admin/appointment">
+            <span class="icon color6"><i class="fa fa fa-calendar"></i></span>
+            Lịch hẹn</a>
+        </li>
         <li><a href="${pageContext.request.contextPath}/admin/contract">
             <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
             Hợp đồng

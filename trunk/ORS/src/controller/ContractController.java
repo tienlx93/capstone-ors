@@ -1,7 +1,9 @@
 package controller;
 
+import dao.AppointmentDAO;
 import dao.ContractDAO;
 import dao.PaymentTermDAO;
+import entity.Appointment;
 import entity.Contract;
 import entity.PaymentTerm;
 import entity.PriceTerm;
@@ -27,12 +29,17 @@ public class ContractController extends HttpServlet {
             ContractDAO dao = new ContractDAO();
             Contract contract = new Contract();
 
+            AppointmentDAO appointmentDao = new AppointmentDAO();
+            String appointmentID = request.getParameter("appointmentID");
+
+            appointmentDao.updateDone(Integer.parseInt(appointmentID),4);
+
             String customerName = request.getParameter("customerName");
             String officeID = request.getParameter("officeID");
             String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
             String paymentTerm = request.getParameter("paymentTerm");
-            String paymentFee = request.getParameter("paymentFee");
+//            String paymentFee = request.getParameter("paymentFee");
 
 
             contract.setStatusId(1);
@@ -40,7 +47,7 @@ public class ContractController extends HttpServlet {
             contract.setOfficeId(Integer.parseInt(officeID));
             contract.setStartDate(java.sql.Date.valueOf(startDateStr));
             contract.setEndDate(java.sql.Date.valueOf(endDateStr));
-            contract.setPaymentFee(Integer.parseInt(paymentFee));
+//            contract.setPaymentFee(Integer.parseInt(paymentFee));
             contract.setPaymentTerm(Integer.parseInt(paymentTerm));
 
             dao.save(contract);
@@ -59,6 +66,8 @@ public class ContractController extends HttpServlet {
             rd.forward(request, response);
         } else if (action.equals("new")){
 
+            AppointmentDAO appointmentDao = new AppointmentDAO();
+            request.setAttribute("appointmentList", appointmentDao.get(Integer.parseInt(request.getParameter("id"))));
 
             PaymentTermDAO ptDao = new PaymentTermDAO();
             List<PaymentTerm> paymentTermList = ptDao.findAll();

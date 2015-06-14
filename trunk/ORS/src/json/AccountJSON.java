@@ -47,4 +47,6 @@ public class AccountJSON {
     public void setRoleId(int roleId) {
         this.roleId = roleId;
     }
+
+
 }

@@ -1,0 +1,33 @@
+<div ng-include="'html/header.html'"></div>
+<div class="content">
+    <div class="home-btn clearfix" ng-click="direction();goto('1')">
+        <div class="fa fa-calendar fa-3x flo-l">
+        </div>
+        <div class="flo-l title">
+            Danh sách lịch hẹn
+            <span class="flo-l badge" ng-show="badge[0]>0">{{badge[0]}}</span>
+        </div>
+        <div class="clr-b"></div>
+    </div>
+
+    <div class="home-btn clearfix" ng-click="direction();goto('2')">
+        <div class="fa fa-wrench fa-3x flo-l">
+        </div>
+        <div class="flo-l title">
+            Danh sách sửa chữa
+            <span class="flo-l badge" ng-show="badge[2]>0">{{badge[1]}}</span>
+        </div>
+        <div class="clr-b"></div>
+    </div>
+
+    <div class="home-btn clearfix" ng-click="direction();goto('3')">
+        <div class="fa fa-fax fa-3x flo-l">
+        </div>
+        <div class="flo-l title">
+            Danh sách thuê thiết bị
+            <span class="flo-l badge" ng-show="badge[3]>0">{{badge[2]}}</span>
+        </div>
+        <div class="clr-b"></div>
+    </div>
+
+</div>

@@ -14,7 +14,7 @@ import java.io.IOException;
 /**
  * Created by Th�nh on 01/06/2015.
  */
-@WebServlet(name = "RepairController", urlPatterns = "/admin/repair" )
+@WebServlet(name = "RepairController", urlPatterns = "/admin/repair")
 public class RepairController extends HttpServlet {
 
 
@@ -22,6 +22,7 @@ public class RepairController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         RepairDAO dao = new RepairDAO();
+
         if (action.equals("editing")) {
             /*Repair rp = new Repair();
             rp.setId(Integer.parseInt(request.getParameter("id")));
@@ -30,11 +31,14 @@ public class RepairController extends HttpServlet {
             rp.setType(request.getParameter("type"));
             rp.setDescription(request.getParameter("description"));
             rp.setRepairStatusId(Integer.parseInt(request.getParameter("repairStatusId")));*/
-            dao.update(Integer.parseInt(request.getParameter("id")),Integer.parseInt((request.getParameter("contractId"))),
-                    request.getParameter("assignedStaff"),request.getParameter("description"),
+            dao.update(Integer.parseInt(request.getParameter("id")), Integer.parseInt((request.getParameter("contractId"))),
+                    request.getParameter("assignedStaff"), request.getParameter("description"),
                     Integer.parseInt(request.getParameter("repairStatusId")));
+
             response.sendRedirect("/admin/repair");
+
         }
+
 
     }
 

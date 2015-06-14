@@ -34,7 +34,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="title">Quản lý yêu cầu thuê thiết bị của khách hàng</h1>
+        <h1 class="title">Quản lý yêu cầu thuê thiết bị</h1>
     </div>
 
     <div class="container-padding">
@@ -64,7 +64,7 @@
                                     <td>${item.assignStaff}</td>
                                     <td>${item.description}</td>
                                     <td>${item.repairStatusByStatusId.description}</td>
-                                    <td><a href="rental?action=edit&id=${item.id}">Chỉnh sửa</a></td>
+                                    <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a></td>
                                 </tr>
                             </c:forEach>
                             </tbody>

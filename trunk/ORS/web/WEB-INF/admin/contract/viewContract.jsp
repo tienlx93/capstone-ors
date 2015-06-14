@@ -37,12 +37,12 @@
           <div class="panel-title">
             Danh sách hợp đồng
           </div>
-          <div>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/contract?action=new">
-              <span class="icon color5"><i class="fa fa-plus"></i></span>
-              Tạo hợp đồng
-            </a>
-          </div>
+          <%--<div>--%>
+            <%--<a class="btn" href="${pageContext.request.contextPath}/admin/contract?action=new">--%>
+              <%--<span class="icon color5"><i class="fa fa-plus"></i></span>--%>
+              <%--Tạo hợp đồng--%>
+            <%--</a>--%>
+          <%--</div>--%>
           <div>
             <table class="table">
               <thead>

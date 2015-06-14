@@ -1,6 +1,7 @@
 package controller;
 
 import dao.RentalItemDAO;
+import entity.RentalItem;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,10 +19,28 @@ public class RentalItemController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        RentalItemDAO dao = new RentalItemDAO();
+
         if (action.equals("editing")) {
+            RentalItemDAO dao = new RentalItemDAO();
             dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("name"),
-                    request.getParameter("description"), request.getParameter("price"), request.getParameter("quantity"));
+                    request.getParameter("description"), Double.parseDouble(request.getParameter("price")),
+                    Integer.parseInt(request.getParameter("quantity")));
+            response.sendRedirect("/admin/rentalItem");
+        } else if (action.equals("save")) {
+            RentalItemDAO dao = new RentalItemDAO();
+            RentalItem rtItem = new RentalItem();
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            String price = request.getParameter("price");
+            String quantity = request.getParameter("quantity");
+
+            rtItem.setName(name);
+            rtItem.setDescription(description);
+            rtItem.setPrice(Double.parseDouble(price));
+            rtItem.setQuantity(Integer.parseInt(quantity));
+
+            dao.save(rtItem);
+
             response.sendRedirect("/admin/rentalItem");
         }
     }
@@ -37,7 +56,9 @@ public class RentalItemController extends HttpServlet {
             request.getRequestDispatcher("/WEB-INF/admin/rental/rentalItemDetail.jsp").forward(request, response);
 
         } else if (action.equals("new")) {
-
+            RentalItem rtItem = new RentalItem();
+            request.setAttribute("rentalItem", rtItem);
+            request.getRequestDispatcher("/WEB-INF/admin/rental/newRentalItem.jsp").forward(request, response);
         }
     }
 }

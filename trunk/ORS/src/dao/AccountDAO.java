@@ -51,6 +51,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return null;
     }
 
+<<<<<<< HEAD
     public boolean update(String username, Account newAccount) {
         Transaction trans = session.beginTransaction();
         try {
@@ -84,6 +85,28 @@ public class AccountDAO extends BaseDAO<Account, String> {
                 trans.rollback();
             }
         }
+=======
+    public boolean isValid(String username, String password) {
+        try {
+            session.getTransaction().begin();
+            String sql = "from Account where username = ? and password = ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, username);
+            query.setString(1, password);
+            entity.Account account = (Account) query.uniqueResult();
+
+            if (account != null) {
+                return true;
+            }
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return false;
+        }
+
+>>>>>>> b3dda7708fe47943b9420f032f6a53c65fca7637
         return false;
     }
 }

@@ -15,7 +15,7 @@
             <div class="office-title">Lê Thánh Tôn, Quận 1, Hồ Chí Minh</div>
         </div>
     </div>
-    <div class="right-request" id="info">
+    <div class="right-request" id="info" ng-show="!isLogin">
         <div class="info">
             <p>Nếu đã có tài khoản, mời bạn đăng nhập</p>
             <p>Nếu chưa có tài khoản, mời bạn nhập thông tin chính xác để chúng tôi có thể liên lạc với bạn</p>
@@ -31,17 +31,17 @@
                 </div>
                 <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" collapse="isCollapsed">
                     <div class="panel-body">
-                        <form>
+                        <form name="form" ng-submit="login(form)">
                             <div class="form-group">
                                 <label for="username">Tên đăng nhập</label>
-                                <input type="text" name="username" class="form-control" id="username" value="">
+                                <input type="text" name="username" class="form-control" id="username" ng-model="username">
                             </div>
                             <div class="form-group">
                                 <label for="password">Mật khẩu</label>
-                                <input type="password" name="password" class="form-control" id="password" value="">
+                                <input type="password" name="password" class="form-control" id="password" ng-model="password">
                             </div>
                             <div class="button-post">
-                                <button type="button" onclick="login()" class="btn btn-primary" value="save" name="action">Đăng nhập</button>
+                                <button type="button" ng-click="login(form)" class="btn btn-primary" value="save" name="action">Đăng nhập</button>
                                 <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
                             </div>
                         </form>
@@ -97,7 +97,7 @@
                             </div>
 
                             <div class="button-post">
-                                <button type="button" onclick="register()" class="btn btn-primary" value="save" name="action">Đăng nhập</button>
+                                <button type="button" ng-click="register()" class="btn btn-primary" value="save" name="action">Đăng nhập</button>
                                 <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
                             </div>
                         </form>
@@ -107,27 +107,27 @@
         </div>
 
     </div>
-    <div class="right-request" id="appointment" style="display: none">
+    <div class="right-request" id="appointment" ng-show="isLogin">
         <div class="info">
             <p>Điền thông tin lịch hẹn bạn muốn gặp gỡ chúng tôi tại văn phòng để biết thêm chi tiết về văn phòng hoặc
             tham khảo thêm về giá. </p>
             <p>Chọn Ngày và Thời gian phù hợp với bạn, chúng tôi sẽ sắp xếp và báo với bạn trong thời gian sớm nhất qua tin nhắn.</p>
         </div>
-        <div class="form-group">
-            <label>Thời gian</label>
-            <div class="clearfix">
-                <div class="col-lg-6">
-                    <input type="date" name="time" class="form-control" id="date" value="">
+        <form name="time">
+            <div class="form-group">
+                <label>Thời gian</label>
+                <div class="clearfix">
+                    <div class="col-lg-6">
+                        <input type="date" name="date" class="form-control" id="date" ng-model="date">
+                    </div>
                 </div>
-                <div class="col-lg-6">
-                    <input type="time" name="time" class="form-control" id="time" value="">
-                </div>
-            </div>
 
-        </div>
-        <div class="button-post">
-            <button type="submit" class="btn btn-primary" value="save" name="action">Đặt lịch hẹn</button>
-            <button type="reset" onclick="back()" class="btn" value="cancel" name="action">Hủy</button>
-        </div>
+            </div>
+            <div class="button-post">
+                <button type="submit" ng-click="request(time)" class="btn btn-primary" value="save" name="action">Đặt lịch hẹn</button>
+                <button type="reset" ng-click="back()" class="btn" value="cancel" name="action">Hủy</button>
+            </div>
+        </form>
+
     </div>
 </div>

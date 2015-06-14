@@ -29,7 +29,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return null;
     }
 
-    public Account login(String email, String password) { //TESTED OK
+    public Account loginByEmail(String email, String password) { //TESTED OK
         try {
             session.getTransaction().begin();
             String sql = "from Account where email = ? and password = ?";
@@ -87,7 +87,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return false;
     }
 
-    public boolean isValid(String username, String password) {
+    public Account login(String username, String password) {
         try {
             session.getTransaction().begin();
             String sql = "from Account where username = ? and password = ?";
@@ -97,15 +97,15 @@ public class AccountDAO extends BaseDAO<Account, String> {
             entity.Account account = (Account) query.uniqueResult();
 
             if (account != null) {
-                return true;
+                return account;
             }
         } catch (Exception e) {
             if (session.getTransaction().isActive()) {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
-            return false;
+            return null;
         }
-        return false;
+        return null;
     }
 }

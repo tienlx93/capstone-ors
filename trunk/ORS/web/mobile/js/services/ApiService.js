@@ -16,7 +16,7 @@ app.factory("Api", ['$http',
                 }
             })
                 .success(function (data) {
-                    callback("Success");
+                    callback(data);
                 })
                 .error(function () {
                     callback("Error");

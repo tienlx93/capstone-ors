@@ -39,6 +39,9 @@ public class ApiController extends HttpServlet {
             case "changeStatus":
                 changeStatus(request, out, username);
                 break;
+            case "login":
+                login(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -266,25 +269,22 @@ public class ApiController extends HttpServlet {
             out.print(gson.toJson("Error"));
         }
     }
+
+    private void login(HttpServletRequest request, PrintWriter out) {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (username != null && password != null) {
+
+            AccountDAO dao = new AccountDAO();
+            if (dao.isValid(username, password)) {
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Wrong"));
+            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
 }
 
-
-//login api
-        /*if (action.equals("login")) {
-            username = request.getParameter("username");
-            String password = request.getParameter("password");
-            if (username != null && password != null) {
-
-                AccountDAO dao = new AccountDAO();
-                if (dao.isValid(username, password)) {
-                    out.print(gson.toJson("Success"));
-                } else {
-                    out.print(gson.toJson("Error"));
-                }
-            } else {
-                out.print(gson.toJson("Error"));
-            }
-        }
-
-        out.flush();*/
 

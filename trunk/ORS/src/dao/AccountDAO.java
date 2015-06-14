@@ -1,12 +1,16 @@
 package dao;
 
 import entity.Account;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
+
+import java.util.List;
 
 /**
  * Created by ASUS on 5/28/2015.
  */
-public class AccountDAO  extends BaseDAO<Account, String> {
+public class AccountDAO extends BaseDAO<Account, String> {
 
     //Constructor
     public AccountDAO() {
@@ -56,5 +60,12 @@ public class AccountDAO  extends BaseDAO<Account, String> {
         }
 
         return false;
+    }
+
+    public List<Account> findStaff() {
+        Transaction tx = null;
+
+
+        return null;
     }
 }

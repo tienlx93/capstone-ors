@@ -3,16 +3,16 @@
 <div class="container" id="loginform">
     <div id="login">
         <!--<h1><img src="../img/logo-black.png"></h1>-->
-        <form method="post" action="#/list">
+        <form method="post" ng-submit="login(form)" action="api?action=login">
             <p>
                 <label>Tên tài khoản</br>
-                    <input type="text" size="20" name="username">
+                    <input type="text" size="20" required ng-model="username">
                 </label>
             </p>
 
             <p>
                 <label>Mật khẩu</br>
-                    <input type="password" size="20" name="password">
+                    <input type="password" size="20" required ng-model="password">
                 </label>
             </p>
 
@@ -23,7 +23,8 @@
                     <input type="checkbox" name="remember">Giữ trạng thái đăng nhập
                 </label>
             </div>
-            <input name="login" value="Log In" type="submit" class="submit">
+            <!--<input name="login" value="Log In" type="submit" class="submit">-->
+            <button ng-click='direction();login(form)'>Đăng nhập</button>
             </p>
 
         </form>

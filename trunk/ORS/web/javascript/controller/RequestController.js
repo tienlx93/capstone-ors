@@ -1,13 +1,21 @@
 
-controllers.controller('RequestController', ['$scope', 'Api',
-    function ($scope, Api) {
-        $scope.isLogin = false;
+controllers.controller('RequestController', ['$scope', '$rootScope', '$location', 'Api',
+    function ($scope, $rootScope, $location, Api) {
+        $rootScope.isLogin = false;
         $scope.login = function(form) {
             if (form.$valid) {
                 var username = $scope.username;
                 var password = $scope.password;
-                //
-                $scope.isLogin = true;
+                Api.login(username,password,function(data){
+                    if (data=="Success") {
+                        $scope.isLogin = true;
+                        $rootScope.username = username;
+                    } else if (data=="Error") {
+                        $scope.error="Có lỗi xảy ra. Xin thử lại";
+                    } else if (data=="Wrong") {
+                        $scope.error="Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại";
+                    }
+                });
 
             }
         };
@@ -18,10 +26,24 @@ controllers.controller('RequestController', ['$scope', 'Api',
             $scope.isLogin = false;
         };
 
-        $scope.request = function() {
-            var time = new Date($scope.date);
-            Api.requestAppointment(time, function() {
+        $scope.request = function(form) {
+            if (form.$valid) {
+                var time = new Date($scope.date);
+                if (!time) {
+                    $scope.error = "Mời nhập thời gian hẹn";
+                } else {
+                    time = time.getTime();
+                    Api.requestAppointment(time, 9, function(data) {
+                        if (data == "Success") {
+                            alert("Đặt lịch hẹn thành công");
+                            $location.path("/detail");
+                        } else {
+                            alert("Có lỗi xảy ra, xin thử lại");
+                        }
+                    });
+                }
+            }
 
-            });
+
         }
     }]);

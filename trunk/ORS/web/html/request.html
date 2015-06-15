@@ -1,7 +1,4 @@
-
-    <link rel="stylesheet" type="text/css" href="/css/request.css"/>
-
-    <script src="/javascript/request.js" type="application/javascript"></script>
+<link rel="stylesheet" type="text/css" href="/css/request.css"/>
 
 <div class="container">
     <div class="left-request">
@@ -18,30 +15,38 @@
     <div class="right-request" id="info" ng-show="!isLogin">
         <div class="info">
             <p>Nếu đã có tài khoản, mời bạn đăng nhập</p>
+
             <p>Nếu chưa có tài khoản, mời bạn nhập thông tin chính xác để chúng tôi có thể liên lạc với bạn</p>
         </div>
         <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingOne">
                     <h4 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed" aria-expanded="true" aria-controls="collapseOne">
+                        <a data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed"
+                           aria-expanded="true" aria-controls="collapseOne">
                             Đã có tài khoản
                         </a>
                     </h4>
                 </div>
-                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne" collapse="isCollapsed">
+                <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne"
+                     collapse="isCollapsed">
                     <div class="panel-body">
                         <form name="form" ng-submit="login(form)">
                             <div class="form-group">
                                 <label for="username">Tên đăng nhập</label>
-                                <input type="text" name="username" class="form-control" id="username" ng-model="username">
+                                <input type="text" name="username" class="form-control" id="username"
+                                       ng-model="username" required>
                             </div>
                             <div class="form-group">
                                 <label for="password">Mật khẩu</label>
-                                <input type="password" name="password" class="form-control" id="password" ng-model="password">
+                                <input type="password" name="password" class="form-control" id="password"
+                                       ng-model="password" required>
                             </div>
+                            <div class="error">{{error}}</div>
                             <div class="button-post">
-                                <button type="button" ng-click="login(form)" class="btn btn-primary" value="save" name="action">Đăng nhập</button>
+                                <button type="button" ng-click="login(form)" class="btn btn-primary">
+                                    Đăng nhập
+                                </button>
                                 <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
                             </div>
                         </form>
@@ -51,12 +56,14 @@
             <div class="panel panel-default">
                 <div class="panel-heading" role="tab" id="headingTwo">
                     <h4 class="panel-title">
-                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed" aria-expanded="false" aria-controls="collapseTwo">
+                        <a class="collapsed" data-toggle="collapse" data-parent="#accordion"
+                           ng-click="isCollapsed = !isCollapsed" aria-expanded="false" aria-controls="collapseTwo">
                             Chưa có tài khoản
                         </a>
                     </h4>
                 </div>
-                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo" collapse="!isCollapsed">
+                <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo"
+                     collapse="!isCollapsed">
                     <div class="panel-body">
                         <form>
                             <div class="form-group">
@@ -95,9 +102,10 @@
                                 <label for="password1">Mật khẩu (*)</label>
                                 <input type="password" name="password" class="form-control" id="password1" value="">
                             </div>
-
                             <div class="button-post">
-                                <button type="button" ng-click="register()" class="btn btn-primary" value="save" name="action">Đăng nhập</button>
+                                <button type="button" ng-click="register()" class="btn btn-primary" value="save"
+                                        name="action">Đăng nhập
+                                </button>
                                 <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
                             </div>
                         </form>
@@ -110,21 +118,27 @@
     <div class="right-request" id="appointment" ng-show="isLogin">
         <div class="info">
             <p>Điền thông tin lịch hẹn bạn muốn gặp gỡ chúng tôi tại văn phòng để biết thêm chi tiết về văn phòng hoặc
-            tham khảo thêm về giá. </p>
-            <p>Chọn Ngày và Thời gian phù hợp với bạn, chúng tôi sẽ sắp xếp và báo với bạn trong thời gian sớm nhất qua tin nhắn.</p>
+                tham khảo thêm về giá. </p>
+
+            <p>Chọn Ngày và Thời gian phù hợp với bạn, chúng tôi sẽ sắp xếp và báo với bạn trong thời gian sớm nhất qua
+                tin nhắn.</p>
         </div>
         <form name="time">
             <div class="form-group">
                 <label>Thời gian</label>
+
                 <div class="clearfix">
                     <div class="col-lg-6">
-                        <input type="date" name="date" class="form-control" id="date" ng-model="date">
+                        <input type="date" name="date" class="form-control" id="date" ng-model="date" required>
                     </div>
+                    <div class="error">{{error}}</div>
                 </div>
 
             </div>
             <div class="button-post">
-                <button type="submit" ng-click="request(time)" class="btn btn-primary" value="save" name="action">Đặt lịch hẹn</button>
+                <button type="submit" ng-click="request(time)" class="btn btn-primary" value="save" name="action">Đặt
+                    lịch hẹn
+                </button>
                 <button type="reset" ng-click="back()" class="btn" value="cancel" name="action">Hủy</button>
             </div>
         </form>

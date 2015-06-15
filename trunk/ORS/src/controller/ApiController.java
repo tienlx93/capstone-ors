@@ -300,11 +300,18 @@ public class ApiController extends HttpServlet {
         if (account != null) {
             Appointment appointment = new Appointment();
             appointment.setCreateTime(new Timestamp((new Date()).getTime()));
-            appointment.setTime(Timestamp.valueOf(time));
+            appointment.setTime(new Timestamp(Long.parseLong(time)));
             appointment.setOfficeId(Integer.parseInt(officeId));
+            appointment.setCustomerUsername(account.getUsername());
+            appointment.setStatusId(1);
 
             AppointmentDAO dao = new AppointmentDAO();
-            dao.save(appointment);
+            boolean result = dao.save(appointment);
+            if (result) {
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
         } else {
             out.print(gson.toJson("Error"));
         }

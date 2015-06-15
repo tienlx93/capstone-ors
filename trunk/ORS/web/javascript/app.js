@@ -40,3 +40,5 @@ app.config(['$routeProvider', '$httpProvider',
                 redirectTo: '/home'
             });
     }]);
+
+var BACK_END_URL = "";

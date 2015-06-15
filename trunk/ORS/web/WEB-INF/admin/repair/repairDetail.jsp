@@ -142,7 +142,10 @@
                                 <label for="repairStatusId">Tình trạng</label>
                                 <% RepairStatusDAO dao = new RepairStatusDAO();
                                     List<RepairStatus> list = dao.findAll();%>
-                                <c:choose>
+                                ${info.repairStatusByRepairStatusId.description}
+                                <input type="hidden" name="repairStatusId" id="repairStatusId"
+                                       value="${info.repairStatusId}">
+                                <%--<c:choose>
                                     <c:when test="${info.repairStatusId != 1}">
                                         ${info.repairStatusByRepairStatusId.description}
                                         <input type="hidden" name="repairStatusId" id="repairStatusId"
@@ -157,16 +160,25 @@
                                             </c:forEach>
                                         </select>
                                     </c:otherwise>
-                                </c:choose>
+                                </c:choose>--%>
                             </div>
 
                             <div class="button-post">
-                                <button type="submit" name="action">
-                                    <c:choose>
-                                        <c:when test="${info.repairStatusId != 1}">Quay về</c:when>
-                                        <c:otherwise>Lưu</c:otherwise>
-                                    </c:choose>
-                                </button>
+                                <c:choose>
+                                    <c:when test="${info.repairStatusId == 1}">
+                                        <button type="submit" value="assign" name="button">Giao việc</button>
+                                        <button type="submit" value="reject" name="button">Hủy</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a href="${pageContext.request.contextPath}/admin/repair"
+                                           class="btn btn-default">Quay về</a>
+                                    </c:otherwise>
+                                </c:choose>
+                                <%--<c:choose>
+                                    <c:when test="${info.repairStatusId != 1}">Quay về</c:when>
+                                    <c:otherwise>Lưu</c:otherwise>
+                                </c:choose>--%>
+
                             </div>
 
                             <%--<div class="button-post">

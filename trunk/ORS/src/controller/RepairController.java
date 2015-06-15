@@ -22,6 +22,7 @@ public class RepairController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         RepairDAO dao = new RepairDAO();
+        String button = request.getParameter("button");
 
         if (action.equals("editing")) {
             /*Repair rp = new Repair();
@@ -31,16 +32,20 @@ public class RepairController extends HttpServlet {
             rp.setType(request.getParameter("type"));
             rp.setDescription(request.getParameter("description"));
             rp.setRepairStatusId(Integer.parseInt(request.getParameter("repairStatusId")));*/
-            dao.update(Integer.parseInt(request.getParameter("id")), Integer.parseInt((request.getParameter("contractId"))),
-                    request.getParameter("assignedStaff"), request.getParameter("description"),
-                    Integer.parseInt(request.getParameter("repairStatusId")));
 
+            if (button.equals("reject")) {
+                dao.changeStatus(Integer.parseInt(request.getParameter("id")), 4);
+            } else if (button.equals("assign")) {
+
+                dao.update(Integer.parseInt(request.getParameter("id")), Integer.parseInt((request.getParameter("contractId"))),
+                        request.getParameter("assignedStaff"), request.getParameter("description"),2);
+            }
             response.sendRedirect("/admin/repair");
 
         }
 
-
     }
+
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RepairDAO dao = new RepairDAO();

@@ -5,6 +5,11 @@ app.factory("Api", ['$http',
     function ($http) {
         var services = {};
 
+        services.updateAccount = function() {
+
+        };
+        services.account = {};
+
         services.login = function (username, password, callback) {
             $http({
                 method: 'POST',

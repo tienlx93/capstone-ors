@@ -281,8 +281,8 @@ public class ApiController extends HttpServlet {
 
             AccountDAO dao = new AccountDAO();
             Account account = dao.login(username, password);
-            if (account != null) {
-                out.print(gson.toJson("Success"));
+            if (account != null && account.getRoleId() == 4) {
+                out.print(gson.toJson(account.getProfileByUsername().getFullName()));
                 session.setAttribute("account", account);
             } else {
                 out.print(gson.toJson("Wrong"));

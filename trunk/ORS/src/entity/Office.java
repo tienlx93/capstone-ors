@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -33,6 +34,7 @@ public class Office {
     private OfficeStatus officeStatusByStatusId;
     private PriceTerm priceTermByPriceTerm;
     private Collection<OfficeAmenity> officeAmenitiesById;
+    private Timestamp createDate;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -333,5 +335,15 @@ public class Office {
 
     public void setOfficeAmenitiesById(Collection<OfficeAmenity> officeAmenitiesById) {
         this.officeAmenitiesById = officeAmenitiesById;
+    }
+
+    @Basic
+    @Column(name = "CreateDate", nullable = false, insertable = true, updatable = true)
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
     }
 }

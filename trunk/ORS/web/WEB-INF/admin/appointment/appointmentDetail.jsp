@@ -77,7 +77,7 @@
                            value="${info.assignedStaff}">
                   </c:when>
                   <c:otherwise>
-                    <select name="assignedStaff" id="assignedStaff" required>
+                    <select name="assignedStaff" id="assignedStaff">
                       <c:forEach var="itemAcc" items="<%= listAcc %>">
                         <option value="">Chọn nhân viên</option>
                         <option value="${itemAcc.username}"

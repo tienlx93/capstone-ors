@@ -16,15 +16,15 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/home.html',
                 controller: ''
             }).
-            when('/list', {
+            when('/list/:query', {
                 templateUrl: 'html/officeList.html',
                 controller: ''
             }).
-            when('/detail', {
+            when('/detail/:id', {
                 templateUrl: 'html/detail.html',
                 controller: 'DetailController'
             }).
-            when('/request', {
+            when('/request/:id', {
                 templateUrl: 'html/request.html',
                 controller: 'RequestController'
             }).

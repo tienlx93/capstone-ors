@@ -21,13 +21,14 @@ public class AppointmentController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        String button = request.getParameter("button");
         AppointmentDAO dao = new AppointmentDAO();
         if (action.equals("editing")) {
-            dao.update(Integer.parseInt(request.getParameter("id")),
-                    request.getParameter("assignedStaff"),
-                    Timestamp.valueOf(request.getParameter("time")),
-                    Integer.parseInt(request.getParameter("appointmentStatusId"))
-            );
+            if(button.equals("assign")) {
+                dao.update(Integer.parseInt(request.getParameter("id")),request.getParameter("assignedStaff"),Timestamp.valueOf(request.getParameter("time")),2);
+            } else if (button.equals("reject")) {
+                dao.updateStatus(Integer.parseInt(request.getParameter("id")), 5);
+            }
             response.sendRedirect("/admin/appointment");
         }
     }

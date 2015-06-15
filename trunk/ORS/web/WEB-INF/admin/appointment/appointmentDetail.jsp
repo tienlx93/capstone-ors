@@ -69,7 +69,7 @@
               <div class="form-group">
                 <label for="assignedStaff">Nhân viên được giao</label>
                 <% AccountDAO acc = new AccountDAO();
-                  List<Account> listAcc = acc.findAll();%>
+                  List<Account> listAcc = acc.findStaff();%>
                 <c:choose>
                   <c:when test="${info.statusId != 1}">
                     ${info.assignedStaff}
@@ -77,8 +77,9 @@
                            value="${info.assignedStaff}">
                   </c:when>
                   <c:otherwise>
-                    <select name="assignedStaff" id="assignedStaff">
+                    <select name="assignedStaff" id="assignedStaff" required>
                       <c:forEach var="itemAcc" items="<%= listAcc %>">
+                        <option value="">Chọn nhân viên</option>
                         <option value="${itemAcc.username}"
                                 <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
                       </c:forEach>
@@ -104,31 +105,19 @@
 
               <div class="form-group">
                 <label for="appointmentStatusId">Tình trạng</label>
-                <% AppointmentStatusDAO dao = new AppointmentStatusDAO();
-                  List<AppointmentStatus> list = dao.findAll();%>
-                <c:choose>
-                  <c:when test="${info.statusId != 1}">
+                <%--<% AppointmentStatusDAO dao = new AppointmentStatusDAO();--%>
+                  <%--List<AppointmentStatus> list = dao.findAll();%>--%>
                     ${info.appointmentStatusByStatusId.description}
                     <input type="hidden" name="appointmentStatusId" id="appointmentStatusId"
                            value="${info.appointmentStatusByStatusId.name}">
-                  </c:when>
-                  <c:otherwise>
-                    <select name="appointmentStatusId" id="appointmentStatusId">
-                      <c:forEach var="item" items="<%= list %>">
-                        <option value="${item.id}"
-                                <c:if test="${info.statusId==item.id}">selected</c:if>
-                                >${item.description}</option>
-                      </c:forEach>
-                    </select>
-                  </c:otherwise>
-                </c:choose>
               </div>
 
               <div class="button-post">
 
                   <c:choose>
                     <c:when test="${info.statusId == 1}">
-                      <button type="submit" name="action">Lưu</button>
+                      <button type="submit" name="button" value="reject">Hủy lịch hẹn</button>
+                      <button type="submit" name="button" value="assign">Giao việc</button>
                     </c:when>
                     <c:when test="${info.statusId == 3}">
                       <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}" class="btn btn-default">Tạo hợp đồng</a>

@@ -32,7 +32,7 @@ public class ContractController extends HttpServlet {
             AppointmentDAO appointmentDao = new AppointmentDAO();
             String appointmentID = request.getParameter("appointmentID");
 
-            appointmentDao.updateDone(Integer.parseInt(appointmentID),4);
+            appointmentDao.updateStatus(Integer.parseInt(appointmentID),4);
 
             String customerName = request.getParameter("customerName");
             String officeID = request.getParameter("officeID");

@@ -49,7 +49,7 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         }
     }
 
-    public void updateDone(int id, int statusId) {
+    public void updateStatus(int id, int statusId) {
 
         Transaction trans = session.beginTransaction();
         try {

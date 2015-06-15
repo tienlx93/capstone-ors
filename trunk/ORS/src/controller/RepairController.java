@@ -1,6 +1,7 @@
 package controller;
 
 import dao.RepairDAO;
+import entity.Account;
 import entity.Repair;
 
 import javax.servlet.RequestDispatcher;
@@ -9,7 +10,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Th�nh on 01/06/2015.
@@ -25,20 +28,27 @@ public class RepairController extends HttpServlet {
         String button = request.getParameter("button");
 
         if (action.equals("editing")) {
-            /*Repair rp = new Repair();
-            rp.setId(Integer.parseInt(request.getParameter("id")));
-            rp.setContractId(Integer.parseInt((request.getParameter("contractId"))));
-            rp.setAssignedStaff(request.getParameter("assignedStaff"));
-            rp.setType(request.getParameter("type"));
-            rp.setDescription(request.getParameter("description"));
-            rp.setRepairStatusId(Integer.parseInt(request.getParameter("repairStatusId")));*/
 
-            if (button.equals("reject")) {
-                dao.changeStatus(Integer.parseInt(request.getParameter("id")), 4);
-            } else if (button.equals("assign")) {
-
-                dao.update(Integer.parseInt(request.getParameter("id")), Integer.parseInt((request.getParameter("contractId"))),
-                        request.getParameter("assignedStaff"), request.getParameter("description"),2);
+            int id = Integer.parseInt(request.getParameter("id"));
+            int contractId = Integer.parseInt(request.getParameter("contractId"));
+            String assignedStaff = request.getParameter("assignedStaff");
+            String description = request.getParameter("description");
+            switch (button) {
+                case "reject":
+                    dao.changeStatus(id, 4);
+                    break;
+                case "assign":
+                    dao.update(id, contractId, assignedStaff, description, 2);
+                    break;
+                case "change1":
+                    dao.changeStatus(id, 1);
+                    break;
+                case "change3":
+                    dao.changeStatus(id, 3);
+                    break;
+                case "change5":
+                    dao.changeStatus(id, 5);
+                    break;
             }
             response.sendRedirect("/admin/repair");
 
@@ -48,16 +58,31 @@ public class RepairController extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        RepairDAO dao = new RepairDAO();
-        String action = request.getParameter("action");
-        if (action == null) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
-            rd.forward(request, response);
-        } else if (action.equals("edit")) {
-            request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-            request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+        if (account != null && (account.getRoleId()==2 || account.getRoleId() == 3)) {
+            RepairDAO dao = new RepairDAO();
+            String action = request.getParameter("action");
+            if (action == null) {
+                RepairDAO repairDAO = new RepairDAO();
+                List<Repair> list;
+                if (account.getRoleId()==2) {
+                    list = repairDAO.findAll();
+                } else {
+                    list = repairDAO.getRepairListByStaff(account.getUsername());
+                }
+                request.setAttribute("list", list);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("edit")) {
+                request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
 
+            }
+        } else {
+            response.sendRedirect("/admin");
         }
+
     }
 
 }

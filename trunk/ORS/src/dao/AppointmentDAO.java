@@ -1,10 +1,12 @@
 package dao;
 
 import entity.Appointment;
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by xps on 6/11/2015.
@@ -63,5 +65,18 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
                 trans.rollback();
             }
         }
+    }
+
+    public List<Appointment> getAppointmentListByStaff(String username) {
+        try {
+            String sql = "from Appointment where assignedStaff = ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, username);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

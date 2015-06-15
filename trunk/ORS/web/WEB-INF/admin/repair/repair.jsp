@@ -42,26 +42,28 @@
                     <div class="panel-title">
                         Danh sách sửa chữa
                     </div>
-                    <% RepairDAO dao = new RepairDAO();
-                        List<Repair> list = dao.findAll();%>
                     <div>
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>Tên văn phòng</th>
                                 <th>Khách hàng</th>
-                                <th>Nhân viên được giao</th>
+                                <c:if test="${user.roleId == 2}">
+                                    <th>Nhân viên được giao</th>
+                                </c:if>
                                 <th>Mô tả</th>
                                 <th>Tình trạng</th>
                                 <th></th>
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach var="item" items="<%= list %>">
+                            <c:forEach var="item" items="${list}">
                                 <tr>
                                     <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                     <td>${item.contractByContractId.customerUsername}</td>
-                                    <td>${item.assignedStaff}</td>
+                                    <c:if test="${user.roleId == 2}">
+                                        <td>${item.assignedStaff}</td>
+                                    </c:if>
                                     <td>${item.description}</td>
                                     <td>${item.repairStatusByRepairStatusId.description}</td>
                                     <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a></td>

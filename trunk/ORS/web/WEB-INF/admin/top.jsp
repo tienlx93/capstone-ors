@@ -34,14 +34,12 @@
     <!-- Start Top Right -->
     <c:if test="${sessionScope.user!=null}">
         <ul class="top-right">
-                <%--<li class="link">
-                    <a href="#" class="notifications">6</a>
-                </li>--%>
-            <li class="link">
-                <a href="#">Chào mừng ${sessionScope.user.username}</a>
-            </li>
-            <li class="link">
-                <a href="#">Logout</a>
+            <li class="dropdown link">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox" aria-expanded="false"><b>${user.username}</b><span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
+                    <li><a href="#"><i class="fa falist fa-key"></i> Đổi mật khẩu</a></li>
+                    <li><a href="#"><i class="fa falist fa-power-off"></i> Đăng xuất</a></li>
+                </ul>
             </li>
         </ul>
     </c:if>

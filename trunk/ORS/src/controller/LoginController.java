@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,12 +25,23 @@ public class LoginController extends HttpServlet {
         if (action.equals("login")) {
             AccountDAO accDAO = new AccountDAO();
             Account acc = new Account();
+            String username = request.getParameter("txtUsername");
+            String password = request.getParameter("txtPassword");
 //            acc.setUsername(request.getParameter("username"));
 //            acc.setPassword(request.getParameter("password"));
-            acc = accDAO.login(request.getParameter("txtUsername"), request.getParameter("txtPassword"));
-            if (acc.getRoleId() == 1) {
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/viewUser.jsp");
+            acc = accDAO.login(username, password);
+            if (acc!=null && acc.getRoleId() != 4) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", acc);
+                response.sendRedirect("/admin/office");
+            } else {
+                request.setAttribute("username", username);
+                request.setAttribute("password", password);
+                request.setAttribute("error", "Thông tin đăng nhập không chính xác");
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/adminLogin.jsp");
+                rd.forward(request, response);
             }
+
         }
     }
 
@@ -38,7 +50,7 @@ public class LoginController extends HttpServlet {
         String action = request.getParameter("action");
         if (action == null) {
             //view list
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/admin.jsp");
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/adminLogin.jsp");
             rd.forward(request, response);
         }
 

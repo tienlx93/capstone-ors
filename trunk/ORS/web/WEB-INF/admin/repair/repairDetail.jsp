@@ -87,7 +87,7 @@
                             <div class="form-group">
                                 <label for="assignedStaff">Nhân viên được giao</label>
                                 <% AccountDAO acc = new AccountDAO();
-                                    List<Account> listAcc = acc.findAll();%>
+                                    List<Account> listAcc = acc.findStaff();%>
                                 <c:choose>
                                     <c:when test="${info.repairStatusId != 1}">
                                         ${info.assignedStaff}
@@ -96,10 +96,23 @@
                                     </c:when>
                                     <c:otherwise>
                                         <select name="assignedStaff" id="assignedStaff">
-                                            <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                                <option value="${itemAcc.username}"
-                                                        <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
-                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${info.repairStatusId == 1}">
+                                                    <option value="" selected></option>
+                                                    <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                        <option value="${itemAcc.username}">${itemAcc.username}</option>
+                                                    </c:forEach>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <option value=""></option>
+                                                    <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                        <option value="${itemAcc.username}"
+                                                                <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
+                                                    </c:forEach>
+                                                </c:otherwise>
+                                            </c:choose>
+
+
                                         </select>
                                     </c:otherwise>
                                 </c:choose>

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
@@ -15,10 +16,10 @@
     <!-- End App Logo -->
 
     <!-- Start Searchbox -->
-    <form class="searchform">
+    <%--<form class="searchform">
         <input type="text" class="searchbox" id="searchbox" placeholder="Search">
         <span class="searchbutton"><i class="fa fa-search"></i></span>
-    </form>
+    </form>--%>
     <!-- End Searchbox -->
 
     <!-- Start Top Menu -->
@@ -31,14 +32,18 @@
 
 
     <!-- Start Top Right -->
-    <ul class="top-right">
-        <li class="link">
-            <a href="#" class="notifications">6</a>
-        </li>
-        <li class="link">
-            <a href="#">Logout</a>
-        </li>
-    </ul>
+    <c:if test="${sessionScope.user!=null}">
+        <ul class="top-right">
+            <li class="dropdown link">
+                <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox" aria-expanded="false"><b>${user.username}</b><span class="caret"></span></a>
+                <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
+                    <li><a href="#"><i class="fa falist fa-key"></i> Đổi mật khẩu</a></li>
+                    <li><a href="#"><i class="fa falist fa-power-off"></i> Đăng xuất</a></li>
+                </ul>
+            </li>
+        </ul>
+    </c:if>
+
     <!-- End Top Right -->
 
 </div>

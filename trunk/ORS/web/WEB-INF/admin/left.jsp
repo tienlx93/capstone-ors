@@ -24,7 +24,9 @@
         </li>
         <li><a href="${pageContext.request.contextPath}/admin/appointment">
             <span class="icon color6"><i class="fa fa fa-calendar"></i></span>
-            Lịch hẹn</a>
+            Lịch hẹn
+            <%--TODO: số lượng lịch hẹn chưa xử lí--%>
+            <span class="label label-default">9</span></a>
         </li>
         <li><a href="${pageContext.request.contextPath}/admin/contract">
             <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
@@ -39,14 +41,13 @@
             <span class="label label-default">3</span></a>
         </li>
         <li><a href="${pageContext.request.contextPath}/admin/rental">
-            <span class="icon color6"><i class="fa fa-wrench"></i></span>
+            <span class="icon color6"><i class="fa fa-fax"></i></span>
             Thuê thiết bị
             <span class="label label-default">19</span></a>
         </li>
         <li><a href="${pageContext.request.contextPath}/admin/rentalItem">
-            <span class="icon color6"><i class="fa fa-wrench"></i></span>
-            Quản lý thiết bị
-            <span class="label label-default">9</span></a>
+            <span class="icon color6"><i class="fa fa-cubes"></i></span>
+            Quản lý thiết bị</a>
         </li>
     </ul>
 

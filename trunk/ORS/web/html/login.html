@@ -1,9 +1,8 @@
 <link rel="stylesheet" type="text/css" href="../css/login.css"/>
-<link rel="stylesheet" type="text/css" href="../lib/bootstrap-3.3.4-dist/css/bootstrap.css"/>
 <div class="container" id="loginform">
     <div id="login">
         <!--<h1><img src="../img/logo-black.png"></h1>-->
-        <form method="post" ng-submit="login(form)" action="api?action=login">
+        <form ng-submit="login(form)" name="form">
             <p>
                 <label>Tên tài khoản</br>
                     <input type="text" size="20" required ng-model="username">
@@ -24,9 +23,9 @@
                 </label>
             </div>
             <!--<input name="login" value="Log In" type="submit" class="submit">-->
-            <button ng-click='direction();login(form)'>Đăng nhập</button>
+            <button ng-click='login(form)'>Đăng nhập</button>
             </p>
-
+            <div ng-show="error!=null" class="error">{{error}}</div>
         </form>
         <div class="other">
             <p>

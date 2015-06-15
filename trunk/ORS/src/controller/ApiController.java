@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,13 +43,15 @@ public class ApiController extends HttpServlet {
             case "login":
                 login(request, out);
                 break;
+            case "requestAppointment":
+                requestAppointment(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
 
 
     }
-
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -271,16 +274,37 @@ public class ApiController extends HttpServlet {
     }
 
     private void login(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (username != null && password != null) {
 
             AccountDAO dao = new AccountDAO();
-            if (dao.isValid(username, password)) {
+            Account account = dao.login(username, password);
+            if (account != null) {
                 out.print(gson.toJson("Success"));
+                session.setAttribute("account", account);
             } else {
                 out.print(gson.toJson("Wrong"));
             }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+    private void requestAppointment(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String time = request.getParameter("time");
+        String officeId = request.getParameter("officeId");
+        if (account != null) {
+            Appointment appointment = new Appointment();
+            appointment.setCreateTime(new Timestamp((new Date()).getTime()));
+            appointment.setTime(Timestamp.valueOf(time));
+            appointment.setOfficeId(Integer.parseInt(officeId));
+
+            AppointmentDAO dao = new AppointmentDAO();
+            dao.save(appointment);
         } else {
             out.print(gson.toJson("Error"));
         }

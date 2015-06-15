@@ -111,8 +111,13 @@ public class AccountDAO extends BaseDAO<Account, String> {
     }
 
     public List<Account> findStaff() {
-        Transaction tx = null;
-
+        try {
+            String sql = "from Account  where roleId = 3 ";
+            Query query = session.createQuery(sql);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return null;
     }

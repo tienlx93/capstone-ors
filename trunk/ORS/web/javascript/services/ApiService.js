@@ -85,7 +85,24 @@ app.factory("Api", ['$http',
                 method: 'GET',
                 url: BACK_END_URL + '/api',
                 params: {
-                    'action': 'getNewOffice',
+                    'action': 'getNewOffice'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
+        services.getContractById = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getContractById',
+                    'id': id
                 }
             })
                 .success(function (data) {

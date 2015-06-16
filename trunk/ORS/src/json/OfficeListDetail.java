@@ -47,7 +47,7 @@ public class OfficeListDetail {
         StringTokenizer tokenizer = new StringTokenizer(office.getImageUrls(), ",");
         while (tokenizer.hasMoreElements()) {
             String img = (String) tokenizer.nextElement();
-            if (img != null && img != "") {
+            if (img != null && !img.equals("")) {
                 images.add(img);
             }
         }

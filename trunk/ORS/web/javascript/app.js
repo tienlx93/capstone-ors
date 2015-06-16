@@ -36,9 +36,13 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/login.html',
                 controller: 'LoginController'
             }).
-            when('/contractList/:id', {
+            when('/contractList', {
                 templateUrl: 'html/contractList.html',
                 controller: 'ContractController'
+            }).
+            when('/contractList/:id', {
+                templateUrl: 'html/contractDetail.html',
+                controller: 'ContractDetailController'
             }).
             otherwise({
                 redirectTo: '/home'

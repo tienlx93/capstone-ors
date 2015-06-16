@@ -83,6 +83,9 @@ public class ApiController extends HttpServlet {
             case "searchOfficeByAddress":
                 searchOfficeByAddress(request, out);
                 break;
+            case "getNewOffice":
+                getNewOffice(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -115,6 +118,16 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(officeList));
     }
 
+    private void getNewOffice(HttpServletRequest request, PrintWriter out) {
+        List<OfficeListDetail> officeList = new ArrayList<>();
+        OfficeDAO dao = new OfficeDAO();
+        for (Office office : dao.getNewOffice()) {
+            officeList.add(new OfficeListDetail(office));
+        }
+
+        out.print(gson.toJson(officeList));
+    }
+    
     private void listMobile(HttpServletRequest request, PrintWriter out, String username) {
         String type = request.getParameter("type");
         List<MobileListJSON> list = new ArrayList<>();

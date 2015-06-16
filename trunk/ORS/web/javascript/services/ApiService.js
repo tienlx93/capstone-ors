@@ -44,7 +44,7 @@ app.factory("Api", ['$http',
                 .error(function () {
                     callback("Error");
                 })
-        }
+        };
 
         services.getContractList = function(contractId, callback) {
             $http({
@@ -70,6 +70,22 @@ app.factory("Api", ['$http',
                 params: {
                     'action': 'searchOfficeByAddress',
                     'address': address
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
+        services.getNewOffice = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getNewOffice',
                 }
             })
                 .success(function (data) {

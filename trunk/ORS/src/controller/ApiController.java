@@ -323,16 +323,14 @@ public class ApiController extends HttpServlet {
     private void getContractList(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        int contractId = Integer.parseInt(request.getParameter("contractId"));
-        if (account != null) {
-            List<ContractJSON> list = new ArrayList<>();
-            ContractDAO dao = new ContractDAO();
-            for (Contract contract : dao.findAll()) {
 
+        if (account != null) {
+            ContractDAO dao = new ContractDAO();
+            List<ContractJSON> list = new ArrayList<>();
+            for (Contract contract : dao.getContractListByCus(account.getUsername())) {
                 Office office = contract.getOfficeByOfficeId();
                 PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
-
-                list.add(new ContractJSON(contractId, office.getId(), office.getName(),
+                list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
                         contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription()));
             }
             out.print(gson.toJson(list));

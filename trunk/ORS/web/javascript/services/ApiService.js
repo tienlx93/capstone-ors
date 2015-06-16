@@ -51,7 +51,7 @@ app.factory("Api", ['$http',
                 method: 'POST',
                 url: BACK_END_URL + '/api',
                 params: {
-                    'action': 'contractList',
+                    'action': 'getContractList',
                     'contractId': contractId
                 }
             })

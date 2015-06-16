@@ -14,7 +14,7 @@ app.config(['$routeProvider', '$httpProvider',
         $routeProvider.
             when('/home', {
                 templateUrl: 'html/home.html',
-                controller: ''
+                controller: 'HomeController'
             }).
             when('/list/:query', {
                 templateUrl: 'html/officeList.html',

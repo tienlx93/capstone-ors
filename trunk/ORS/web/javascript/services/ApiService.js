@@ -45,5 +45,22 @@ app.factory("Api", ['$http',
                     callback("Error");
                 })
         };
+
+        services.searchOfficeByAddress = function(address, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'searchOfficeByAddress',
+                    'address': address
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
         return services;
     }]);

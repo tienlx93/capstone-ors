@@ -77,6 +77,9 @@ public class ApiController extends HttpServlet {
             case "detailMobile":
                 detailMobile(request, out, username);
                 break;
+            case "searchOfficeByAddress":
+                searchOfficeByAddress(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -152,6 +155,29 @@ public class ApiController extends HttpServlet {
         }
         out.print(gson.toJson(list));
     }
+
+    private void searchOfficeByAddress(HttpServletRequest request,PrintWriter out) {
+        String address = request.getParameter("address");
+//        PriceTermDAO priceTerm = new PriceTermDAO();
+//        List<PriceTerm> listPrice = priceTerm.findAll();
+        AmenityDAO amenityDAO = new AmenityDAO();
+        List<Amenity> listAmenity = amenityDAO.findAll();
+
+        OfficeDAO dao = new OfficeDAO();
+        for (Office office : dao.getOfficeByAddress(address)) {
+            OfficeListDetail officeDetail = null;
+
+            officeDetail.setId(office.getId());
+            officeDetail.setName(office.getName());
+            officeDetail.setDescription(office.getDescription());
+            officeDetail.setPrice(office.getPrice());
+            officeDetail.setPriceTerm(office.getPriceTermByPriceTerm().getName());
+
+            List<String> list = new ArrayList<>();
+//            officeDetail.setAmenityList();
+        }
+
+    };
 
     private void detailMobile(HttpServletRequest request, PrintWriter out, String username) {
         String type = request.getParameter("type");

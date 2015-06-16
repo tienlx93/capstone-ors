@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -79,6 +80,13 @@ public class ApiController extends HttpServlet {
                 break;
             case "detailMobile":
                 detailMobile(request, out, username);
+                break;
+            case "getContractById":
+                try {
+                    getContractById(request, out);
+                } catch (ParseException e) {
+                    out.print(gson.toJson("Error"));
+                }
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -335,6 +343,19 @@ public class ApiController extends HttpServlet {
             }
             out.print(gson.toJson(list));
         }
+    }
+
+    private void getContractById(HttpServletRequest request, PrintWriter out) throws ParseException {
+        String contractId = request.getParameter("id");
+        int id = Integer.parseInt(contractId);
+        ContractDAO dao = new ContractDAO();
+        Contract contract = dao.get(id);
+        Office office = contract.getOfficeByOfficeId();
+        PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
+        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
+
+        out.print(gson.toJson(json));
     }
 }
 

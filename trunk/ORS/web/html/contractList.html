@@ -1,0 +1,29 @@
+
+<div class="container">
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>Tên văn phòng</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Giá</th>
+            <th>Thời hạn thanh toán</th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+            <tr ng-repeat="list in data.list">
+
+                <td>{{list.officeName}}</td>
+                <td>{{list.startDay}}</td>
+                <td>{{list.endDay}}</td>
+                <td>{{list.price}}</td>
+                <td>{{list.paymentTerm}}</td>
+
+            </tr>
+
+        </tbody>
+    </table>
+</div>

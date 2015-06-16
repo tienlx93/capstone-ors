@@ -68,6 +68,9 @@ public class ApiController extends HttpServlet {
             case "getOffice":
                 getOffice(request, out);
                 break;
+            case "getContractList":
+                getContractList(request, out);
+                break;
             case "getAllOffice":
                 getAllOffice(request, out);
                 break;
@@ -340,6 +343,23 @@ public class ApiController extends HttpServlet {
             }
         } else {
             out.print(gson.toJson("Error"));
+        }
+    }
+
+    private void getContractList(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            ContractDAO dao = new ContractDAO();
+            List<ContractJSON> list = new ArrayList<>();
+            for (Contract contract : dao.getContractListByCus(account.getUsername())) {
+                Office office = contract.getOfficeByOfficeId();
+                PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
+                list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
+                        contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription()));
+            }
+            out.print(gson.toJson(list));
         }
     }
 }

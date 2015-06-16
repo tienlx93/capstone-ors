@@ -44,6 +44,23 @@ app.factory("Api", ['$http',
                 .error(function () {
                     callback("Error");
                 })
+        }
+
+        services.getContractList = function(contractId, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'contractList',
+                    'contractId': contractId
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
         };
         return services;
     }]);

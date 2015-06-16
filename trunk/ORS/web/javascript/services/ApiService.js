@@ -5,7 +5,7 @@ app.factory("Api", ['$http',
     function ($http) {
         var services = {};
 
-        services.updateAccount = function() {
+        services.updateAccount = function () {
 
         };
         services.account = {};
@@ -28,7 +28,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.requestAppointment = function(time, officeId, callback) {
+        services.requestAppointment = function (time, officeId, callback) {
             $http({
                 method: 'POST',
                 url: BACK_END_URL + '/api',
@@ -46,13 +46,42 @@ app.factory("Api", ['$http',
                 })
         }
 
-        services.getContractList = function(contractId, callback) {
+        services.getContractList = function (contractId, callback) {
             $http({
                 method: 'POST',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'getContractList',
                     'contractId': contractId
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+        services.getOffice = function (officeId, name, description, priceTerm, floorNumber, area,
+                                       address, latitude, longitude, category, amenities, images, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getOffice',
+                    'OfficeId': officeId,
+                    'Name': name,
+                    'Description': description,
+                    'PriceTerm': priceTerm,
+                    'floorNumber': floorNumber,
+                    'area': area,
+                    'address': address,
+                    'latitude': latitude,
+                    'longitude': longitude,
+                    'category': category,
+                    'amenities': amenities,
+                    'images': images
+
                 }
             })
                 .success(function (data) {

@@ -48,5 +48,10 @@ app.config(['$routeProvider', '$httpProvider',
                 redirectTo: '/home'
             });
     }]);
-
+app.filter('toLocaleDate', function () {
+    return function (input) {
+        var date = new Date(input);
+        return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    };
+});
 var BACK_END_URL = "";

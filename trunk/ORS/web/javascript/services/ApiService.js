@@ -28,6 +28,22 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.checkLogin = function (callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'checkLogin'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.requestAppointment = function(time, officeId, callback) {
             $http({
                 method: 'POST',
@@ -46,13 +62,12 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getContractList = function(contractId, callback) {
+        services.getContractList = function(callback) {
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: BACK_END_URL + '/api',
                 params: {
-                    'action': 'getContractList',
-                    'contractId': contractId
+                    'action': 'getContractList'
                 }
             })
                 .success(function (data) {

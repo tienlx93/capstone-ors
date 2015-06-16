@@ -4,11 +4,10 @@
 
 controllers.controller('ContractController', ['$scope', '$location', '$routeParams', '$route', 'Api',
     function ($scope, $location, $routeParams, $route, Api) {
-        var id = $routeParams.id;
         $scope.data = {};
 
         //get data
-        Api.getContractList(id, function (data) {
+        Api.getContractList(function (data) {
             if (data == "Error") {
                 $scope.error = true;
             } else {

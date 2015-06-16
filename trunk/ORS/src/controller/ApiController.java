@@ -44,6 +44,9 @@ public class ApiController extends HttpServlet {
             case "login":
                 login(request, out);
                 break;
+            case "checkLogin":
+                checkLogin(request, out);
+                break;
             case "requestAppointment":
                 requestAppointment(request, out);
                 break;
@@ -337,6 +340,20 @@ public class ApiController extends HttpServlet {
             } else {
                 out.print(gson.toJson("Wrong"));
             }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+
+    private void checkLogin(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            String[] acc = new String[2];
+            acc[0] = account.getUsername();
+            acc[1] = account.getProfileByUsername().getFullName();
+            out.print(gson.toJson(acc));
         } else {
             out.print(gson.toJson("Error"));
         }

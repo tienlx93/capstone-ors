@@ -70,14 +70,13 @@ function addAmenity() {
     $("#amenityList").val(amenityList);
 }
 
-$("#amenity").keyup(function (event) {
+$("#amenity").on('keydown', function (event) {
     if (event.keyCode == 13) {
         event.preventDefault();
         addAmenity();
+        $("#amenity").val("");
     }
 });
-
-var exp = ['Audi', 'BMW', 'Bugatti', 'Ferrari', 'Ford', 'Lamborghini', 'Mercedes Benz', 'Porsche', 'Rolls-Royce', 'Volkswagen'];
 
 $.ajax({url: "/api/amenity", success: function(result){
     var data = new Bloodhound({

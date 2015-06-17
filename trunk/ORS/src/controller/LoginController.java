@@ -21,14 +21,11 @@ public class LoginController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
-        AccountDAO dao = new AccountDAO();
         if (action.equals("login")) {
             AccountDAO accDAO = new AccountDAO();
-            Account acc = new Account();
+            Account acc;
             String username = request.getParameter("txtUsername");
             String password = request.getParameter("txtPassword");
-//            acc.setUsername(request.getParameter("username"));
-//            acc.setPassword(request.getParameter("password"));
             acc = accDAO.login(username, password);
             if (acc!=null && acc.getRoleId() != 4) {
                 HttpSession session = request.getSession();
@@ -45,7 +42,6 @@ public class LoginController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        AccountDAO dao = new AccountDAO();
         String action = request.getParameter("action");
         if (action == null) {
             //view list

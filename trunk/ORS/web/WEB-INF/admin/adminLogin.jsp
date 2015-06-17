@@ -27,8 +27,8 @@
                 <input class="form-control" type="text" name="txtUsername" id="loginEmail" value="${username}" placeholder="Tài khoản" required >
                 <input class="form-control" type="password" name="txtPassword" id="loginPass" value="${password}" placeholder="Mật khẩu" required >
                 <div class="error">${error}</div>
-                <input type="submit" name="action" value="login">
-                <input type="reset" name="123" value="Reset">
+                <button type="submit" class="btn btn-primary" name="action" value="login">Đăng nhập</button>
+                <button type="reset" class="btn btn-default" name="123" value="Reset">Reset</button>
             </form>
         </div>
     </body>

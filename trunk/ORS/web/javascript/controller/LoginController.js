@@ -3,21 +3,28 @@
  */
 
 
-controllers.controller('LoginController', ['$scope', '$location', 'ApiController',
-    function ($scope, $location, ApiController) {
-        $scope.login = function(form) {
+controllers.controller('LoginController', ['$scope', '$location', 'Api',
+    function ($scope, $location, Api) {
+        $scope.login = function (form) {
+            console.log('1');
             if (form.$valid) {
                 var username = $scope.username;
                 var password = $scope.password;
+                console.log('2');
 
-                ApiController.login(username,password,function(data){
-                    if (data=="Success") {
-                        $location.path("#/officeList").replace();
-                    } else if (data=="Error") {
-                        $scope.error="Có lỗi xảy ra. Xin thử lại";
-                    } else if (data=="Wrong") {
-                        $scope.error="Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại";
+                Api.login(username, password, function (data) {
+                    if (data == "Error") {
+                        $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                    } else if (data == "Wrong") {
+                        $scope.error = "Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại";
+                    } else if (data) {
+                        Api.account.username = username;
+                        Api.account.fullName = data;
+                        Api.updateAccount();
+                        $location.path("#/home").replace();
                     }
+
+
                 });
             }
 

@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
@@ -18,36 +19,46 @@
             <span class="icon color6"><i class="fa fa-building-o"></i></span>
             Văn phòng</a>
         </li>
-        <li><a href="${pageContext.request.contextPath}/admin/user">
-            <span class="icon color6"><i class="fa fa-user"></i></span>
-            Người dùng</a>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/admin/appointment">
-            <span class="icon color6"><i class="fa fa fa-calendar"></i></span>
-            Lịch hẹn</a>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/admin/contract">
-            <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
-            Hợp đồng
-            <%--TODO: số lượng hợp đồng chưa xử lí--%>
-            <span class="label label-default">1</span></a>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/admin/repair">
-            <span class="icon color6"><i class="fa fa-wrench"></i></span>
-            Sửa chữa
-            <%--TODO: số lượng repair chưa xử lí--%>
-            <span class="label label-default">3</span></a>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/admin/rental">
-            <span class="icon color6"><i class="fa fa-wrench"></i></span>
-            Thuê thiết bị
-            <span class="label label-default">19</span></a>
-        </li>
-        <li><a href="${pageContext.request.contextPath}/admin/rentalItem">
-            <span class="icon color6"><i class="fa fa-wrench"></i></span>
-            Quản lý thiết bị
-            <span class="label label-default">9</span></a>
-        </li>
+        <c:if test="${user.roleId == 1}">
+            <li><a href="${pageContext.request.contextPath}/admin/user">
+                <span class="icon color6"><i class="fa fa-user"></i></span>
+                Người dùng</a>
+            </li>
+        </c:if>
+
+        <c:if test="${user.roleId != 1}">
+            <li><a href="${pageContext.request.contextPath}/admin/appointment">
+                <span class="icon color6"><i class="fa fa fa-calendar"></i></span>
+                Lịch hẹn
+                    <%--TODO: số lượng lịch hẹn chưa xử lí--%>
+                <span class="label label-default"></span></a>
+            </li>
+            <c:if test="${user.roleId != 3}">
+                <li><a href="${pageContext.request.contextPath}/admin/contract">
+                    <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
+                    Hợp đồng
+                        <%--TODO: số lượng hợp đồng chưa xử lí--%>
+                    <span class="label label-default"></span></a>
+                </li>
+            </c:if>
+            <li><a href="${pageContext.request.contextPath}/admin/repair">
+                <span class="icon color6"><i class="fa fa-wrench"></i></span>
+                Sửa chữa
+                    <%--TODO: số lượng repair chưa xử lí--%>
+                <span class="label label-default"></span></a>
+            </li>
+            <li><a href="${pageContext.request.contextPath}/admin/rental">
+                <span class="icon color6"><i class="fa fa-fax"></i></span>
+                Thuê thiết bị
+                    <%--TODO: số lượng thuê thiết bị chưa xử lí--%>
+                <span class="label label-default"></span></a>
+            </li>
+            <li><a href="${pageContext.request.contextPath}/admin/rentalItem">
+                <span class="icon color6"><i class="fa fa-cubes"></i></span>
+                Quản lý thiết bị</a>
+            </li>
+        </c:if>
+
     </ul>
 
 

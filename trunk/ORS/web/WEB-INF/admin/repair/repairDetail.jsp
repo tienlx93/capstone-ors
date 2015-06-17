@@ -69,118 +69,79 @@
                                 <input type="hidden" id="customerName"
                                        value="${info.contractByContractId.customerUsername}">
                             </div>
+                            <c:if test="${user.roleId==2}">
+                                <div class="form-group">
+                                    <label for="assignedStaff">Nhân viên được giao</label>
+                                    <% AccountDAO acc = new AccountDAO();
+                                        List<Account> listAcc = acc.findStaff();%>
+                                    <c:choose>
+                                        <c:when test="${info.repairStatusId != 1}">
+                                            ${info.assignedStaff}
+                                            <input type="hidden" name="assignedStaff" id="assignedStaff"
+                                                   value="${info.assignedStaff}">
+                                        </c:when>
+                                        <c:otherwise>
+                                            <select name="assignedStaff" id="assignedStaff">
+                                                <c:choose>
+                                                    <c:when test="${info.repairStatusId == 1}">
+                                                        <option value="" selected></option>
+                                                        <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                            <option value="${itemAcc.username}">${itemAcc.username}</option>
+                                                        </c:forEach>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <option value=""></option>
+                                                        <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                            <option value="${itemAcc.username}"
+                                                                    <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
+                                                        </c:forEach>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </select>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </div>
+                            </c:if>
 
-                            <%--<div class="form-group">
-                                <label for="assignedStaff">Nhân viên được giao</label>
-                                <% AccountDAO acc = new AccountDAO();
-                                    List<Account> listAcc = acc.findAll();%>
-                                <select name="assignedStaff" id="assignedStaff"
-                                        <c:if test="${info.repairStatusId != 1}"> disabled</c:if>
-                                        >
-                                    <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                        <option value="${itemAcc.username}"
-                                                <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>--%>
-
-                            <div class="form-group">
-                                <label for="assignedStaff">Nhân viên được giao</label>
-                                <% AccountDAO acc = new AccountDAO();
-                                    List<Account> listAcc = acc.findStaff();%>
-                                <c:choose>
-                                    <c:when test="${info.repairStatusId != 1}">
-                                        ${info.assignedStaff}
-                                        <input type="hidden" name="assignedStaff" id="assignedStaff"
-                                               value="${info.assignedStaff}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <select name="assignedStaff" id="assignedStaff">
-                                            <c:choose>
-                                                <c:when test="${info.repairStatusId == 1}">
-                                                    <option value="" selected></option>
-                                                    <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                                        <option value="${itemAcc.username}">${itemAcc.username}</option>
-                                                    </c:forEach>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <option value=""></option>
-                                                    <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                                        <option value="${itemAcc.username}"
-                                                                <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
-                                                    </c:forEach>
-                                                </c:otherwise>
-                                            </c:choose>
-
-
-                                        </select>
-                                    </c:otherwise>
-                                </c:choose>
-                            </div>
 
                             <div class="form-group">
                                 <label for="description">Mô tả</label>
                                 <textarea type="text" name="description" id="description">${info.description}</textarea>
                             </div>
 
-                            <%--<div class="form-group">
-                                <label for="repairStatusId">Tình trạng</label>
-                                <% RepairStatusDAO dao = new RepairStatusDAO();
-                                    List<RepairStatus> list = dao.findAll();%>
-                                <select name="repairStatusId" id="repairStatusId"
-                                        <c:if test="${info.repairStatusId != 1}"> disabled</c:if>
-                                        >
-                                    <c:forEach var="item" items="<%= list %>">
-                                        <option value="${item.id}"
-                                                <c:if test="${info.repairStatusId==item.id}">selected</c:if>
-                                                >${item.description}</option>
-                                    </c:forEach>
-                                </select>
-                            </div>--%>
-
                             <div class="form-group">
                                 <label for="repairStatusId">Tình trạng</label>
                                 <% RepairStatusDAO dao = new RepairStatusDAO();
                                     List<RepairStatus> list = dao.findAll();%>
-                                <c:choose>
-                                    <c:when test="${info.repairStatusId != 1}">
-                                        ${info.repairStatusByRepairStatusId.description}
-                                        <input type="hidden" name="repairStatusId" id="repairStatusId"
-                                               value="${info.repairStatusId}">
-                                    </c:when>
-                                    <c:otherwise>
-                                        <select name="repairStatusId" id="repairStatusId">
-                                            <c:forEach var="item" items="<%= list %>">
-                                                <option value="${item.id}"
-                                                        <c:if test="${info.repairStatusId==item.id}">selected</c:if>
-                                                        >${item.description}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </c:otherwise>
-                                </c:choose>
+                                ${info.repairStatusByRepairStatusId.description}
+                                <input type="hidden" name="repairStatusId" id="repairStatusId"
+                                       value="${info.repairStatusId}">
                             </div>
 
                             <div class="button-post">
-                                <button type="submit" name="action">
-                                    <c:choose>
-                                        <c:when test="${info.repairStatusId != 1}">Quay về</c:when>
-                                        <c:otherwise>Lưu</c:otherwise>
-                                    </c:choose>
-                                </button>
+                                <c:choose>
+                                    <c:when test="${user.roleId==2}">
+                                        <button type="submit" value="assign" name="button" class="btn">Giao việc</button>
+                                        <button type="submit" value="reject" name="button" class="btn">Từ chối</button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${info.repairStatusId == 2}">
+                                                <button type="submit" value="change5" name="button" class="btn">Đồng ý sửa chữa</button>
+                                                <button type="submit" value="change1" name="button" class="btn">Không đồng ý sửa chữa</button>
+                                            </c:when>
+                                            <c:when test="${info.repairStatusId == 5}">
+                                                <button type="submit" value="change3" name="button" class="btn">Khách hàng hài lòng</button>
+                                                <button type="submit" value="change1" name="button" class="btn">Khách hàng không hài lòng</button>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                                <a href="${pageContext.request.contextPath}/admin/repair"
+                                   class="btn btn-default">Quay về</a>
                             </div>
-
-                            <%--<div class="button-post">
-                                <button type="submit" name="action"
-                                        <c:if test="${info.repairStatusId != 1}">hidden</c:if>>Lưu</button>
-                            </div>
-
                         </form>
-                        <a href="/admin/repair" class="btn btn-default">Quay về</a>--%>
-
-                        </form>
-
                     </div>
-
                 </div>
             </div>
         </div>

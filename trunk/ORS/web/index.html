@@ -28,8 +28,12 @@
     <script src="/javascript/controller/RequestController.js" type="application/javascript"></script>
     <script src="/javascript/controller/RequestRepairController.js" type="application/javascript"></script>
     <script src="/javascript/controller/LoginController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/ContractController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/MenuController.js" type="application/javascript"></script>
+
+    <script src="/javascript/services/ApiService.js" type="application/javascript"></script>
 </head>
-<body>
+<body ng-controller="MenuController">
 <header>
     <div class="container container-100 header-wrapper">
         <div class="logo-service left">
@@ -53,12 +57,17 @@
                 <a href="#/">Tìm văn phòng</a>
             </li>
         </ul>
-        <ul class="right login-wrapper">
+        <ul class="right login-wrapper" ng-show="!loggedIn">
             <li>
                 <a href="#/login">Đăng nhập</a>
             </li>
             <li>
                 <a href="">Đăng ký</a>
+            </li>
+        </ul>
+        <ul class="right login-wrapper" ng-show="loggedIn">
+            <li>
+                <a href="#/login">{{fullName}}</a>
             </li>
         </ul>
     </div>

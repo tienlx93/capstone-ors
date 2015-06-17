@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,13 +43,15 @@ public class ApiController extends HttpServlet {
             case "login":
                 login(request, out);
                 break;
+            case "requestAppointment":
+                requestAppointment(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
 
 
     }
-
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
@@ -64,6 +67,9 @@ public class ApiController extends HttpServlet {
         switch (action) {
             case "getOffice":
                 getOffice(request, out);
+                break;
+            case "getContractList":
+                getContractList(request, out);
                 break;
             case "getAllOffice":
                 getAllOffice(request, out);
@@ -271,18 +277,63 @@ public class ApiController extends HttpServlet {
     }
 
     private void login(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         if (username != null && password != null) {
 
             AccountDAO dao = new AccountDAO();
-            if (dao.isValid(username, password)) {
-                out.print(gson.toJson("Success"));
+            Account account = dao.login(username, password);
+            if (account != null && account.getRoleId() == 4) {
+                out.print(gson.toJson(account.getProfileByUsername().getFullName()));
+                session.setAttribute("account", account);
             } else {
                 out.print(gson.toJson("Wrong"));
             }
         } else {
             out.print(gson.toJson("Error"));
+        }
+    }
+
+    private void requestAppointment(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String time = request.getParameter("time");
+        String officeId = request.getParameter("officeId");
+        if (account != null) {
+            Appointment appointment = new Appointment();
+            appointment.setCreateTime(new Timestamp((new Date()).getTime()));
+            appointment.setTime(new Timestamp(Long.parseLong(time)));
+            appointment.setOfficeId(Integer.parseInt(officeId));
+            appointment.setCustomerUsername(account.getUsername());
+            appointment.setStatusId(1);
+
+            AppointmentDAO dao = new AppointmentDAO();
+            boolean result = dao.save(appointment);
+            if (result) {
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+    private void getContractList(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            ContractDAO dao = new ContractDAO();
+            List<ContractJSON> list = new ArrayList<>();
+            for (Contract contract : dao.getContractListByCus(account.getUsername())) {
+                Office office = contract.getOfficeByOfficeId();
+                PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
+                list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
+                        contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription()));
+            }
+            out.print(gson.toJson(list));
         }
     }
 }

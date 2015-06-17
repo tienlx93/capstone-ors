@@ -13,11 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by ASUS on 6/9/2015.
@@ -52,6 +54,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "requestAppointment":
                 requestAppointment(request, out);
+                break;
+            case "requestRepair":
+                requestRepair(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -392,6 +397,57 @@ public class ApiController extends HttpServlet {
         } else {
             out.print(gson.toJson("Error"));
         }
+    }
+
+    private void requestRepair(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String time = request.getParameter("time");
+        String contractId = request.getParameter("contractId");
+        String amenities = new String(request.getParameter("amenities").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String description = new String(request.getParameter("description").getBytes(
+                "iso-8859-1"), "UTF-8");
+        if (account != null) {
+            RepairDAO dao = new RepairDAO();
+            Repair repair = new Repair();
+            repair.setRepairStatusId(1);
+            repair.setContractId(Integer.parseInt(contractId));
+            repair.setCreateTime(new Timestamp((new Date()).getTime()));
+            repair.setDescription(description);
+
+
+
+            boolean result = dao.save(repair);
+
+            if (result) {
+                List<String> amenityList = saveAmenities(amenities);
+                AmenityDAO amenityDAO = new AmenityDAO();
+                List<Integer> amenityListInt = new ArrayList<>();
+                Amenity amenity;
+                for (String s : amenityList) {
+                    amenity = amenityDAO.searchAmenity(s);
+                    amenityListInt.add(amenity.getId());
+                }
+                RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
+                repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+    private List<String> saveAmenities(String amenities) {
+        StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
+        List<String> amenityList = new ArrayList<>();
+        while (tokenizer.hasMoreTokens()) {
+            amenityList.add(tokenizer.nextToken());
+        }
+
+        return amenityList;
     }
 
     private void getContractList(HttpServletRequest request, PrintWriter out) {

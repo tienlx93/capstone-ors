@@ -16,6 +16,7 @@ public class RentalDetail {
     private RentalItem rentalItemByRentalItemId;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;

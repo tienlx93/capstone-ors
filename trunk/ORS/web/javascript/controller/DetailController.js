@@ -9,10 +9,14 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
                 $scope.error = true;
             } else {
                 $scope.officeDetail = data;
-                initialize(data.latitude, data.longitude);
+                if (data.latitude) {
+                    initialize(data.latitude, data.longitude);
+                } else {
+                    initialize(10.776083, 106.70095);
+                }
                 for (var i = 0; i < data.images.length; i ++) {
-                    //$scope.addSlide(data.images[i]);
-                    $scope.addSlide('../img/office' + (i+1) + '.jpg');
+                    $scope.addSlide(data.images[i]);
+                    //$scope.addSlide('../img/office' + (i+1) + '.jpg');
                 }
             }
         });

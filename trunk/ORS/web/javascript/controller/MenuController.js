@@ -1,9 +1,10 @@
 /**
  * Created by ASUS on 6/15/2015.
  */
-controllers.controller('MenuController', ['$scope', '$location', 'Api',
-    function ($scope,$location, Api) {
+controllers.controller('MenuController', ['$scope', '$rootScope', '$location', 'Api',
+    function ($scope, $rootScope, $location, Api) {
         $scope.loggedIn = false;
+        $rootScope.isLogin = false;
 
         $scope.logout = function() {
             Api.logout(function(data){
@@ -27,6 +28,7 @@ controllers.controller('MenuController', ['$scope', '$location', 'Api',
         Api.updateAccount = function(){
             if (Api.account.username) {
                 $scope.loggedIn = true;
+                $rootScope.isLogin = true;
                 $scope.fullName = Api.account.fullName;
             }
         }

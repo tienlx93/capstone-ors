@@ -28,7 +28,7 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/request.html',
                 controller: 'RequestController'
             }).
-            when('/requestRepair', {
+            when('/requestRepair/:id', {
                 templateUrl: 'html/requestRepair.html',
                 controller: 'RequestRepairController'
             }).

@@ -1,6 +1,6 @@
 controllers.controller('HomeController', ['$scope','$location', 'Api',
     function ($scope, $location, Api) {
-
+        $scope.searchKey ='';
         $scope.listNewOffice = [];
 
         $scope.getNewOffice = function () {
@@ -12,4 +12,13 @@ controllers.controller('HomeController', ['$scope','$location', 'Api',
         };
 
         $scope.getNewOffice();
+
+        $scope.searchListOffice = function (address) {
+            $location.path("/list/" + address).replace();
+            //Api.searchOfficeByAddress(address, function(data) {
+            //    if (data) {
+            //        $scope.listSearchedOffice = data;
+            //    }
+            //})
+        }
     }]);

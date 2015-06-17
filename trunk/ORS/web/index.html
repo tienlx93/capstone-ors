@@ -25,6 +25,7 @@
 
     <script src="/javascript/app.js" type="application/javascript"></script>
     <script src="/javascript/controller/HomeController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/OfficeListController.js" type="application/javascript"></script>
     <script src="/javascript/controller/DetailController.js" type="application/javascript"></script>
     <script src="/javascript/controller/RequestController.js" type="application/javascript"></script>
     <script src="/javascript/controller/RequestRepairController.js" type="application/javascript"></script>
@@ -39,8 +40,10 @@
 <header>
     <div class="container container-100 header-wrapper">
         <div class="logo-service left">
-            <img src="/img/logo-black.png">
-            Office Rental Service
+            <a href="#/">
+                <img src="/img/logo-black.png">
+                Office Rental Service
+            </a>
         </div>
         <div class="request-office right">
             <a href="">Đặt văn phòng</a>
@@ -67,7 +70,7 @@
                 <a href="">Đăng ký</a>
             </li>
         </ul>
-        <ul class="right login-wrapper" ng-show="loggedIn">
+        <ul class="right login-wrapper  " ng-show="loggedIn">
             <li>
                 <a href="#/contractList">{{fullName}}</a>
             </li>

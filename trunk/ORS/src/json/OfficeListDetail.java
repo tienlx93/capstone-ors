@@ -17,18 +17,20 @@ public class OfficeListDetail {
     private List<String> amenityList;
     private Long price;
     private String priceTerm;
+    private String address;
     private List<String> images;
 
     public OfficeListDetail() {
     }
 
-    public OfficeListDetail(int id, String name, String description, List<String> amenityList, Long price, String priceTerm, List<String> images) {
+    public OfficeListDetail(int id, String name, String description, List<String> amenityList, Long price, String priceTerm,String address ,List<String> images) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.amenityList = amenityList;
         this.price = price;
         this.priceTerm = priceTerm;
+        this.address = address;
         this.images = images;
     }
 
@@ -43,6 +45,7 @@ public class OfficeListDetail {
 
         this.price = office.getPrice();
         this.priceTerm = office.getPriceTermByPriceTerm().getDescription();
+        this.address = office.getAddress();
         this.images = new ArrayList<>();
         StringTokenizer tokenizer = new StringTokenizer(office.getImageUrls(), ",");
         while (tokenizer.hasMoreElements()) {
@@ -109,4 +112,11 @@ public class OfficeListDetail {
         this.images = images;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
 }

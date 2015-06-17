@@ -35,6 +35,15 @@ body {
     height: 30px;
 }
 
+.header-wrapper .logo-service a {
+    text-decoration: none;
+    color: #000000;
+}
+
+.header-wrapper .logo-service a:hover {
+    color: #000000;
+}
+
 .header-wrapper .request-office {
     padding: 10px 15px;
     background-color: #b5d334;

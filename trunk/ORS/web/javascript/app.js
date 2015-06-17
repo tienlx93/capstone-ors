@@ -14,7 +14,7 @@ app.config(['$routeProvider', '$httpProvider',
         $routeProvider.
             when('/home', {
                 templateUrl: 'html/home.html',
-                controller: ''
+                controller: 'HomeController'
             }).
             when('/list/:query', {
                 templateUrl: 'html/officeList.html',
@@ -36,13 +36,22 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/login.html',
                 controller: 'LoginController'
             }).
-            when('/contractList/:id', {
+            when('/contractList', {
                 templateUrl: 'html/contractList.html',
                 controller: 'ContractController'
+            }).
+            when('/contractList/:id', {
+                templateUrl: 'html/contractDetail.html',
+                controller: 'ContractDetailController'
             }).
             otherwise({
                 redirectTo: '/home'
             });
     }]);
-
+app.filter('toLocaleDate', function () {
+    return function (input) {
+        var date = new Date(input);
+        return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    };
+});
 var BACK_END_URL = "";

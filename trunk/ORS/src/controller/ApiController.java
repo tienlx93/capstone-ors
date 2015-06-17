@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -42,6 +43,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "login":
                 login(request, out);
+                break;
+            case "checkLogin":
+                checkLogin(request, out);
                 break;
             case "requestAppointment":
                 requestAppointment(request, out);
@@ -80,6 +84,19 @@ public class ApiController extends HttpServlet {
             case "detailMobile":
                 detailMobile(request, out, username);
                 break;
+            case "searchOfficeByAddress":
+                searchOfficeByAddress(request, out);
+                break;
+            case "getNewOffice":
+                getNewOffice(request, out);
+                break;
+            case "getContractById":
+                try {
+                    getContractById(request, out);
+                } catch (ParseException e) {
+                    out.print(gson.toJson("Error"));
+                }
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -112,6 +129,16 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(officeList));
     }
 
+    private void getNewOffice(HttpServletRequest request, PrintWriter out) {
+        List<OfficeListDetail> officeList = new ArrayList<>();
+        OfficeDAO dao = new OfficeDAO();
+        for (Office office : dao.getNewOffice()) {
+            officeList.add(new OfficeListDetail(office));
+        }
+
+        out.print(gson.toJson(officeList));
+    }
+    
     private void listMobile(HttpServletRequest request, PrintWriter out, String username) {
         String type = request.getParameter("type");
         List<MobileListJSON> list = new ArrayList<>();
@@ -155,6 +182,29 @@ public class ApiController extends HttpServlet {
         }
         out.print(gson.toJson(list));
     }
+
+    private void searchOfficeByAddress(HttpServletRequest request,PrintWriter out) {
+        String address = request.getParameter("address");
+//        PriceTermDAO priceTerm = new PriceTermDAO();
+//        List<PriceTerm> listPrice = priceTerm.findAll();
+        AmenityDAO amenityDAO = new AmenityDAO();
+        List<Amenity> listAmenity = amenityDAO.findAll();
+
+        OfficeDAO dao = new OfficeDAO();
+        for (Office office : dao.getOfficeByAddress(address)) {
+            OfficeListDetail officeDetail = null;
+
+            officeDetail.setId(office.getId());
+            officeDetail.setName(office.getName());
+            officeDetail.setDescription(office.getDescription());
+            officeDetail.setPrice(office.getPrice());
+            officeDetail.setPriceTerm(office.getPriceTermByPriceTerm().getName());
+
+            List<String> list = new ArrayList<>();
+//            officeDetail.setAmenityList();
+        }
+
+    };
 
     private void detailMobile(HttpServletRequest request, PrintWriter out, String username) {
         String type = request.getParameter("type");
@@ -295,6 +345,20 @@ public class ApiController extends HttpServlet {
         }
     }
 
+
+    private void checkLogin(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            String[] acc = new String[2];
+            acc[0] = account.getUsername();
+            acc[1] = account.getProfileByUsername().getFullName();
+            out.print(gson.toJson(acc));
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
     private void requestAppointment(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
@@ -335,6 +399,19 @@ public class ApiController extends HttpServlet {
             }
             out.print(gson.toJson(list));
         }
+    }
+
+    private void getContractById(HttpServletRequest request, PrintWriter out) throws ParseException {
+        String contractId = request.getParameter("id");
+        int id = Integer.parseInt(contractId);
+        ContractDAO dao = new ContractDAO();
+        Contract contract = dao.get(id);
+        Office office = contract.getOfficeByOfficeId();
+        PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
+        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
+
+        out.print(gson.toJson(json));
     }
 }
 

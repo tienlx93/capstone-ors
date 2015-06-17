@@ -1,5 +1,6 @@
 
 <div class="container">
+    <h2>Danh sách hợp đồng</h2>
     <table class="table">
         <thead>
         <tr>
@@ -9,18 +10,20 @@
             <th>Ngày kết thúc</th>
             <th>Giá</th>
             <th>Thời hạn thanh toán</th>
+            <th></th>
 
         </tr>
         </thead>
         <tbody>
 
-            <tr ng-repeat="list in data.list">
+            <tr ng-repeat="item in data">
 
-                <td>{{list.officeName}}</td>
-                <td>{{list.startDay}}</td>
-                <td>{{list.endDay}}</td>
-                <td>{{list.price}}</td>
-                <td>{{list.paymentTerm}}</td>
+                <td>{{item.officeName}}</td>
+                <td>{{item.startDay | toLocaleDate}}</td>
+                <td>{{item.endDay | toLocaleDate}}</td>
+                <td>{{item.price}}</td>
+                <td>{{item.paymentTerm}}</td>
+                <td><a class="btn btn-default" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
 
             </tr>
 

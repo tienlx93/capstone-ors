@@ -5,6 +5,7 @@ import entity.OfficeAmenity;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by ASUS on 6/10/2015.
@@ -16,17 +17,19 @@ public class OfficeListDetail {
     private List<String> amenityList;
     private Long price;
     private String priceTerm;
+    private List<String> images;
 
     public OfficeListDetail() {
     }
 
-    public OfficeListDetail(int id, String name, String description, List<String> amenityList, Long price, String priceTerm) {
+    public OfficeListDetail(int id, String name, String description, List<String> amenityList, Long price, String priceTerm, List<String> images) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.amenityList = amenityList;
         this.price = price;
         this.priceTerm = priceTerm;
+        this.images = images;
     }
 
     public OfficeListDetail(Office office) {
@@ -40,6 +43,14 @@ public class OfficeListDetail {
 
         this.price = office.getPrice();
         this.priceTerm = office.getPriceTermByPriceTerm().getDescription();
+        this.images = new ArrayList<>();
+        StringTokenizer tokenizer = new StringTokenizer(office.getImageUrls(), ",");
+        while (tokenizer.hasMoreElements()) {
+            String img = (String) tokenizer.nextElement();
+            if (img != null && !img.equals("")) {
+                images.add(img);
+            }
+        }
     }
 
     public int getId() {
@@ -89,4 +100,13 @@ public class OfficeListDetail {
     public void setPriceTerm(String priceTerm) {
         this.priceTerm = priceTerm;
     }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
+    }
+
 }

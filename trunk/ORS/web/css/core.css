@@ -142,3 +142,6 @@ table {
 .gist {
     font-size: 14px;
 }
+.container {
+    padding: 20px 0;
+}

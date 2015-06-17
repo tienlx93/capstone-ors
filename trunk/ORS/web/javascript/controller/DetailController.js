@@ -35,7 +35,7 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             {amenityName: 'IT support'},
             {amenityName: 'AV equipment'}
         ];*/
-        $scope.officeDetail=data
+        $scope.officeDetail=data;
         $scope.officeDetail =
         {
 

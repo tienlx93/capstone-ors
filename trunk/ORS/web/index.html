@@ -24,12 +24,14 @@
     </script>
 
     <script src="/javascript/app.js" type="application/javascript"></script>
+    <script src="/javascript/controller/HomeController.js" type="application/javascript"></script>
     <script src="/javascript/controller/DetailController.js" type="application/javascript"></script>
     <script src="/javascript/controller/RequestController.js" type="application/javascript"></script>
     <script src="/javascript/controller/RequestRepairController.js" type="application/javascript"></script>
     <script src="/javascript/controller/LoginController.js" type="application/javascript"></script>
     <script src="/javascript/controller/ContractController.js" type="application/javascript"></script>
     <script src="/javascript/controller/MenuController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/ContractDetailController.js" type="application/javascript"></script>
 
     <script src="/javascript/services/ApiService.js" type="application/javascript"></script>
 </head>
@@ -67,7 +69,10 @@
         </ul>
         <ul class="right login-wrapper" ng-show="loggedIn">
             <li>
-                <a href="#/login">{{fullName}}</a>
+                <a href="#/contractList">{{fullName}}</a>
+            </li>
+            <li>
+                <a href="">Thoát</a>
             </li>
         </ul>
     </div>

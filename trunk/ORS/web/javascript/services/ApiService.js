@@ -5,7 +5,7 @@ app.factory("Api", ['$http',
     function ($http) {
         var services = {};
 
-        services.updateAccount = function () {
+        services.updateAccount = function() {
 
         };
         services.account = {};
@@ -28,7 +28,23 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.requestAppointment = function (time, officeId, callback) {
+        services.checkLogin = function (callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'checkLogin'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.requestAppointment = function(time, officeId, callback) {
             $http({
                 method: 'POST',
                 url: BACK_END_URL + '/api',
@@ -44,15 +60,14 @@ app.factory("Api", ['$http',
                 .error(function () {
                     callback("Error");
                 })
-        }
+        };
 
-        services.getContractList = function (contractId, callback) {
+        services.getContractList = function(callback) {
             $http({
-                method: 'POST',
+                method: 'GET',
                 url: BACK_END_URL + '/api',
                 params: {
-                    'action': 'getContractList',
-                    'contractId': contractId
+                    'action': 'getContractList'
                 }
             })
                 .success(function (data) {
@@ -62,6 +77,57 @@ app.factory("Api", ['$http',
                     callback("Error");
                 })
         };
+
+        services.searchOfficeByAddress = function(address, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'searchOfficeByAddress',
+                    'address': address
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
+        services.getNewOffice = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getNewOffice'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
+        services.getContractById = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getContractById',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+        
         services.getOffice = function (officeId, name, description, priceTerm, floorNumber, area,
                                        address, latitude, longitude, category, amenities, images, callback) {
             $http({

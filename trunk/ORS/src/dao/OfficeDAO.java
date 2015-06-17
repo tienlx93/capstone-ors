@@ -1,6 +1,9 @@
 package dao;
 
 import entity.Office;
+import org.hibernate.Query;
+
+import java.util.List;
 
 /**
  * Created by ASUS on 6/2/2015.
@@ -10,4 +13,30 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         super(Office.class);
     }
 
+    public List<Office> getOfficeByAddress(String searchKey) {
+        try {
+            String sql = "from Office where address LIKE ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, '%' + searchKey + '%');
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Office> getNewOffice() {
+        try {
+            String sql = "from Office order by createDate desc";
+            Query query = session.createQuery(sql);
+            return query.setMaxResults(5).list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

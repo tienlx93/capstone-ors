@@ -12,7 +12,8 @@ app.factory("Api", ['$http',
                 params: {
                     'action': 'login',
                     'username': username,
-                    'password': password
+                    'password': password,
+                    'type': 3
                 }
             })
                 .success(function (data) {

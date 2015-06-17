@@ -28,7 +28,7 @@ public class AppointmentController extends HttpServlet {
         if (action.equals("editing")) {
             switch (button) {
                 case "assign":
-                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), Timestamp.valueOf(request.getParameter("time")), 2);
+                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), 2);
                     break;
                 case "reject":
                     dao.updateStatus(Integer.parseInt(request.getParameter("id")), 5);

@@ -146,7 +146,7 @@ public class ApiController extends HttpServlet {
 
         out.print(gson.toJson(officeList));
     }
-    
+
     private void listMobile(HttpServletRequest request, PrintWriter out, String username) {
         String type = request.getParameter("type");
         List<MobileListJSON> list = new ArrayList<>();
@@ -191,7 +191,7 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(list));
     }
 
-    private void searchOfficeByAddress(HttpServletRequest request,PrintWriter out) throws UnsupportedEncodingException {
+    private void searchOfficeByAddress(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
 //        String address = request.getParameter("address");
 //
@@ -334,13 +334,23 @@ public class ApiController extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String type = request.getParameter("type");
         if (username != null && password != null) {
 
             AccountDAO dao = new AccountDAO();
             Account account = dao.login(username, password);
-            if (account != null && account.getRoleId() == 4) {
-                out.print(gson.toJson(account.getProfileByUsername().getFullName()));
-                session.setAttribute("account", account);
+
+            if (account != null) {
+                if (type != null && type.equals("3")) {
+                    out.print(gson.toJson("Success"));
+                    session.setAttribute("account", account);
+                } else if(type == null && account.getRoleId() == 4){
+                    out.print(gson.toJson(account.getProfileByUsername().getFullName()));
+                    session.setAttribute("account", account);
+                } else {
+                    out.print(gson.toJson("Wrong"));
+                }
+
             } else {
                 out.print(gson.toJson("Wrong"));
             }
@@ -411,7 +421,6 @@ public class ApiController extends HttpServlet {
             repair.setContractId(Integer.parseInt(contractId));
             repair.setCreateTime(new Timestamp((new Date()).getTime()));
             repair.setDescription(description);
-
 
 
             boolean result = dao.save(repair);

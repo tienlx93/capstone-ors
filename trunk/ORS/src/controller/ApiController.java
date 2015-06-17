@@ -191,27 +191,23 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(list));
     }
 
-    private void searchOfficeByAddress(HttpServletRequest request,PrintWriter out) {
-        String address = request.getParameter("address");
-//        PriceTermDAO priceTerm = new PriceTermDAO();
-//        List<PriceTerm> listPrice = priceTerm.findAll();
-        AmenityDAO amenityDAO = new AmenityDAO();
-        List<Amenity> listAmenity = amenityDAO.findAll();
+    private void searchOfficeByAddress(HttpServletRequest request,PrintWriter out) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+//        String address = request.getParameter("address");
+//
+//        byte[] bytes = address.getBytes(StandardCharsets.ISO_8859_1);
+//        address = new String(bytes, StandardCharsets.UTF_8);
+
+        final String address = new String(request.getParameter("address").getBytes(
+                "iso-8859-1"), "UTF-8");
+
+        List<OfficeListDetail> officeList = new ArrayList<>();
 
         OfficeDAO dao = new OfficeDAO();
         for (Office office : dao.getOfficeByAddress(address)) {
-            OfficeListDetail officeDetail = null;
-
-            officeDetail.setId(office.getId());
-            officeDetail.setName(office.getName());
-            officeDetail.setDescription(office.getDescription());
-            officeDetail.setPrice(office.getPrice());
-            officeDetail.setPriceTerm(office.getPriceTermByPriceTerm().getName());
-
-            List<String> list = new ArrayList<>();
-//            officeDetail.setAmenityList();
+            officeList.add(new OfficeListDetail(office));
         }
-
+        out.print(gson.toJson(officeList));
     };
 
     private void detailMobile(HttpServletRequest request, PrintWriter out, String username) {

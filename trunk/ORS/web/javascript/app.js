@@ -18,7 +18,7 @@ app.config(['$routeProvider', '$httpProvider',
             }).
             when('/list/:query', {
                 templateUrl: 'html/officeList.html',
-                controller: ''
+                controller: 'OfficeListController'
             }).
             when('/detail/:id', {
                 templateUrl: 'html/detail.html',

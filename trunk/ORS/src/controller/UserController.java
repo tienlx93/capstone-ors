@@ -37,23 +37,26 @@ public class UserController extends HttpServlet {
         } else if (action.equals("ban")) {
             String username = request.getParameter("username");
             Account acc = dao.get(username);
-            if (acc.getStatusId()==1)
-            {
-                acc.setStatusId(2);
-            }
-            else
-            {
-                acc.setStatusId(1);
-            }
-            dao.update(username,acc);
-//        } else if (action.equals("unban")) {
-//            String username = request.getParameter("username");
-//            Account acc = dao.get(username);
-//            acc.setStatusId(1);
-//            dao.update(username, acc);
+            acc.setStatusId(2);
+            dao.update(username, acc);
+        } else if (action.equals("unban")) {
+            String username = request.getParameter("username");
+            Account acc = dao.get(username);
+            acc.setStatusId(1);
+            dao.update(username, acc);
         } else if (action.equals("update")) {
             String username = request.getParameter("username");
+            AccountDAO accDAO = new AccountDAO();
+            Account acc = new Account();
+            Account accdemo = new Account();
+            accdemo.setPassword(request.getParameter("password"));
+            accdemo.setEmail(request.getParameter("email"));
+            accdemo.setRoleId(Integer.parseInt(request.getParameter("role")));
 
+/*          String password = request.getParameter("password");
+            String email = request.getParameter("email");*/
+     /**//* String role = request.getParameter("role");*/
+            accDAO.update(username, accdemo);
         }
         response.sendRedirect("/admin/user");
     }

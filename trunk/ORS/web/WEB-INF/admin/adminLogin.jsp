@@ -17,8 +17,6 @@
         <script type="text/javascript"
                 src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
         <title>Office Rental Service</title>
-
-
         <title>Login</title>
     </head>
     <body>

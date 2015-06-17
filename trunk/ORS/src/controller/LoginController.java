@@ -41,7 +41,6 @@ public class LoginController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/adminLogin.jsp");
                 rd.forward(request, response);
             }
-
         }
     }
 

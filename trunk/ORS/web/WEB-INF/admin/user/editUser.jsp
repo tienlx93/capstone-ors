@@ -66,11 +66,15 @@
                   </c:forEach>
                 </select>
               </div>
-
+              <div>
+              <form action="${pageContext.request.contextPath}/admin/user" method="post">
+                <input type="hidden" value="${item.username}" name="username">
+              </form>
+              </div>
               <div class="button-post">
 
                 <button type="button" value="cancel" name="action">Hủy</button>
-                <button type="submit" value="update" name="action">Tạo mới</button>
+                <button type="submit" value="update" name="action">Cập nhật</button>
                 <button type="submit" value="ban" name="action">Khóa tài khoản</button>
                 <button type="submit" value="unban" name="action">Mở tài khoản</button>
               </div>

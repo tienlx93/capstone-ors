@@ -8,7 +8,7 @@
         </div>
         <div id="mid">
             <h4 style="padding-bottom: 10px">Mẫu dịch vụ văn phòng</h4>
-            Giá: {{officeDetail.price}}<br/>
+            Giá: {{officeDetail.price?officeDetail.price:'Liên hệ'}}<br/>
             Đơn vị: {{officeDetail.priceTerm}}<br/>
             Loại: {{officeDetail.category}}<br/>
             Tầng: {{officeDetail.floorNumber}}<br/>
@@ -20,7 +20,7 @@
         </div>
         <div id="down">
             <!--<input type="button" value="Request"/>-->
-            <a href="#/request" class="btn btn-default">Gửi yêu cầu</a>
+            <a href="#/request/{{officeDetail.id}}" class="btn btn-default">Gửi yêu cầu</a>
         </div>
     </div>
     <div id="right">
@@ -41,7 +41,7 @@
         </div>
         <div id="amenity">
             <ul>
-                <li ng-repeat="amenity in amenities">{{amenity.amenityName}}</li>
+                <li ng-repeat="amenity in officeDetail.amenities">{{amenity}}</li>
             </ul>
         </div>
         <div id="description">

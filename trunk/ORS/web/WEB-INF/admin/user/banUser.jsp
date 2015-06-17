@@ -82,7 +82,6 @@
       </div>
     </div>
   </div>
-
   <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
 </body>

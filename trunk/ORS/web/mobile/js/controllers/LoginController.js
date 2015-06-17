@@ -10,12 +10,11 @@ controllers.controller('LoginController', ['$scope', '$location', 'Api',
 
                 Api.login(username,password,function(data){
                     if (data=="Success") {
+                        $location.path("home").replace();
                     } else if (data=="Error") {
                         $scope.error="Có lỗi xảy ra. Xin thử lại";
                     } else if (data=="Wrong") {
                         $scope.error="Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại";
-                    } else if (data) {
-                        $location.path("home").replace();
                     }
                 });
             }

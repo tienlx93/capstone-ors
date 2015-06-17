@@ -1,19 +1,19 @@
 
 controllers.controller('RequestController', ['$scope', '$rootScope', '$location', 'Api',
     function ($scope, $rootScope, $location, Api) {
-        $rootScope.isLogin = false;
+
         $scope.login = function(form) {
             if (form.$valid) {
                 var username = $scope.username;
                 var password = $scope.password;
                 Api.login(username,password,function(data){
-                    if (data=="Success") {
-                        $scope.isLogin = true;
-                        $rootScope.username = username;
-                    } else if (data=="Error") {
+                    if (data=="Error") {
                         $scope.error="Có lỗi xảy ra. Xin thử lại";
                     } else if (data=="Wrong") {
                         $scope.error="Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại";
+                    } else if (data) {
+                        $scope.isLogin = true;
+                        Api.updateAccount();
                     }
                 });
 
@@ -22,9 +22,7 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$location'
         $scope.register = function(){
 
         };
-        $scope.back = function() {
-            $scope.isLogin = false;
-        };
+
 
         $scope.request = function(form) {
             if (form.$valid) {

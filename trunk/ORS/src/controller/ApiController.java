@@ -19,6 +19,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by ASUS on 6/9/2015.
@@ -48,8 +49,14 @@ public class ApiController extends HttpServlet {
             case "checkLogin":
                 checkLogin(request, out);
                 break;
+            case "logout":
+                logout(request, out);
+                break;
             case "requestAppointment":
                 requestAppointment(request, out);
+                break;
+            case "requestRepair":
+                requestRepair(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -139,7 +146,7 @@ public class ApiController extends HttpServlet {
 
         out.print(gson.toJson(officeList));
     }
-    
+
     private void listMobile(HttpServletRequest request, PrintWriter out, String username) {
         String type = request.getParameter("type");
         List<MobileListJSON> list = new ArrayList<>();
@@ -184,7 +191,7 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(list));
     }
 
-    private void searchOfficeByAddress(HttpServletRequest request,PrintWriter out) throws UnsupportedEncodingException {
+    private void searchOfficeByAddress(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
         request.setCharacterEncoding("UTF-8");
 //        String address = request.getParameter("address");
 //
@@ -327,13 +334,23 @@ public class ApiController extends HttpServlet {
         HttpSession session = request.getSession();
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        String type = request.getParameter("type");
         if (username != null && password != null) {
 
             AccountDAO dao = new AccountDAO();
             Account account = dao.login(username, password);
-            if (account != null && account.getRoleId() == 4) {
-                out.print(gson.toJson(account.getProfileByUsername().getFullName()));
-                session.setAttribute("account", account);
+
+            if (account != null) {
+                if (type != null && type.equals("3")) {
+                    out.print(gson.toJson("Success"));
+                    session.setAttribute("account", account);
+                } else if(type == null && account.getRoleId() == 4){
+                    out.print(gson.toJson(account.getProfileByUsername().getFullName()));
+                    session.setAttribute("account", account);
+                } else {
+                    out.print(gson.toJson("Wrong"));
+                }
+
             } else {
                 out.print(gson.toJson("Wrong"));
             }
@@ -354,6 +371,13 @@ public class ApiController extends HttpServlet {
         } else {
             out.print(gson.toJson("Error"));
         }
+    }
+
+    private void logout(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        session.removeAttribute("account");
+        out.print(gson.toJson("Success"));
     }
 
     private void requestAppointment(HttpServletRequest request, PrintWriter out) {
@@ -379,6 +403,56 @@ public class ApiController extends HttpServlet {
         } else {
             out.print(gson.toJson("Error"));
         }
+    }
+
+    private void requestRepair(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String time = request.getParameter("time");
+        String contractId = request.getParameter("contractId");
+        String amenities = new String(request.getParameter("amenities").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String description = new String(request.getParameter("description").getBytes(
+                "iso-8859-1"), "UTF-8");
+        if (account != null) {
+            RepairDAO dao = new RepairDAO();
+            Repair repair = new Repair();
+            repair.setRepairStatusId(1);
+            repair.setContractId(Integer.parseInt(contractId));
+            repair.setCreateTime(new Timestamp((new Date()).getTime()));
+            repair.setDescription(description);
+
+
+            boolean result = dao.save(repair);
+
+            if (result) {
+                List<String> amenityList = saveAmenities(amenities);
+                AmenityDAO amenityDAO = new AmenityDAO();
+                List<Integer> amenityListInt = new ArrayList<>();
+                Amenity amenity;
+                for (String s : amenityList) {
+                    amenity = amenityDAO.searchAmenity(s);
+                    amenityListInt.add(amenity.getId());
+                }
+                RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
+                repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+    private List<String> saveAmenities(String amenities) {
+        StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
+        List<String> amenityList = new ArrayList<>();
+        while (tokenizer.hasMoreTokens()) {
+            amenityList.add(tokenizer.nextToken());
+        }
+
+        return amenityList;
     }
 
     private void getContractList(HttpServletRequest request, PrintWriter out) {

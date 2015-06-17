@@ -4,11 +4,10 @@
     <h2 class="descriptionRepair">Yêu cầu sửa chữa</h2>
 
     <div class="descriptionRepair">
-        <label class="labelleft">Tên office:</label>
+        <label class="labelleft">Tên văn phòng:</label>
         <span class="spanleft">{{officeName}}</span>
     </div>
-    <div hidden>{{assignedStaff}}
-    </div>
+
     <div class="descriptionRepair" hidden>
         <label class="labelleft">Sửa chữa:</label>
         <span class="spanleft">
@@ -18,23 +17,24 @@
             </select>
         </span>
     </div>
-    <div class="descriptionRepair">
-        <label class="labelleft">Sửa chữa:</label>
+    <form name="form">
+        <div class="descriptionRepair">
+            <label class="labelleft">Sửa chữa:</label>
         <span class="spanleft">
             <div class="checkbox" ng-repeat="amenity in amenities">
-                <label><input type="checkbox" >{{amenity.option}}</label>
+                <label><input type="checkbox" ng-click="toggleSelection(amenity)" value="{{amenity}}">{{amenity}}</label>
             </div>
         </span>
-    </div>
-    <div class="descriptionRepair">
-        <label class="labelleft">Mô tả yêu cầu sửa chữa:</label>
-        <span class="spanleft"><textarea>{{description}}</textarea></span>
-    </div>
-    <div hidden>{{repairStatusId}}
-    </div>
-    <div class="descriptionRepair">
-        <a href="#/home" class="btn btn-default">Gửi yêu cầu</a>
-    </div>
+        </div>
+        <div class="descriptionRepair">
+            <label class="labelleft">Mô tả yêu cầu sửa chữa:</label>
+            <span class="spanleft"><textarea ng-model="description"></textarea></span>
+        </div>
+        <div class="descriptionRepair">
+            <button ng-click="submit(form)" class="btn btn-default">Gửi yêu cầu</button>
+        </div>
+    </form>
+
 
 
 </div>

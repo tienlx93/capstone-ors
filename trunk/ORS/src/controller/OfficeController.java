@@ -10,7 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -42,6 +44,7 @@ public class OfficeController extends HttpServlet {
             office.setAddress(address);
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
+            office.setCreateDate(new Timestamp((new Date()).getTime()));
             if (!price.equals("")) {
                 office.setPrice(Long.valueOf(price));
             }
@@ -63,9 +66,11 @@ public class OfficeController extends HttpServlet {
                 }
                 OfficeAmenityDAO officeAmenityDAO = new OfficeAmenityDAO();
                 officeAmenityDAO.saveOfficeAmenity(office.getId(), amenityListInt);
-
+                response.sendRedirect("/admin/office");
+            } else {
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/office/newOffice.jsp");
+                rd.forward(request, response);
             }
-            response.sendRedirect("/admin/office");
         }
     }
 

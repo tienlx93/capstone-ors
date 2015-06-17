@@ -44,6 +44,22 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.logout = function (callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'logout'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.requestAppointment = function(time, officeId, callback) {
             $http({
                 method: 'POST',
@@ -144,5 +160,25 @@ app.factory("Api", ['$http',
                     callback("Error");
                 })
         };
+
+        services.requestRepair = function (contractId, amenities, description, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'requestRepair',
+                    'contractId': contractId,
+                    'amenities': amenities,
+                    'description': description
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         return services;
     }]);

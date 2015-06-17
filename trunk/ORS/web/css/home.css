@@ -69,13 +69,22 @@ body {
     background-color: black;
 }
 
-.navigation-wrapper ul li {
+.navigation-wrapper ul.default li {
     display: inline-block;
 }
 
-.navigation-wrapper ul li a {
+.navigation-wrapper ul.default  li a {
     text-decoration: none;
     color: white;
+}
+
+.navigation-wrapper .wrapper {
+    padding: 5px 10px;
+}
+
+.navigation-wrapper .name {
+    color: white;
+    vertical-align: middle;
 }
 
 .navigation-wrapper .login-wrapper li {

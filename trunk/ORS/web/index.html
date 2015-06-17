@@ -57,12 +57,12 @@
 </header>
 <nav>
     <div class="container container-100 navigation-wrapper">
-        <ul class="left menu-wrapper">
+        <ul class="left menu-wrapper default">
             <li>
                 <a href="#/">Tìm văn phòng</a>
             </li>
         </ul>
-        <ul class="right login-wrapper" ng-show="!loggedIn">
+        <ul class="right login-wrapper default" ng-show="!loggedIn">
             <li>
                 <a href="#/login">Đăng nhập</a>
             </li>
@@ -70,13 +70,17 @@
                 <a href="">Đăng ký</a>
             </li>
         </ul>
-        <ul class="right login-wrapper  " ng-show="loggedIn">
-            <li>
-                <a href="#/contractList">{{fullName}}</a>
-            </li>
-            <li>
-                <a href="">Thoát</a>
-            </li>
+        <ul class="right" ng-show="loggedIn">
+            <div class="btn-group wrapper" dropdown is-open="status.isopen">
+                <a href="" class="dropdown-toggle name" dropdown-toggle ng-disabled="disabled">
+                    Chào mừng, {{fullName}} <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/contractList">Danh sách hợp đồng</a></li>
+                    <li class="divider"></li>
+                    <li><a href="" ng-click="logout()">Đăng xuất</a></li>
+                </ul>
+            </div>
         </ul>
     </div>
 </nav>

@@ -143,5 +143,35 @@ app.factory("Api", ['$http',
                     callback('Error');
                 })
         };
+        
+        services.getOffice = function (officeId, name, description, priceTerm, floorNumber, area,
+                                       address, latitude, longitude, category, amenities, images, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getOffice',
+                    'OfficeId': officeId,
+                    'Name': name,
+                    'Description': description,
+                    'PriceTerm': priceTerm,
+                    'floorNumber': floorNumber,
+                    'area': area,
+                    'address': address,
+                    'latitude': latitude,
+                    'longitude': longitude,
+                    'category': category,
+                    'amenities': amenities,
+                    'images': images
+
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
         return services;
     }]);

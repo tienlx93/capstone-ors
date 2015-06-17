@@ -1,5 +1,16 @@
-controllers.controller('DetailController', ['$scope',
-    function ($scope) {
+controllers.controller('DetailController', ['$scope', '$location', '$routeParams', '$route', 'Api',
+    function ($scope, $location, $routeParams, $route, Api) {
+        var id = $routeParams.id;
+        $scope.data = {};
+
+        //get data
+        Api.getOffice(id, function (data) {
+            if (data == "Error") {
+                $scope.error = true;
+            } else {
+                $scope.data = data;
+            }
+        })
         function initialize() {
             var mapOptions = {
                 center: {lat: 10.776083, lng: 106.70095},
@@ -9,11 +20,12 @@ controllers.controller('DetailController', ['$scope',
                 mapOptions);
         }
 
+
         $scope.$on('$viewContentLoaded', function () {
             initialize();
         });
 
-        $scope.amenities = [
+       /* $scope.amenities = [
             {amenityName: 'Telephone answering'},
             {amenityName: 'Air-conditioning'},
             {amenityName: 'Security system'},
@@ -22,11 +34,12 @@ controllers.controller('DetailController', ['$scope',
             {amenityName: 'Reception services'},
             {amenityName: 'IT support'},
             {amenityName: 'AV equipment'}
-        ];
-
+        ];*/
+        $scope.officeDetail=data;
         $scope.officeDetail =
         {
-            'name': 'Văn phòng Ali',
+
+            /*'name': data.na,
             'price': '20580000 VNĐ',
             'priceTerm': 'Trên m2',
             'floorNumber' : '1',
@@ -34,7 +47,7 @@ controllers.controller('DetailController', ['$scope',
             'address': '12 Trần Hưng Đạo, Quận 1, HCM',
             'category': 'Tòa nhà văn phòng',
             'status': 'Chưa đặt',
-            'description': 'This serviced office is located in a prestigious building, which contains office facilities, a shopping mall and restaurant district, and a luxurious condominium. This facility can easily assist expanding businesses and has other locations in Asia which can be used during business trips and global expansion. Staff are multilingual and can speak Vietnamese, English, and Japanese fluently, so a translation/interpretation service is also available at this facility.'
+            'description': 'This serviced office is located in a prestigious building, which contains office facilities, a shopping mall and restaurant district, and a luxurious condominium. This facility can easily assist expanding businesses and has other locations in Asia which can be used during business trips and global expansion. Staff are multilingual and can speak Vietnamese, English, and Japanese fluently, so a translation/interpretation service is also available at this facility.'*/
         };
 
         $scope.myInterval = 5000;

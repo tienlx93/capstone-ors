@@ -47,6 +47,9 @@ public class ApiController extends HttpServlet {
             case "checkLogin":
                 checkLogin(request, out);
                 break;
+            case "logout":
+                logout(request, out);
+                break;
             case "requestAppointment":
                 requestAppointment(request, out);
                 break;
@@ -357,6 +360,13 @@ public class ApiController extends HttpServlet {
         } else {
             out.print(gson.toJson("Error"));
         }
+    }
+
+    private void logout(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        session.removeAttribute("account");
+        out.print(gson.toJson("Success"));
     }
 
     private void requestAppointment(HttpServletRequest request, PrintWriter out) {

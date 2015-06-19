@@ -15,10 +15,5 @@ controllers.controller('HomeController', ['$scope','$location', 'Api',
 
         $scope.searchListOffice = function (address) {
             $location.path("/list/" + address).replace();
-            //Api.searchOfficeByAddress(address, function(data) {
-            //    if (data) {
-            //        $scope.listSearchedOffice = data;
-            //    }
-            //})
         }
     }]);

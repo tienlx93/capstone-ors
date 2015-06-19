@@ -40,6 +40,21 @@
                         <%--TODO: số lượng hợp đồng chưa xử lí--%>
                     <span class="label label-default"></span></a>
                 </li>
+                <li>
+                    <a href="#">
+                    <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
+                    Yêu cầu của khách hàng
+                    <span class="caret"></span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="#">Trả trước hạn</a>
+                        </li>
+                        <li>
+                            <a href="#">Gia hạn</a>
+                        </li>
+                    </ul>
+                </li>
             </c:if>
             <li><a href="${pageContext.request.contextPath}/admin/repair">
                 <span class="icon color6"><i class="fa fa-wrench"></i></span>

@@ -19,6 +19,8 @@
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
+
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <title>Office Rental Service</title>

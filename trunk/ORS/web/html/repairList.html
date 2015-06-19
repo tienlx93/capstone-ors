@@ -1,0 +1,19 @@
+<div class="container">
+    <h2>Danh sách sửa chữa </h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Mô tả</th>
+            <th>Ngày tạo</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="item in data">
+            <td>{{item.description}}</td>
+            <td>{{item.createTime | toLocaleDate}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>

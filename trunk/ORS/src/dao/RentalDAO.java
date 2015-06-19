@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Appointment;
+import entity.Contract;
 import entity.Rental;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -66,5 +67,19 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
         }
         return false;
     }
+
+    public List<Rental> getRentalListByContract(int contractId) {
+        try {
+            String sql = "from Rental where contractId = ?";
+            Query query = session.createQuery(sql);
+            query.setInteger(0, contractId);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
 }

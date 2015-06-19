@@ -1,6 +1,7 @@
 package dao;
 
 import entity.Contract;
+import entity.Repair;
 import org.hibernate.Query;
 
 import java.util.List;
@@ -13,6 +14,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
     public ContractDAO() {
         super(Contract.class);
     }
+
     public List<Contract> getContractListByCus(String username) {
         try {
             String sql = "from Contract where customerUsername = ?";
@@ -25,4 +27,6 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         }
         return null;
     }
+
+
 }

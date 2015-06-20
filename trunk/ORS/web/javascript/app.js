@@ -51,6 +51,13 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/repairList.html',
                 controller: 'RepairController'
             }).
+            when('/rentalList', {
+
+            }).
+            when('/rentalList/:id', {
+                templateUrl: 'html/rentalList.html',
+                controller: 'RentalController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });

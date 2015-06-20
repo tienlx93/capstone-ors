@@ -486,16 +486,16 @@ public class ApiController extends HttpServlet {
             String contractId = request.getParameter("id");
             int id = Integer.parseInt(contractId);
             RentalDAO rentalDAO = new RentalDAO();
-            List<RentalListJSON> list2 = new ArrayList<>();
+            List<RentalListJSON> list = new ArrayList<>();
 
             for (Rental rental : rentalDAO.getRentalListByContract(id)) {
                 for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
                     RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
-                    list2.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                    list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                             rentalDetail.getUnitPrice(), rentalDetail.getQuantity()));
                 }
             }
-            out.print(gson.toJson(list2));
+            out.print(gson.toJson(list));
         }
     }
 

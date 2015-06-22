@@ -47,13 +47,33 @@
         <div id="description">
             <h1 class="detail">Mô tả</h1>
 
-            <p>{{officeDetail.description}}</p>
+            <p style="white-space: pre-line;">{{officeDetail.description}}</p>
 
         </div>
+
         <div id="location">
             <h1 class="detail">Vị trí bản đồ</h1>
 
             <div id="map-canvas"></div>
+        </div>
+
+        <div id="relative">
+            <h3 class="detail">Văn phòng tương tự</h3>
+
+            <div class="relative-office">
+                <ul>
+                    <li ng-repeat="item in relativeOffices">
+                        <div class="relative-img">
+                            <a href="" ng-click="goto(item.id)">
+                                <img ng-src="{{item.images[0]}}">
+                            </a>
+                        </div>
+                        <div class="relative-title"><a href="" ng-click="goto(item.id)">{{item.name}}</a></div>
+                        <div class="relative-desc">{{item.description}}</div>
+                        <div class="relative-price">{{item.price}} <span ng-show="{{item.price}}">VNĐ - </span> {{item.priceTerm}}</div>
+                    </li>
+                </ul>
+            </div>
         </div>
 
     </div>

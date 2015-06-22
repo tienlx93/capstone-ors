@@ -46,7 +46,7 @@
                         Tạo hợp đồng
                     </div>
                     <div>
-                        <form action="contract" method="post">
+                        <form action="contract" method="post" id="createContract">
                             <div class="form-group" hidden>
                                 <label for="appointmentID">Id</label>
                                 ${appointmentList.id}<input type="hidden" name="appointmentID" id="appointmentID" value="${appointmentList.id}">
@@ -95,10 +95,16 @@
                                 </select>
                             </div>
 
-                            <div class="button-post">
-                                <button type="button" value="cancel" name="action">Hủy</button>
-                                <button type="submit" value="save" name="action">Tạo mới</button>
+                            <div class="form-group">
+                                <label for="comment">Ý kiến khách hàng</label>
+                                <input style="display: inline-block" type='text' class="form-control" name="comment"
+                                       id="comment"
+                                       value=""/>
+                            </div>
 
+                            <div class="button-post">
+                                <button type="submit" value="cancel" name="action">Hủy</button>
+                                <button type="submit" value="save" name="action">Tạo mới</button>
                             </div>
 
                         </form>

@@ -105,7 +105,13 @@
                                 <input type="hidden" name="appointmentStatusId" id="appointmentStatusId"
                                        value="${info.appointmentStatusByStatusId.name}">
                             </div>
-
+                            <c:if test="info.statusId == 2 && user.roleId == 3">
+                                <div class="form-group">
+                                    <label for="comment">Ý kiến khách hàng</label>
+                                    <input type="text" id="comment"
+                                           value="">
+                                </div>
+                            </c:if>
                             <div class="button-post">
 
                                 <c:choose>

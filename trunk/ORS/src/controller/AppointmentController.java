@@ -31,6 +31,8 @@ public class AppointmentController extends HttpServlet {
                     dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), 2);
                     break;
                 case "reject":
+                    String comment = request.getParameter("comment");
+
                     dao.updateStatus(Integer.parseInt(request.getParameter("id")), 5);
                     break;
                 case "update3":

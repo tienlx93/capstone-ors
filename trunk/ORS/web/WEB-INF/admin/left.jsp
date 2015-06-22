@@ -34,6 +34,11 @@
                 <span class="label label-default"></span></a>
             </li>
             <c:if test="${user.roleId != 3}">
+                <li><a href="${pageContext.request.contextPath}/admin/calendar">
+                    <span class="icon color6"><i class="fa fa fa-calendar"></i></span>
+                    Quản lí thời gian nhân viên
+                    <span class="label label-default"></span></a>
+                </li>
                 <li><a href="${pageContext.request.contextPath}/admin/contract">
                     <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
                     Hợp đồng

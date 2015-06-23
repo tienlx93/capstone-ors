@@ -47,94 +47,121 @@
                 <div class="panel panel-default">
                     <div>
                         <form action="repair?action=editing" method="post">
-                            <div class="form-group" hidden>
-                                <label for="id">Id</label>
+                            <div class="form-group clearfix" hidden>
+                                <label for="id" class="col-sm-2 control-label">Id</label>
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
 
-                            <div class="form-group" hidden>
-                                <label for="contractId">Hợp đồng</label>
-                                ${info.contractId}<input type="hidden" name="contractId" id="contractId"
-                                                         value="${info.contractId}">
+                            <div class="form-group clearfix" hidden>
+                                <label for="contractId" class="col-sm-2 control-label">Hợp đồng</label>
+
+                                <div class="col-sm-10">
+                                    ${info.contractId}<input type="hidden" name="contractId" id="contractId"
+                                                             value="${info.contractId}">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="nameOfiice">Tên văn phòng</label>
-                                ${info.contractByContractId.officeByOfficeId.name}
-                                <input type="hidden" id="nameOfiice"
-                                       value="${info.contractByContractId.officeByOfficeId.name}">
+                            <div class="form-group clearfix">
+                                <label for="nameOfiice" class="col-sm-2 control-label">Tên văn phòng</label>
+
+                                <div class="col-sm-10">
+                                    ${info.contractByContractId.officeByOfficeId.name}
+                                    <input type="hidden" id="nameOfiice"
+                                           value="${info.contractByContractId.officeByOfficeId.name}">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="customerName">Khách hàng</label>
-                                ${info.contractByContractId.customerUsername}
-                                <input type="hidden" id="customerName"
-                                       value="${info.contractByContractId.customerUsername}">
+                            <div class="form-group clearfix">
+                                <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
+
+                                <div class="col-sm-10">
+                                    ${info.contractByContractId.customerUsername}
+                                    <input type="hidden" id="customerName"
+                                           value="${info.contractByContractId.customerUsername}">
+                                </div>
                             </div>
                             <c:if test="${user.roleId==2}">
-                                <div class="form-group">
-                                    <label for="assignedStaff">Nhân viên được giao</label>
+                                <div class="form-group clearfix">
+                                    <label for="assignedStaff" class="col-sm-2 control-label">Nhân viên được
+                                        giao</label>
                                     <% AccountDAO acc = new AccountDAO();
                                         List<Account> listAcc = acc.findStaff();%>
-                                    <c:choose>
-                                        <c:when test="${info.repairStatusId != 1}">
-                                            ${info.assignedStaff}
-                                            <input type="hidden" name="assignedStaff" id="assignedStaff"
-                                                   value="${info.assignedStaff}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <select name="assignedStaff" id="assignedStaff">
-                                                <c:choose>
-                                                    <c:when test="${info.repairStatusId == 1}">
-                                                        <option value="" selected></option>
-                                                        <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                                            <option value="${itemAcc.username}">${itemAcc.username}</option>
-                                                        </c:forEach>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <option value=""></option>
-                                                        <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                                            <option value="${itemAcc.username}"
-                                                                    <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
-                                                        </c:forEach>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </select>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <div class="col-sm-10">
+                                        <c:choose>
+                                            <c:when test="${info.repairStatusId != 1}">
+                                                ${info.assignedStaff}
+                                                <input type="hidden" name="assignedStaff" id="assignedStaff"
+                                                       value="${info.assignedStaff}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="assignedStaff" id="assignedStaff" class="form-control">
+                                                    <c:choose>
+                                                        <c:when test="${info.repairStatusId == 1}">
+                                                            <option value="" selected></option>
+                                                            <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                                <option value="${itemAcc.username}">${itemAcc.username}</option>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option value=""></option>
+                                                            <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                                <option value="${itemAcc.username}"
+                                                                        <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
                             </c:if>
 
 
-                            <div class="form-group">
-                                <label for="description">Mô tả</label>
-                                <textarea type="text" name="description" id="description">${info.description}</textarea>
+                            <div class="form-group clearfix">
+                                <label for="description" class="col-sm-2 control-label">Mô tả</label>
+
+                                <div class="col-sm-10">
+                                    <textarea type="text" name="description" class="form-control"
+                                              id="description">${info.description}</textarea>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="repairStatusId">Tình trạng</label>
+                            <div class="form-group clearfix">
+                                <label for="repairStatusId" class="col-sm-2 control-label">Tình trạng</label>
                                 <% RepairStatusDAO dao = new RepairStatusDAO();
                                     List<RepairStatus> list = dao.findAll();%>
-                                ${info.repairStatusByRepairStatusId.description}
-                                <input type="hidden" name="repairStatusId" id="repairStatusId"
-                                       value="${info.repairStatusId}">
+                                <div class="col-sm-10">
+                                    ${info.repairStatusByRepairStatusId.description}
+                                    <input type="hidden" name="repairStatusId" id="repairStatusId"
+                                           value="${info.repairStatusId}">
+                                </div>
                             </div>
 
                             <div class="button-post">
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
-                                        <button type="submit" value="assign" name="button" class="btn">Giao việc</button>
+                                        <button type="submit" value="assign" name="button" class="btn">Giao việc
+                                        </button>
                                         <button type="submit" value="reject" name="button" class="btn">Từ chối</button>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${info.repairStatusId == 2}">
-                                                <button type="submit" value="change5" name="button" class="btn">Đồng ý sửa chữa</button>
-                                                <button type="submit" value="change1" name="button" class="btn">Không đồng ý sửa chữa</button>
+                                                <button type="submit" value="change5" name="button" class="btn">Đồng ý
+                                                    sửa chữa
+                                                </button>
+                                                <button type="submit" value="change1" name="button" class="btn">Không
+                                                    đồng ý sửa chữa
+                                                </button>
                                             </c:when>
                                             <c:when test="${info.repairStatusId == 5}">
-                                                <button type="submit" value="change3" name="button" class="btn">Khách hàng hài lòng</button>
-                                                <button type="submit" value="change1" name="button" class="btn">Khách hàng không hài lòng</button>
+                                                <button type="submit" value="change3" name="button" class="btn">Khách
+                                                    hàng hài lòng
+                                                </button>
+                                                <button type="submit" value="change1" name="button" class="btn">Khách
+                                                    hàng không hài lòng
+                                                </button>
                                             </c:when>
                                         </c:choose>
                                     </c:otherwise>
@@ -152,10 +179,6 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
-
 
 </body>
 </html>

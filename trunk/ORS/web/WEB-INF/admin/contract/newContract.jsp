@@ -47,59 +47,78 @@
                     </div>
                     <div>
                         <form action="contract" method="post" id="createContract">
-                            <div class="form-group" hidden>
-                                <label for="appointmentID">Id</label>
-                                ${appointmentList.id}<input type="hidden" name="appointmentID" id="appointmentID" value="${appointmentList.id}">
+                            <div class="form-group clearfix" hidden>
+                                <label for="appointmentID" class="col-sm-2 control-label">Id</label>
+                                ${appointmentList.id}<input type="hidden" name="appointmentID" id="appointmentID"
+                                                            value="${appointmentList.id}">
                             </div>
 
-                            <div class="form-group">
-                                <label for="customerName">Khách hàng</label>
-                                ${appointmentList.accountByCustomerUsername.username}
-                                <input type="hidden" id="customerName" name="customerName"
-                                       value="${appointmentList.accountByCustomerUsername.username}">
+                            <div class="form-group clearfix">
+                                <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
+
+                                <div class="col-sm-10">
+                                    ${appointmentList.accountByCustomerUsername.username}
+                                    <input type="hidden" id="customerName" name="customerName"
+                                           value="${appointmentList.accountByCustomerUsername.username}">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="officeID">Tên văn phòng</label>
-                                ${appointmentList.officeByOfficeId.name}
-                                <input type="hidden" id="officeID" name="officeID"
-                                       value="${appointmentList.officeByOfficeId.id}">
+                            <div class="form-group clearfix">
+                                <label for="officeID" class="col-sm-2 control-label">Tên văn phòng</label>
+
+                                <div class="col-sm-10">
+                                    ${appointmentList.officeByOfficeId.name}
+                                    <input type="hidden" id="officeID" name="officeID"
+                                           value="${appointmentList.officeByOfficeId.id}">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="startDate">Ngày bắt đầu</label>
-                                <input style="display: inline-block" type='text' class="form-control" name="startDate"
-                                       id="startDate"
-                                       value="${contract.startDate}"/>
+                            <div class="form-group clearfix">
+                                <label for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</label>
+
+                                <div class="col-sm-10">
+                                    <input style="display: inline-block" type='text' class="form-control"
+                                           name="startDate"
+                                           id="startDate"
+                                           value="${contract.startDate}"/>
+                                </div>
                             </div>
 
                             <%--<div class="form-group">--%>
                             <%--<label for="endDate">Ngày kết thúc</label>--%>
                             <%--<input type="text" name="endDate" class="" id="endDate" value="${contract.endDate}">--%>
                             <%--</div>--%>
-                            <div class="form-group">
-                                <label for="endDate">Ngày kết thúc</label>
-                                <input style="display: inline-block" type='text' class="form-control" name="endDate"
-                                       id="endDate"
-                                       value="${contract.endDate}"/>
+                            <div class="form-group clearfix">
+                                <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
+
+                                <div class="col-sm-10">
+                                    <input style="display: inline-block" type='text' class="form-control" name="endDate"
+                                           id="endDate"
+                                           value="${contract.endDate}"/>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="paymentTerm">Thời hạn thanh toán</label>
-                                <select name="paymentTerm" class="" id="paymentTerm">
-                                    <c:forEach var="item" items="${paymentTermList}">
-                                        <option value="${item.id}"
-                                                <c:if test="${office.paymentTermList  ==item.id}">selected</c:if> >
-                                                ${item.description}</option>
-                                    </c:forEach>
-                                </select>
+                            <div class="form-group clearfix">
+                                <label for="paymentTerm" class="col-sm-2 control-label">Thời hạn thanh toán</label>
+
+                                <div class="col-sm-10">
+                                    <select name="paymentTerm" class="form-control" id="paymentTerm">
+                                        <c:forEach var="item" items="${paymentTermList}">
+                                            <option value="${item.id}"
+                                                    <c:if test="${office.paymentTermList  ==item.id}">selected</c:if> >
+                                                    ${item.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="comment">Ý kiến khách hàng</label>
-                                <input style="display: inline-block" type='text' class="form-control" name="comment"
-                                       id="comment"
-                                       value=""/>
+                            <div class="form-group clearfix">
+                                <label for="comment" class="col-sm-2 control-label">Ý kiến khách hàng</label>
+
+                                <div class="col-sm-10">
+                                    <input style="display: inline-block" type='text' class="form-control" name="comment"
+                                           id="comment" value=""/>
+                                </div>
                             </div>
 
                             <div class="button-post">

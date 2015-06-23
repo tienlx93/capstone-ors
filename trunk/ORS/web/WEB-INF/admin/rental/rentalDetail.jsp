@@ -53,50 +53,60 @@
                         <form action="rental?action=editing" method="post">
                             <div class="form-group" hidden>
                                 <label for="id">Id</label>
-                                <%--<input type="text" name="name" class="" id="id" value="${office.name}">--%>
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
 
-                            <div class="form-group">
-                                <label for="contractId">Hợp đồng</label>
-                                <%--<input type="text" name="address" class="" id="contractId" value="${office.address}">--%>
-                                ${info.contractId}<input type="hidden" name="contractId" id="contractId"
-                                                         value="${info.contractId}">
+                            <div class="form-group clearfix">
+                                <label for="contractId" class="col-sm-2 control-label">Hợp đồng</label>
+
+                                <div class="col-sm-10">
+                                    ${info.contractId}<input type="hidden" name="contractId" id="contractId"
+                                                             value="${info.contractId}">
+                                </div>
+
                             </div>
-                            <div class="form-group">
-                                <label for="assignStaff">Nhân viên được giao</label>
+                            <div class="form-group clearfix">
+                                <label for="assignStaff" class="col-sm-2 control-label">Nhân viên được giao</label>
 
                                 <% AccountDAO acc = new AccountDAO();
                                     List<Account> listAcc = acc.findAll();%>
-                                <select name="assignStaff" id="assignStaff">
-                                    <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                        <option value="${itemAcc.username}"
-                                                <c:if test="${info.assignStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
-                                    </c:forEach>
-                                </select>
+                                <div class="col-sm-10">
+                                    <select name="assignStaff" id="assignStaff" class="form-control">
+                                        <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                            <option value="${itemAcc.username}"
+                                                    <c:if test="${info.assignStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
 
 
-                            <div class="form-group">
-                                <label for="description">Mô tả</label>
-                                <textarea type="text" name="description" id="description">${info.description}</textarea>
+                            <div class="form-group clearfix">
+                                <label for="description" class="col-sm-2 control-label">Mô tả</label>
+
+                                <div class="col-sm-10">
+                                    <textarea type="text" name="description" class="form-control"
+                                              id="description">${info.description}</textarea>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="statusId">Tình trạng</label>
+                            <div class="form-group clearfix">
+                                <label for="statusId" class="col-sm-2 control-label">Tình trạng</label>
                                 <% RepairStatusDAO dao = new RepairStatusDAO();
                                     List<RepairStatus> list = dao.findAll();%>
-                                <select name="statusId" id="statusId">
-                                    <c:forEach var="item" items="<%= list %>">
-                                        <option value="${item.id}"
-                                                <c:if test="${info.statusId==item.id}">selected</c:if>
-                                                >${item.description}</option>
-                                    </c:forEach>
-                                </select>
+                                <div class="col-sm-10">
+                                    <select name="statusId" id="statusId" class="form-control">
+                                        <c:forEach var="item" items="<%= list %>">
+                                            <option value="${item.id}"
+                                                    <c:if test="${info.statusId==item.id}">selected</c:if>
+                                                    >${item.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="list">Thông tin thiết bị</label>
+                            <div class="form-group clearfix">
+                                <label for="list" class="col-sm-2 control-label clearfix">Thông tin thiết bị</label>
                                 <% RentalDetailDAO rdd = new RentalDetailDAO();
                                     List<RentalDetail> detailList = rdd.findAll();%>
                                 <div>
@@ -141,7 +151,5 @@
 
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
 </body>
 </html>

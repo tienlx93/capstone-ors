@@ -68,4 +68,17 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         }
         return false;
     }
+
+    public List<Repair> getRepairListByContract(int contractId) {
+        try {
+            String sql = "from Repair where contractId = ?";
+            Query query = session.createQuery(sql);
+            query.setInteger(0, contractId);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

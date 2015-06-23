@@ -16,10 +16,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
 /**
  * Created by ASUS on 6/9/2015.
@@ -82,6 +79,12 @@ public class ApiController extends HttpServlet {
                 break;
             case "getContractList":
                 getContractList(request, out);
+                break;
+            case "getRentalList":
+                getRentalList(request, out);
+                break;
+            case "getRepairList":
+                getRepairList(request, out);
                 break;
             case "getAllOffice":
                 getAllOffice(request, out);
@@ -208,7 +211,9 @@ public class ApiController extends HttpServlet {
             officeList.add(new OfficeListDetail(office));
         }
         out.print(gson.toJson(officeList));
-    };
+    }
+
+    ;
 
     private void detailMobile(HttpServletRequest request, PrintWriter out, String username) {
         String type = request.getParameter("type");
@@ -344,7 +349,7 @@ public class ApiController extends HttpServlet {
                 if (type != null && type.equals("3")) {
                     out.print(gson.toJson("Success"));
                     session.setAttribute("account", account);
-                } else if(type == null && account.getRoleId() == 4){
+                } else if (type == null && account.getRoleId() == 4) {
                     out.print(gson.toJson(account.getProfileByUsername().getFullName()));
                     session.setAttribute("account", account);
                 } else {
@@ -467,6 +472,43 @@ public class ApiController extends HttpServlet {
                 PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
                 list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
                         contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription()));
+            }
+            out.print(gson.toJson(list));
+        }
+    }
+
+    //Con loi
+    private void getRentalList(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            String contractId = request.getParameter("id");
+            int id = Integer.parseInt(contractId);
+            RentalDAO rentalDAO = new RentalDAO();
+            List<RentalListJSON> list = new ArrayList<>();
+
+            for (Rental rental : rentalDAO.getRentalListByContract(id)) {
+                for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
+                    RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
+                    list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity()));
+                }
+            }
+            out.print(gson.toJson(list));
+        }
+    }
+
+    private void getRepairList(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String contractId = request.getParameter("id");
+        int id = Integer.parseInt(contractId);
+        if (account != null) {
+            RepairDAO dao = new RepairDAO();
+            List<RepairListJSON> list = new ArrayList<>();
+            for (Repair repair : dao.getRepairListByContract(id)) {
+                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime()));
             }
             out.print(gson.toJson(list));
         }

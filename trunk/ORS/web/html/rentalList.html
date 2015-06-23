@@ -1,0 +1,23 @@
+<div class="container">
+    <h2>Danh sách thuê thiết bị </h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Tên thiết bị </th>
+            <th>Mô tả</th>
+            <th>Giá thuê</th>
+            <th>Số lượng</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="item in data">
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.unitPrice}}</td>
+            <td>{{item.quantity}}</td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>

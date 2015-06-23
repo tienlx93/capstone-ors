@@ -94,6 +94,40 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.getRepairList = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRepairList',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getRentalList = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRentalList',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.searchOfficeByAddress = function(address, callback) {
             $http({
                 method: 'GET',

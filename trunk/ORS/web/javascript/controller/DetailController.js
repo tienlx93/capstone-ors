@@ -14,7 +14,7 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
                 } else {
                     initialize(10.776083, 106.70095);
                 }
-                for (var i = 0; i < data.images.length; i ++) {
+                for (var i = 0; i < data.images.length; i++) {
                     $scope.addSlide(data.images[i]);
                     //$scope.addSlide('../img/office' + (i+1) + '.jpg');
                 }
@@ -29,36 +29,33 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
                 mapOptions);
         }
 
+        $scope.relativeOffices = [];
 
-        /*$scope.$on('$viewContentLoaded', function () {
-            initialize(10.776083, 106.70095);
-        });*/
+        Api.getNewOffice(function (data) {
+            if (data) {
+                for (var i = 0; i < 3; i++) {
+                    $scope.relativeOffices[i] = data[i];
+                    $scope.relativeOffices[i].description = data[i].description.length > 200 ?
+                    data[i].description.substring(0, 200) + "..." : data[i].description;
+                }
 
-       /* $scope.amenities = [
-            {amenityName: 'Telephone answering'},
-            {amenityName: 'Air-conditioning'},
-            {amenityName: 'Security system'},
-            {amenityName: 'Meeting rooms'},
-            {amenityName: 'Videoconferencing'},
-            {amenityName: 'Reception services'},
-            {amenityName: 'IT support'},
-            {amenityName: 'AV equipment'}
-        ];*/
+            }
+        });
+
+        $scope.goto = function (officeId) {
+            $location.path("/detail/" + officeId);
+            window.scroll(0,0);
+        };
 
 
         $scope.myInterval = 5000;
         var slides = $scope.slides = [];
-        $scope.addSlide = function(url) {
-            var newWidth = slides.length + 1;
+        $scope.addSlide = function (url) {
             slides.push({
                 image: url
-                /*text: ['More','Extra','Lots of','Surplus'][slides.length % 4] + ' ' +
-                ['Cats', 'Kittys', 'Felines', 'Cutes'][slides.length % 4]*/
             });
         };
-        /*for (var i=0; i<4; i++) {
-            $scope.addSlide('../img/office' + 1 + '.jpg');
-        }*/
+
     }
 
 ]);

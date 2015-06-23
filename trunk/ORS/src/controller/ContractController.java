@@ -52,6 +52,15 @@ public class ContractController extends HttpServlet {
 
             dao.save(contract);
             response.sendRedirect("/admin/contract");
+
+        } else if (action.equals("cancel")) {
+            String comment = request.getParameter("comment");
+
+            AppointmentDAO appointmentDao = new AppointmentDAO();
+            String appointmentID = request.getParameter("appointmentID");
+
+            appointmentDao.updateStatus(Integer.parseInt(appointmentID),4);
+            response.sendRedirect("/admin/contract");
         }
     }
 

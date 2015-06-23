@@ -76,7 +76,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -89,7 +89,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -107,7 +107,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -120,7 +120,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -138,7 +138,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -151,7 +151,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -169,7 +169,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -182,7 +182,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -227,7 +227,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -240,7 +240,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -258,7 +258,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -271,7 +271,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -289,7 +289,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -302,7 +302,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -320,7 +320,7 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
                                                 <th>Mô tả</th>
-                                                <th>Tình trạng</th>
+
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -333,7 +333,7 @@
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.rentalStatusByStatusId.description}</td>
+
                                                         <td><a href="rental?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>

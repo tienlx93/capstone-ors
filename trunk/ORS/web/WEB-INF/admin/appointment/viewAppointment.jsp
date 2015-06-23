@@ -55,18 +55,18 @@
 
                                             <li role="presentation" class="active"><a href="#all"
                                                                                       aria-controls="pending" role="tab"
-                                                                                      data-toggle="tab">All</a></li>
+                                                                                      data-toggle="tab">Tất cả</a></li>
                                             <li role="presentation" class=""><a href="#Assigned"
                                                                                 aria-controls="Assigned" role="tab"
-                                                                                data-toggle="tab">Assigned</a></li>
+                                                                                data-toggle="tab">Đã Giao</a></li>
                                             <li role="presentation" class=""><a href="#Accepted"
                                                                                 aria-controls="Accepted" role="tab"
-                                                                                data-toggle="tab">Accepted</a></li>
+                                                                                data-toggle="tab">Chấp Nhận</a></li>
                                             <li role="presentation" class=""><a href="#done" aria-controls="done"
-                                                                                role="tab" data-toggle="tab">Done/Rejected</a>
+                                                                                role="tab" data-toggle="tab">Hoàn Thành/ Hủy</a>
                                             </li>
                                             <li role="presentation" class=""><a href="#pending" aria-controls="home"
-                                                                                role="tab" data-toggle="tab">Pending</a>
+                                                                                role="tab" data-toggle="tab">Chờ xử lí</a>
                                             </li>
                                         </ul>
 
@@ -82,7 +82,7 @@
                                                             <th>Nhân viên</th>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
-                                                            <th>Trạng thái</th>
+
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -93,7 +93,7 @@
                                                                     <td>${item.accountByAssignedStaff.username}</td>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
-                                                                    <td>${item.appointmentStatusByStatusId.name}</td>
+
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
@@ -119,7 +119,7 @@
                                                             <th>Nhân viên</th>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
-                                                            <th>Trạng thái</th>
+
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -130,7 +130,7 @@
                                                                     <td>${item.accountByAssignedStaff.username}</td>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
-                                                                    <td>${item.appointmentStatusByStatusId.name}</td>
+
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
@@ -156,7 +156,7 @@
                                                             <th>Nhân viên</th>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
-                                                            <th>Trạng thái</th>
+
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -167,7 +167,7 @@
                                                                     <td>${item.accountByAssignedStaff.username}</td>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
-                                                                    <td>${item.appointmentStatusByStatusId.name}</td>
+
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
@@ -193,7 +193,7 @@
                                                             <th>Nhân viên</th>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
-                                                            <th>Trạng thái</th>
+
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -204,7 +204,7 @@
                                                                     <td>${item.accountByAssignedStaff.username}</td>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
-                                                                    <td>${item.appointmentStatusByStatusId.name}</td>
+
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
@@ -230,7 +230,7 @@
                                                             <th>Nhân viên</th>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
-                                                            <th>Trạng thái</th>
+
                                                         </tr>
                                                         </thead>
                                                         <tbody>
@@ -240,7 +240,7 @@
                                                                 <td>${item.accountByAssignedStaff.username}</td>
                                                                 <td>${item.officeByOfficeId.name}</td>
                                                                 <td>${item.time}</td>
-                                                                <td>${item.appointmentStatusByStatusId.name}</td>
+
                                                                 <td>
                                                                     <a class="btn"
                                                                        href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">

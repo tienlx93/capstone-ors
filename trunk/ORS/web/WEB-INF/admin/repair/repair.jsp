@@ -77,7 +77,7 @@
                                                         <th>Nhân viên được giao</th>
                                                     </c:if>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -91,7 +91,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -110,7 +110,7 @@
                                                         <th>Nhân viên được giao</th>
                                                     </c:if>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -124,7 +124,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -143,7 +143,7 @@
                                                         <th>Nhân viên được giao</th>
                                                     </c:if>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -157,7 +157,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -176,7 +176,7 @@
                                                         <th>Nhân viên được giao</th>
                                                     </c:if>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -190,7 +190,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -234,7 +234,7 @@
                                                     <th>Tên văn phòng</th>
                                                     <th>Khách hàng</th>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -248,7 +248,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -267,7 +267,7 @@
                                                         <th>Nhân viên được giao</th>
                                                     </c:if>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -281,7 +281,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -300,7 +300,7 @@
                                                         <th>Nhân viên được giao</th>
                                                     </c:if>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -314,7 +314,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
@@ -333,7 +333,7 @@
                                                         <th>Nhân viên được giao</th>
                                                     </c:if>
                                                     <th>Mô tả</th>
-                                                    <th>Tình trạng</th>
+
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -347,7 +347,7 @@
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
                                                         <td>${item.description}</td>
-                                                        <td>${item.repairStatusByRepairStatusId.description}</td>
+                                                        >
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>

@@ -1,9 +1,7 @@
 package entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * Created by ASUS on 6/10/2015.
@@ -13,6 +11,7 @@ public class AppointmentStatus {
     private int id;
     private String name;
     private String description;
+    private Collection<Appointment> appointmentsById;
 
     @Id
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
@@ -64,5 +63,14 @@ public class AppointmentStatus {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
+    }
+
+    @OneToMany(mappedBy = "appointmentStatusByStatusId")
+    public Collection<Appointment> getAppointmentsById() {
+        return appointmentsById;
+    }
+
+    public void setAppointmentsById(Collection<Appointment> appointmentsById) {
+        this.appointmentsById = appointmentsById;
     }
 }

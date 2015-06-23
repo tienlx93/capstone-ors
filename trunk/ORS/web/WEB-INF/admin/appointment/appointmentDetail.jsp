@@ -108,8 +108,7 @@
                             <c:if test="info.statusId == 2 && user.roleId == 3">
                                 <div class="form-group">
                                     <label for="comment">Ý kiến khách hàng</label>
-                                    <input type="text" id="comment"
-                                           value="">
+                                    <input type="text" id="comment" class="form-control" value="">
                                 </div>
                             </c:if>
                             <div class="button-post">

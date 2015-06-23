@@ -23,6 +23,7 @@ public class Contract {
     private Collection<Repair> repairsById;
     private Office officeByOfficeId;
     private Collection<Rental> rentalsById;
+    private String comment;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -194,5 +195,15 @@ public class Contract {
 
     public void setRentalsById(Collection<Rental> rentalsById) {
         this.rentalsById = rentalsById;
+    }
+
+    @Basic
+    @Column(name = "Comment", nullable = true, insertable = true, updatable = true)
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

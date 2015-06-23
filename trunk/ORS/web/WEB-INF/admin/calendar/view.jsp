@@ -27,11 +27,13 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
   <script src='${pageContext.request.contextPath}/lib/fullcalendar-2.3.2/lib/moment.min.js'></script>
   <script src='${pageContext.request.contextPath}/lib/fullcalendar-2.3.2/fullcalendar.min.js'></script>
+  <script src='${pageContext.request.contextPath}/lib/fullcalendar-2.3.2/lang/vi.js'></script>
   <script>
 
     $(document).ready(function() {
 
       $('#calendar').fullCalendar({
+        lang: 'vi',
         header: {
           left: 'prev,next today',
           center: 'title',

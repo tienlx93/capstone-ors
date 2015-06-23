@@ -19,6 +19,9 @@ public class Rental {
     private RepairStatus repairStatusByStatusId;
     private Collection<RentalDetail> rentalDetailsById;
     private RentalStatus rentalStatusByStatusId;
+    private Timestamp createTime;
+    private Timestamp updateTime;
+    private Timestamp assignedTime;
 
     @Id
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
@@ -144,9 +147,6 @@ public class Rental {
     public void setRentalStatusByStatusId(RentalStatus rentalStatusByStatusId) {
         this.rentalStatusByStatusId = rentalStatusByStatusId;
     }
-
-    private Timestamp createTime;
-
     @Basic
     @Column(name = "CreateTime", nullable = false, insertable = true, updatable = true)
     public Timestamp getCreateTime() {
@@ -155,7 +155,7 @@ public class Rental {
 
     public void setCreateTime(Timestamp createTime) {
         this.createTime = createTime;
-    }    private Timestamp updateTime;
+    }
 
     @Basic
     @Column(name = "UpdateTime", nullable = true, insertable = true, updatable = true)
@@ -165,5 +165,15 @@ public class Rental {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Basic
+    @Column(name = "AssignedTime", nullable = true, insertable = true, updatable = true)
+    public Timestamp getAssignedTime() {
+        return assignedTime;
+    }
+
+    public void setAssignedTime(Timestamp assignedTime) {
+        this.assignedTime = assignedTime;
     }
 }

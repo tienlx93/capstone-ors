@@ -49,24 +49,39 @@
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
 
-                            <div class="form-group">
-                                <label for="name">Tên</label>
-                                <input type="text" name="name" id="name" value="${info.name}"/>
+                            <div class="form-group clearfix">
+                                <label for="name" class="col-sm-2 control-label">Tên</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" class="form-control" id="name"
+                                           value="${info.name}" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="description">Mô tả</label>
-                                <textarea type="text" name="description" id="description">${info.description}</textarea>
+                            <div class="form-group clearfix">
+                                <label for="description" class="col-sm-2 control-label">Mô tả</label>
+
+                                <div class="col-sm-10">
+                                <textarea name="description" class="form-control" id="description"
+                                          required>${info.description}</textarea>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="price">Giá</label>
-                                <input type="text" name="price" id="price" value="${info.price}"/>
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="price" class="form-control" id="price"
+                                           value="${info.price}">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="quantity">Số lượng</label>
-                                <input type="text" name="quantity" id="quantity" value="${info.quantity}" required/>
+                            <div class="form-group clearfix">
+                                <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="quantity" class="form-control" id="quantity"
+                                           value="${info.price}">
+                                </div>
                             </div>
 
 

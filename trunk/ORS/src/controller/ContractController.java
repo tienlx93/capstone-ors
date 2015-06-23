@@ -73,17 +73,28 @@ public class ContractController extends HttpServlet {
             request.setAttribute("data", list);
             rd = request.getRequestDispatcher("/WEB-INF/admin/contract/viewContract.jsp");
             rd.forward(request, response);
-        } else if (action.equals("new")){
+        } else {
+            switch (action) {
+                case "new":
+                    AppointmentDAO appointmentDao = new AppointmentDAO();
+                    request.setAttribute("appointmentList", appointmentDao.get(Integer.parseInt(request.getParameter("id"))));
 
-            AppointmentDAO appointmentDao = new AppointmentDAO();
-            request.setAttribute("appointmentList", appointmentDao.get(Integer.parseInt(request.getParameter("id"))));
+                    PaymentTermDAO ptDao = new PaymentTermDAO();
+                    List<PaymentTerm> paymentTermList = ptDao.findAll();
+                    request.setAttribute("paymentTermList", paymentTermList);
 
-            PaymentTermDAO ptDao = new PaymentTermDAO();
-            List<PaymentTerm> paymentTermList = ptDao.findAll();
-            request.setAttribute("paymentTermList", paymentTermList);
-
-            rd = request.getRequestDispatcher("/WEB-INF/admin/contract/newContract.jsp");
-            rd.forward(request, response);
+                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/newContract.jsp");
+                    rd.forward(request, response);
+                    break;
+                case "return":
+                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/request.jsp");
+                    rd.forward(request, response);
+                    break;
+                case "extend":
+                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/request.jsp");
+                    rd.forward(request, response);
+                    break;
+            }
         }
 
     }

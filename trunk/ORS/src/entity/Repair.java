@@ -20,6 +20,7 @@ public class Repair {
     private Collection<RepairDetail> repairDetailsById;
     private Timestamp createTime;
     private Timestamp updateTime;
+    private Timestamp assignedTime;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -156,5 +157,15 @@ public class Repair {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Basic
+    @Column(name = "AssignedTime", nullable = true, insertable = true, updatable = true)
+    public Timestamp getAssignedTime() {
+        return assignedTime;
+    }
+
+    public void setAssignedTime(Timestamp assignedTime) {
+        this.assignedTime = assignedTime;
     }
 }

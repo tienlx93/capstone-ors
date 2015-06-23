@@ -23,7 +23,7 @@
     <jsp:include page="/WEB-INF/admin/top.jsp"/>
         <div id="container">
             <form class="form-signin" id="login" action="${pageContext.request.contextPath}/admin" method="post">
-                <h2>Đăng nhập admin</h2>
+                <h2>Đăng nhập vào hệ thống</h2>
                 <input class="form-control" type="text" name="txtUsername" id="loginEmail" value="${username}" placeholder="Tài khoản" required >
                 <input class="form-control" type="password" name="txtPassword" id="loginPass" value="${password}" placeholder="Mật khẩu" required >
                 <div class="error">${error}</div>

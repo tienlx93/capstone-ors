@@ -20,6 +20,7 @@ public class Appointment {
     private AppointmentStatus appointmentStatusByStatusId;
     private Timestamp createTime;
     private Timestamp updateTime;
+    private String comment;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -168,5 +169,15 @@ public class Appointment {
 
     public void setUpdateTime(Timestamp updateTime) {
         this.updateTime = updateTime;
+    }
+
+    @Basic
+    @Column(name = "Comment", nullable = true, insertable = true, updatable = true)
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

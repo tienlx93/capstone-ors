@@ -36,7 +36,7 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
                 if (searchAmenity(s)==null){
                     amenity = new Amenity();
                     amenity.setName(s);
-                    amenity.setHitCount(0);
+                    amenity.setWeight(0);
                     session.save(amenity);
                 }
             }

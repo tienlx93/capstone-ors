@@ -35,6 +35,7 @@ public class Office {
     private PriceTerm priceTermByPriceTerm;
     private Collection<OfficeAmenity> officeAmenitiesById;
     private Timestamp createDate;
+    private Integer viewCount;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -345,5 +346,15 @@ public class Office {
 
     public void setCreateDate(Timestamp createDate) {
         this.createDate = createDate;
+    }
+
+    @Basic
+    @Column(name = "ViewCount", nullable = true, insertable = true, updatable = true)
+    public Integer getViewCount() {
+        return viewCount;
+    }
+
+    public void setViewCount(Integer viewCount) {
+        this.viewCount = viewCount;
     }
 }

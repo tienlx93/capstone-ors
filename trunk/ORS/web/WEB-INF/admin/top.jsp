@@ -38,7 +38,7 @@
                 <a href="#" data-toggle="dropdown" class="dropdown-toggle profilebox" aria-expanded="false"><b>${user.username}</b><span class="caret"></span></a>
                 <ul class="dropdown-menu dropdown-menu-list dropdown-menu-right">
                     <li><a href="#"><i class="fa falist fa-key"></i> Đổi mật khẩu</a></li>
-                    <li><a href="#"><i class="fa falist fa-power-off"></i> Đăng xuất</a></li>
+                    <li><a href="${pageContext.request.contextPath}/admin?action=logout"><i class="fa falist fa-power-off"></i> Đăng xuất</a></li>
                 </ul>
             </li>
         </ul>

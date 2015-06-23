@@ -47,6 +47,10 @@ public class LoginController extends HttpServlet {
             //view list
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/adminLogin.jsp");
             rd.forward(request, response);
+        } else if (action.equals("logout")) {
+            HttpSession session = request.getSession();
+            session.removeAttribute("account");
+            response.sendRedirect("/admin");
         }
 
     }

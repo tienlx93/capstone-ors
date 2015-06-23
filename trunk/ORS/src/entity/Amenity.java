@@ -11,10 +11,12 @@ public class Amenity {
     private int id;
     private String name;
     private String description;
-    private Integer hitCount;
     private Collection<OfficeAmenity> officeAmenitiesById;
     private Collection<RequestAmenity> requestAmenitiesById;
     private Collection<RepairDetail> repairDetailsById;
+    private Integer weight;
+    private Integer amenityGroupId;
+    private AmenityGroup amenityGroupByAmenityGroupId;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -47,16 +49,6 @@ public class Amenity {
         this.description = description;
     }
 
-    @Basic
-    @Column(name = "HitCount", nullable = true, insertable = true, updatable = true)
-    public Integer getHitCount() {
-        return hitCount;
-    }
-
-    public void setHitCount(Integer hitCount) {
-        this.hitCount = hitCount;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,7 +59,7 @@ public class Amenity {
         if (id != amenity.id) return false;
         if (name != null ? !name.equals(amenity.name) : amenity.name != null) return false;
         if (description != null ? !description.equals(amenity.description) : amenity.description != null) return false;
-        if (hitCount != null ? !hitCount.equals(amenity.hitCount) : amenity.hitCount != null) return false;
+        if (weight != null ? !weight.equals(amenity.weight) : amenity.weight != null) return false;
 
         return true;
     }
@@ -77,7 +69,7 @@ public class Amenity {
         int result = id;
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (hitCount != null ? hitCount.hashCode() : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
         return result;
     }
 
@@ -106,5 +98,35 @@ public class Amenity {
 
     public void setRepairDetailsById(Collection<RepairDetail> repairDetailsById) {
         this.repairDetailsById = repairDetailsById;
+    }
+
+    @Basic
+    @Column(name = "Weight", nullable = true, insertable = true, updatable = true)
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    @Basic
+    @Column(name = "AmenityGroupId", nullable = true, insertable = true, updatable = true)
+    public Integer getAmenityGroupId() {
+        return amenityGroupId;
+    }
+
+    public void setAmenityGroupId(Integer amenityGroupId) {
+        this.amenityGroupId = amenityGroupId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "AmenityGroupId", referencedColumnName = "Id", insertable = false, updatable = false)
+    public AmenityGroup getAmenityGroupByAmenityGroupId() {
+        return amenityGroupByAmenityGroupId;
+    }
+
+    public void setAmenityGroupByAmenityGroupId(AmenityGroup amenityGroupByAmenityGroupId) {
+        this.amenityGroupByAmenityGroupId = amenityGroupByAmenityGroupId;
     }
 }

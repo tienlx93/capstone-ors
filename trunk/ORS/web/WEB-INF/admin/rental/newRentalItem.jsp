@@ -45,28 +45,43 @@
                     </div>
                     <div>
                         <form action="rentalItem" method="post">
-                            <div class="form-group">
-                                <label for="name">Tên thiết bị</label>
-                                <input type="text" name="name" class="" id="name" value="${rentalItem.name}" required>
+                            <div class="form-group clearfix">
+                                <label for="name" class="col-sm-2 control-label">Tên thiết bị</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" class="form-control" id="name"
+                                           value="${rentalItem.name}" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="description">Mô tả</label>
-                                <textarea name="description" class="" id="description"
+                            <div class="form-group clearfix">
+                                <label for="description" class="col-sm-2 control-label">Mô tả</label>
+
+                                <div class="col-sm-10">
+                                <textarea name="description" class="form-control" id="description"
                                           required>${rentalItem.description}</textarea>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="price">Giá (VND)</label>
-                                <input type="text" name="price" class="" id="price" value="${rentalItem.price}">
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="price" class="form-control" id="price"
+                                           value="${rentalItem.price}">
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="quantity">Số lượng (cái)</label>
-                                <input type="text" name="quantity" class="" id="quantity" value="${rentalItem.price}">
+                            <div class="form-group clearfix">
+                                <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="quantity" class="form-control" id="quantity"
+                                           value="${rentalItem.price}">
+                                </div>
                             </div>
 
-                            <div class="button-post">
+                            <div class="button-post clearfix">
                                 <button type="submit" value="save" class="btn btn-primary" name="action">Tạo mới
                                 </button>
                                 <a href="/admin/rentalItem" class="btn btn-default">Hủy</a>

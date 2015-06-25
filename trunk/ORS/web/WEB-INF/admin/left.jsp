@@ -53,10 +53,10 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="#">Trả trước hạn</a>
+                            <a href="${pageContext.request.contextPath}/admin/contract?action=return">Hủy trước hạn</a>
                         </li>
                         <li>
-                            <a href="#">Gia hạn</a>
+                            <a href="${pageContext.request.contextPath}/admin/contract?action=extend">Gia hạn</a>
                         </li>
                     </ul>
                 </li>

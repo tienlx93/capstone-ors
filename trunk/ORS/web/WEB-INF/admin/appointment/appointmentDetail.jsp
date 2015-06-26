@@ -45,7 +45,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div>
-                        <form action="appointment?action=editing" method="post">
+                        <form action="appointment?action=editing" method="post" name="appointment">
                             <div class="form-group" hidden>
                                 <label for="id">Id</label>
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
@@ -116,6 +116,9 @@
                                            value="${info.appointmentStatusByStatusId.name}">
                                 </div>
                             </div>
+
+                            <input type="hidden" value="" name="comment" />
+
                             <c:if test="info.statusId == 2 && user.roleId == 3">
                                 <div class="form-group clearfix">
                                     <label for="comment" class="col-sm-2 control-label">Ý kiến khách hàng</label>
@@ -129,12 +132,13 @@
 
                                 <c:choose>
                                     <c:when test="${info.statusId == 1 && user.roleId == 2}">
-                                        <button type="submit" name="button" value="reject">Hủy lịch hẹn</button>
+                                        <button type="submit" name="button" value="reject" onclick="inputComment()">Hủy lịch hẹn</button>
                                         <button type="submit" name="button" value="assign">Giao việc</button>
                                     </c:when>
                                     <c:when test="${info.statusId == 3 && user.roleId == 2}">
                                         <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
                                            class="btn btn-default">Tạo hợp đồng</a>
+                                        <button type="submit" name="button" value="reject" onclick="inputComment()">Hủy lịch hẹn</button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
                                         <button type="submit" name="button" value="update3">
@@ -164,6 +168,14 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
-
+<script>
+    function inputComment() {
+        var comment = prompt("Ý kiến khách hàng: ", "");
+        if(comment) {
+            document.appointment.comment.value = comment;
+            document.appointment.button.value = 'reject';
+        }
+    }
+</script>
 </body>
 </html>

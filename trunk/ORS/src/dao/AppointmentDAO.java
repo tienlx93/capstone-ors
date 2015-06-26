@@ -66,6 +66,23 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         }
     }
 
+    public void updateComment(int id, int statusId, String comment) {
+
+        Transaction trans = session.beginTransaction();
+        try {
+            Appointment appointment = (Appointment)session.get(Appointment.class,id);
+            appointment.setStatusId(statusId);
+            appointment.setComment(comment);
+            session.update(appointment);
+            trans.commit();
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+    }
+
     public List<Appointment> getAppointmentListByStaff(String username) {
         try {
             String sql = "from Appointment where assignedStaff = ?";

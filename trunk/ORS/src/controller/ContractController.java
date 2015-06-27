@@ -56,8 +56,9 @@ public class ContractController extends HttpServlet {
                 officeChildren.setCity(officeParent.getCity());
                 officeChildren.setParentOfficeId(officeParent.getId());
 
-                OfficeDAO officeChildrenDao = new OfficeDAO();
-                officeChildrenDao.save(officeChildren);
+                officeDao.save(officeChildren);
+
+                officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
             }
 
             ContractDAO dao = new ContractDAO();
@@ -73,7 +74,7 @@ public class ContractController extends HttpServlet {
             String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
             String paymentTerm = request.getParameter("paymentTerm");
-//            String paymentFee = request.getParameter("paymentFee");
+            String paymentFee = request.getParameter("paymentFee");
 
 
             contract.setStatusId(1);
@@ -81,7 +82,7 @@ public class ContractController extends HttpServlet {
             contract.setOfficeId(Integer.parseInt(officeID));
             contract.setStartDate(java.sql.Date.valueOf(startDateStr));
             contract.setEndDate(java.sql.Date.valueOf(endDateStr));
-//            contract.setPaymentFee(Integer.parseInt(paymentFee));
+            contract.setPaymentFee(Integer.parseInt(paymentFee));
             contract.setPaymentTerm(Integer.parseInt(paymentTerm));
 
             dao.save(contract);

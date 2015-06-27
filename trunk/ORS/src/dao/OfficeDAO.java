@@ -1,7 +1,9 @@
 package dao;
 
+import entity.Contract;
 import entity.Office;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -25,6 +27,22 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         }
 
         return null;
+    }
+
+    public boolean updateArea(int id, double area) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Office office = (Office) session.get(Office.class, id);
+            office.setArea(area);
+            session.update(office);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
     }
 
     public List<Office> getNewOffice() {

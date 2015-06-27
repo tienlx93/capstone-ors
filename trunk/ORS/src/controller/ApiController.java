@@ -121,10 +121,13 @@ public class ApiController extends HttpServlet {
             int id = Integer.parseInt(officeId);
             Office office;
             OfficeDAO dao = new OfficeDAO();
-            office = dao.get(id);
-            OfficeJSON json = new OfficeJSON(office);
-            out.print(gson.toJson(json));
-
+            office = dao.viewOffice(id);
+            if (office!=null) {
+                OfficeJSON json = new OfficeJSON(office);
+                out.print(gson.toJson(json));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
         } else {
             out.print(gson.toJson("Missing officeId"));
         }

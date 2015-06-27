@@ -62,10 +62,43 @@ app.config(['$routeProvider', '$httpProvider',
                 redirectTo: '/home'
             });
     }]);
+
 app.filter('toLocaleDate', function () {
     return function (input) {
         var date = new Date(input);
         return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
     };
 });
+
+var dateTimePicker = function ($parse) {
+
+    return {
+        require: '?ngModel',
+        restrict: 'AE',
+        scope: {
+            pick12HourFormat: '@',
+            language: '@',
+            useCurrent: '@',
+            location: '@'
+        },
+        link: function (scope, elem, attrs) {
+            elem.datetimepicker({
+                pick12HourFormat: scope.pick12HourFormat,
+                language: scope.language,
+                useCurrent: scope.useCurrent
+            });
+
+            //Local event change
+
+            var ngModelGetter = $parse(attrs['ngModel']);
+            elem.on('dp.change', function(event) {
+                scope.$apply(function() {
+                    return ngModelGetter.assign(scope, event.target.value);
+                });
+            });
+        }
+    };
+};
+
+//app.directive('dateTimePicker', dateTimePicker);
 var BACK_END_URL = "";

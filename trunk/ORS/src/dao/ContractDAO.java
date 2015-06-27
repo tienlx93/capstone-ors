@@ -3,7 +3,9 @@ package dao;
 import entity.Contract;
 import entity.Repair;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
+import java.sql.Date;
 import java.util.List;
 
 
@@ -28,5 +30,43 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return null;
     }
 
+    public boolean changeStatus(int id, int status) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Contract contract = (Contract) session.get(Contract.class, id);
+            contract.setStatusId(status);
+            session.update(contract);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
+    }
 
+    public void update(Integer id, String customerUsername, int officeId, Date startDate, Date endDate,
+                       int paymentFee, int paymentTerm, int statusId) {
+
+        Transaction trans = session.beginTransaction();
+        try {
+            Contract ct = (Contract) session.get(Contract.class, id);
+            ct.setCustomerUsername(customerUsername);
+            ct.setOfficeId(officeId);
+            ct.setStartDate(startDate);
+            ct.setEndDate(endDate);
+            ct.setPaymentFee(paymentFee);
+            ct.setPaymentTerm(paymentTerm);
+            ct.setStatusId(statusId);
+            session.update(ct);
+            trans.commit();
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+
+    }
 }

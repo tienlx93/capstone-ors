@@ -49,7 +49,6 @@ public class ContractController extends HttpServlet {
                 }
                 officeChildren.setArea(Double.parseDouble(area));
                 officeChildren.setImageUrls("");
-                officeChildren.setOfficeAmenitiesById(officeParent.getOfficeAmenitiesById());
                 officeChildren.setLatitude(officeParent.getLatitude());
                 officeChildren.setLongitude(officeParent.getLongitude());
                 officeChildren.setDistrict(officeParent.getDistrict());

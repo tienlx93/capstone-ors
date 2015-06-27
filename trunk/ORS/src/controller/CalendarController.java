@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -78,7 +79,7 @@ public class CalendarController extends HttpServlet {
                 item.setId(repair.getId());
                 item.setStaff(staff.getUsername());
                 SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                item.setStart(format.format(repair.getAssignedTime()));
+                item.setStart(format.format(repair.getAssignedTime() == null ? new Date() : repair.getAssignedTime()));
                 item.setTitle("Sửa chữa");
                 item.setType(2);
                 item.setUrl("/admin/rental?action=edit&id=" + repair.getId());

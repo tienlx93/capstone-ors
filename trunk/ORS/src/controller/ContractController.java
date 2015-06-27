@@ -1,12 +1,7 @@
 package controller;
 
-import dao.AppointmentDAO;
-import dao.ContractDAO;
-import dao.PaymentTermDAO;
-import entity.Appointment;
-import entity.Contract;
-import entity.PaymentTerm;
-import entity.PriceTerm;
+import dao.*;
+import entity.*;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,8 +10,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by xps on 6/2/2015.
@@ -28,6 +26,41 @@ public class ContractController extends HttpServlet {
         String action = request.getParameter("action");
         String button = request.getParameter("button");
         if (action.equals("save")) {
+            if(Integer.parseInt(request.getParameter("categoryId")) == 2) {
+                OfficeDAO officeDao = new OfficeDAO();
+                Office officeParent = officeDao.get(Integer.parseInt(request.getParameter("officeID")));
+
+                String area = request.getParameter("officeArea");
+                String address = request.getParameter("officeAddress");
+                Office officeChildren = new Office();
+
+                officeChildren.setStatusId(2);
+                officeChildren.setName(officeParent.getName());
+                officeChildren.setAddress(address);
+                officeChildren.setCategoryId(officeParent.getCategoryId());
+                officeChildren.setDescription("");
+                officeChildren.setCreateDate(new Timestamp((new java.util.Date()).getTime()));
+                if (!officeChildren.equals("")) {
+                    officeChildren.setPrice(officeParent.getPrice());
+                }
+                officeChildren.setPriceTerm(officeParent.getPriceTerm());
+                if (!officeChildren.equals("")) {
+                    officeChildren.setFloorNumber(officeParent.getFloorNumber());
+                }
+                officeChildren.setArea(Double.parseDouble(area));
+                officeChildren.setImageUrls("");
+                officeChildren.setOfficeAmenitiesById(officeParent.getOfficeAmenitiesById());
+                officeChildren.setLatitude(officeParent.getLatitude());
+                officeChildren.setLongitude(officeParent.getLongitude());
+                officeChildren.setDistrict(officeParent.getDistrict());
+                officeChildren.setCity(officeParent.getCity());
+                officeChildren.setParentOfficeId(officeParent.getId());
+
+                officeDao.save(officeChildren);
+
+                officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
+            }
+
             ContractDAO dao = new ContractDAO();
             Contract contract = new Contract();
 
@@ -41,7 +74,7 @@ public class ContractController extends HttpServlet {
             String startDateStr = request.getParameter("startDate");
             String endDateStr = request.getParameter("endDate");
             String paymentTerm = request.getParameter("paymentTerm");
-//            String paymentFee = request.getParameter("paymentFee");
+            String paymentFee = request.getParameter("paymentFee");
 
 
             contract.setStatusId(1);
@@ -49,14 +82,12 @@ public class ContractController extends HttpServlet {
             contract.setOfficeId(Integer.parseInt(officeID));
             contract.setStartDate(java.sql.Date.valueOf(startDateStr));
             contract.setEndDate(java.sql.Date.valueOf(endDateStr));
-//            contract.setPaymentFee(Integer.parseInt(paymentFee));
+            contract.setPaymentFee(Integer.parseInt(paymentFee));
             contract.setPaymentTerm(Integer.parseInt(paymentTerm));
 
             dao.save(contract);
             response.sendRedirect("/admin/contract");
         } else if (action.equals("cancel")) {
-            String comment = request.getParameter("comment");
-
             AppointmentDAO appointmentDao = new AppointmentDAO();
             String appointmentID = request.getParameter("appointmentID");
 
@@ -99,21 +130,23 @@ public class ContractController extends HttpServlet {
         ContractDAO dao = new ContractDAO();
         String action = request.getParameter("action");
         RequestDispatcher rd;
+        PaymentTermDAO ptDao = new PaymentTermDAO();
+        List<PaymentTerm> paymentTermList = ptDao.findAll();
         if (action == null) {
             List<Contract> list = dao.findAll();
             request.setAttribute("data", list);
             rd = request.getRequestDispatcher("/WEB-INF/admin/contract/viewContract.jsp");
             rd.forward(request, response);
         } else {
-            List<Contract> list = dao.findAll();
-            request.setAttribute("dataList", list);
-            ContractDAO contractDAO = new ContractDAO();
-            PaymentTermDAO ptDao = new PaymentTermDAO();
-            List<PaymentTerm> paymentTermList = ptDao.findAll();
             switch (action) {
                 case "new":
                     AppointmentDAO appointmentDao = new AppointmentDAO();
-                    request.setAttribute("appointmentList", appointmentDao.get(Integer.parseInt(request.getParameter("id"))));
+                    Appointment appointment = appointmentDao.get(Integer.parseInt(request.getParameter("id")));
+                    request.setAttribute("appointmentList", appointment);
+
+                    OfficeDAO officeDao = new OfficeDAO();
+                    request.setAttribute("office", officeDao.get(appointment.getOfficeId()));
+
 
                     request.setAttribute("paymentTermList", paymentTermList);
 
@@ -133,19 +166,33 @@ public class ContractController extends HttpServlet {
                     break;
                 case "viewReturn":
 
-                    request.setAttribute("info", contractDAO.get(Integer.parseInt(request.getParameter("id"))));
+                    request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                     rd = request.getRequestDispatcher("/WEB-INF/admin/contract/returnContract.jsp");
                     rd.forward(request, response);
                     break;
                 case "viewExtend":
 
                     request.setAttribute("paymentTermList", paymentTermList);
-                    request.setAttribute("info", contractDAO.get(Integer.parseInt(request.getParameter("id"))));
+                    request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                     rd = request.getRequestDispatcher("/WEB-INF/admin/contract/extendContract.jsp");
                     rd.forward(request, response);
                     break;
             }
         }
 
+    }
+
+    private List<String> saveAmenities(String amenities) {
+        StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
+        List<String> amenityList = new ArrayList<>();
+        while (tokenizer.hasMoreTokens()) {
+            amenityList.add(tokenizer.nextToken());
+        }
+        AmenityDAO amenityDAO = new AmenityDAO();
+        OfficeAmenityDAO officeAmenityDAO = new OfficeAmenityDAO();
+        if (amenityDAO.addAmenities(amenityList)) {
+            officeAmenityDAO.findAll();
+        }
+        return amenityList;
     }
 }

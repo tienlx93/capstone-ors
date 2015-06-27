@@ -46,7 +46,7 @@
                         Tạo hợp đồng
                     </div>
                     <div>
-                        <form action="contract" method="post" id="createContract">
+                        <form action="contract" method="post" name="createContract" onsubmit="return validateArea()">
                             <div class="form-group clearfix" hidden>
                                 <label for="appointmentID" class="col-sm-2 control-label">Id</label>
                                 ${appointmentList.id}<input type="hidden" name="appointmentID" id="appointmentID"
@@ -72,6 +72,36 @@
                                            value="${appointmentList.officeByOfficeId.id}">
                                 </div>
                             </div>
+
+                            <div class="form-group clearfix" hidden>
+                                <label for="categoryId" class="col-sm-2 control-label">Id</label>
+                                ${office.categoryId}<input type="hidden" name="categoryId" id="categoryId"
+                                                            value="${office.categoryId}">
+                            </div>
+
+                            <c:if test="${office.categoryId == 2}">
+                                <div class="form-group clearfix">
+                                    <label for="officeAddress" class="col-sm-2 control-label">Địa chỉ văn phòng</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="text" id="officeAddress" name="officeAddress"
+                                               value="${office.address}">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="officeArea" class="col-sm-2 control-label">Diện tích văn phòng</label>
+
+                                    <div class="col-sm-10">
+                                        <input type="number" id="officeArea" name="officeArea"
+                                               value="${office.area}">
+                                    </div>
+
+                                    <div hidden>
+                                        <input name="parentArea" value="${office.area}">
+                                    </div>
+                                </div>
+                            </c:if>
+
 
                             <div class="form-group clearfix">
                                 <label for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</label>
@@ -104,8 +134,7 @@
                                 <div class="col-sm-10">
                                     <select name="paymentTerm" class="form-control" id="paymentTerm">
                                         <c:forEach var="item" items="${paymentTermList}">
-                                            <option value="${item.id}"
-                                                    <c:if test="${office.paymentTermList  ==item.id}">selected</c:if> >
+                                            <option value="${item.id}">
                                                     ${item.description}</option>
                                         </c:forEach>
                                     </select>
@@ -113,16 +142,15 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="comment" class="col-sm-2 control-label">Ý kiến khách hàng</label>
+                                <label for="paymentFee" class="col-sm-2 control-label">Giá tiền</label>
 
                                 <div class="col-sm-10">
-                                    <input style="display: inline-block" type='text' class="form-control" name="comment"
-                                           id="comment" value=""/>
+                                    <input style="display: inline-block" type='number' class="form-control" name="paymentFee"
+                                           id="paymentFee" value=""/>
                                 </div>
                             </div>
 
                             <div class="button-post">
-                                <button type="submit" value="cancel" name="action">Hủy</button>
                                 <button type="submit" value="save" name="action">Tạo mới</button>
                             </div>
 
@@ -166,6 +194,17 @@
             end.hide();
         }).data('datepicker');
     });
+
+    function validateArea() {
+        var parentArea = document.createContract.parentArea.value;
+        var area = document.createContract.officeArea.value;
+
+        if(parseFloat(area) > parseFloat(parentArea)) {
+            alert('Diện tích văn phòng con không được lớn hơn diện tích văn phòng cha!');
+            return false;
+        }
+        return true;
+    };
 </script>
 
 </body>

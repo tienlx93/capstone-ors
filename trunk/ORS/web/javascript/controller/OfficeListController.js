@@ -6,6 +6,10 @@ controllers.controller('OfficeListController', ['$scope','$location', 'Api', '$r
             Api.searchOfficeByAddress(address, function(data) {
                 if (data) {
                     $scope.listSearchedOffice = data;
+                    for(var i = 0; i < $scope.listSearchedOffice.length; i++) {
+                        $scope.listSearchedOffice[i].description = $scope.listSearchedOffice[i].description.length > 200 ?
+                        $scope.listSearchedOffice[i].description.substring(0, 200) + "..." : $scope.listSearchedOffice[i].description;
+                    }
                 }
             })
         };

@@ -58,7 +58,6 @@
                                 <th>Ngày kết thúc</th>
                                 <th>Giá</th>
                                 <th>Thời hạn thanh toán</th>
-                                <th>Trạng thái</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -66,12 +65,11 @@
                                 <c:if test="${item.statusId != 4}">
                                     <tr>
                                         <td>${item.accountByCustomerUsername.username}</td>
-                                        <td>${item.officeByOfficeId.id}</td>
+                                        <td>${item.officeByOfficeId.name}</td>
                                         <td>${item.startDate}</td>
                                         <td>${item.endDate}</td>
                                         <td>${item.paymentFee}</td>
                                         <td>${item.paymentTermByPaymentTerm.description}</td>
-                                        <td>${item.contractStatusByStatusId.description}</td>
                                     </tr>
                                 </c:if>
                             </c:forEach>

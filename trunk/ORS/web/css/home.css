@@ -90,6 +90,15 @@ body {
 .navigation-wrapper .login-wrapper li {
     border: 1px solid white;
     padding: 5px 10px;
+    cursor: pointer;
+}
+
+.navigation-wrapper .login-wrapper li:hover {
+    background-color: white;
+}
+
+.navigation-wrapper .login-wrapper li:hover a {
+    color: #000000;
 }
 
 .navigation-wrapper .menu-wrapper {

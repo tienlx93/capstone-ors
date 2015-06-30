@@ -129,8 +129,6 @@
 
                             <div class="form-group clearfix">
                                 <label for="repairStatusId" class="col-sm-2 control-label">Tình trạng</label>
-                                <% RepairStatusDAO dao = new RepairStatusDAO();
-                                    List<RepairStatus> list = dao.findAll();%>
                                 <div class="col-sm-10">
                                     ${info.repairStatusByRepairStatusId.description}
                                     <input type="hidden" name="repairStatusId" id="repairStatusId"
@@ -141,9 +139,12 @@
                             <div class="button-post">
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
-                                        <button type="submit" value="assign" name="button" class="btn">Giao việc
-                                        </button>
-                                        <button type="submit" value="reject" name="button" class="btn">Từ chối</button>
+                                        <c:if test="${info.repairStatusId == 1}">
+                                            <button type="submit" value="assign" name="button" class="btn">Giao việc
+                                            </button>
+                                            <button type="submit" value="reject" name="button" class="btn">Từ chối
+                                            </button>
+                                        </c:if>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>

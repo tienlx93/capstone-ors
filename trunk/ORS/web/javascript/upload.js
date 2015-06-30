@@ -72,13 +72,13 @@ function addAmenity() {
 
 $("#amenity").on('keydown', function (event) {
     if (event.keyCode == 13) {
-        event.preventDefault();
+        //event.preventDefault();
         addAmenity();
         $("#amenity").val("");
     }
 });
 
-$.ajax({url: "/api/amenity", success: function(result){
+$.ajax({url: "/api?action=amenity", success: function(result){
     var data = new Bloodhound({
         datumTokenizer: Bloodhound.tokenizers.whitespace,
         queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -121,14 +121,14 @@ dropdown.find("option[value=3]").hide();
 dropdown.find("option[value=4]").show();
 $("#category").change(function(){
     if ($("#category").val() == 1) {
-        dropdown[0].selectedIndex = 1;
+        dropdown[0].selectedIndex = 0;
         dropdown.find("option[value=1]").show();
         dropdown.find("option[value=2]").hide();
         dropdown.find("option[value=3]").hide();
         dropdown.find("option[value=4]").show();
 
     } else {
-        dropdown[0].selectedIndex = 2;
+        dropdown[0].selectedIndex = 1;
         dropdown.find("option[value=1]").hide();
         dropdown.find("option[value=2]").show();
         dropdown.find("option[value=3]").show();

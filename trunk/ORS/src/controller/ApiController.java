@@ -108,6 +108,9 @@ public class ApiController extends HttpServlet {
                     out.print(gson.toJson("Error"));
                 }
                 break;
+            case "amenity":
+                getAmenityList(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -528,6 +531,19 @@ public class ApiController extends HttpServlet {
                 contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
 
         out.print(gson.toJson(json));
+    }
+
+    private void getAmenityList(HttpServletRequest request, PrintWriter out) {
+        Gson gson = new Gson();
+
+        AmenityDAO dao = new AmenityDAO();
+
+        List<String> list = new ArrayList<>();
+        for (Amenity amenity : dao.findAll()) {
+            list.add(amenity.getName());
+        }
+        out.print(gson.toJson(list));
+        out.flush();
     }
 }
 

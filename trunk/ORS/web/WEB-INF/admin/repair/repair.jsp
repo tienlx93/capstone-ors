@@ -47,144 +47,119 @@
                         Danh sách sửa chữa
                     </div>
                     <div>
-                        <c:if test="${user.roleId == 2}">
-                            <div class="panel-body">
 
-                                <div role="tabpanel">
+                        <div class="panel-body">
 
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li role="presentation" class="active"><a href="#request"
-                                                                                  aria-controls="request"
-                                                                                  role="tab" data-toggle="tab">Chờ xử
-                                            lí</a>
+                            <div role="tabpanel">
+
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-tabs" role="tablist">
+                                    <c:if test="${user.roleId == 2}">
+                                        <li role="presentation" class="active">
+                                            <a href="#request"
+                                               aria-controls="request"
+                                               role="tab" data-toggle="tab">Cần giao việc</a>
                                         </li>
-                                        <li role="presentation"><a href="#Assigned" aria-controls="Assigned" role="tab"
-                                                                   data-toggle="tab">Giao việc</a></li>
-                                        <li role="presentation"><a href="#done" aria-controls="done" role="tab"
-                                                                   data-toggle="tab">Hoàn thành</a></li>
-                                        <li role="presentation"><a href="#cancel" aria-controls="cancel" role="tab"
-                                                                   data-toggle="tab">Hủy</a></li>
-                                    </ul>
+                                    </c:if>
+                                    <li role="presentation">
+                                        <a href="#Assigned" aria-controls="Assigned" role="tab"
+                                           data-toggle="tab">Đã giao</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#done" aria-controls="done" role="tab"
+                                           data-toggle="tab">Hoàn thành</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#cancel" aria-controls="cancel" role="tab"
+                                           data-toggle="tab">Hủy</a>
+                                    </li>
+                                </ul>
 
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <c:if test="${user.roleId == 2}">
                                         <div role="tabpanel" class="tab-pane active" id="request">
                                             <table class="table">
                                                 <thead>
                                                 <tr>
                                                     <th>Tên văn phòng</th>
                                                     <th>Khách hàng</th>
-                                                    <c:if test="${user.roleId == 2}">
-                                                        <th>Nhân viên được giao</th>
-                                                    </c:if>
-                                                    <th>Mô tả</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <c>
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 1}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>${item.contractByContractId.customerUsername}</td>
-                                                        <c:if test="${user.roleId == 2}">
-                                                            <td>${item.assignedStaff}</td>
-                                                        </c:if>
-                                                        <td>${item.description}</td>
-
-                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
-                                                        </td>
-                                                    </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="Assigned">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Tên văn phòng</th>
-                                                    <th>Khách hàng</th>
-                                                    <c:if test="${user.roleId == 2}">
-                                                        <th>Nhân viên được giao</th>
-                                                    </c:if>
-                                                    <th>Mô tả</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <c>
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 2}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>${item.contractByContractId.customerUsername}</td>
-                                                        <c:if test="${user.roleId == 2}">
-                                                            <td>${item.assignedStaff}</td>
-                                                        </c:if>
-                                                        <td>${item.description}</td>
-
-                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
-                                                        </td>
-                                                    </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="done">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Tên văn phòng</th>
-                                                    <th>Khách hàng</th>
-                                                    <c:if test="${user.roleId == 2}">
-                                                        <th>Nhân viên được giao</th>
-                                                    </c:if>
-                                                    <th>Mô tả</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <c>
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 3}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>${item.contractByContractId.customerUsername}</td>
-                                                        <c:if test="${user.roleId == 2}">
-                                                            <td>${item.assignedStaff}</td>
-                                                        </c:if>
-                                                        <td>${item.description}</td>
-
-                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
-                                                        </td>
-                                                    </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="cancel">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Tên văn phòng</th>
-                                                    <th>Khách hàng</th>
-                                                    <c:if test="${user.roleId == 2}">
-                                                        <th>Nhân viên được giao</th>
-                                                    </c:if>
+                                                    <th>Ngày tạo yêu cầu</th>
                                                     <th>Mô tả</th>
 
                                                     <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 4}">
+                                                <c:forEach var="item" items="${list}">
+                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 1}">
+                                                        <tr>
+                                                            <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                            <td>${item.contractByContractId.customerUsername}</td>
+                                                            <td>${item.createTime}</td>
+                                                            <td>${item.description}</td>
+
+                                                            <td><a href="repair?action=edit&id=${item.id}">Giao việc</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:if>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </c:if>
+                                    <div role="tabpanel" class="tab-pane" id="Assigned">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Tên văn phòng</th>
+                                                <th>Khách hàng</th>
+                                                <th>Ngày sửa chữa</th>
+                                                <c:if test="${user.roleId == 2}">
+                                                    <th>Nhân viên được giao</th>
+                                                </c:if>
+                                                <th>Mô tả</th>
+
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach var="item" items="${list}">
+                                                <c:if test="${item.repairStatusByRepairStatusId.id == 2}">
+                                                    <tr>
+                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                        <td>${item.contractByContractId.customerUsername}</td>
+                                                        <td>${item.assignedTime}</td>
+                                                        <c:if test="${user.roleId == 2}">
+                                                            <td>${item.assignedStaff}</td>
+                                                        </c:if>
+                                                        <td>${item.description}</td>
+
+                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:if>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="done">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Tên văn phòng</th>
+                                                <th>Khách hàng</th>
+                                                <c:if test="${user.roleId == 2}">
+                                                    <th>Nhân viên được giao</th>
+                                                </c:if>
+                                                <th>Mô tả</th>
+
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach var="item" items="${list}">
+                                                <c:if test="${item.repairStatusByRepairStatusId.id == 3}">
                                                     <tr>
                                                         <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                         <td>${item.contractByContractId.customerUsername}</td>
@@ -196,173 +171,49 @@
                                                         <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
                                                         </td>
                                                     </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
+                                                </c:if>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div role="tabpanel" class="tab-pane" id="cancel">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th>Tên văn phòng</th>
+                                                <th>Khách hàng</th>
+                                                <c:if test="${user.roleId == 2}">
+                                                    <th>Nhân viên được giao</th>
+                                                </c:if>
+                                                <th>Mô tả</th>
+
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <c:forEach var="item" items="${list}">
+                                                <c:if test="${item.repairStatusByRepairStatusId.id == 4}">
+                                                    <tr>
+                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                        <td>${item.contractByContractId.customerUsername}</td>
+                                                        <c:if test="${user.roleId == 2}">
+                                                            <td>${item.assignedStaff}</td>
+                                                        </c:if>
+                                                        <td>${item.description}</td>
+
+                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:if>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
-                        </c:if>
+                        </div>
                     </div>
-                    <div>
-                        <c:if test="${user.roleId == 3}">
-                            <div class="panel-body">
 
-                                <div role="tabpanel">
-
-                                    <!-- Nav tabs -->
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li role="presentation" class="active"><a href="#request"
-                                                                                  aria-controls="1"
-                                                                                  role="tab" data-toggle="tab">Chờ xử
-                                            lí</a>
-                                        </li>
-                                        <li role="presentation"><a href="#assigned" aria-controls="2" role="tab"
-                                                                   data-toggle="tab">Việc được giao</a></li>
-                                        <li role="presentation"><a href="#done" aria-controls="3" role="tab"
-                                                                   data-toggle="tab">Hoàn thành</a></li>
-                                        <li role="presentation"><a href="#cancel" aria-controls="4" role="tab"
-                                                                   data-toggle="tab">Hủy</a></li>
-                                    </ul>
-
-                                    <!-- Tab panes -->
-                                    <div class="tab-content">
-                                        <div role="tabpanel" class="tab-pane active" id="request">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Tên văn phòng</th>
-                                                    <th>Khách hàng</th>
-                                                    <th>Mô tả</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <c>
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 1}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>${item.contractByContractId.customerUsername}</td>
-                                                        <c:if test="${user.roleId == 3}">
-                                                            <td>${item.assignedStaff}</td>
-                                                        </c:if>
-                                                        <td>${item.description}</td>
-
-                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
-                                                        </td>
-                                                    </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="assigned">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Tên văn phòng</th>
-                                                    <th>Khách hàng</th>
-                                                    <c:if test="${user.roleId == 3}">
-                                                        <th>Nhân viên được giao</th>
-                                                    </c:if>
-                                                    <th>Mô tả</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 2}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>${item.contractByContractId.customerUsername}</td>
-                                                        <c:if test="${user.roleId == 3}">
-                                                            <td>${item.assignedStaff}</td>
-                                                        </c:if>
-                                                        <td>${item.description}</td>
-
-                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
-                                                        </td>
-                                                    </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="done">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Tên văn phòng</th>
-                                                    <th>Khách hàng</th>
-                                                    <c:if test="${user.roleId == 3}">
-                                                        <th>Nhân viên được giao</th>
-                                                    </c:if>
-                                                    <th>Mô tả</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 3}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>${item.contractByContractId.customerUsername}</td>
-                                                        <c:if test="${user.roleId == 3}">
-                                                            <td>${item.assignedStaff}</td>
-                                                        </c:if>
-                                                        <td>${item.description}</td>
-
-                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
-                                                        </td>
-                                                    </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
-                                        <div role="tabpanel" class="tab-pane" id="cancel">
-                                            <table class="table">
-                                                <thead>
-                                                <tr>
-                                                    <th>Tên văn phòng</th>
-                                                    <th>Khách hàng</th>
-                                                    <c:if test="${user.roleId == 3}">
-                                                        <th>Nhân viên được giao</th>
-                                                    </c:if>
-                                                    <th>Mô tả</th>
-
-                                                    <th></th>
-                                                </tr>
-                                                </thead>
-                                                <c>
-                                                    <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 4}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>${item.contractByContractId.customerUsername}</td>
-                                                        <c:if test="${user.roleId == 3}">
-                                                            <td>${item.assignedStaff}</td>
-                                                        </c:if>
-                                                        <td>${item.description}</td>
-                                                        >
-                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
-                                                        </td>
-                                                    </tr>
-                                                    </c:if>
-                                                    </c:forEach>
-                                                    </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </c:if>
-                    </div>
                 </div>
             </div>
         </div>

@@ -18,7 +18,8 @@
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
           type="text/css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+          type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
@@ -29,6 +30,8 @@
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -73,13 +76,20 @@
 
                             <div class="form-group clearfix">
                                 <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
-
                                 <div class="col-sm-10">
                                     ${info.contractByContractId.customerUsername}
                                     <input type="hidden" id="customerName"
                                            value="${info.contractByContractId.customerUsername}">
                                 </div>
                             </div>
+
+                            <div class="form-group clearfix">
+                                <label for="nameOfiice" class="col-sm-2 control-label">Ngày tạo yêu cầu</label>
+                                <div class="col-sm-10">
+                                    ${info.createTime}
+                                </div>
+                            </div>
+
                             <c:if test="${user.roleId==2}">
                                 <div class="form-group clearfix">
                                     <label for="assignedStaff" class="col-sm-2 control-label">Nhân viên được
@@ -128,6 +138,24 @@
                             </div>
 
                             <div class="form-group clearfix">
+                                <label for="assignedTime" class="col-sm-2 control-label">Ngày sửa chữa</label>
+                                <c:choose>
+                                    <c:when test="${user.roleId==2}">
+                                        <div class="col-sm-10">
+                                            <input type='text' class="form-control"
+                                                   name="assignedTime"
+                                                   id="assignedTime"
+                                                   value="${info.assignedTime}"/>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${info.assignedTime}
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </div>
+
+                            <div class="form-group clearfix">
                                 <label for="repairStatusId" class="col-sm-2 control-label">Tình trạng</label>
                                 <% RepairStatusDAO dao = new RepairStatusDAO();
                                     List<RepairStatus> list = dao.findAll();%>
@@ -141,26 +169,35 @@
                             <div class="button-post">
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
-                                        <button type="submit" value="assign" name="button" class="btn">Giao việc
-                                        </button>
-                                        <button type="submit" value="reject" name="button" class="btn">Từ chối</button>
+                                        <c:if test="${info.repairStatusId == 1}">
+                                            <button type="submit" value="assign" name="button" class="btn btn-default">
+                                                Giao việc
+                                            </button>
+                                            <button type="submit" value="reject" name="button" class="btn btn-default">
+                                                Từ chối sửa chữa
+                                            </button>
+                                        </c:if>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${info.repairStatusId == 2}">
-                                                <button type="submit" value="change5" name="button" class="btn">Đồng ý
-                                                    sửa chữa
+                                                <button type="submit" value="change5" name="button"
+                                                        class="btn btn-default">
+                                                    Đồng ý sửa chữa
                                                 </button>
-                                                <button type="submit" value="change1" name="button" class="btn">Không
-                                                    đồng ý sửa chữa
+                                                <button type="submit" value="change1" name="button"
+                                                        class="btn btn-default">
+                                                    Không đồng ý sửa chữa
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.repairStatusId == 5}">
-                                                <button type="submit" value="change3" name="button" class="btn">Khách
-                                                    hàng hài lòng
+                                                <button type="submit" value="change3" name="button"
+                                                        class="btn btn-default">
+                                                    Khách hàng hài lòng
                                                 </button>
-                                                <button type="submit" value="change1" name="button" class="btn">Khách
-                                                    hàng không hài lòng
+                                                <button type="submit" value="change1" name="button"
+                                                        class="btn btn-default">
+                                                    Khách hàng không hài lòng
                                                 </button>
                                             </c:when>
                                         </c:choose>
@@ -179,6 +216,20 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
+        $('#assignedTime').datepicker({
+            format: 'yyyy-mm-dd',
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).data('datepicker');
+
+    });
+
+</script>
 </body>
 </html>

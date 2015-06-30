@@ -53,28 +53,36 @@
 
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
-
-                                            <li role="presentation" class="active"><a href="#all"
-                                                                                      aria-controls="pending" role="tab"
-                                                                                      data-toggle="tab">Tất cả</a></li>
-                                            <li role="presentation" class=""><a href="#Assigned"
-                                                                                aria-controls="Assigned" role="tab"
-                                                                                data-toggle="tab">Đã Giao</a></li>
-                                            <li role="presentation" class=""><a href="#Accepted"
-                                                                                aria-controls="Accepted" role="tab"
-                                                                                data-toggle="tab">Chấp Nhận</a></li>
-                                            <li role="presentation" class=""><a href="#done" aria-controls="done"
-                                                                                role="tab" data-toggle="tab">Hoàn Thành/ Hủy</a>
+                                            <li role="presentation" class="active">
+                                                <a href="#pending" aria-controls="home"
+                                                   role="tab" data-toggle="tab">Cần Giao Việc</a>
                                             </li>
-                                            <li role="presentation" class=""><a href="#pending" aria-controls="home"
-                                                                                role="tab" data-toggle="tab">Chờ xử lí</a>
+                                            <li role="presentation" class="">
+                                                <a href="#Assigned"
+                                                   aria-controls="Assigned" role="tab"
+                                                   data-toggle="tab">Đã Giao</a>
+                                            </li>
+                                            <li role="presentation" class="">
+                                                <a href="#Accepted"
+                                                   aria-controls="Accepted" role="tab"
+                                                   data-toggle="tab">Chấp Nhận</a>
+                                            </li>
+                                            <li role="presentation" class="">
+                                                <a href="#done" aria-controls="done"
+                                                   role="tab" data-toggle="tab">Hoàn Thành/Hủy</a>
+                                            </li>
+
+                                            <li role="presentation" class="">
+                                                <a href="#all"
+                                                   aria-controls="pending" role="tab"
+                                                   data-toggle="tab">Tất cả</a>
                                             </li>
                                         </ul>
 
                                         <!-- Tab panes -->
                                         <div class="tab-content">
 
-                                            <div role="tabpanel" class="tab-pane " id="pending">
+                                            <div role="tabpanel" class="tab-pane active" id="pending">
                                                 <div>
                                                     <table class="table">
                                                         <thead>
@@ -98,9 +106,7 @@
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
+                                                                            Giao việc
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -135,9 +141,7 @@
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
+                                                                            Chi tiết
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -172,9 +176,7 @@
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
+                                                                            Đến kí/hủy hợp đồng
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -209,9 +211,7 @@
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
+                                                                            Chi tiết
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -222,7 +222,7 @@
                                                 </div>
                                                 <!--end table-->
                                             </div>
-                                            <div role="tabpanel" class="tab-pane active" id="all">
+                                            <div role="tabpanel" class="tab-pane" id="all">
                                                 <div>
                                                     <table class="table">
                                                         <thead>
@@ -245,9 +245,7 @@
                                                                 <td>
                                                                     <a class="btn"
                                                                        href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                        <span class="icon color5"><i
-                                                                                class="fa fa-plus"></i></span>
-                                                                        Cập nhật lịch hẹn
+                                                                        Chi tiết
                                                                     </a>
                                                                 </td>
                                                             </tr>

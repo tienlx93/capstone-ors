@@ -155,7 +155,7 @@
                             <div class="button-post">
                                 <input type="hidden" id="imageUrls" name="imageUrls">
                                 <input type="hidden" id="amenityList" name="amenityList">
-                                <button type="submit" value="save" class="btn btn-primary" name="action">Tạo mới
+                                <button type="button" value="save" class="btn btn-primary" name="action">Tạo mới
                                 </button>
                                 <a href="/admin/office" class="btn btn-default">Hủy</a>
                             </div>

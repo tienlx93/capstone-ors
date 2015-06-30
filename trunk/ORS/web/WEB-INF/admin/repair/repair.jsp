@@ -92,7 +92,7 @@
                                                 </thead>
                                                 <tbody>
                                                 <c:forEach var="item" items="${list}">
-                                                    <c:if test="${item.repairStatusByRepairStatusId.id == 1}">
+                                                    <c:if test="${item.repairStatusId == 1}">
                                                         <tr>
                                                             <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                             <td>${item.contractByContractId.customerUsername}</td>
@@ -125,7 +125,7 @@
                                             </thead>
                                             <tbody>
                                             <c:forEach var="item" items="${list}">
-                                                <c:if test="${item.repairStatusByRepairStatusId.id == 2}">
+                                                <c:if test="${item.repairStatusId == 2}">
                                                     <tr>
                                                         <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                         <td>${item.contractByContractId.customerUsername}</td>
@@ -159,7 +159,7 @@
                                             </thead>
                                             <tbody>
                                             <c:forEach var="item" items="${list}">
-                                                <c:if test="${item.repairStatusByRepairStatusId.id == 3}">
+                                                <c:if test="${item.repairStatusId == 3}">
                                                     <tr>
                                                         <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                         <td>${item.contractByContractId.customerUsername}</td>
@@ -192,7 +192,7 @@
                                             </thead>
                                             <tbody>
                                             <c:forEach var="item" items="${list}">
-                                                <c:if test="${item.repairStatusByRepairStatusId.id == 4}">
+                                                <c:if test="${item.repairStatusId == 4}">
                                                     <tr>
                                                         <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                         <td>${item.contractByContractId.customerUsername}</td>

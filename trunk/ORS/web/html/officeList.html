@@ -21,24 +21,21 @@
                     <img src="../img/office.jpg">
                 </div><!--lend left-detail-->
                 <div class="center-detail">
-                    <a href="#">{{item.address}}</a>
+                    <a href="#/detail/{{item.id}}">{{item.address}}</a>
                     <p>{{item.description}}</p>
                     <div class="menu">
-                        <!--<ul class="right">-->
-                            <!--<li>Furnished offices</li>-->
-                            <!--<li>Furnished offices</li>-->
-                            <!--<li>Furnished offices</li>-->
-                            <!--<li>Furnished offices</li>-->
-                        <!--</ul>-->
                         <ul class="left">
                             <li ng-repeat="amenity in item.amenityList">{{amenity}}</li>
                         </ul>
                     </div><!--lend menu-->
                 </div>
                 <div class="right-detail">
-                    <h4>Serviced Office</h4>
-                    <h3>{{item.price ? item.price : 'Liên hệ'}}</h3>
-                    <div class="VD"><a href="#/detail/{{item.id}}">View Detail</a></div>
+                    <h4>{{item.category}}</h4>
+
+                    <div class="price" ng-if="item.priceTerm=='Nguyên căn'">{{item.price + ' VND / Tháng'}}</div>
+                    <div class="price" ng-if="item.priceTerm!='Nguyên căn'">{{item.price ? item.price + ' VND': 'Liên hệ'}}
+                        <div class="price-detail" ng-if="item.price">{{item.priceTerm+' / Tháng'}}</div></div>
+                    <div class="VD"><a href="#/detail/{{item.id}}">Chi tiết</a></div>
                 </div>
             </div>
             <!--end left-wrapper-->
@@ -46,7 +43,7 @@
 
         <div id="right-wrapper">
             <div id="one">
-                <input type="text" placeholder="input your city">
+                <input type="text" placeholder="tìm kiếm...">
                 <select>
                     <option>Viet Nam</option>
                     <option>Binh Duong</option>
@@ -54,7 +51,7 @@
                 </select>
             </div>
             <div id="two">
-                <p>Amenities</p>
+                <p>Danh sách tiện nghi</p>
                 <label>
                     <input type="checkbox" id="inlineCheckbox1" value="option1"> Furnished offices (3)
                 </label>
@@ -70,8 +67,8 @@
                 <label>
                     <input type="checkbox" id="inlineCheckbox5" value="option1"> Furnished offices (3)
                 </label>
-                <div id="more"><a href="#">More amennities +</a></div>
-                <div id="up"><a href="#">Update results</a></div>
+                <div id="more"><a href="#">Thêm tiện nghi</a></div>
+                <div id="up"><a href="#">Tìm kiếm</a></div>
             </div>
             <div id="three"></div>
             <div id="four"></div>

@@ -157,8 +157,6 @@
 
                             <div class="form-group clearfix">
                                 <label for="repairStatusId" class="col-sm-2 control-label">Tình trạng</label>
-                                <% RepairStatusDAO dao = new RepairStatusDAO();
-                                    List<RepairStatus> list = dao.findAll();%>
                                 <div class="col-sm-10">
                                     ${info.repairStatusByRepairStatusId.description}
                                     <input type="hidden" name="repairStatusId" id="repairStatusId"

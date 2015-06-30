@@ -74,35 +74,10 @@ app.filter('toLocaleDate', function () {
     };
 });
 
-var dateTimePicker = function ($parse) {
-
-    return {
-        require: '?ngModel',
-        restrict: 'AE',
-        scope: {
-            pick12HourFormat: '@',
-            language: '@',
-            useCurrent: '@',
-            location: '@'
-        },
-        link: function (scope, elem, attrs) {
-            elem.datetimepicker({
-                pick12HourFormat: scope.pick12HourFormat,
-                language: scope.language,
-                useCurrent: scope.useCurrent
-            });
-
-            //Local event change
-
-            var ngModelGetter = $parse(attrs['ngModel']);
-            elem.on('dp.change', function(event) {
-                scope.$apply(function() {
-                    return ngModelGetter.assign(scope, event.target.value);
-                });
-            });
-        }
+app.filter('m2', ['$sce', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input.replace("m2","m<sup>2</sup>"));
     };
-};
+}]);
 
-//app.directive('dateTimePicker', dateTimePicker);
 var BACK_END_URL = "";

@@ -24,9 +24,10 @@
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <title>Office Rental Service</title>
 </head>
-<body>
+<body onload="initialize()">
 <jsp:include page="/WEB-INF/admin/top.jsp"/>
 
 <jsp:include page="/WEB-INF/admin/left.jsp"/>
@@ -59,7 +60,37 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" name="address" class="form-control" id="address"
+                                           onFocus="geolocate()"
                                            value="${office.address}" required>
+                                </div>
+                                <div class="col-sm-10">
+                                    <table id="autocomplete">
+                                        <tr>
+                                            <td class="label">Địa chỉ</td>
+                                            <td class="slimField">
+                                                <input class="field" id="street_number" disabled="true"></td>
+                                            <td class="wideField" colspan="2">
+                                                <input class="field" id="route" disabled="true"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Quận / Huyện</td>
+                                            <td class="wideField" colspan="3">
+                                                <input class="field" name="district"
+                                                       id="administrative_area_level_2"
+                                                       disabled="true"></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="label">Thành phố / Tỉnh</td>
+                                            <td class="wideField" colspan="3">
+                                                <input class="field" name="city"
+                                                       id="administrative_area_level_1"
+                                                       disabled="true"></td>
+                                            <input type="text" name="latitude" id="latitude">
+                                            <input type="text" name="longitude" id="longitude">
+
+                                        </tr>
+                                    </table>
+                                    <div id="map-canvas"></div>
                                 </div>
                             </div>
                             <div class="form-group clearfix">
@@ -173,6 +204,7 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/street.js"></script>
 
 </body>
 </html>

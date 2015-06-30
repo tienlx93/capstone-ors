@@ -20,6 +20,16 @@ public class OfficeListDetail {
     private String address;
     private List<String> images;
 
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+
+    private String category;
+
     public OfficeListDetail() {
     }
 
@@ -54,6 +64,7 @@ public class OfficeListDetail {
                 images.add(img);
             }
         }
+        this.category = office.getCategoryByCategoryId().getDescription();
     }
 
     public int getId() {

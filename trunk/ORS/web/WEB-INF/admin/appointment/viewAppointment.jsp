@@ -69,13 +69,11 @@
                                             </li>
                                             <li role="presentation" class="">
                                                 <a href="#done" aria-controls="done"
-                                                   role="tab" data-toggle="tab">Hoàn Thành/Hủy</a>
+                                                   role="tab" data-toggle="tab">Hoàn Thành</a>
                                             </li>
-
                                             <li role="presentation" class="">
-                                                <a href="#all"
-                                                   aria-controls="pending" role="tab"
-                                                   data-toggle="tab">Tất cả</a>
+                                                <a href="#cancel" aria-controls="cancel"
+                                                   role="tab" data-toggle="tab">Hủy</a>
                                             </li>
                                         </ul>
 
@@ -88,7 +86,6 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -96,10 +93,9 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <c:if test="${item.appointmentStatusByStatusId.id == 1}">
+                                                            <c:if test="${item.statusId == 1}">
                                                                 <tr>
                                                                     <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
 
@@ -123,7 +119,9 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -131,10 +129,12 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <c:if test="${item.appointmentStatusByStatusId.id == 2}">
+                                                            <c:if test="${item.statusId == 2}">
                                                                 <tr>
                                                                     <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
 
@@ -158,7 +158,9 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -166,10 +168,12 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <c:if test="${item.appointmentStatusByStatusId.id == 3}">
+                                                            <c:if test="${item.statusId == 3}">
                                                                 <tr>
                                                                     <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
 
@@ -193,7 +197,9 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -201,10 +207,12 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <c:if test="${(item.appointmentStatusByStatusId.id == 4)||(item.appointmentStatusByStatusId.id == 5)}">
+                                                            <c:if test="${item.appointmentStatusByStatusId.id == 4}">
                                                                 <tr>
                                                                     <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
 
@@ -222,13 +230,15 @@
                                                 </div>
                                                 <!--end table-->
                                             </div>
-                                            <div role="tabpanel" class="tab-pane" id="all">
+                                            <div role="tabpanel" class="tab-pane" id="cancel">
                                                 <div>
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -236,19 +246,23 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <tr>
-                                                                <td>${item.accountByCustomerUsername.username}</td>
-                                                                <td>${item.accountByAssignedStaff.username}</td>
-                                                                <td>${item.officeByOfficeId.name}</td>
-                                                                <td>${item.time}</td>
+                                                            <c:if test="${item.appointmentStatusByStatusId.id == 5}">
+                                                                <tr>
+                                                                    <td>${item.accountByCustomerUsername.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
+                                                                    <td>${item.officeByOfficeId.name}</td>
+                                                                    <td>${item.time}</td>
 
-                                                                <td>
-                                                                    <a class="btn"
-                                                                       href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                        Chi tiết
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                                    <td>
+                                                                        <a class="btn"
+                                                                           href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
+                                                                            Chi tiết
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:if>
                                                         </c:forEach>
                                                         </tbody>
                                                     </table>

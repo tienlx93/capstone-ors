@@ -83,11 +83,11 @@ body {
     font-weight: 100;
 }
 .right-detail .VD {
-    margin-left: 40px;
     text-align: center;
     background-color: #3CA63F;
     height: 25px;
     width: 100px;
+    margin: 20px auto auto;
 }
 .right-detail .VD a {
     border-radius: 2px;
@@ -182,3 +182,16 @@ body {
 }
 
 /*left-wrapper*/
+
+.right-detail .price {
+    margin-top: 10px;
+    margin-left: 10px;
+    font-size: 30px;
+    font-weight: 100;
+}
+
+.right-detail .price .price-detail {
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+}

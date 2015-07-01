@@ -29,6 +29,7 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
             rp.setDescription(description);
             rp.setAssignedTime(new Timestamp(assignedTime.getTime()));
             rp.setRepairStatusId(repairStatusId);
+            rp.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(rp);
             trans.commit();
 

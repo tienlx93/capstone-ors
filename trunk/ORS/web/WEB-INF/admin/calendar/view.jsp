@@ -47,7 +47,10 @@
             $.ajax({
                 url: "/admin/calendar",
                 method: 'POST',
-                data: '',
+                data: {
+                    staff: '${staff}',
+                    type:'${type}'
+                },
                 success: function (result) {
                     for (var i = 0; i < result.length; i++) {
                         var item = result[i];

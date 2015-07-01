@@ -86,8 +86,8 @@
                                             </c:when>
                                             <c:otherwise>
                                                 <select name="assignedStaff" id="assignedStaff" class="form-control">
+                                                    <option value="">Chọn nhân viên</option>
                                                     <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                                        <option value="">Chọn nhân viên</option>
                                                         <option value="${itemAcc.username}"
                                                                 <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
                                                     </c:forEach>

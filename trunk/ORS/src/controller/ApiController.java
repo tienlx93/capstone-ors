@@ -111,11 +111,24 @@ public class ApiController extends HttpServlet {
             case "amenity":
                 getAmenityList(request, out);
                 break;
+            case "officeName":
+                getOfficeName(request,out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
 
         out.flush();
+    }
+
+    private void getOfficeName(HttpServletRequest request, PrintWriter out) {
+        List<String> officeList = new ArrayList<>();
+        OfficeDAO dao = new OfficeDAO();
+        for (Office office : dao.findAll()) {
+            officeList.add(office.getName());
+        }
+
+        out.print(gson.toJson(officeList));
     }
 
     private void getOffice(HttpServletRequest request, PrintWriter out) {

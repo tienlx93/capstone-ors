@@ -85,8 +85,8 @@
                                                 <input class="field" name="city"
                                                        id="administrative_area_level_1"
                                                        disabled="true"></td>
-                                            <input type="text" name="latitude" id="latitude">
-                                            <input type="text" name="longitude" id="longitude">
+                                            <input type="hidden" name="latitude" id="latitude">
+                                            <input type="hidden" name="longitude" id="longitude">
 
                                         </tr>
                                     </table>

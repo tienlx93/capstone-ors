@@ -17,6 +17,7 @@ public class Amenity {
     private Integer weight;
     private Integer amenityGroupId;
     private AmenityGroup amenityGroupByAmenityGroupId;
+    private Integer priority;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -128,5 +129,15 @@ public class Amenity {
 
     public void setAmenityGroupByAmenityGroupId(AmenityGroup amenityGroupByAmenityGroupId) {
         this.amenityGroupByAmenityGroupId = amenityGroupByAmenityGroupId;
+    }
+
+    @Basic
+    @Column(name = "Priority", nullable = true, insertable = true, updatable = true)
+    public Integer getPriority() {
+        return priority;
+    }
+
+    public void setPriority(Integer priority) {
+        this.priority = priority;
     }
 }

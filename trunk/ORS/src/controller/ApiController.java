@@ -43,6 +43,9 @@ public class ApiController extends HttpServlet {
             case "login":
                 login(request, out);
                 break;
+            case "register":
+                register(request, out);
+                break;
             case "checkLogin":
                 checkLogin(request, out);
                 break;
@@ -112,7 +115,7 @@ public class ApiController extends HttpServlet {
                 getAmenityList(request, out);
                 break;
             case "officeName":
-                getOfficeName(request,out);
+                getOfficeName(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -138,7 +141,7 @@ public class ApiController extends HttpServlet {
             Office office;
             OfficeDAO dao = new OfficeDAO();
             office = dao.viewOffice(id);
-            if (office!=null) {
+            if (office != null) {
                 OfficeJSON json = new OfficeJSON(office);
                 out.print(gson.toJson(json));
             } else {
@@ -383,6 +386,55 @@ public class ApiController extends HttpServlet {
         }
     }
 
+    private void register(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String username = new String(request.getParameter("username").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String password = request.getParameter("password");
+        String mail = request.getParameter("mail");
+        String title = new String(request.getParameter("title").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String fullname = new String(request.getParameter("fullname").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String company = new String(request.getParameter("company").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String phone = request.getParameter("phone");
+        String address = new String(request.getParameter("address").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String birthday = request.getParameter("birthday");
+
+        if (account == null) {
+            Account acc = new Account();
+            acc.setUsername(username);
+            acc.setPassword(password);
+            acc.setEmail(mail);
+            acc.setRoleId(4);
+            acc.setStatusId(1);
+            AccountDAO accountDAO = new AccountDAO();
+            boolean result = accountDAO.save(acc);
+
+            Date date = java.sql.Date.valueOf(birthday);
+
+            Profile pf = new Profile();
+            pf.setUsername(acc.getUsername());
+            pf.setTitle(title);
+            pf.setFullName(fullname);
+            pf.setCompany(company);
+            pf.setPhone(phone);
+            pf.setAddress(address);
+            pf.setBirthday(Timestamp.valueOf("1980-11-11 02:02:02"));
+            ProfileDAO profileDAO = new ProfileDAO();
+            boolean result2 = profileDAO.save(pf);
+
+            if (result && result2) {
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
+        }
+    }
+
 
     private void checkLogin(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
@@ -496,7 +548,7 @@ public class ApiController extends HttpServlet {
         }
     }
 
-    //Con loi
+
     private void getRentalList(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");

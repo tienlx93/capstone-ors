@@ -62,6 +62,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/rental.html',
                 controller: ''
             }).
+            when('/register', {
+                templateUrl: 'html/register.html',
+                controller: 'RegisterController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });

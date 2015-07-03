@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -33,12 +34,14 @@ public class RepairController extends HttpServlet {
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignedStaff = request.getParameter("assignedStaff");
             String description = request.getParameter("description");
+            String assignedTime = request.getParameter("assignedTime");
             switch (button) {
                 case "reject":
                     dao.changeStatus(id, 4);
                     break;
                 case "assign":
-                    dao.update(id, contractId, assignedStaff, description, 2);
+                    Date date = java.sql.Date.valueOf(assignedTime);
+                    dao.update(id, contractId, assignedStaff, description,date,2);
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);

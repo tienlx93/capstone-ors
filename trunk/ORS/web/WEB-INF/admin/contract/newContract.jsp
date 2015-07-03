@@ -142,11 +142,11 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="comment" class="col-sm-2 control-label">Ý kiến khách hàng</label>
+                                <label for="paymentFee" class="col-sm-2 control-label">Giá tiền</label>
 
                                 <div class="col-sm-10">
-                                    <input style="display: inline-block" type='text' class="form-control" name="comment"
-                                           id="comment" value=""/>
+                                    <input style="display: inline-block" type='number' class="form-control" name="paymentFee"
+                                           id="paymentFee" value=""/>
                                 </div>
                             </div>
 

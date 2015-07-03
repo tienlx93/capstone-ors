@@ -28,6 +28,7 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
             rt.setAssignStaff(assignStaff);
             rt.setStatusId(statusId);
             rt.setDescription(description);
+            rt.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(rt);
             trans.commit();
 
@@ -57,6 +58,7 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
             Rental rental = (Rental) session.get(Rental.class, id);
             rental.setStatusId(status);
             rental.setUpdateTime(new Timestamp((new Date()).getTime()));
+            rental.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(rental);
             trans.commit();
             return true;

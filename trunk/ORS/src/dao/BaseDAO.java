@@ -20,10 +20,8 @@ public class BaseDAO<E, I extends Serializable> {
     }
 
     public List<E> findAll() {
-        Transaction trans = null;
+        Transaction trans = session.getTransaction();
         try {
-            trans = session.beginTransaction();
-
             return session.createCriteria(type).list();
         } catch (Exception e) {
             if (trans.isActive()) {
@@ -35,12 +33,9 @@ public class BaseDAO<E, I extends Serializable> {
     }
 
     public E get(I id) {
-        Transaction trans = null;
+        Transaction trans = session.getTransaction();
         try {
-            trans = session.beginTransaction();
-
             E source = (E) session.get(type, id);
-
             return source;
         } catch (Exception e) {
             if (trans.isActive()) {
@@ -51,12 +46,12 @@ public class BaseDAO<E, I extends Serializable> {
     }
 
     public boolean save(E item) {
-        Transaction trans = null;
+        Transaction trans = session.getTransaction();
         try {
-            trans = session.beginTransaction();
+            trans.begin();
 
             session.save(item);
-            session.getTransaction().commit();
+            trans.commit();
 
             return true;
         } catch (Exception e) {
@@ -68,9 +63,8 @@ public class BaseDAO<E, I extends Serializable> {
     }
 
     public boolean remove(E item) {
-        Transaction trans = null;
+        Transaction trans= session.getTransaction();
         try {
-            trans = session.beginTransaction();
             trans.begin();
             session.delete(item);
             session.flush();

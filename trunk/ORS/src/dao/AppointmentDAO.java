@@ -40,6 +40,7 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
             Appointment appointment = (Appointment) session.get(Appointment.class, id);
             appointment.setAssignedStaff(assignedStaff);
             appointment.setStatusId(statusId);
+            appointment.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(appointment);
             trans.commit();
 
@@ -56,6 +57,7 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         try {
             Appointment appointment = (Appointment)session.get(Appointment.class,id);
             appointment.setStatusId(statusId);
+            appointment.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(appointment);
             trans.commit();
 
@@ -73,6 +75,7 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
             Appointment appointment = (Appointment)session.get(Appointment.class,id);
             appointment.setStatusId(statusId);
             appointment.setComment(comment);
+            appointment.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(appointment);
             trans.commit();
 

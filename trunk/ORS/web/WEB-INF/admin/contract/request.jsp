@@ -60,7 +60,6 @@
                                 <th>Ngày kết thúc</th>
                                 <th>Giá</th>
                                 <th>Thời hạn thanh toán</th>
-                                <th>Trạng thái</th>
                                 <th></th>
                             </tr>
                             </thead>
@@ -71,13 +70,12 @@
                                     <c:when test="${item.statusId == 3 && titleName == 'huy'}">
                                         <tr>
                                             <td>${item.accountByCustomerUsername.username}</td>
-                                            <td>${item.officeByOfficeId.id}</td>
+                                            <td>${item.officeByOfficeId.name}</td>
                                             <td>${item.startDate}</td>
                                             <td>${item.endDate}</td>
                                             <td>${item.paymentFee}</td>
                                             <td>${item.paymentTermByPaymentTerm.description}</td>
 
-                                            <td>${item.contractStatusByStatusId.description}</td>
                                             <td><a href="contract?action=viewReturn&id=${item.id}">Xem chi tiết</a>
                                             </td>
                                         </tr>
@@ -86,13 +84,12 @@
                                         <c:if test="${item.statusId == 2 && titleName == 'giahan'}">
                                         <tr>
                                             <td>${item.accountByCustomerUsername.username}</td>
-                                            <td>${item.officeByOfficeId.id}</td>
+                                            <td>${item.officeByOfficeId.name}</td>
                                             <td>${item.startDate}</td>
                                             <td>${item.endDate}</td>
                                             <td>${item.paymentFee}</td>
                                             <td>${item.paymentTermByPaymentTerm.description}</td>
 
-                                            <td>${item.contractStatusByStatusId.description}</td>
                                             <td><a href="contract?action=viewExtend&id=${item.id}">Xem chi tiết</a>
                                             </td>
                                         </c:if>

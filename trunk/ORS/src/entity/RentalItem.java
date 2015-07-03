@@ -14,6 +14,7 @@ public class RentalItem {
     private Double price;
     private Integer quantity;
     private Collection<RentalDetail> rentalDetailsById;
+    private String imageUrl;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -99,5 +100,15 @@ public class RentalItem {
 
     public void setRentalDetailsById(Collection<RentalDetail> rentalDetailsById) {
         this.rentalDetailsById = rentalDetailsById;
+    }
+
+    @Basic
+    @Column(name = "ImageUrl", nullable = true, insertable = true, updatable = true)
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

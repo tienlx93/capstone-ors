@@ -28,6 +28,31 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.register = function (username, password, mail, title, fullname, company, phone, address, birthday, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'register',
+                    'username': username,
+                    'password': password,
+                    'mail': mail,
+                    'title': title,
+                    'fullname': fullname,
+                    'company': company,
+                    'phone': phone,
+                    'address': address,
+                    'birthday': birthday
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.checkLogin = function (callback) {
             $http({
                 method: 'POST',

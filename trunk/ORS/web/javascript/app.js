@@ -58,14 +58,30 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/rentalList.html',
                 controller: 'RentalController'
             }).
+            when('/rental', {
+                templateUrl: 'html/rental.html',
+                controller: ''
+            }).
+            when('/register', {
+                templateUrl: 'html/register.html',
+                controller: 'RegisterController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });
     }]);
+
 app.filter('toLocaleDate', function () {
     return function (input) {
         var date = new Date(input);
         return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
     };
 });
+
+app.filter('m2', ['$sce', function ($sce) {
+    return function (input) {
+        return $sce.trustAsHtml(input.replace("m2","m<sup>2</sup>"));
+    };
+}]);
+
 var BACK_END_URL = "";

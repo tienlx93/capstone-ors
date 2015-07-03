@@ -1,7 +1,9 @@
 package dao;
 
+import entity.Contract;
 import entity.Office;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -27,9 +29,42 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         return null;
     }
 
+    public Office viewOffice(int id) {
+        Transaction trans = session.getTransaction();
+        try {
+            trans.begin();
+            Office office = (Office) session.get(Office.class, id);
+            office.setViewCount(office.getViewCount() == null ? 1 : office.getViewCount() + 1);
+            session.update(office);
+            trans.commit();
+            return office;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return null;
+    }
+
+    public boolean updateArea(int id, double area) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Office office = (Office) session.get(Office.class, id);
+            office.setArea(area);
+            session.update(office);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
+    }
+
     public List<Office> getNewOffice() {
         try {
-            String sql = "from Office order by createDate desc";
+            String sql = "from Office order by viewCount desc";
             Query query = session.createQuery(sql);
             return query.setMaxResults(5).list();
 

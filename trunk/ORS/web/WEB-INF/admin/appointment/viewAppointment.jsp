@@ -1,3 +1,6 @@
+<%@ page import="dao.AccountDAO" %>
+<%@ page import="entity.Account" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -20,6 +23,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <title>Office Rental Service</title>
@@ -44,65 +48,117 @@
                             <div class="panel panel-transparent">
 
                                 <div class="panel-title">
-
                                 </div>
-
+                                <% AccountDAO acc = new AccountDAO();
+                                    List<Account> listAcc = acc.findStaff();%>
                                 <div class="panel-body">
-
+                                    <div>
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <label>Văn phòng
+                                                    <div class="input-typeahead">
+                                                        <input type="text" class="form-control typeahead" id="office"
+                                                               name="office">
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="staff">Nhân viên</label>
+                                                <select name="staff"
+                                                        id="staff"
+                                                        class="form-control">
+                                                    <option value="">Chọn nhân viên...</option>
+                                                    <c:forEach var="itemAcc"
+                                                               items="<%= listAcc %>">
+                                                        <option value="${itemAcc.username}">
+                                                                ${itemAcc.username}</option>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                            <button type="submit" class="btn btn-default">Lọc kết quả</button>
+                                        </form>
+                                    </div>
+                                    <div>&nbsp;</div>
                                     <div role="tabpanel">
 
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
-
-                                            <li role="presentation" class="active"><a href="#all"
-                                                                                      aria-controls="pending" role="tab"
-                                                                                      data-toggle="tab">Tất cả</a></li>
-                                            <li role="presentation" class=""><a href="#Assigned"
-                                                                                aria-controls="Assigned" role="tab"
-                                                                                data-toggle="tab">Đã Giao</a></li>
-                                            <li role="presentation" class=""><a href="#Accepted"
-                                                                                aria-controls="Accepted" role="tab"
-                                                                                data-toggle="tab">Chấp Nhận</a></li>
-                                            <li role="presentation" class=""><a href="#done" aria-controls="done"
-                                                                                role="tab" data-toggle="tab">Hoàn Thành/ Hủy</a>
+                                            <li role="presentation" class="active">
+                                                <a href="#pending" aria-controls="home"
+                                                   role="tab" data-toggle="tab">Cần Giao Việc</a>
                                             </li>
-                                            <li role="presentation" class=""><a href="#pending" aria-controls="home"
-                                                                                role="tab" data-toggle="tab">Chờ xử lí</a>
+                                            <li role="presentation" class="">
+                                                <a href="#Assigned"
+                                                   aria-controls="Assigned" role="tab"
+                                                   data-toggle="tab">Đã Giao</a>
+                                            </li>
+                                            <li role="presentation" class="">
+                                                <a href="#Accepted"
+                                                   aria-controls="Accepted" role="tab"
+                                                   data-toggle="tab">Chấp Nhận</a>
+                                            </li>
+                                            <li role="presentation" class="">
+                                                <a href="#done" aria-controls="done"
+                                                   role="tab" data-toggle="tab">Hoàn Thành</a>
+                                            </li>
+                                            <li role="presentation" class="">
+                                                <a href="#cancel" aria-controls="cancel"
+                                                   role="tab" data-toggle="tab">Hủy</a>
                                             </li>
                                         </ul>
 
                                         <!-- Tab panes -->
                                         <div class="tab-content">
-
-                                            <div role="tabpanel" class="tab-pane " id="pending">
+                                            <div role="tabpanel" class="tab-pane active" id="pending">
                                                 <div>
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
+                                                            <th>Đề xuất nhân viên</th>
 
                                                         </tr>
                                                         </thead>
                                                         <tbody>
-                                                        <c:forEach items="${data}" var="item">
-                                                            <c:if test="${item.appointmentStatusByStatusId.id == 1}">
+                                                        <c:forEach items="${data}" var="item" varStatus="index">
+                                                            <c:if test="${item.statusId == 1}">
                                                                 <tr>
-                                                                    <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
-                                                                    <td>${item.officeByOfficeId.name}</td>
-                                                                    <td>${item.time}</td>
+                                                                    <form action="/admin/appointment?action=editing"
+                                                                          method="post" name="appointment">
+                                                                        <td>${item.accountByCustomerUsername.username}</td>
+                                                                        <td>${item.officeByOfficeId.name}</td>
+                                                                        <td>${item.time}</td>
+                                                                        <td>
+                                                                            <input type="hidden" name="id"
+                                                                                   value="${item.id}">
+                                                                            <select name="assignedStaff"
+                                                                                    id="assignedStaff"
+                                                                                    class="form-control">
+                                                                                <c:set var="i" value="${0}"></c:set>
+                                                                                <c:forEach var="itemAcc"
+                                                                                           items="<%= listAcc %>">
+                                                                                    <option value="${itemAcc.username}"
+                                                                                            <c:if test="${index.index==i}">selected</c:if> >
+                                                                                            ${itemAcc.username}</option>
+                                                                                    <c:set var="i"
+                                                                                           value="${i+1}"></c:set>
+                                                                                </c:forEach>
+                                                                            </select>
+                                                                        </td>
 
-                                                                    <td>
-                                                                        <a class="btn"
-                                                                           href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
-                                                                        </a>
-                                                                    </td>
+                                                                        <td>
+                                                                            <button class="btn btn-default"
+                                                                                    type="submit" name="button"
+                                                                                    value="assign">Giao việc
+                                                                            </button>
+                                                                            <a class="btn"
+                                                                               href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
+                                                                                Chi tiết
+                                                                            </a>
+                                                                        </td>
+                                                                    </form>
                                                                 </tr>
                                                             </c:if>
                                                         </c:forEach>
@@ -117,7 +173,9 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -125,19 +183,19 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <c:if test="${item.appointmentStatusByStatusId.id == 2}">
+                                                            <c:if test="${item.statusId == 2}">
                                                                 <tr>
                                                                     <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
 
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
+                                                                            Chi tiết
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -154,7 +212,9 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -162,19 +222,19 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <c:if test="${item.appointmentStatusByStatusId.id == 3}">
+                                                            <c:if test="${item.statusId == 3}">
                                                                 <tr>
                                                                     <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
 
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
+                                                                            Đến kí/hủy hợp đồng
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -191,7 +251,9 @@
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -199,19 +261,19 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <c:if test="${(item.appointmentStatusByStatusId.id == 4)||(item.appointmentStatusByStatusId.id == 5)}">
+                                                            <c:if test="${item.appointmentStatusByStatusId.id == 4}">
                                                                 <tr>
                                                                     <td>${item.accountByCustomerUsername.username}</td>
-                                                                    <td>${item.accountByAssignedStaff.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
                                                                     <td>${item.officeByOfficeId.name}</td>
                                                                     <td>${item.time}</td>
 
                                                                     <td>
                                                                         <a class="btn"
                                                                            href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            <span class="icon color5"><i
-                                                                                    class="fa fa-plus"></i></span>
-                                                                            Cập nhật lịch hẹn
+                                                                            Chi tiết
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -222,13 +284,15 @@
                                                 </div>
                                                 <!--end table-->
                                             </div>
-                                            <div role="tabpanel" class="tab-pane active" id="all">
+                                            <div role="tabpanel" class="tab-pane" id="cancel">
                                                 <div>
                                                     <table class="table">
                                                         <thead>
                                                         <tr>
                                                             <th>Khách hàng</th>
-                                                            <th>Nhân viên</th>
+                                                            <c:if test="${user.roleId == 2}">
+                                                                <th>Nhân viên</th>
+                                                            </c:if>
                                                             <th>Văn phòng</th>
                                                             <th>Thời gian</th>
 
@@ -236,21 +300,23 @@
                                                         </thead>
                                                         <tbody>
                                                         <c:forEach items="${data}" var="item">
-                                                            <tr>
-                                                                <td>${item.accountByCustomerUsername.username}</td>
-                                                                <td>${item.accountByAssignedStaff.username}</td>
-                                                                <td>${item.officeByOfficeId.name}</td>
-                                                                <td>${item.time}</td>
+                                                            <c:if test="${item.appointmentStatusByStatusId.id == 5}">
+                                                                <tr>
+                                                                    <td>${item.accountByCustomerUsername.username}</td>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                    </c:if>
+                                                                    <td>${item.officeByOfficeId.name}</td>
+                                                                    <td>${item.time}</td>
 
-                                                                <td>
-                                                                    <a class="btn"
-                                                                       href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                        <span class="icon color5"><i
-                                                                                class="fa fa-plus"></i></span>
-                                                                        Cập nhật lịch hẹn
-                                                                    </a>
-                                                                </td>
-                                                            </tr>
+                                                                    <td>
+                                                                        <a class="btn"
+                                                                           href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
+                                                                            Chi tiết
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            </c:if>
                                                         </c:forEach>
                                                         </tbody>
                                                     </table>
@@ -277,6 +343,25 @@
 
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
-
+<script>
+    $.ajax({
+        url: "/api?action=officeName", success: function (result) {
+            var data = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.whitespace,
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                local: result
+            });
+            $('input.typeahead').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 2
+            }, {
+                name: 'office',
+                source: data,
+                limit: 5
+            });
+        }
+    });
+</script>
 </body>
 </html>

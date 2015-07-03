@@ -37,7 +37,10 @@ public class OfficeController extends HttpServlet {
             String area = request.getParameter("area");
             String imageUrls = request.getParameter("imageUrls");
             String amenities = request.getParameter("amenityList");
-
+            String latitude = request.getParameter("latitude");
+            String longitude = request.getParameter("longitude");
+            String district = request.getParameter("district");
+            String city = request.getParameter("city");
 
             office.setStatusId(1);
             office.setName(name);
@@ -54,6 +57,10 @@ public class OfficeController extends HttpServlet {
             }
             office.setArea(Double.parseDouble(area));
             office.setImageUrls(imageUrls);
+            office.setCity(city);
+            office.setDistrict(district);
+            office.setLatitude(Double.valueOf(latitude));
+            office.setLongitude(Double.valueOf(longitude));
 
             if (dao.save(office)) {
                 List<String> amenityList = saveAmenities(amenities);

@@ -65,7 +65,7 @@
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo"
                      collapse="!isCollapsed">
                     <div class="panel-body">
-                        <form>
+                        <form name="register">
                             <div class="form-group">
                                 <label for="title">Chức danh</label>
                                 <select name="title" class="form-control" id="title">
@@ -123,21 +123,29 @@
             <p>Chọn Ngày và Thời gian phù hợp với bạn, chúng tôi sẽ sắp xếp và báo với bạn trong thời gian sớm nhất qua
                 tin nhắn.</p>
         </div>
-        <form name="time">
+        <form name="requestTime">
             <div class="form-group">
-                <label>Thời gian</label>
+                <label>Thời gian <span title="Chọn thời gian hẹn từ 7:00 tới 18:00">[?]</span></label>
 
                 <div class="clearfix">
-                    <div class="col-lg-6">
-                        <input type="date" name="date" class="form-control" id="date" ng-model="date" required>
+                    <div style="position: relative">
+                        <input type='text' class="form-control"
+                               id="date"
+                               data-date-time-picker
+                               data-language="{{vi}}"
+                               data-pick12HourFormat="true"
+                               data-use-current="{{false}}"
+                               data-location="{{testProject}}"
+                               ng-model="date" required/>
                     </div>
                     <div class="error">{{error}}</div>
+                    <pre>{{date}}</pre>
                 </div>
 
             </div>
             <div class="button-post">
-                <button type="submit" ng-click="request(time)" class="btn btn-primary" value="save" name="action">Đặt
-                    lịch hẹn
+                <button type="submit" ng-click="request(requestTime)" class="btn btn-primary" value="save"
+                        name="action">Đặt lịch hẹn
                 </button>
                 <button type="reset" ng-click="back()" class="btn" value="cancel" name="action">Hủy</button>
             </div>

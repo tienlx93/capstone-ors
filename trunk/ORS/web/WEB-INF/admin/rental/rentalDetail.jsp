@@ -65,21 +65,49 @@
                                 </div>
 
                             </div>
-                            <div class="form-group clearfix">
-                                <label for="assignStaff" class="col-sm-2 control-label">Nhân viên được giao</label>
+                            <c:if test="${user.roleId==2}">
+                                <div class="form-group clearfix">
+                                    <label for="assignStaff" class="col-sm-2 control-label">Nhân viên được giao</label>
 
-                                <% AccountDAO acc = new AccountDAO();
-                                    List<Account> listAcc = acc.findAll();%>
-                                <div class="col-sm-10">
-                                    <select name="assignStaff" id="assignStaff" class="form-control">
-                                        <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                            <option value="${itemAcc.username}"
-                                                    <c:if test="${info.assignStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <% AccountDAO acc = new AccountDAO();
+                                        List<Account> listAcc = acc.findStaff();%>
+                                    <div class="col-sm-10">
+                                            <%--<select name="assignStaff" id="assignStaff" class="form-control">--%>
+                                            <%--<c:forEach var="itemAcc" items="<%= listAcc %>">--%>
+                                            <%--<option value="${itemAcc.username}"--%>
+                                            <%--<c:if test="${info.assignStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>--%>
+                                            <%--</c:forEach>--%>
+                                            <%--</select>--%>
+
+                                        <c:choose>
+                                            <c:when test="${info.statusId != 1}">
+                                                ${info.assignStaff}
+                                                <input type="hidden" name="assignStaff" id="assignStaff"
+                                                       value="${info.assignStaff}">
+                                            </c:when>
+                                            <c:otherwise>
+                                                <select name="assignStaff" id="assignStaff" class="form-control">
+                                                    <c:choose>
+                                                        <c:when test="${info.statusId == 1}">
+                                                            <option value="" selected></option>
+                                                            <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                                <option value="${itemAcc.username}">${itemAcc.username}</option>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option value=""></option>
+                                                            <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                                <option value="${itemAcc.username}"
+                                                                        <c:if test="${info.assignStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </select>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </div>
                                 </div>
-                            </div>
-
+                            </c:if>
 
                             <div class="form-group clearfix">
                                 <label for="description" class="col-sm-2 control-label">Mô tả</label>
@@ -90,7 +118,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group clearfix">
+                            <%--<div class="form-group clearfix">
                                 <label for="statusId" class="col-sm-2 control-label">Tình trạng</label>
                                 <% RepairStatusDAO dao = new RepairStatusDAO();
                                     List<RepairStatus> list = dao.findAll();%>
@@ -103,7 +131,20 @@
                                         </c:forEach>
                                     </select>
                                 </div>
+                            </div>--%>
+
+
+                            <div class="form-group clearfix">
+                                <label for="repairStatusId" class="col-sm-2 control-label">Tình trạng</label>
+                                <%--<% RepairStatusDAO dao = new RepairStatusDAO();--%>
+                                <%--List<RepairStatus> list = dao.findAll();%>--%>
+                                <div class="col-sm-10">
+                                    ${info.rentalStatusByStatusId.description}
+                                    <input type="hidden" name="repairStatusId" id="repairStatusId"
+                                           value="${info.statusId}">
+                                </div>
                             </div>
+
 
                             <div class="form-group clearfix">
                                 <label for="list" class="col-sm-2 control-label clearfix">Thông tin thiết bị</label>
@@ -135,10 +176,46 @@
                                 </div>
                             </div>
 
-                            <div class="button-post">
-                                <button type="submit" name="action">Lưu</button>
+                            <%--<div class="button-post">--%>
+                            <%--<button type="submit" name="action">Lưu</button>--%>
 
+                            <%--</div>--%>
+
+                            <div class="button-post">
+                                <c:choose>
+                                    <c:when test="${user.roleId==2}">
+                                        <c:if test="${info.statusId == 1}">
+                                            <button type="submit" value="assign" name="button" class="btn">Giao việc
+                                            </button>
+                                            <button type="submit" value="reject" name="button" class="btn">Từ chối
+                                            </button>
+                                        </c:if>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:choose>
+                                            <c:when test="${info.statusId == 2}">
+                                                <button type="submit" value="change5" name="button" class="btn">Đồng ý
+                                                    sửa chữa
+                                                </button>
+                                                <button type="submit" value="change1" name="button" class="btn">Không
+                                                    đồng ý sửa chữa
+                                                </button>
+                                            </c:when>
+                                            <c:when test="${info.statusId == 5}">
+                                                <button type="submit" value="change3" name="button" class="btn">Khách
+                                                    hàng hài lòng
+                                                </button>
+                                                <button type="submit" value="change1" name="button" class="btn">Khách
+                                                    hàng không hài lòng
+                                                </button>
+                                            </c:when>
+                                        </c:choose>
+                                    </c:otherwise>
+                                </c:choose>
+                                <a href="${pageContext.request.contextPath}/admin/rental"
+                                   class="btn btn-default">Quay về</a>
                             </div>
+
                         </form>
                     </div>
 

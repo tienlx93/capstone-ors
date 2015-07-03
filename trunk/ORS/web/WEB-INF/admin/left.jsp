@@ -77,9 +77,16 @@
                 <span class="icon color6"><i class="fa fa-cubes"></i></span>
                 Quản lý thiết bị</a>
             </li>
+            <li><a href="${pageContext.request.contextPath}/admin/amenity">
+                <span class="icon color6"><i class="fa fa-cubes"></i></span>
+                Quản lý tiện nghi</a>
+            </li>
+            <li><a href="${pageContext.request.contextPath}/admin/groupAmenity">
+                <span class="icon color6"><i class="fa fa-cubes"></i></span>
+                Quản lý nhóm tiện nghi</a>
+            </li>
+
         </c:if>
 
     </ul>
-
-
 </div>

@@ -2,7 +2,9 @@ package dao;
 
 import entity.Account;
 import entity.Amenity;
+import entity.AmenityGroup;
 import org.hibernate.Query;
+import org.hibernate.Transaction;
 
 import java.util.List;
 
@@ -47,6 +49,35 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
                 session.getTransaction().rollback();
             }
             e.printStackTrace();
+        }
+        return false;
+    }
+    public List<Amenity> getAmenityList() {
+        try {
+            String sql = "from Amenity  order by id";
+            Query query = session.createQuery(sql);
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public boolean update(String name, Amenity newAmenity) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Amenity amenity = (Amenity) session.get(Amenity.class, name);
+            amenity.setWeight(newAmenity.getWeight());
+            amenity.setDescription(newAmenity.getDescription());
+
+
+            session.update(amenity);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
         }
         return false;
     }

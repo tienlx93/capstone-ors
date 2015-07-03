@@ -33,11 +33,13 @@ public class RentalItemController extends HttpServlet {
             String description = request.getParameter("description");
             String price = request.getParameter("price");
             String quantity = request.getParameter("quantity");
+            String imageUrl = request.getParameter("imageUrl");
 
             rtItem.setName(name);
             rtItem.setDescription(description);
             rtItem.setPrice(Double.parseDouble(price));
             rtItem.setQuantity(Integer.parseInt(quantity));
+            rtItem.setImageUrl(imageUrl);
 
             dao.save(rtItem);
 

@@ -20,6 +20,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
@@ -67,6 +68,18 @@
                             </div>
 
                             <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Hình ảnh</label><br>
+                                <input type="hidden" name="imageUrl" id="imageUrl" value="${info.imageUrl}">
+                                <div class="images clearfix" id="images">
+                                    <div class="upload-img">
+                                        <div class="img"><img src="${info.imageUrl!=null?info.imageUrl:'/upload/placeholder.jpg'}"></div>
+                                    </div>
+                                </div>
+                                <div class="clear-float"></div>
+                                <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
+                            </div>
+
+                            <div class="form-group clearfix">
                                 <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
 
                                 <div class="col-sm-10">
@@ -80,7 +93,7 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" name="quantity" class="form-control" id="quantity"
-                                           value="${info.price}">
+                                           value="${info.quantity}">
                                 </div>
                             </div>
 
@@ -100,6 +113,7 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/uploadRental.js"></script>
 
 </body>
 </html>

@@ -28,7 +28,7 @@ public class FileUploadController extends HttpServlet {
         String office = request.getParameter("office");
         final String path = getServletContext().getRealPath("") + "\\upload\\" + office;
         final Part filePart = request.getPart("file");
-        final String fileName = getFileName(filePart);
+        String fileName = getFileName(filePart);
 
         OutputStream out = null;
         InputStream filecontent = null;
@@ -40,7 +40,10 @@ public class FileUploadController extends HttpServlet {
                 uploadDir.mkdir();
                 LOGGER.log(Level.INFO, "upload directory = {0} ", new Object[]{uploadDir.mkdir()});
             }
-
+            if (office.equals("rental")) {
+                assert fileName != null;
+                fileName = java.util.UUID.randomUUID().toString() + fileName.substring(fileName.lastIndexOf("."));
+            }
             out = new FileOutputStream(new File(path + File.separator
                     + fileName));
             filecontent = filePart.getInputStream();

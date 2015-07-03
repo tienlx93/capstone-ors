@@ -46,9 +46,8 @@ $(document).ready(function () {
             $('#upload').show();
         }
     });
-
-
 });
+
 var amenityList = [];
 function deleteAmenity(amenity) {
     for (var i = 0; i < amenityList.length; i++) {

@@ -58,9 +58,13 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/rentalList.html',
                 controller: 'RentalController'
             }).
-            when('/rental', {
+            when('/rental/:id', {
                 templateUrl: 'html/rental.html',
-                controller: ''
+                controller: 'OfficeRentalController'
+            }).
+            when('/rentalCart/:id', {
+                templateUrl: 'html/rentalCart.html',
+                controller: 'OfficeRentalCartController'
             }).
             when('/register', {
                 templateUrl: 'html/register.html',

@@ -136,6 +136,22 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.getAllOfficeRentalList = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getAllOfficeRentalList'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.getRentalList = function(id, callback) {
             $http({
                 method: 'GET',

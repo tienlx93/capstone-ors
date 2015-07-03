@@ -1,60 +1,31 @@
 <link href="../css/rental.css" rel="stylesheet"/>
 <div class="rental-wrapper">
+    <div class="container">
     <div class="row">
-        <div class="col-md-3" style="padding: 30px 15px;">
+        <div class="col-md-3" style="padding: 15px;">
             <div class="list-group">
-                <a href="#" class="list-group-item active">
+                <a href="#/rentalCart/{{contractID}}" class="list-group-item">Xem giỏ hàng</a>
+
+                <a href="#/rental/{{contractID}}" class="list-group-item active">
                     Tất cả
                 </a>
-                <a href="#" class="list-group-item">Bàn</a>
-                <a href="#" class="list-group-item">Ghế</a>
-                <a href="#" class="list-group-item">Máy in</a>
-                <a href="#" class="list-group-item">Quạt</a>
+                <a href="#/rental/{{contractID}}" class="list-group-item">Bàn</a>
+                <a href="#/rental/{{contractID}}" class="list-group-item">Ghế</a>
+                <a href="#/rental/{{contractID}}" class="list-group-item">Máy in</a>
+                <a href="#/rental/{{contractID}}" class="list-group-item">Quạt</a>
             </div>
         </div>
 
         <div class="col-md-9">
-            <div class="col-md-4 item">
-                <div class="image" style="background-image: url('../img/ban-1.jpg')"></div>
-                <div class="detail" style="float: left">
-                    <div class="title">Bàn văn phòng 1</div>
-                    <div class="price">100.000 VNĐ</div>
+            <div class="col-md-4 item" ng-repeat="item in itemList">
+                <div class="image" style="background-image: url({{item.image}})"></div>
+                <div class="detail">
+                    <div class="title">{{item.name}}</div>
+                    <div class="price">{{item.price}} VNĐ</div>
                 </div>
-                <div style="float: right;margin: 20px 0;min-width: 100px;" class="btn btn-success">Thuê</div>
-            </div>
-            <div class="col-md-4 item">
-                <div class="image" style="background-image: url('../img/ban-2.jpg')"></div>
-                <div class="detail" style="float: left">
-                    <div class="title">Bàn văn phòng2</div>
-                    <div class="price">150.000 VNĐ</div>
-                </div>
-                <div style="float: right;margin: 20px 0;min-width: 100px;" class="btn btn-success">Thuê</div>
-            </div>
-            <div class="col-md-4 item">
-                <div class="image" style="background-image: url('../img/ban-3.jpg')"></div>
-                <div class="detail" style="float: left">
-                    <div class="title">Bàn văn phòng 3</div>
-                    <div class="price">200.000 VNĐ</div>
-                </div>
-                <div style="float: right;margin: 20px 0;min-width: 100px;" class="btn btn-success">Thuê</div>
-            </div>
-            <div class="col-md-4 item">
-                <div class="image" style="background-image: url('../img/ghe-1.jpg')"></div>
-                <div class="detail" style="float: left">
-                    <div class="title">Ghế văn phòng 1</div>
-                    <div class="price">40.000 VNĐ</div>
-                </div>
-                <div style="float: right;margin: 20px 0;min-width: 100px;" class="btn btn-success">Thuê</div>
-            </div>
-            <div class="col-md-4 item">
-                <div class="image" style="background-image: url('../img/ghe-2.jpg')"></div>
-                <div class="detail" style="float: left">
-                    <div class="title">Ghế văn phòng 2</div>
-                    <div class="price">60.000 VNĐ</div>
-                </div>
-                <div style="float: right;margin: 20px 0;min-width: 100px;" class="btn btn-success">Thuê</div>
+                <div ng-click="addToCart(item)" style="display:block;margin: 10px 0;min-width: 100px;" class="btn btn-success">Thuê</div>
             </div>
         </div>
     </div>
-
+    </div>
 </div>

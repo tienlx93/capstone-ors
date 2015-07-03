@@ -1,0 +1,33 @@
+<div class="rental-cart-wrapper">
+    <div class="container">
+        <h2>Danh sách thuê vật dụng</h2>
+        <table class="table">
+            <thead>
+            <tr>
+
+                <th>Vật dụng</th>
+                <th>Mô tả</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Tổng giá</th>
+
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="item in listItems">
+
+                <td>{{item.name}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.price}} VNĐ</td>
+                <td><input class="form-control input-lg" type="number" ng-model="item.quantity" value="{{item.quantity}}"></td>
+                <td>{{item.price * item.quantity}} VNĐ</td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div style="text-align: right">
+            <div class="btn btn-success" ng-click="sendRequest()">Gửi yêu cầu</div>
+        </div>
+    </div>
+</div>

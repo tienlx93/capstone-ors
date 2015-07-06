@@ -236,6 +236,25 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.requestRental = function (contractId, rentalList, description, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'requestRental',
+                    'contractId': contractId,
+                    'rentalList': rentalList,
+                    'description': description
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.requestRepair = function (contractId, amenities, description, callback) {
             $http({
                 method: 'POST',

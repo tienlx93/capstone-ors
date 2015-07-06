@@ -58,6 +58,9 @@ public class ApiController extends HttpServlet {
             case "requestRepair":
                 requestRepair(request, out);
                 break;
+            case "requestRental":
+                requestRental(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -524,7 +527,7 @@ public class ApiController extends HttpServlet {
         }
     }
 
-    private List<String> saveAmenities(String amenities) {
+        private List<String> saveAmenities(String amenities) {
         StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
         List<String> amenityList = new ArrayList<>();
         while (tokenizer.hasMoreTokens()) {
@@ -533,6 +536,55 @@ public class ApiController extends HttpServlet {
 
         return amenityList;
     }
+
+    private void requestRental(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String contractId = request.getParameter("contractId");
+        String rentalList = new String(request.getParameter("rentalList").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String description = new String(request.getParameter("description").getBytes(
+                "iso-8859-1"), "UTF-8");
+        if (account != null) {
+            RentalDAO dao = new RentalDAO();
+            Rental rental = new Rental();
+            rental.setContractId(Integer.parseInt(contractId));
+            rental.setDescription(description);
+            rental.setStatusId(1);
+            rental.setCreateTime(new Timestamp((new Date()).getTime()));
+
+            boolean result = dao.save(rental);
+
+//            if (result) {
+//                List<String> amenityList = saveAmenities(amenities);
+//                AmenityDAO amenityDAO = new AmenityDAO();
+//                List<Integer> amenityListInt = new ArrayList<>();
+//                Amenity amenity;
+//                for (String s : amenityList) {
+//                    amenity = amenityDAO.searchAmenity(s);
+//                    amenityListInt.add(amenity.getId());
+//                }
+//                RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
+//                repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
+//                out.print(gson.toJson("Success"));
+//            } else {
+//                out.print(gson.toJson("Error"));
+//            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+    private List<String> saveRental(String amenities) {
+        StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
+        List<String> amenityList = new ArrayList<>();
+        while (tokenizer.hasMoreTokens()) {
+            amenityList.add(tokenizer.nextToken());
+        }
+
+        return amenityList;
+    }
+
 
     private void getContractList(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();

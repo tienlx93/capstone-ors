@@ -9,9 +9,17 @@ app.service('ShoppingCartService', function() {
         return productList;
     };
 
+    var removeProduct = function(oldObj) {
+      for(var i = 0; i < productList.length; i++) {
+          if(oldObj.rentalId = productList[i].rentalId) {
+              productList.splice(i, i + 1);
+          }
+      }
+    };
     return {
         addProduct: addProduct,
-        getProducts: getProducts
+        getProducts: getProducts,
+        removeProduct: removeProduct
     };
 
 });

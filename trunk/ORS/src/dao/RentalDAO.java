@@ -98,7 +98,7 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
         return null;
     }
 
-    public List<Appointment> getRentalListByStatus(int status) {
+    public List<Rental> getRentalListByStatus(int status) {
         try {
             String sql = "from Rental where statusId = :status";
             Query query = session.createQuery(sql);

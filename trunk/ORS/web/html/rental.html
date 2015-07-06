@@ -17,7 +17,7 @@
         </div>
 
         <div class="col-md-9">
-            <div class="col-md-4 item" ng-repeat="item in itemList">
+            <div class="col-md-4 item" ng-repeat="item in itemList track by $index" >
                 <div class="image" style="background-image: url({{item.image}})"></div>
                 <div class="detail">
                     <div class="title">{{item.name}}</div>

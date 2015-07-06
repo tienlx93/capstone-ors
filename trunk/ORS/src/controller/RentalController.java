@@ -3,6 +3,7 @@ package controller;
 import dao.RentalDAO;
 import entity.Account;
 import entity.Rental;
+import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Thành on 08/06/2015.
@@ -63,6 +65,9 @@ public class RentalController extends HttpServlet {
                 RentalDAO rentalDAO = new RentalDAO();
                 List<Rental> list;
                 if (account.getRoleId()==2) {
+                    ScheduleService service = new ScheduleService();
+                    Map<Integer, Rental> suggestMap = service.makeRentalSchedule();
+                    request.setAttribute("suggestMap", suggestMap);
                     list = rentalDAO.findAll();
                 } else {
                     list = rentalDAO.getRentalListByStaff(account.getUsername());

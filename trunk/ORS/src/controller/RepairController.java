@@ -3,6 +3,7 @@ package controller;
 import dao.RepairDAO;
 import entity.Account;
 import entity.Repair;
+import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Th�nh on 01/06/2015.
@@ -41,7 +43,7 @@ public class RepairController extends HttpServlet {
                     break;
                 case "assign":
                     Date date = java.sql.Date.valueOf(assignedTime);
-                    dao.update(id, contractId, assignedStaff, description,date,2);
+                    dao.update(id, contractId, assignedStaff, description, date, 2);
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
@@ -63,14 +65,17 @@ public class RepairController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
-        if (account != null && (account.getRoleId()==2 || account.getRoleId() == 3)) {
+        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
             RepairDAO dao = new RepairDAO();
             String action = request.getParameter("action");
             if (action == null) {
                 RepairDAO repairDAO = new RepairDAO();
                 List<Repair> list;
-                if (account.getRoleId()==2) {
+                if (account.getRoleId() == 2) {
                     list = repairDAO.findAll();
+                    ScheduleService service = new ScheduleService();
+                    Map<Integer, Repair> suggestMap = service.makeRepairSchedule();
+                    request.setAttribute("suggestMap", suggestMap);
                 } else {
                     list = repairDAO.getRepairListByStaff(account.getUsername());
                 }

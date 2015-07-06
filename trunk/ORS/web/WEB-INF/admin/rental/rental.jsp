@@ -1,7 +1,10 @@
 <%@ page import="java.util.List" %>
 <%@ page import="dao.RentalDAO" %>
 <%@ page import="entity.Rental" %>
+<%@ page import="entity.Account" %>
+<%@ page import="dao.AccountDAO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Thành
@@ -38,7 +41,8 @@
     <div class="page-header">
         <h1 class="title">Quản lý yêu cầu thuê thiết bị</h1>
     </div>
-
+    <% AccountDAO acc = new AccountDAO();
+        List<Account> listAcc = acc.findStaff();%>
     <div class="container-padding">
         <div class="row">
             <div class="col-md-12">
@@ -83,6 +87,8 @@
                                                     <th>Khách hàng</th>
                                                     <th>Ngày tạo yêu cầu</th>
                                                     <th>Mô tả</th>
+                                                    <th>Đề xuất nhân viên</th>
+                                                    <th>Đề xuất thời gian</th>
                                                     <th></th>
                                                 </tr>
                                                 </thead>
@@ -90,12 +96,48 @@
                                                 <c:forEach var="item" items="${list}">
                                                     <c:if test="${item.statusId == 1}">
                                                         <tr>
-                                                            <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                            <td>${item.contractByContractId.customerUsername}</td>
-                                                            <td>${item.createTime}</td>
-                                                            <td>${item.description}</td>
-                                                            <td><a href="rental?action=edit&id=${item.id}">Giao việc</a>
-                                                            </td>
+                                                            <form>
+                                                                <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                                <td>${item.contractByContractId.customerUsername}</td>
+                                                                <td>${item.createTime}</td>
+                                                                <td>${item.description}</td>
+                                                                <td>
+                                                                    <input type="hidden" name="id"
+                                                                           value="${item.id}">
+                                                                    <input type="hidden" name="contractId"
+                                                                           value="${item.contractId}">
+                                                                    <input type="hidden" name="description"
+                                                                           value="${item.description}">
+                                                                    <select name="assignStaff"
+                                                                            class="form-control">
+                                                                        <option value="">(Không có đề xuất)</option>
+                                                                        <c:forEach var="itemAcc"
+                                                                                   items="<%= listAcc %>">
+                                                                            <option value="${itemAcc.username}"
+                                                                                    <c:if test="${suggestMap[item.id].assignStaff == itemAcc.username}">selected</c:if> >
+                                                                                    ${itemAcc.username}</option>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <fmt:formatDate
+                                                                            value="${suggestMap[item.id].assignedTime}"
+                                                                            pattern="yyyy-MM-dd" var="newDate"/>
+                                                                    <input type="text" name="assignedTime"
+                                                                           class="datetime" value="${newDate}">
+                                                                </td>
+                                                                <td>
+                                                                    <button class="btn btn-default" id="assign"
+                                                                            type="submit" name="button"
+                                                                            value="assign">Giao việc
+                                                                    </button>
+                                                                    <a class="btn"
+                                                                       href="rental?action=edit&id=${item.id}">
+                                                                        Chi tiết
+                                                                    </a>
+                                                                </td>
+                                                            </form>
+
                                                         </tr>
                                                     </c:if>
                                                 </c:forEach>

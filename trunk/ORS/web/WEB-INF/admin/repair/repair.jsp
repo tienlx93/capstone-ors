@@ -1,7 +1,8 @@
-<%@ page import="dao.RepairDAO" %>
-<%@ page import="entity.Repair" %>
 <%@ page import="java.util.List" %>
+<%@ page import="entity.Account" %>
+<%@ page import="dao.AccountDAO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Thành
@@ -18,7 +19,8 @@
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
           type="text/css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+          type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 
@@ -28,6 +30,8 @@
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -74,7 +78,8 @@
                                            data-toggle="tab">Hủy</a>
                                     </li>
                                 </ul>
-
+                                <% AccountDAO acc = new AccountDAO();
+                                    List<Account> listAcc = acc.findStaff();%>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <c:if test="${user.roleId == 2}">
@@ -86,21 +91,63 @@
                                                     <th>Khách hàng</th>
                                                     <th>Ngày tạo yêu cầu</th>
                                                     <th>Mô tả</th>
+                                                    <th>Đề xuất nhân viên</th>
+                                                    <th>Đề xuất thời gian</th>
 
                                                     <th></th>
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach var="item" items="${list}">
+                                                <c:forEach var="item" items="${list}" varStatus="index">
                                                     <c:if test="${item.repairStatusId == 1}">
                                                         <tr>
-                                                            <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                            <td>${item.contractByContractId.customerUsername}</td>
-                                                            <td>${item.createTime}</td>
-                                                            <td>${item.description}</td>
+                                                            <form action="repair?action=editing" method="post"
+                                                                  name="repair">
+                                                                <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                                <td>${item.contractByContractId.customerUsername}</td>
+                                                                <td>
+                                                                    <fmt:formatDate value="${item.createTime}"
+                                                                                    pattern="yyyy-MM-dd hh:mm"/>
 
-                                                            <td><a href="repair?action=edit&id=${item.id}">Giao việc</a>
-                                                            </td>
+                                                                </td>
+                                                                <td>${item.description}</td>
+                                                                <td>
+                                                                    <input type="hidden" name="id"
+                                                                           value="${item.id}">
+                                                                    <input type="hidden" name="contractId"
+                                                                           value="${item.contractId}">
+                                                                    <input type="hidden" name="description"
+                                                                           value="${item.description}">
+                                                                    <select name="assignedStaff"
+                                                                            class="form-control">
+                                                                        <option value="">(Không có đề xuất)</option>
+                                                                        <c:forEach var="itemAcc"
+                                                                                   items="<%= listAcc %>">
+                                                                            <option value="${itemAcc.username}"
+                                                                                    <c:if test="${suggestMap[item.id].assignedStaff == itemAcc.username}">selected</c:if> >
+                                                                                    ${itemAcc.username}</option>
+                                                                        </c:forEach>
+                                                                    </select>
+                                                                </td>
+                                                                <td>
+                                                                    <fmt:formatDate
+                                                                            value="${suggestMap[item.id].assignedTime}"
+                                                                            pattern="yyyy-MM-dd" var="newDate"/>
+                                                                    <input type="text" name="assignedTime"
+                                                                           class="datetime" value="${newDate}">
+                                                                </td>
+
+                                                                <td>
+                                                                    <button class="btn btn-default" id="assign"
+                                                                            type="submit" name="button"
+                                                                            value="assign">Giao việc
+                                                                    </button>
+                                                                    <a class="btn"
+                                                                       href="repair?action=edit&id=${item.id}">
+                                                                        Chi tiết
+                                                                    </a>
+                                                                </td>
+                                                            </form>
                                                         </tr>
                                                     </c:if>
                                                 </c:forEach>
@@ -222,36 +269,22 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function () {
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-<%--<head>
-    <title>Repair</title>
-</head>
-<body>
-<h1>Repair List</h1>
-<% RepairDAO dao = new RepairDAO();
-    List<Repair> list = dao.findAll();%>
-<table>
-    <tr>
-        <td>Hợp đồng</td>
-        <td>Nhân viên được giao</td>
-        <td>Loại yêu cầu</td>
-        <td>Mô tả</td>
-        <td>Tình trạng</td>
-        <td></td>
-    </tr>
-    <c:forEach var="item" items="<%= list %>">
-        <tr>
-            <td>${item.contractId}</td>
-            <td>${item.assignedStaff}</td>
-            <td>${item.type}</td>
-            <td>${item.description}</td>
-            <td>${item.repairStatusByRepairStatusId.name}</td>
+        $('.datetime').datepicker({
+            format: 'yyyy-mm-dd',
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).data('datepicker');
 
-            <td><a href="Repair?action=edit&id=${item.id}">Xem chi tiết</a></td>
+    });
 
-        </tr>
-    </c:forEach>
-</table>--%>
+</script>
+
 </body>
 </html>
 

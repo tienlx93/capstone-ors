@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -44,7 +45,12 @@ public class ApiController extends HttpServlet {
                 login(request, out);
                 break;
             case "register":
-                register(request, out);
+                try {
+                    register(request, out);
+                } catch (ParseException e) {
+                    out.print(gson.toJson("Error"));
+                    e.printStackTrace();
+                }
                 break;
             case "checkLogin":
                 checkLogin(request, out);
@@ -392,7 +398,7 @@ public class ApiController extends HttpServlet {
         }
     }
 
-    private void register(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+    private void register(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException, ParseException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
         String username = new String(request.getParameter("username").getBytes(
@@ -420,7 +426,9 @@ public class ApiController extends HttpServlet {
             AccountDAO accountDAO = new AccountDAO();
             boolean result = accountDAO.save(acc);
 
-            Date date = java.sql.Date.valueOf(birthday);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsed = format.parse(birthday);
+
 
             Profile pf = new Profile();
             pf.setUsername(acc.getUsername());
@@ -429,7 +437,7 @@ public class ApiController extends HttpServlet {
             pf.setCompany(company);
             pf.setPhone(phone);
             pf.setAddress(address);
-            pf.setBirthday(Timestamp.valueOf("1980-11-11 02:02:02"));
+            pf.setBirthday(new Timestamp(parsed.getTime()));
             ProfileDAO profileDAO = new ProfileDAO();
             boolean result2 = profileDAO.save(pf);
 
@@ -554,6 +562,8 @@ public class ApiController extends HttpServlet {
             rental.setCreateTime(new Timestamp((new Date()).getTime()));
 
             boolean result = dao.save(rental);
+            RentalListJSON rentalListJSON = gson.fromJson(rentalList, RentalListJSON.class);
+
 
 //            if (result) {
 //                List<String> amenityList = saveAmenities(amenities);
@@ -604,22 +614,13 @@ public class ApiController extends HttpServlet {
     }
 
     private void getAllOfficeRentalList(HttpServletRequest request, PrintWriter out) {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
-
-        if (account != null) {
-            RentalDAO rentalDAO = new RentalDAO();
             List<RentalListJSON> list = new ArrayList<>();
-
-            for (Rental rental : rentalDAO.findAll()) {
-                for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
-                    RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
-                    list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity()));
-                }
+            RentalItemDAO dao = new RentalItemDAO();
+            for (RentalItem rentalItem : dao.findAll()) {
+                    list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                            rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl()));
             }
             out.print(gson.toJson(list));
-        }
     }
 
     private void getRentalList(HttpServletRequest request, PrintWriter out) {
@@ -636,7 +637,7 @@ public class ApiController extends HttpServlet {
                 for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
                     RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
                     list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity()));
+                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null));
                 }
             }
             out.print(gson.toJson(list));

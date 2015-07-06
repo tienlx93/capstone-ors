@@ -7,7 +7,7 @@ public class Test {
     public static void main(final String[] args) {
         ScheduleService scheduleService = new ScheduleService();
         String staff = "staff1";
-        scheduleService.makeAppointmentSchedule();
-
+        //scheduleService.makeAppointmentSchedule();
+        scheduleService.makeRepairSchedule();
     }
 }

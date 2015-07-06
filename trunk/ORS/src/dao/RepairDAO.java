@@ -99,7 +99,7 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         return null;
     }
 
-    public List<Appointment> getRepairListByStatus(int status) {
+    public List<Repair> getRepairListByStatus(int status) {
         try {
             String sql = "from Repair where repairStatusId = :status";
             Query query = session.createQuery(sql);

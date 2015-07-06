@@ -4,15 +4,9 @@ import dao.AccountDAO;
 import dao.AppointmentDAO;
 import dao.RentalDAO;
 import dao.RepairDAO;
-import entity.Account;
-import entity.Appointment;
-import entity.Rental;
-import entity.Repair;
-import json.CalendarItemJSON;
-import json.CalendarJSON;
+import entity.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -70,7 +64,7 @@ public class ScheduleService {
     }
 
     /**
-     *
+     * Make the HashMap of unassigned appointment with available staff
      * @return HashMap of unassigned appointment to staff
      */
     public Map<Integer, String> makeAppointmentSchedule() {
@@ -89,7 +83,7 @@ public class ScheduleService {
                 for (Account account : staffList) {
                     availableStaff.add(account);
                 }
-                String assignedStaff = assignAppointmentInStaffList(availableStaff, appointment);
+                String assignedStaff = assignJob(availableStaff, appointment, null, null);
                 if (assignedStaff != null) {
                     result.put(appointment.getId(), assignedStaff);
                 } else {
@@ -98,17 +92,100 @@ public class ScheduleService {
             }
 
         }
-
-
         return result;
     }
 
     /**
+     *
+     * @return HashMap of unassigned repair to staff
+     */
+    public Map<Integer, Repair> makeRepairSchedule() {
+        Map<Integer, Repair> result = new HashMap<>();
+        List<Repair> repairList = repairDAO.getRepairListByStatus(1);
+
+        List<Account> availableStaff;
+        int priority;
+        Date today = new Date();
+        Date assignedDate;
+        //Loop in unassigned appointment
+        for (Repair repair : repairList) {
+            priority = 0;
+            // Check if in repair list has item that has priority 1, set the repair priority to 1
+            for (RepairDetail detail : repair.getRepairDetailsById()) {
+                if (detail.getAmenityByAmenityId().getPriority() != null && detail.getAmenityByAmenityId().getPriority() == 1){
+                    priority = 1;
+                }
+            }
+            //if priority 1, set job in today, else set in weekend
+            if (priority == 1) {
+                assignedDate = today;
+            } else {
+                assignedDate = getNextDay(endDate, -2);
+            }
+
+            //Check if repair in week, try to assign
+            if ((repair.getCreateTime().after(startDate) || repair.getCreateTime().equals(startDate))
+                    && repair.getCreateTime().before(endDate)) {
+                availableStaff = new ArrayList<>();
+                for (Account account : staffList) {
+                    availableStaff.add(account);
+                }
+                repair.setAssignedTime(new Timestamp(assignedDate.getTime()));
+                String assignedStaff = assignRepairRental(availableStaff, repair, null);
+                if (assignedStaff != null) {
+                    repair.setAssignedStaff(assignedStaff);
+                    result.put(repair.getId(), repair);
+                } else {
+                    result.put(repair.getId(), null);
+                }
+            }
+
+        }
+        return result;
+    }
+
+    /**
+     *
+     * @return HashMap of unassigned repair to staff
+     */
+    public Map<Integer, Rental> makeRentalSchedule() {
+        Map<Integer, Rental> result = new HashMap<>();
+        List<Rental> rentalList = rentalDAO.getRentalListByStatus(1);
+
+        List<Account> availableStaff;
+
+        //Loop in unassigned rental
+        for (Rental rental : rentalList) {
+
+            Date assignedDate = getNextDay(endDate, -2);
+            //Check if repair in week, try to assign
+            if ((rental.getCreateTime().after(startDate) || rental.getCreateTime().equals(startDate))
+                    && rental.getCreateTime().before(endDate)) {
+                availableStaff = new ArrayList<>();
+                for (Account account : staffList) {
+                    availableStaff.add(account);
+                }
+                rental.setAssignedTime(new Timestamp(assignedDate.getTime()));
+                String assignedStaff = assignRepairRental(availableStaff, null, rental);
+                if (assignedStaff != null) {
+                    rental.setAssignStaff(assignedStaff);
+                    result.put(rental.getId(), rental);
+                } else {
+                    result.put(rental.getId(), null);
+                }
+            }
+
+        }
+        return result;
+    }
+
+
+    /**
      * @param availableStaff
      * @param appointment
-     * @return
+     * @return String of username for appointment
      */
-    private String assignAppointmentInStaffList(List<Account> availableStaff, Appointment appointment) {
+    private String assignJob(List<Account> availableStaff, Appointment appointment, Repair repair, Rental rental) {
         if (availableStaff.size() > 0) {
             //Loop in available staff
             int min = Integer.MAX_VALUE;
@@ -125,8 +202,23 @@ public class ScheduleService {
 
             // Check the number of job in the day of staff
             int jobInDate = 0;
-            Date dayStart = getStartOfDay(appointment.getTime());
-            Date dayEnd = getEndOfDay(appointment.getTime());
+            Date dayStart;
+            Date dayEnd;
+            int jobsAvailable;
+            if (appointment != null) {
+                dayStart = getStartOfDay(appointment.getTime());
+                dayEnd = getEndOfDay(appointment.getTime());
+                jobsAvailable = 4;
+            } else if (repair != null) {
+                dayStart = getStartOfDay(repair.getAssignedTime());
+                dayEnd = getEndOfDay(repair.getAssignedTime());
+                jobsAvailable = 3;
+            } else {
+                dayStart = getStartOfDay(rental.getAssignedTime());
+                dayEnd = getEndOfDay(rental.getAssignedTime());
+                jobsAvailable = 4;
+            }
+
             for (Date date : jobDateList) {
                 if ((date.after(dayStart) || date.equals(dayStart)) && date.before(dayEnd)) {
                     jobInDate++;
@@ -134,20 +226,62 @@ public class ScheduleService {
             }
 
             // If number of job >= 4, remove the staff from the list, and re calculate the available staff
-            if (jobInDate >= 4) {
+            if (jobInDate >= jobsAvailable) {
                 availableStaff.remove(tbd);
-                return assignAppointmentInStaffList(availableStaff, appointment);
+                return assignJob(availableStaff, appointment, repair, rental);
             } else {
                 //Else the staff is available, assign the job to the staff
-                System.out.println("Assign success: appointment at " + appointment.getTime() +
+                Date assignedTime;
+                if (appointment != null) {
+                    assignedTime = appointment.getTime();
+                } else if (repair != null) {
+                    assignedTime = repair.getAssignedTime();
+                } else {
+                    assignedTime = rental.getAssignedTime();
+                }
+                System.out.println("Assign success: appointment at " + assignedTime +
                         "\n     staff: " + tbd.getUsername());
-                jobDateList.add(appointment.getTime());
+                jobDateList.add(assignedTime);
                 return tbd.getUsername();
             }
         } else {
             System.out.println("Assign fail");
             return null;
         }
+    }
+
+    private String assignRepairRental(List<Account> availableStaff, Repair repair, Rental rental) {
+        Date assignedTime;
+        if (repair!=null){
+            assignedTime = repair.getAssignedTime();
+        } else {
+            assignedTime = rental.getAssignedTime();
+        }
+        //if the assign time in week, try to assign
+        if (assignedTime.before(endDate)) {
+            String assignedStaff = assignJob(availableStaff, null, repair, rental);
+            if (assignedStaff != null) {
+                return assignedStaff;
+            } else {
+                //Increase the assigned date by 1, try to assign again
+                if (repair!=null){
+                    repair.setAssignedTime(new Timestamp(getNextDay(repair.getAssignedTime(), 1).getTime()));
+                } else if (rental != null) {
+                    rental.setAssignedTime(new Timestamp(getNextDay(rental.getAssignedTime(), 1).getTime()));
+                }
+                return  assignRepairRental(availableStaff, repair, rental);
+            }
+        } else {
+            // if assign time out of week, cannot assign
+            return null;
+        }
+    }
+
+    private Date getNextDay(Date date, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        calendar.add(Calendar.DATE, day);
+        return calendar.getTime();
     }
 
     private Date getEndOfDay(Date date) {

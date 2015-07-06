@@ -136,20 +136,18 @@
                                                                             <select name="assignedStaff"
                                                                                     id="assignedStaff"
                                                                                     class="form-control">
-                                                                                <c:set var="i" value="${0}"></c:set>
+                                                                                <option value="">(Không có đề xuất)</option>
                                                                                 <c:forEach var="itemAcc"
                                                                                            items="<%= listAcc %>">
                                                                                     <option value="${itemAcc.username}"
-                                                                                            <c:if test="${index.index==i}">selected</c:if> >
+                                                                                            <c:if test="${suggestMap[item.id] == itemAcc.username}">selected</c:if> >
                                                                                             ${itemAcc.username}</option>
-                                                                                    <c:set var="i"
-                                                                                           value="${i+1}"></c:set>
                                                                                 </c:forEach>
                                                                             </select>
                                                                         </td>
 
                                                                         <td>
-                                                                            <button class="btn btn-default"
+                                                                            <button class="btn btn-default" id="assign"
                                                                                     type="submit" name="button"
                                                                                     value="assign">Giao việc
                                                                             </button>

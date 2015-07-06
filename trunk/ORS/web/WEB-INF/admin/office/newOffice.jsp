@@ -45,7 +45,7 @@
                         Thêm mới văn phòng
                     </div>
                     <div>
-                        <form action="office" method="post">
+                        <form action="office" method="post" id="form">
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2 control-label">Tên văn phòng</label>
 
@@ -186,7 +186,7 @@
                             <div class="button-post">
                                 <input type="hidden" id="imageUrls" name="imageUrls">
                                 <input type="hidden" id="amenityList" name="amenityList">
-                                <button type="button" value="save" class="btn btn-primary" name="action">Tạo mới
+                                <button type="submit" value="save" class="btn btn-primary" name="action">Tạo mới
                                 </button>
                                 <a href="/admin/office" class="btn btn-default">Hủy</a>
                             </div>

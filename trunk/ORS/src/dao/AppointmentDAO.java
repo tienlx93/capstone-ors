@@ -98,4 +98,32 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         }
         return null;
     }
+
+    public List<Appointment> getAppointmentListByStaffInRange(String username, Date startDate, Date endDate) {
+        try {
+            String sql = "from Appointment where assignedStaff = :username and time >= :startDate and time < :endDate";
+            Query query = session.createQuery(sql);
+            query.setString("username", username);
+            query.setDate("startDate", startDate);
+            query.setDate("endDate", endDate);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Appointment> getAppointmentListByStatus(int status) {
+        try {
+            String sql = "from Appointment where statusId = :status";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

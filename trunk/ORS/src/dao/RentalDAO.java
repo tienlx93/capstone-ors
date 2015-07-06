@@ -83,5 +83,31 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
         return null;
     }
 
+    public List<Rental> getRentalListByStaffInRange(String username, Date startDate, Date endDate) {
+        try {
+            String sql = "from Rental where assignStaff = :username and assignedTime >= :startDate and assignedTime < :endDate";
+            Query query = session.createQuery(sql);
+            query.setString("username", username);
+            query.setDate("startDate", startDate);
+            query.setDate("endDate", endDate);
 
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Appointment> getRentalListByStatus(int status) {
+        try {
+            String sql = "from Rental where statusId = :status";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

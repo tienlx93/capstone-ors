@@ -3,6 +3,7 @@ package controller;
 import dao.AppointmentDAO;
 import entity.Account;
 import entity.Appointment;
+import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xps on 6/11/2015.
@@ -53,6 +55,9 @@ public class AppointmentController extends HttpServlet {
                 List<Appointment> list;
                 if (account.getRoleId() == 2) {
                     list = dao.findAll();
+                    ScheduleService service = new ScheduleService();
+                    Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
+                    request.setAttribute("suggestMap", suggestMap);
                 } else {
                     list = dao.getAppointmentListByStaff(account.getUsername());
                 }

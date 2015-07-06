@@ -83,4 +83,32 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         }
         return null;
     }
+
+    public List<Repair> getRepairListByStaffInRange(String username, Date startDate, Date endDate) {
+        try {
+            String sql = "from Repair where assignedStaff = :username and assignedTime >= :startDate and assignedTime < :endDate";
+            Query query = session.createQuery(sql);
+            query.setString("username", username);
+            query.setDate("startDate", startDate);
+            query.setDate("endDate", endDate);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Appointment> getRepairListByStatus(int status) {
+        try {
+            String sql = "from Repair where repairStatusId = :status";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

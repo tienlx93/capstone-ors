@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -26,11 +27,13 @@ public class AppointmentController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         String button = request.getParameter("button");
+        String time = request.getParameter("time");
         AppointmentDAO dao = new AppointmentDAO();
         if (action.equals("editing")) {
             switch (button) {
                 case "assign":
-                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), 2);
+                    Date date = java.sql.Date.valueOf(time);
+                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), date, 2);
                     break;
                 case "reject":
                     String comment = request.getParameter("comment");

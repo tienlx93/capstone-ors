@@ -116,7 +116,7 @@
                                                         <tr>
                                                             <th>Khách hàng</th>
                                                             <th>Văn phòng</th>
-                                                            <th>Thời gian</th>
+                                                            <th>Thời gian gặp</th>
                                                             <th>Đề xuất nhân viên</th>
 
                                                         </tr>
@@ -175,7 +175,7 @@
                                                                 <th>Nhân viên</th>
                                                             </c:if>
                                                             <th>Văn phòng</th>
-                                                            <th>Thời gian</th>
+                                                            <th>Thời gian gặp</th>
 
                                                         </tr>
                                                         </thead>
@@ -214,7 +214,7 @@
                                                                 <th>Nhân viên</th>
                                                             </c:if>
                                                             <th>Văn phòng</th>
-                                                            <th>Thời gian</th>
+                                                            <th>Thời gian gặp</th>
 
                                                         </tr>
                                                         </thead>
@@ -253,7 +253,7 @@
                                                                 <th>Nhân viên</th>
                                                             </c:if>
                                                             <th>Văn phòng</th>
-                                                            <th>Thời gian</th>
+                                                            <th>Thời gian gặp</th>
 
                                                         </tr>
                                                         </thead>
@@ -292,7 +292,7 @@
                                                                 <th>Nhân viên</th>
                                                             </c:if>
                                                             <th>Văn phòng</th>
-                                                            <th>Thời gian</th>
+                                                            <th>Thời gian gặp</th>
 
                                                         </tr>
                                                         </thead>

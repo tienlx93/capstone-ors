@@ -653,7 +653,7 @@ public class ApiController extends HttpServlet {
             RepairDAO dao = new RepairDAO();
             List<RepairListJSON> list = new ArrayList<>();
             for (Repair repair : dao.getRepairListByContract(id)) {
-                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime()));
+                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(), repair.getAssignedStaff()));
             }
             out.print(gson.toJson(list));
         }

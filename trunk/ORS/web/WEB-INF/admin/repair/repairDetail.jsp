@@ -98,7 +98,7 @@
                                         List<Account> listAcc = acc.findStaff();%>
                                     <div class="col-sm-10">
                                         <c:choose>
-                                            <c:when test="${info.repairStatusId != 1}">
+                                            <c:when test="${info.repairStatusId == 3 || info.repairStatusId == 4}">
                                                 ${info.assignedStaff}
                                                 <input type="hidden" name="assignedStaff" id="assignedStaff"
                                                        value="${info.assignedStaff}">
@@ -112,6 +112,7 @@
                                                                 <option value="${itemAcc.username}">${itemAcc.username}</option>
                                                             </c:forEach>
                                                         </c:when>
+
                                                         <c:otherwise>
                                                             <option value=""></option>
                                                             <c:forEach var="itemAcc" items="<%= listAcc %>">
@@ -173,6 +174,11 @@
                                             </button>
                                             <button type="submit" value="reject" name="button" class="btn btn-default">
                                                 Từ chối sửa chữa
+                                            </button>
+                                        </c:if>
+                                        <c:if test="${info.repairStatusId == 2}">
+                                            <button type="submit" value="assign" name="button" class="btn btn-default">
+                                                Giao việc lại
                                             </button>
                                         </c:if>
                                     </c:when>

@@ -33,13 +33,14 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         return false;
     }
 
-    public void update(int id, String assignedStaff, int statusId) {
+    public void update(int id, String assignedStaff, Date time, int statusId) {
 
         Transaction trans = session.beginTransaction();
         try {
             Appointment appointment = (Appointment) session.get(Appointment.class, id);
             appointment.setAssignedStaff(assignedStaff);
             appointment.setStatusId(statusId);
+            appointment.setTime(new Timestamp(time.getTime()));
             appointment.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(appointment);
             trans.commit();

@@ -5,6 +5,7 @@
         <tr>
             <th>Mô tả</th>
             <th>Ngày tạo</th>
+            <th>Nhân viên sửa chữa</th>
         </tr>
         </thead>
         <tbody>
@@ -12,6 +13,7 @@
         <tr ng-repeat="item in data">
             <td>{{item.description}}</td>
             <td>{{item.createTime | toLocaleDate}}</td>
+            <td>{{item.assignStaff}}</td>
         </tr>
 
         </tbody>

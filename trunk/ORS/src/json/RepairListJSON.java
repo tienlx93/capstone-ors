@@ -9,14 +9,16 @@ public class RepairListJSON {
     private int repairId;
     private String description;
     private Date createTime;
+    private String assignStaff;
 
     public RepairListJSON() {
     }
 
-    public RepairListJSON(int repairId, String description, Date createTime) {
+    public RepairListJSON(int repairId, String description, Date createTime, String assignStaff) {
         this.repairId = repairId;
         this.description = description;
         this.createTime = createTime;
+        this.assignStaff = assignStaff;
     }
 
     public int getRepairId() {
@@ -41,5 +43,13 @@ public class RepairListJSON {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getAssignStaff() {
+        return assignStaff;
+    }
+
+    public void setAssignStaff(String assignStaff) {
+        this.assignStaff = assignStaff;
     }
 }

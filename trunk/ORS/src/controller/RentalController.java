@@ -1,8 +1,10 @@
 package controller;
 
 import dao.RentalDAO;
+import dao.RentalDetailDAO;
 import entity.Account;
 import entity.Rental;
+import entity.RentalDetail;
 import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
@@ -77,6 +79,9 @@ public class RentalController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                RentalDetailDAO rdd = new RentalDetailDAO();
+                List<RentalDetail> detailList = rdd.getRentalDetailByRental(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("detailList", detailList);
                 request.getRequestDispatcher("/WEB-INF/admin/rental/rentalDetail.jsp").forward(request, response);
 
             } else if (action.equals("new")) {

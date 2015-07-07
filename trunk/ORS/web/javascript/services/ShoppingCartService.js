@@ -2,7 +2,17 @@ app.service('ShoppingCartService', function() {
     var productList = [];
 
     var addProduct = function(newObj) {
-        productList.push(newObj);
+        var duplicate = false;
+        for (var i =0; i < productList.length; i++) {
+            if(newObj.rentalId === productList[i].rentalId) {
+                productList[i].quantity += newObj.quantity;
+                duplicate = true;
+                break;
+            }
+        }
+        if (!duplicate) {
+            productList.push(newObj);
+        }
     };
 
     var getProducts = function(){

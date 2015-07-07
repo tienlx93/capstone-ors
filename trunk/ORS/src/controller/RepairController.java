@@ -4,6 +4,7 @@ import dao.RepairDAO;
 import entity.Account;
 import entity.Repair;
 import service.ScheduleService;
+import service.ScheduleService2;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -73,7 +74,7 @@ public class RepairController extends HttpServlet {
                 List<Repair> list;
                 if (account.getRoleId() == 2) {
                     list = repairDAO.findAll();
-                    ScheduleService service = new ScheduleService();
+                    ScheduleService2 service = new ScheduleService2();
                     Map<Integer, Repair> suggestMap = service.makeRepairSchedule();
                     request.setAttribute("suggestMap", suggestMap);
                 } else {

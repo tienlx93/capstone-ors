@@ -6,6 +6,7 @@ import entity.Account;
 import entity.Rental;
 import entity.RentalDetail;
 import service.ScheduleService;
+import service.ScheduleService2;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -67,7 +68,7 @@ public class RentalController extends HttpServlet {
                 RentalDAO rentalDAO = new RentalDAO();
                 List<Rental> list;
                 if (account.getRoleId()==2) {
-                    ScheduleService service = new ScheduleService();
+                    ScheduleService2 service = new ScheduleService2();
                     Map<Integer, Rental> suggestMap = service.makeRentalSchedule();
                     request.setAttribute("suggestMap", suggestMap);
                     list = rentalDAO.findAll();

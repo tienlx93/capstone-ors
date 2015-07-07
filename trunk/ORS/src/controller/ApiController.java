@@ -127,7 +127,7 @@ public class ApiController extends HttpServlet {
                 getOfficeName(request, out);
                 break;
             case "getAllOfficeRentalList":
-                getAllOfficeRentalList(request,out);
+                getAllOfficeRentalList(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -535,7 +535,7 @@ public class ApiController extends HttpServlet {
         }
     }
 
-        private List<String> saveAmenities(String amenities) {
+    private List<String> saveAmenities(String amenities) {
         StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
         List<String> amenityList = new ArrayList<>();
         while (tokenizer.hasMoreTokens()) {
@@ -614,13 +614,13 @@ public class ApiController extends HttpServlet {
     }
 
     private void getAllOfficeRentalList(HttpServletRequest request, PrintWriter out) {
-            List<RentalListJSON> list = new ArrayList<>();
-            RentalItemDAO dao = new RentalItemDAO();
-            for (RentalItem rentalItem : dao.findAll()) {
-                    list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                            rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl()));
-            }
-            out.print(gson.toJson(list));
+        List<RentalListJSON> list = new ArrayList<>();
+        RentalItemDAO dao = new RentalItemDAO();
+        for (RentalItem rentalItem : dao.findAll()) {
+            list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl()));
+        }
+        out.print(gson.toJson(list));
     }
 
     private void getRentalList(HttpServletRequest request, PrintWriter out) {
@@ -653,7 +653,8 @@ public class ApiController extends HttpServlet {
             RepairDAO dao = new RepairDAO();
             List<RepairListJSON> list = new ArrayList<>();
             for (Repair repair : dao.getRepairListByContract(id)) {
-                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(), repair.getAssignedStaff()));
+                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
+                        repair.getAssignedStaff(), repair.getAssignedTime(), repair.getRepairStatusByRepairStatusId().getDescription()));
             }
             out.print(gson.toJson(list));
         }

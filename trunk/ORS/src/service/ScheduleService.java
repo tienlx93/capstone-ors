@@ -5,6 +5,7 @@ import dao.AppointmentDAO;
 import dao.RentalDAO;
 import dao.RepairDAO;
 import entity.*;
+import org.hibernate.Session;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -13,6 +14,7 @@ import java.util.*;
  * Created by ASUS on 7/4/2015.
  */
 public class ScheduleService {
+    private Session session;
     private Calendar calendar;
     private List<Account> staffList;
     private Map<String, List<Date>> dateMap;
@@ -23,6 +25,7 @@ public class ScheduleService {
     private Date endDate;
 
     public ScheduleService() {
+        session = util.HibernateUtil.getSession();
         calendar = Calendar.getInstance();
         calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
         calendar.set(Calendar.HOUR_OF_DAY, 0);

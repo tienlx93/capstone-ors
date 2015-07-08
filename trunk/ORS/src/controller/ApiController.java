@@ -409,11 +409,25 @@ public class ApiController extends HttpServlet {
                 "iso-8859-1"), "UTF-8");
         String fullname = new String(request.getParameter("fullname").getBytes(
                 "iso-8859-1"), "UTF-8");
-        String company = new String(request.getParameter("company").getBytes(
-                "iso-8859-1"), "UTF-8");
+        String tokenCompny = request.getParameter("company");
+        String company;
+        if (tokenCompny == null) {
+            company = null;
+        } else {
+            company = new String(tokenCompny.getBytes(
+                    "iso-8859-1"), "UTF-8");
+        }
+        /*String company = new String(request.getParameter("company").getBytes(
+                "iso-8859-1"), "UTF-8");*/
         String phone = request.getParameter("phone");
-        String address = new String(request.getParameter("address").getBytes(
-                "iso-8859-1"), "UTF-8");
+        String tokenAddress = request.getParameter("address");
+        String address;
+        if (tokenAddress == null) {
+            address = null;
+        } else {
+            address = new String(tokenAddress.getBytes(
+                    "iso-8859-1"), "UTF-8");
+        }
         String birthday = request.getParameter("birthday");
 
         if (account == null) {
@@ -434,10 +448,19 @@ public class ApiController extends HttpServlet {
             pf.setUsername(acc.getUsername());
             pf.setTitle(title);
             pf.setFullName(fullname);
-            pf.setCompany(company);
             pf.setPhone(phone);
+            pf.setCompany(company);
             pf.setAddress(address);
             pf.setBirthday(new Timestamp(parsed.getTime()));
+            /*if (company.equals("") && address.equals("") && parsed!= null) {
+
+            } else {
+                pf.setCompany(null);
+                pf.setAddress(null);
+                pf.setBirthday(null);
+            }*/
+
+
             ProfileDAO profileDAO = new ProfileDAO();
             boolean result2 = profileDAO.save(pf);
 

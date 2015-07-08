@@ -3,9 +3,11 @@ package controller;
 import com.google.gson.Gson;
 import dao.AmenityDAO;
 import dao.AccountDAO;
+import dao.AmenityGroupDAO;
 import dao.RoleDAO;
 import entity.Account;
 import entity.Amenity;
+import entity.AmenityGroup;
 import entity.Role;
 import json.AccountJSON;
 
@@ -36,6 +38,7 @@ public class AmenityController extends HttpServlet {
             ame.setDescription(request.getParameter("description"));
             ame.setWeight(Integer.parseInt(request.getParameter("weight")));
             ame.setWeight(Integer.parseInt(request.getParameter("priority")));
+            ame.setAmenityGroupId(Integer.parseInt(request.getParameter("group")));
             dao.save(ame);
         } else if (action.equals("delete")) {
             String name = request.getParameter("name");
@@ -70,12 +73,16 @@ public class AmenityController extends HttpServlet {
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/viewAmenity.jsp");
             rd.forward(request, response);
         } else if (action.equals("new")) {
+            AmenityGroupDAO groupDAO = new AmenityGroupDAO();
+           List<AmenityGroup> groupList = groupDAO.findAll();
+            request.setAttribute("groupList", groupList);
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/addAmenity.jsp");
             rd.forward(request, response);
         } else if (action.equals("edit")) {
-            String name = request.getParameter("name");
-            Amenity amenity = dao.get(Integer.parseInt(name));
-            request.setAttribute("amenity", amenity);
+            //String name = request.getParameter("name");
+            //Amenity amenity = dao.get(Integer.valueOf(name));
+            //request.setAttribute("amenity", amenity);
+
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/editAmenity.jsp");
             rd.forward(request, response);
         }

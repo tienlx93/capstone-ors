@@ -65,6 +65,15 @@
                 <input type="text" name="priority" class="" id="priority">
               </div>
 
+              <div class="form-group">
+                <label for="group">Nhóm thiết bị</label>
+                <select name="group" class="" id="group">
+                  <c:forEach var="item" items="${groupList}">
+                    <option value="${item.id}">${item.name}</option>
+                  </c:forEach>
+                </select>
+              </div>
+
               <div class="button-post">
                 <button type="button" value="cancel" name="action">Hủy</button>
                 <button type="submit" value="save" name="action">Tạo mới</button>

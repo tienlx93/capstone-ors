@@ -24,6 +24,7 @@ public class Rental {
     private Timestamp assignedTime;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;

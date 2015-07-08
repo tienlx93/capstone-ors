@@ -5,6 +5,8 @@
         <tr>
             <th>Mô tả</th>
             <th>Ngày tạo</th>
+            <th>Tình trạng</th>
+            <th>Ngày được sửa chữa</th>
         </tr>
         </thead>
         <tbody>
@@ -12,6 +14,8 @@
         <tr ng-repeat="item in data">
             <td>{{item.description}}</td>
             <td>{{item.createTime | toLocaleDate}}</td>
+            <td>{{item.status}}</td>
+            <td><span ng-show="item.assignedTime">{{item.assignedTime | toLocaleDate}}</span></td>
         </tr>
 
         </tbody>

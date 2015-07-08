@@ -9,16 +9,18 @@ public class RentalListJSON {
     private String description;
     private double unitPrice;
     private int quantity;
+    private String imageUrl;
 
     public RentalListJSON() {
     }
 
-    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity) {
+    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl) {
         this.rentalId = rentalId;
         this.name = name;
         this.description = description;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
+        this.imageUrl = imageUrl;
     }
 
     public int getRentalId() {
@@ -59,5 +61,13 @@ public class RentalListJSON {
 
     public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

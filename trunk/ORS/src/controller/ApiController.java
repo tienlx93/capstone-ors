@@ -16,6 +16,7 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -44,7 +45,12 @@ public class ApiController extends HttpServlet {
                 login(request, out);
                 break;
             case "register":
-                register(request, out);
+                try {
+                    register(request, out);
+                } catch (ParseException e) {
+                    out.print(gson.toJson("Error"));
+                    e.printStackTrace();
+                }
                 break;
             case "checkLogin":
                 checkLogin(request, out);
@@ -57,6 +63,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "requestRepair":
                 requestRepair(request, out);
+                break;
+            case "requestRental":
+                requestRental(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -118,7 +127,7 @@ public class ApiController extends HttpServlet {
                 getOfficeName(request, out);
                 break;
             case "getAllOfficeRentalList":
-                getAllOfficeRentalList(request,out);
+                getAllOfficeRentalList(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -389,7 +398,7 @@ public class ApiController extends HttpServlet {
         }
     }
 
-    private void register(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+    private void register(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException, ParseException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
         String username = new String(request.getParameter("username").getBytes(
@@ -417,7 +426,9 @@ public class ApiController extends HttpServlet {
             AccountDAO accountDAO = new AccountDAO();
             boolean result = accountDAO.save(acc);
 
-            Date date = java.sql.Date.valueOf(birthday);
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsed = format.parse(birthday);
+
 
             Profile pf = new Profile();
             pf.setUsername(acc.getUsername());
@@ -426,7 +437,7 @@ public class ApiController extends HttpServlet {
             pf.setCompany(company);
             pf.setPhone(phone);
             pf.setAddress(address);
-            pf.setBirthday(Timestamp.valueOf("1980-11-11 02:02:02"));
+            pf.setBirthday(new Timestamp(parsed.getTime()));
             ProfileDAO profileDAO = new ProfileDAO();
             boolean result2 = profileDAO.save(pf);
 
@@ -534,6 +545,57 @@ public class ApiController extends HttpServlet {
         return amenityList;
     }
 
+    private void requestRental(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String contractId = request.getParameter("contractId");
+        String rentalList = new String(request.getParameter("rentalList").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String description = new String(request.getParameter("description").getBytes(
+                "iso-8859-1"), "UTF-8");
+        if (account != null) {
+            RentalDAO dao = new RentalDAO();
+            Rental rental = new Rental();
+            rental.setContractId(Integer.parseInt(contractId));
+            rental.setDescription(description);
+            rental.setStatusId(1);
+            rental.setCreateTime(new Timestamp((new Date()).getTime()));
+
+            boolean result = dao.save(rental);
+            RentalListJSON rentalListJSON = gson.fromJson(rentalList, RentalListJSON.class);
+
+
+//            if (result) {
+//                List<String> amenityList = saveAmenities(amenities);
+//                AmenityDAO amenityDAO = new AmenityDAO();
+//                List<Integer> amenityListInt = new ArrayList<>();
+//                Amenity amenity;
+//                for (String s : amenityList) {
+//                    amenity = amenityDAO.searchAmenity(s);
+//                    amenityListInt.add(amenity.getId());
+//                }
+//                RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
+//                repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
+//                out.print(gson.toJson("Success"));
+//            } else {
+//                out.print(gson.toJson("Error"));
+//            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+    private List<String> saveRental(String amenities) {
+        StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
+        List<String> amenityList = new ArrayList<>();
+        while (tokenizer.hasMoreTokens()) {
+            amenityList.add(tokenizer.nextToken());
+        }
+
+        return amenityList;
+    }
+
+
     private void getContractList(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
@@ -552,22 +614,13 @@ public class ApiController extends HttpServlet {
     }
 
     private void getAllOfficeRentalList(HttpServletRequest request, PrintWriter out) {
-        HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
-
-        if (account != null) {
-            RentalDAO rentalDAO = new RentalDAO();
-            List<RentalListJSON> list = new ArrayList<>();
-
-            for (Rental rental : rentalDAO.findAll()) {
-                for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
-                    RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
-                    list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity()));
-                }
-            }
-            out.print(gson.toJson(list));
+        List<RentalListJSON> list = new ArrayList<>();
+        RentalItemDAO dao = new RentalItemDAO();
+        for (RentalItem rentalItem : dao.findAll()) {
+            list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl()));
         }
+        out.print(gson.toJson(list));
     }
 
     private void getRentalList(HttpServletRequest request, PrintWriter out) {
@@ -584,7 +637,7 @@ public class ApiController extends HttpServlet {
                 for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
                     RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
                     list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity()));
+                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null));
                 }
             }
             out.print(gson.toJson(list));
@@ -600,7 +653,8 @@ public class ApiController extends HttpServlet {
             RepairDAO dao = new RepairDAO();
             List<RepairListJSON> list = new ArrayList<>();
             for (Repair repair : dao.getRepairListByContract(id)) {
-                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime()));
+                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
+                        repair.getAssignedStaff(), repair.getAssignedTime(), repair.getRepairStatusByRepairStatusId().getDescription()));
             }
             out.print(gson.toJson(list));
         }

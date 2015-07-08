@@ -1,5 +1,6 @@
 package json;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 /**
@@ -9,14 +10,17 @@ public class RepairListJSON {
     private int repairId;
     private String description;
     private Date createTime;
+    private String assignStaff;
+    private Date assignedTime;
+    private String status;
 
-    public RepairListJSON() {
-    }
-
-    public RepairListJSON(int repairId, String description, Date createTime) {
+    public RepairListJSON(int repairId, String description, Date createTime, String assignStaff, Date assignedTime, String status) {
         this.repairId = repairId;
         this.description = description;
         this.createTime = createTime;
+        this.assignStaff = assignStaff;
+        this.assignedTime = assignedTime;
+        this.status = status;
     }
 
     public int getRepairId() {
@@ -41,5 +45,29 @@ public class RepairListJSON {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getAssignStaff() {
+        return assignStaff;
+    }
+
+    public void setAssignStaff(String assignStaff) {
+        this.assignStaff = assignStaff;
+    }
+
+    public Date getAssignedTime() {
+        return assignedTime;
+    }
+
+    public void setAssignedTime(Date assignedTime) {
+        this.assignedTime = assignedTime;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

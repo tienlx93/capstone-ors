@@ -1,8 +1,12 @@
 package controller;
 
 import dao.RentalDAO;
+import dao.RentalDetailDAO;
 import entity.Account;
 import entity.Rental;
+import entity.RentalDetail;
+import service.ScheduleService;
+import service.ScheduleService2;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Thành on 08/06/2015.
@@ -63,6 +68,9 @@ public class RentalController extends HttpServlet {
                 RentalDAO rentalDAO = new RentalDAO();
                 List<Rental> list;
                 if (account.getRoleId()==2) {
+                    ScheduleService2 service = new ScheduleService2();
+                    Map<Integer, Rental> suggestMap = service.makeRentalSchedule();
+                    request.setAttribute("suggestMap", suggestMap);
                     list = rentalDAO.findAll();
                 } else {
                     list = rentalDAO.getRentalListByStaff(account.getUsername());
@@ -72,6 +80,9 @@ public class RentalController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                RentalDetailDAO rdd = new RentalDetailDAO();
+                List<RentalDetail> detailList = rdd.getRentalDetailByRental(Integer.parseInt(request.getParameter("id")));
+                request.setAttribute("detailList", detailList);
                 request.getRequestDispatcher("/WEB-INF/admin/rental/rentalDetail.jsp").forward(request, response);
 
             } else if (action.equals("new")) {

@@ -1,6 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="dao.AppointmentStatusDAO" %>
-<%@ page import="entity.AppointmentStatus" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dao.AccountDAO" %>
 <%@ page import="entity.Account" %>
@@ -18,7 +16,8 @@
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
           type="text/css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+          type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
@@ -28,6 +27,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -79,18 +80,28 @@
                                         List<Account> listAcc = acc.findStaff();%>
                                     <div class="col-sm-10">
                                         <c:choose>
-                                            <c:when test="${info.statusId != 1}">
+                                            <c:when test="${info.statusId == 5 || info.statusId == 4 || info.statusId == 3}">
                                                 ${info.assignedStaff}
                                                 <input type="hidden" name="assignedStaff" id="assignedStaff"
                                                        value="${info.assignedStaff}">
                                             </c:when>
                                             <c:otherwise>
                                                 <select name="assignedStaff" id="assignedStaff" class="form-control">
-                                                    <option value="">Chọn nhân viên</option>
-                                                    <c:forEach var="itemAcc" items="<%= listAcc %>">
-                                                        <option value="${itemAcc.username}"
-                                                                <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
-                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${info.statusId == 1}">
+                                                            <option value="" selected></option>
+                                                            <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                                <option value="${itemAcc.username}">${itemAcc.username}</option>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <option value=""></option>
+                                                            <c:forEach var="itemAcc" items="<%= listAcc %>">
+                                                                <option value="${itemAcc.username}"
+                                                                        <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </select>
                                             </c:otherwise>
                                         </c:choose>
@@ -100,11 +111,24 @@
 
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Thời gian</label>
+                                <label for="time" class="col-sm-2 control-label">Thời gian gặp</label>
+                                <c:choose>
+                                    <c:when test="${user.roleId==2}">
+                                        <div class="col-sm-10">
+                                            <input type='text' class="form-control"
+                                                   name="time"
+                                                   id="time"
+                                                   value="${info.time}"/>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${info.time}
+                                    </c:otherwise>
+                                </c:choose>
 
-                                <div class="col-sm-10">
-                                    ${info.time}
-                                </div>
+                                <%--<div class="col-sm-10">--%>
+                                <%--${info.time}--%>
+                                <%--</div>--%>
                             </div>
 
                             <div class="form-group clearfix">
@@ -117,7 +141,7 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" value="" name="comment" />
+                            <input type="hidden" value="" name="comment"/>
 
                             <c:if test="info.statusId == 2 && user.roleId == 3">
                                 <div class="form-group clearfix">
@@ -132,26 +156,33 @@
 
                                 <c:choose>
                                     <c:when test="${info.statusId == 1 && user.roleId == 2}">
-                                        <button type="submit" name="button" value="reject" onclick="inputComment()">Hủy lịch hẹn</button>
-                                        <button type="submit" name="button" value="assign">Giao việc</button>
+                                        <button class="btn btn-default" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
+                                            lịch hẹn
+                                        </button>
+                                        <button type="submit" name="button" value="assign" class="btn btn-default">Giao việc</button>
+                                    </c:when>
+                                    <c:when test="${info.statusId == 2 && user.roleId == 2}">
+                                        <button class="btn btn-default" type="submit" name="button" value="assign">Giao việc lại</button>
                                     </c:when>
                                     <c:when test="${info.statusId == 3 && user.roleId == 2}">
                                         <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
                                            class="btn btn-default">Tạo hợp đồng</a>
-                                        <button type="submit" name="button" value="reject" onclick="inputComment()">Hủy lịch hẹn</button>
+                                        <button class="btn btn-default" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
+                                            lịch hẹn
+                                        </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
-                                        <button type="submit" name="button" value="update3">
+                                        <button class="btn btn-default" type="submit" name="button" value="update3">
                                             Khách hàng đồng ý kí hợp đồng
                                         </button>
                                         <br>
-                                        <button type="submit" name="button" value="reject">
+                                        <button class="btn btn-default" type="submit" name="button" value="reject">
                                             Khách hàng không đồng ý kí hợp đồng
                                         </button>
                                     </c:when>
 
                                 </c:choose>
-                                <br>
+
                                 <a href="${pageContext.request.contextPath}/admin/appointment"
                                    class="btn btn-default">Quay về</a>
                             </div>
@@ -171,11 +202,26 @@
 <script>
     function inputComment() {
         var comment = prompt("Ý kiến khách hàng: ", "");
-        if(comment) {
+        if (comment) {
             document.appointment.comment.value = comment;
             document.appointment.button.value = 'reject';
         }
     }
+</script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        $('#assignedTime').datepicker({
+            format: 'yyyy-mm-dd',
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).data('datepicker');
+
+    });
+
 </script>
 </body>
 </html>

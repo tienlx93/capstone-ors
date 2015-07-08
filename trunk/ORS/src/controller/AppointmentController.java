@@ -3,6 +3,8 @@ package controller;
 import dao.AppointmentDAO;
 import entity.Account;
 import entity.Appointment;
+import service.ScheduleService;
+import service.ScheduleService2;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,7 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by xps on 6/11/2015.
@@ -24,11 +28,13 @@ public class AppointmentController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         String button = request.getParameter("button");
+        String time = request.getParameter("time");
         AppointmentDAO dao = new AppointmentDAO();
         if (action.equals("editing")) {
             switch (button) {
                 case "assign":
-                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), 2);
+                    Date date = java.sql.Date.valueOf(time);
+                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), date, 2);
                     break;
                 case "reject":
                     String comment = request.getParameter("comment");
@@ -53,6 +59,9 @@ public class AppointmentController extends HttpServlet {
                 List<Appointment> list;
                 if (account.getRoleId() == 2) {
                     list = dao.findAll();
+                    ScheduleService2 service = new ScheduleService2();
+                    Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
+                    request.setAttribute("suggestMap", suggestMap);
                 } else {
                     list = dao.getAppointmentListByStaff(account.getUsername());
                 }

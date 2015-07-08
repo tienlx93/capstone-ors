@@ -24,7 +24,7 @@ public class RentalItemController extends HttpServlet {
             RentalItemDAO dao = new RentalItemDAO();
             dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("name"),
                     request.getParameter("description"), Double.parseDouble(request.getParameter("price")),
-                    Integer.parseInt(request.getParameter("quantity")));
+                    Integer.parseInt(request.getParameter("quantity")), request.getParameter("imageUrl"));
             response.sendRedirect("/admin/rentalItem");
         } else if (action.equals("save")) {
             RentalItemDAO dao = new RentalItemDAO();

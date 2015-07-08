@@ -12,7 +12,7 @@ public class RentalItemDAO extends BaseDAO<RentalItem, Integer> {
         super(RentalItem.class);
     }
 
-    public void update(int id, String name, String description, double price, Integer quantity) {
+    public void update(int id, String name, String description, double price, Integer quantity, String imageUrl) {
         Transaction trans = session.beginTransaction();
         try {
             RentalItem rtItem = (RentalItem)session.get(RentalItem.class,id);
@@ -20,6 +20,7 @@ public class RentalItemDAO extends BaseDAO<RentalItem, Integer> {
             rtItem.setDescription(description);
             rtItem.setPrice(price);
             rtItem.setQuantity(quantity);
+            rtItem.setImageUrl(imageUrl);
             session.update(rtItem);
             trans.commit();
 

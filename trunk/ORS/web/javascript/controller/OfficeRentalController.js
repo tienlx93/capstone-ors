@@ -1,5 +1,5 @@
-controllers.controller('OfficeRentalController', ['$scope', '$location', 'Api', '$routeParams', 'ShoppingCartService',
-    function ($scope, $location, Api, $routeParams, ShoppingCartService) {
+controllers.controller('OfficeRentalController', ['$scope', '$location', 'Api', '$routeParams', 'ShoppingCartService', 'toastr',
+    function ($scope, $location, Api, $routeParams, ShoppingCartService, toastr) {
         $scope.contractID = $routeParams.id;
         var rentalCart = [];
 
@@ -18,6 +18,7 @@ controllers.controller('OfficeRentalController', ['$scope', '$location', 'Api', 
 
         $scope.addToCart = function (item) {
             ShoppingCartService.addProduct(item);
+            toastr.success('Bạn đã thêm ' + item.quantity + ' ' + item.name + ' vào giỏ hàng');
         };
 
     }]);

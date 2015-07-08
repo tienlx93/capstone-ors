@@ -2,7 +2,7 @@
  * Created by ASUS on 6/7/2015.
  */
 var app = angular.module('ors', [
-    'ngRoute', 'ngAnimate', 'ui.bootstrap',
+    'ngRoute', 'ngAnimate', 'ui.bootstrap','toastr',
     'controllers'
 ]);
 var controllers = angular.module('controllers', []);

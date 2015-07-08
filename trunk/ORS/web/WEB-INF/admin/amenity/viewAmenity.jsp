@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Tuan
@@ -53,6 +54,7 @@
                 <th>Tên tiện nghi</th>
                 <th>Mô tả</th>
                 <th>Trọng số</th>
+                <th>Độ ưu tiên</th>
                 <th></th>
               </tr>
               </thead>
@@ -62,6 +64,7 @@
                   <td>${item.name}</td>
                   <td>${item.description}</td>
                   <td>${item.weight}</td>
+                  <td>${item.priority}</td>
                   <td><a href="amenity?action=edit&id=${item.id}">Cập nhật</a>
                   </td>
                 </tr>

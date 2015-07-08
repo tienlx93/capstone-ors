@@ -35,6 +35,7 @@ public class AmenityController extends HttpServlet {
             ame.setName(request.getParameter("name"));
             ame.setDescription(request.getParameter("description"));
             ame.setWeight(Integer.parseInt(request.getParameter("weight")));
+            ame.setWeight(Integer.parseInt(request.getParameter("priority")));
             dao.save(ame);
         } else if (action.equals("delete")) {
             String name = request.getParameter("name");
@@ -44,11 +45,13 @@ public class AmenityController extends HttpServlet {
             Amenity ame = new Amenity();
             Amenity amedemo = new Amenity();
             amedemo.setWeight(Integer.parseInt(request.getParameter("weight")));
+            ame.setWeight(Integer.parseInt(request.getParameter("priority")));
             amedemo.setDescription(request.getParameter("description"));
-            
+
 /*          String password = request.getParameter("password");
             String email = request.getParameter("email");*/
      /**//* String role = request.getParameter("role");*/
+
             accDAO.update(name, amedemo);
         }
         response.sendRedirect("/admin/amenity");
@@ -59,15 +62,11 @@ public class AmenityController extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
         String action = request.getParameter("action");
 
-
         AmenityDAO dao = new AmenityDAO();
 
-        List<Amenity> list = new ArrayList<>();
-        for (Amenity amenity : dao.findAll()) {
-            list.add(amenity);
-        }
+        List<Amenity> list =  dao.findAll();
         if (action == null) {
-            request.setAttribute("list", list);
+            request.setAttribute("data", list);
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/viewAmenity.jsp");
             rd.forward(request, response);
         } else if (action.equals("new")) {
@@ -75,6 +74,8 @@ public class AmenityController extends HttpServlet {
             rd.forward(request, response);
         } else if (action.equals("edit")) {
             String name = request.getParameter("name");
+            Amenity amenity = dao.get(Integer.parseInt(name));
+            request.setAttribute("amenity", amenity);
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/editAmenity.jsp");
             rd.forward(request, response);
         }

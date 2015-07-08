@@ -27,15 +27,15 @@ public class AmenityGroupController extends HttpServlet {
         String action = request.getParameter("action");
         AmenityGroupDAO dao = new AmenityGroupDAO();
         if (action.equals("save")) {
-            AmenityGroup acc = new AmenityGroup();
-            acc.setName(request.getParameter("amenitygroupname"));
-            acc.setDescription(request.getParameter("description"));
-            dao.save(acc);
+            AmenityGroup ag = new AmenityGroup();
+            ag.setName(request.getParameter("name"));
+            ag.setDescription(request.getParameter("description"));
+            dao.save(ag);
         } else if (action.equals("delete")) {
-            String username = request.getParameter("amenitygroupname");
+            String username = request.getParameter("name");
           //  dao.delete(name);
     } else if (action.equals("update")) {
-            String name = request.getParameter("amenitygroupname");
+            String name = request.getParameter("name");
             AmenityGroupDAO accDAO = new AmenityGroupDAO();
             AmenityGroup acc = new AmenityGroup();
             AmenityGroup accdemo = new AmenityGroup();
@@ -53,10 +53,8 @@ public class AmenityGroupController extends HttpServlet {
         String action = request.getParameter("action");
 
         AmenityGroupDAO dao = new AmenityGroupDAO();
-        List<AmenityGroup> list = new ArrayList<>();
-        for (AmenityGroup amenityGroup : dao.findAll()) {
-            list.add(amenityGroup);
-        }
+        List<AmenityGroup> list = dao.findAll();
+
 
         if (action == null) {
             request.setAttribute("list", list);

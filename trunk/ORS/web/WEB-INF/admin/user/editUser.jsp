@@ -46,7 +46,7 @@
           <div>
             <form action="${pageContext.request.contextPath}/admin/user" method="post">
               <div class="form-group">
-                <label for="">Tên tài khoản</label>
+                <label>Tên tài khoản</label>
                 <span>${account.username}</span>
               </div>
 

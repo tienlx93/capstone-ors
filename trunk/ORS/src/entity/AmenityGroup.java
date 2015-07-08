@@ -14,6 +14,7 @@ public class AmenityGroup {
     private Collection<Amenity> amenitiesById;
 
     @Id
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     @Column(name = "Id", nullable = false, insertable = true, updatable = true)
     public int getId() {
         return id;

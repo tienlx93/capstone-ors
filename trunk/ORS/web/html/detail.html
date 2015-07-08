@@ -8,10 +8,12 @@
         </div>
         <div id="mid">
             <h4 style="padding-bottom: 10px">{{officeDetail.category}}</h4>
-            <div>Giá: <span ng-bind-html="officeDetail.price ? officeDetail.price + ' VND '
-            + officeDetail.priceTerm + ' / Tháng' : 'Liên hệ' | m2"></span></div>
+            <div>Giá:
+                <span ng-if="officeDetail.price">{{officeDetail.price | currency:'VND':0}}</span>
+                <span ng-bind-html="officeDetail.price ? officeDetail.priceTerm + ' / Tháng' : 'Liên hệ' | m2"></span>
+            </div>
             <div>Số tầng: {{officeDetail.floorNumber}}</div>
-            <div>Diện tích: {{officeDetail.area}} m<sup>2</sup></div>
+            <div>Diện tích: {{officeDetail.area | number:0}} m<sup>2</sup></div>
             <div>Địa chỉ: {{officeDetail.address}}</div>
             <hr class="line"/>
 
@@ -68,7 +70,7 @@
                         </div>
                         <div class="relative-title"><a href="" ng-click="goto(item.id)">{{item.name}}</a></div>
                         <div class="relative-desc">{{item.description}}</div>
-                        <div class="relative-price">{{item.price}} <span ng-show="{{item.price}}">VNĐ - </span> {{item.priceTerm}}</div>
+                        <div class="relative-price">{{item.price | currency:'VND':0}} <span ng-bind-html="item.priceTerm | m2"></span></div>
                     </li>
                 </ul>
             </div>

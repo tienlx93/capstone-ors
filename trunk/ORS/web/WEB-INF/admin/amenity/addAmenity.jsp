@@ -46,8 +46,8 @@
           <div>
             <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
               <div class="form-group">
-                <label for="amenityname">Tên tiện nghi</label>
-                <input type="text" name="amenityname" class="" id="amenityname">
+                <label for="name">Tên tiện nghi</label>
+                <input type="text" name="name" class="" id="name">
               </div>
 
               <div class="form-group">
@@ -59,6 +59,12 @@
                 <label for="weight">Trọng số</label>
                 <input type="text" name="weight" class="" id="weight">
               </div>
+
+              <div class="form-group">
+                <label for="priority">Độ ưu tiên</label>
+                <input type="text" name="priority" class="" id="priority">
+              </div>
+
               <div class="button-post">
                 <button type="button" value="cancel" name="action">Hủy</button>
                 <button type="submit" value="save" name="action">Tạo mới</button>

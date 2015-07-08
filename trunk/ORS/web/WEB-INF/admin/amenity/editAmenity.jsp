@@ -60,6 +60,11 @@
                 <input type="text" name="weight" class="" id="weight" value="${amenity.weight}">
               </div>
 
+              <div class="form-group">
+                <label for="priority">Độ ưu tiên</label>
+                <input type="text" name="priority" class="" id="priority" value="${amenity.priority}">
+              </div>
+
               <div>
                 <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
                   <input type="hidden" value="${item.name}" name="name">

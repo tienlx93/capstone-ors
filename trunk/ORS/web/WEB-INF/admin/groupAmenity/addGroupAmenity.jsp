@@ -41,13 +41,13 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            Thêm tài khoản mới
+            Thêm mới nhóm tiện nghi
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/groupAmenity" method="post">
               <div class="form-group">
-                <label for="amenitygroupname">Tên nhóm tiện nghi</label>
-                <input type="text" name="amenitygroupname" class="" id="amenitygroupname">
+                <label for="name">Tên nhóm tiện nghi</label>
+                <input type="text" name="name" class="" id="name">
               </div>
 
               <div class="form-group">

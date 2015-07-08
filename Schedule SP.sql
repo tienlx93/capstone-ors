@@ -1,3 +1,6 @@
+USE [ors]
+GO
+
 IF object_id('GetJobCount') IS NULL
     EXEC ('CREATE PROCEDURE dbo.GetJobCount as select 1')
 GO

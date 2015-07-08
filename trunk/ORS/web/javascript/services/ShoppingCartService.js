@@ -5,7 +5,7 @@ app.service('ShoppingCartService', function() {
         var duplicate = false;
         for (var i =0; i < productList.length; i++) {
             if(newObj.rentalId === productList[i].rentalId) {
-                productList[i].quantity += newObj.quantity;
+                productList[i].quantity += newObj.number;
                 duplicate = true;
                 break;
             }

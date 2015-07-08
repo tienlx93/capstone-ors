@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import dao.*;
 import entity.*;
 import json.*;
@@ -549,8 +550,14 @@ public class ApiController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
         String contractId = request.getParameter("contractId");
-        String rentalList = new String(request.getParameter("rentalList").getBytes(
-                "iso-8859-1"), "UTF-8");
+        String[] rentalList = request.getParameterValues("rentalList");
+        List<String> rentalItem = new ArrayList<>();
+
+        for (String rental : rentalList) {
+            rentalItem.add(new String(rental.getBytes(
+                    "iso-8859-1"), "UTF-8"));
+        }
+
         String description = new String(request.getParameter("description").getBytes(
                 "iso-8859-1"), "UTF-8");
         if (account != null) {
@@ -562,37 +569,34 @@ public class ApiController extends HttpServlet {
             rental.setCreateTime(new Timestamp((new Date()).getTime()));
 
             boolean result = dao.save(rental);
-            RentalListJSON rentalListJSON = gson.fromJson(rentalList, RentalListJSON.class);
+            List<RentalListJSON> rentalListItem = new ArrayList<>();
+
+            for (String item : rentalItem) {
+                RentalListJSON rentalListJSON = gson.fromJson(item, RentalListJSON.class);
+                rentalListItem.add(rentalListJSON);
+            }
+
+            RentalDetailDAO rentalDatailDao = new RentalDetailDAO();
+            for (RentalListJSON json : rentalListItem) {
+                RentalDetail rentalDetail = new RentalDetail();
+                rentalDetail.setRentalId(rental.getId());
+                rentalDetail.setRentalItemId(json.getRentalId());
+                rentalDetail.setQuantity(json.getQuantity());
+                rentalDetail.setUnitPrice(json.getUnitPrice());
+
+                rentalDatailDao.save(rentalDetail);
+            }
 
 
-//            if (result) {
-//                List<String> amenityList = saveAmenities(amenities);
-//                AmenityDAO amenityDAO = new AmenityDAO();
-//                List<Integer> amenityListInt = new ArrayList<>();
-//                Amenity amenity;
-//                for (String s : amenityList) {
-//                    amenity = amenityDAO.searchAmenity(s);
-//                    amenityListInt.add(amenity.getId());
-//                }
-//                RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
-//                repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
-//                out.print(gson.toJson("Success"));
-//            } else {
-//                out.print(gson.toJson("Error"));
-//            }
+            if (result) {
+//
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
         } else {
             out.print(gson.toJson("Error"));
         }
-    }
-
-    private List<String> saveRental(String amenities) {
-        StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
-        List<String> amenityList = new ArrayList<>();
-        while (tokenizer.hasMoreTokens()) {
-            amenityList.add(tokenizer.nextToken());
-        }
-
-        return amenityList;
     }
 
 

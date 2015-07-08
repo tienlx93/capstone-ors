@@ -9,7 +9,18 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
         };
 
         $scope.requestRental = function() {
-            var rentalList = $scope.listItems;
+            var rentalList = [];
+            for(var i = 0; i < $scope.listItems.length; i++) {
+                var rentalItem = {
+                    rentalId: $scope.listItems[i].rentalId,
+                    name: $scope.listItems[i].name,
+                    description: $scope.listItems[i].description,
+                    unitPrice: $scope.listItems[i].unitPrice,
+                    quantity: $scope.listItems[i].quantity,
+                    imageUrl: $scope.listItems[i].imageUrl
+                };
+                rentalList.push(rentalItem);
+            };
             var description = $scope.description;
             Api.requestRental(id, rentalList, description, function(data){
                 if (data=="Success") {
@@ -17,7 +28,6 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
                     $location.path("/home");
                 } else {
                     toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
-                    //alert("Có lỗi xảy ra, xin thử lại");
                 }
             })
         };

@@ -24,8 +24,17 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$location'
 
             }
         };
-        $scope.register = function () {
+        $scope.register = function (form) {
+            if (form.$valid) {
 
+                Api.register($scope.user, function (data) {
+                    if (data == "Error") {
+                        $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                    } else if (data) {
+                        $location.path("/detail");
+                    }
+                });
+            }
         };
 
         $scope.request = function (form) {

@@ -18,7 +18,7 @@
         <div id="quat" style="width: 850px">
             <div ng-repeat="item in listSearchedOffice" class="left-wrapper">
                 <div class="left-detail">
-                    <img src="../img/office.jpg">
+                    <img src="../img/office.jpg" ng-src="{{item.images[0]}}">
                 </div><!--lend left-detail-->
                 <div class="center-detail">
                     <a href="#/detail/{{item.id}}">{{item.address}}</a>
@@ -32,9 +32,12 @@
                 <div class="right-detail">
                     <h4>{{item.category}}</h4>
 
-                    <div class="price" ng-if="item.priceTerm=='Nguyên căn'">{{item.price + ' VND / Tháng'}}</div>
-                    <div class="price" ng-if="item.priceTerm!='Nguyên căn'">{{item.price ? item.price + ' VND': 'Liên hệ'}}
-                        <div class="price-detail" ng-if="item.price">{{item.priceTerm+' / Tháng'}}</div></div>
+                    <div class="price" ng-if="item.priceTerm=='Nguyên căn'">{{item.price  | currency:'VND / Tháng'}}</div>
+                    <div class="price" ng-if="item.priceTerm!='Nguyên căn'">
+                        <span ng-if="item.price">{{item.price | currency:'VND':0}}</span>
+                        <span ng-if="!item.price">Liên hệ</span>
+                        <div class="price-detail" ng-if="item.price" ng-bind-html="item.priceTerm+' / Tháng' | m2"></div>
+                    </div>
                     <div class="VD"><a href="#/detail/{{item.id}}">Chi tiết</a></div>
                 </div>
             </div>

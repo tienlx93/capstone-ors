@@ -8,6 +8,7 @@ controllers.controller('OfficeRentalController', ['$scope', '$location', 'Api', 
                 if (data) {
                     $scope.itemList = data;
                     for(var i = 0; i < $scope.itemList.length; i++) {
+                        $scope.itemList[i].number = 1;
                         $scope.itemList[i].quantity = 1;
                     }
                 }
@@ -18,7 +19,8 @@ controllers.controller('OfficeRentalController', ['$scope', '$location', 'Api', 
 
         $scope.addToCart = function (item) {
             ShoppingCartService.addProduct(item);
-            toastr.success('Bạn đã thêm ' + item.quantity + ' ' + item.name + ' vào giỏ hàng');
+            toastr.success('Bạn đã thêm ' + item.number + ' ' + item.name + ' vào giỏ hàng');
+            item.number = 1;
         };
 
     }]);

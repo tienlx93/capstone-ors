@@ -52,41 +52,46 @@ public class CalendarController extends HttpServlet {
 
             //appointment by assigned staff
             for (Appointment appointment : staff.getAppointmentsByUsername_0()) {
-                item = new CalendarItemJSON();
-                item.setId(appointment.getId());
-                item.setStaff(staff.getUsername());
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                item.setStart(format.format(appointment.getTime()));
-                item.setTitle("Xem văn phòng");
-                item.setType(1);
-                item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
+                if (appointment.getStatusId() == 2) {
+                    item = new CalendarItemJSON();
+                    item.setId(appointment.getId());
+                    item.setStaff(staff.getUsername());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                    item.setStart(format.format(appointment.getTime()));
+                    item.setTitle("Xem văn phòng");
+                    item.setType(1);
+                    item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
 
-                itemList.add(item);
+                    itemList.add(item);
+                }
             }
             for (Rental rental : staff.getRentalsByUsername()) {
-                item = new CalendarItemJSON();
-                item.setId(rental.getId());
-                item.setStaff(staff.getUsername());
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                item.setStart(format.format(rental.getAssignedTime()));
-                item.setTitle("Thuê thiết bị");
-                item.setType(3);
-                item.setUrl("/admin/rental?action=edit&id=" + rental.getId());
-
-                itemList.add(item);
+                if (rental.getStatusId() == 2 || rental.getStatusId() == 5) {
+                    item = new CalendarItemJSON();
+                    item.setId(rental.getId());
+                    item.setStaff(staff.getUsername());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                    item.setStart(format.format(rental.getAssignedTime()));
+                    item.setTitle("Thuê thiết bị");
+                    item.setType(3);
+                    item.setUrl("/admin/rental?action=edit&id=" + rental.getId());
+                    itemList.add(item);
+                }
             }
 
             for (Repair repair : staff.getRepairsByUsername()) {
-                item = new CalendarItemJSON();
-                item.setId(repair.getId());
-                item.setStaff(staff.getUsername());
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                item.setStart(format.format(repair.getAssignedTime() == null ? new Date() : repair.getAssignedTime()));
-                item.setTitle("Sửa chữa");
-                item.setType(2);
-                item.setUrl("/admin/rental?action=edit&id=" + repair.getId());
+                if (repair.getRepairStatusId() == 2 || repair.getRepairStatusId() == 5) {
+                    item = new CalendarItemJSON();
+                    item.setId(repair.getId());
+                    item.setStaff(staff.getUsername());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                    item.setStart(format.format(repair.getAssignedTime() == null ? new Date() : repair.getAssignedTime()));
+                    item.setTitle("Sửa chữa");
+                    item.setType(2);
+                    item.setUrl("/admin/repair?action=edit&id=" + repair.getId());
 
-                itemList.add(item);
+                    itemList.add(item);
+                }
             }
             calendar.setItemList(itemList);
 
@@ -106,44 +111,50 @@ public class CalendarController extends HttpServlet {
                 if (typeList.size()==0 || typeList.contains("appointment")) {
                     //appointment by assigned staff
                     for (Appointment appointment : staff.getAppointmentsByUsername_0()) {
-                        item = new CalendarItemJSON();
-                        item.setId(appointment.getId());
-                        item.setStaff(staff.getUsername());
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                        item.setStart(format.format(appointment.getTime()));
-                        item.setTitle("Xem văn phòng");
-                        item.setType(1);
-                        item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
+                        if (appointment.getStatusId() == 2) {
+                            item = new CalendarItemJSON();
+                            item.setId(appointment.getId());
+                            item.setStaff(staff.getUsername());
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                            item.setStart(format.format(appointment.getTime()));
+                            item.setTitle("Xem văn phòng");
+                            item.setType(1);
+                            item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
 
-                        itemList.add(item);
+                            itemList.add(item);
+                        }
                     }
                 }
                 if (typeList.size()==0 || typeList.contains("rental")) {
                     for (Rental rental : staff.getRentalsByUsername()) {
-                        item = new CalendarItemJSON();
-                        item.setId(rental.getId());
-                        item.setStaff(staff.getUsername());
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                        item.setStart(format.format(rental.getAssignedTime()));
-                        item.setTitle("Thuê thiết bị");
-                        item.setType(3);
-                        item.setUrl("/admin/rental?action=edit&id=" + rental.getId());
+                        if (rental.getStatusId() == 2 || rental.getStatusId() == 5) {
+                            item = new CalendarItemJSON();
+                            item.setId(rental.getId());
+                            item.setStaff(staff.getUsername());
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                            item.setStart(format.format(rental.getAssignedTime()));
+                            item.setTitle("Thuê thiết bị");
+                            item.setType(3);
+                            item.setUrl("/admin/rental?action=edit&id=" + rental.getId());
 
-                        itemList.add(item);
+                            itemList.add(item);
+                        }
                     }
                 }
                 if (typeList.size()==0 || typeList.contains("repair")) {
                     for (Repair repair : staff.getRepairsByUsername()) {
-                        item = new CalendarItemJSON();
-                        item.setId(repair.getId());
-                        item.setStaff(staff.getUsername());
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                        item.setStart(format.format(repair.getAssignedTime() == null ? new Date() : repair.getAssignedTime()));
-                        item.setTitle("Sửa chữa");
-                        item.setType(2);
-                        item.setUrl("/admin/rental?action=edit&id=" + repair.getId());
+                        if (repair.getRepairStatusId() == 2 || repair.getRepairStatusId() == 5) {
+                            item = new CalendarItemJSON();
+                            item.setId(repair.getId());
+                            item.setStaff(staff.getUsername());
+                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                            item.setStart(format.format(repair.getAssignedTime() == null ? new Date() : repair.getAssignedTime()));
+                            item.setTitle("Sửa chữa");
+                            item.setType(2);
+                            item.setUrl("/admin/repair?action=edit&id=" + repair.getId());
 
-                        itemList.add(item);
+                            itemList.add(item);
+                        }
                     }
                 }
                 calendar.setItemList(itemList);
@@ -153,7 +164,7 @@ public class CalendarController extends HttpServlet {
         }
 
 
-        out.print(gson.toJson(calendarList));
+            out.print(gson.toJson(calendarList));
         out.flush();
     }
 

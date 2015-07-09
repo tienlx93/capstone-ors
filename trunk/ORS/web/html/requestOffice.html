@@ -1,15 +1,15 @@
 <link rel="stylesheet" type="text/css" href="/css/request.css"/>
 
 <div class="container">
+
     <div class="left-request">
         <div class="title">
-            Đặt lịch hẹn xem văn phòng
+            Đặt văn phòng
         </div>
         <div class="office clearfix">
             <div class="img">
                 <img src="/img/office.jpg">
             </div>
-            <div class="office-title">Lê Thánh Tôn, Quận 1, Hồ Chí Minh</div>
         </div>
     </div>
     <div class="right-request" id="info" ng-show="!isLogin">
@@ -68,15 +68,18 @@
                         <form name="registerForm" ng-submit="register(registerForm)">
                             <div class="form-group">
                                 <label for="username1">Tên đăng nhập (*)</label>
-                                <input type="text" required ng-model="user.username" class="form-control" id="username1" value="" >
+                                <input type="text" required ng-model="user.username" class="form-control" id="username1"
+                                       value="">
                             </div>
                             <div class="form-group">
                                 <label for="password1">Mật khẩu (*)</label>
-                                <input type="password" required ng-model="user.password" class="form-control" id="password1" value="">
+                                <input type="password" required ng-model="user.password" class="form-control"
+                                       id="password1" value="">
                             </div>
                             <div class="form-group">
                                 <label for="mail">E-mail (*)</label>
-                                <input type="email" required ng-model="user.mail" class="form-control" id="mail" value="" >
+                                <input type="email" required ng-model="user.mail" class="form-control" id="mail"
+                                       value="">
                             </div>
                             <div class="form-group">
                                 <label for="title">Chức danh</label>
@@ -88,7 +91,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="fullname">Họ và tên (*)</label>
-                                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" value="" required>
+                                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" value=""
+                                       required>
                             </div>
                             <div class="form-group">
                                 <label for="company">Công ty</label>
@@ -96,7 +100,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone">Số điện thoại (*)</label>
-                                <input type="number" ng-model="user.phone" class="form-control" id="phone" value="" required>
+                                <input type="number" ng-model="user.phone" class="form-control" id="phone" value=""
+                                       required>
                             </div>
                             <div class="form-group">
                                 <label for="address">Địa chỉ</label>
@@ -122,39 +127,58 @@
     </div>
     <div class="right-request" id="appointment" ng-show="isLogin">
         <div class="info">
-            <p>Điền thông tin lịch hẹn bạn muốn gặp gỡ chúng tôi tại văn phòng để biết thêm chi tiết về văn phòng hoặc
-                tham khảo thêm về giá. </p>
+            <p>Điền thông tin văn phòng bạn muốn thuê vào các ô sau.</p>
 
-            <p>Chọn Ngày và Thời gian phù hợp với bạn, chúng tôi sẽ sắp xếp và báo với bạn trong thời gian sớm nhất qua
-                tin nhắn.</p>
+            <p>Chúng tôi sẽ báo với bạn trong thời gian sớm nhất qua tin nhắn.</p>
         </div>
-        <form name="requestTime">
+        <form name="requestOfficeForm" ng-submit="requestOffice(requestOfficeForm)">
             <div class="form-group">
-                <label>Thời gian <span title="Chọn thời gian hẹn từ 7:00 tới 18:00">[?]</span></label>
+                <label for="category">Loại văn phòng</label>
+                <select ng-model="reOffice.category" class="form-control" id="category" required>
+                    <option value=""></option>
+                    <option value="1">Văn phòng nguyên căn</option>
+                    <option value="2">Tòa nhà văn phòng</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="price">Giá (VNĐ)</label>
+                <input type="number" ng-model="reOffice.price" class="form-control" id="price" required>
+            </div>
+            <div class="form-group">
+                <label for="area">Diện tích (m2)</label>
+                <input type="number" ng-model="reOffice.area" class="form-control" id="area" required>
+            </div>
+            <div class="form-group">
+                <label for="district">Quận</label>
+                <input type="text" ng-model="reOffice.district" class="form-control" id="district" required>
+            </div>
+            <div class="form-group clearfix">
+                <label for="amenity">Danh sách tiện nghi</label><br>
 
-                <div class="clearfix">
-                    <div style="position: relative">
-                        <input type='text' class="form-control"
-                               id="date"
-                               data-date-time-picker
-                               data-language="{{vi}}"
-                               data-pick12HourFormat="true"
-                               data-use-current="{{false}}"
-                               data-location="{{testProject}}"
-                               ng-model="date" required/>
-                    </div>
-                    <div class="error">{{error}}</div>
-                    <pre>{{date}}</pre>
+                <div class="clear-float" id="amenity-list">
+
                 </div>
-
+                <div class="col-lg-4">
+                    <div class="input-group">
+                        <input type="text" class="form-control typeahead" autocomplete="off"
+                               id="amenity" style="width: 355px;">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" onclick="addAmenity()" type="button">+</button>
+                                    </span>
+                    </div>
+                    <!-- /input-group -->
+                </div>
+                <!-- /.col-lg-4 -->
             </div>
             <div class="button-post">
-                <button type="submit" ng-click="request(requestTime)" class="btn btn-primary" value="save"
-                        name="action">Đặt lịch hẹn
+                <input type="hidden" id="amenityList" name="amenityList">
+                <button type="submit" ng-click="requestOffice(requestOfficeForm)" class="btn btn-primary" value="save"
+                        name="action">Đặt văn phòng
                 </button>
                 <button type="reset" ng-click="back()" class="btn" value="cancel" name="action">Hủy</button>
+                <div ng-show="error!=null" class="error">{{error}}</div>
             </div>
         </form>
-
     </div>
 </div>
+

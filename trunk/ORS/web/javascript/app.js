@@ -70,6 +70,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/register.html',
                 controller: 'RegisterController'
             }).
+            when('/requestOffice', {
+                templateUrl: 'html/requestOffice.html',
+                controller: 'RequestOfficeController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });

@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.Collection;
 
 /**
@@ -13,10 +14,14 @@ public class RequestOffice {
     private int categoryId;
     private Integer price;
     private Double area;
-    private String address;
     private Collection<RequestAmenity> requestAmenitiesById;
     private Account accountByCustomerUsername;
     private Category categoryByCategoryId;
+    private String district;
+    private Timestamp createDate;
+    private Timestamp scheduleDate;
+    private String officeSuggested;
+    private boolean available;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -40,7 +45,7 @@ public class RequestOffice {
     }
 
     @Basic
-    @Column(name = "CategoryId", nullable = false, insertable = true, updatable = true)
+    @Column(name = "CategoryId", nullable = true, insertable = true, updatable = true)
     public int getCategoryId() {
         return categoryId;
     }
@@ -69,16 +74,6 @@ public class RequestOffice {
         this.area = area;
     }
 
-    @Basic
-    @Column(name = "Address", nullable = true, insertable = true, updatable = true)
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -92,7 +87,6 @@ public class RequestOffice {
             return false;
         if (price != null ? !price.equals(that.price) : that.price != null) return false;
         if (area != null ? !area.equals(that.area) : that.area != null) return false;
-        if (address != null ? !address.equals(that.address) : that.address != null) return false;
 
         return true;
     }
@@ -104,7 +98,6 @@ public class RequestOffice {
         result = 31 * result + categoryId;
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (area != null ? area.hashCode() : 0);
-        result = 31 * result + (address != null ? address.hashCode() : 0);
         return result;
     }
 
@@ -136,4 +129,55 @@ public class RequestOffice {
     public void setCategoryByCategoryId(Category categoryByCategoryId) {
         this.categoryByCategoryId = categoryByCategoryId;
     }
+
+    @Basic
+    @Column(name = "District", nullable = true, insertable = true, updatable = true)
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    @Basic
+    @Column(name = "CreateDate", nullable = false, insertable = true, updatable = true)
+    public Timestamp getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(Timestamp createDate) {
+        this.createDate = createDate;
+    }
+
+    @Basic
+    @Column(name = "ScheduleDate", nullable = true, insertable = true, updatable = true)
+    public Timestamp getScheduleDate() {
+        return scheduleDate;
+    }
+
+    public void setScheduleDate(Timestamp scheduleDate) {
+        this.scheduleDate = scheduleDate;
+    }
+
+    @Basic
+    @Column(name = "OfficeSuggested", nullable = true, insertable = true, updatable = true)
+    public String getOfficeSuggested() {
+        return officeSuggested;
+    }
+
+    public void setOfficeSuggested(String officeSuggested) {
+        this.officeSuggested = officeSuggested;
+    }
+
+    @Basic
+    @Column(name = "Available", nullable = false, insertable = true, updatable = true)
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
 }

@@ -53,6 +53,8 @@ public class ApiController extends HttpServlet {
                     e.printStackTrace();
                 }
                 break;
+            case "requestOffice":
+                requestOffice(request, out);
             case "checkLogin":
                 checkLogin(request, out);
                 break;
@@ -95,6 +97,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "getRentalList":
                 getRentalList(request, out);
+                break;
+            case "getAmenityList":
+                getAmenityList(request, out);
                 break;
             case "getRepairList":
                 getRepairList(request, out);
@@ -473,6 +478,51 @@ public class ApiController extends HttpServlet {
         }
     }
 
+    private void requestOffice(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        String category = request.getParameter("category");
+        String price = request.getParameter("price");
+        String area = request.getParameter("area");
+        String district = new String(request.getParameter("district").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String amenities = request.getParameter("amenityList");
+
+        if (account != null) {
+
+            RequestOffice reOff = new RequestOffice();
+            reOff.setCustomerUsername(account.getUsername());
+            reOff.setCategoryId(Integer.parseInt(category));
+            reOff.setPrice(Integer.parseInt(price));
+            reOff.setArea(Double.parseDouble(area));
+            reOff.setDistrict(district);
+            reOff.setCreateDate(new Timestamp((new Date()).getTime()));
+            reOff.setAvailable(true);
+
+            RequestOfficeDAO dao = new RequestOfficeDAO();
+            boolean result = dao.save(reOff);
+
+            if (result) {
+
+                List<String> amenityList = saveAmenities(amenities);
+                AmenityDAO amenityDAO = new AmenityDAO();
+                List<Integer> amenityListInt = new ArrayList<>();
+                Amenity amenity;
+                for (String s : amenityList) {
+                    amenity = amenityDAO.searchAmenity(s);
+                    amenityListInt.add(amenity.getId());
+                }
+                RequestAmenityDAO requestAmenityDAO = new RequestAmenityDAO();
+                requestAmenityDAO.saveRequestAmenity(reOff.getId(), amenityListInt);
+
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
+        }
+    }
+
 
     private void checkLogin(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
@@ -565,7 +615,11 @@ public class ApiController extends HttpServlet {
         while (tokenizer.hasMoreTokens()) {
             amenityList.add(tokenizer.nextToken());
         }
-
+        AmenityDAO amenityDAO = new AmenityDAO();
+        RequestAmenityDAO dao = new RequestAmenityDAO();
+        if (amenityDAO.addAmenities(amenityList)) {
+            dao.findAll();
+        }
         return amenityList;
     }
 
@@ -709,6 +763,7 @@ public class ApiController extends HttpServlet {
         for (Amenity amenity : dao.findAll()) {
             list.add(amenity.getName());
         }
+        request.setAttribute("amenityList", list);
         out.print(gson.toJson(list));
         out.flush();
     }

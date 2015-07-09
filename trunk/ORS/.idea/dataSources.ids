@@ -262,10 +262,14 @@
     <table name="RequestOffice" schema="dbo" catalog="ors" type="TABLE">
       <column name="Id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="CustomerUsername" sqlType="nvarchar" precision="50" scale="0" nullable="false" jdbcType="-9"/>
-      <column name="CategoryId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="CategoryId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="Price" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="Area" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
-      <column name="Address" sqlType="nvarchar" precision="250" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="District" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="CreateDate" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
+      <column name="ScheduleDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
+      <column name="OfficeSuggested" sqlType="nvarchar" precision="250" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="Available" sqlType="bit" precision="1" scale="0" nullable="false" jdbcType="-7"/>
       <primary-key name="PK_RequestOffice" columns="Id"/>
       <foreign-key name="FK_RequestOffice_Account" columns="CustomerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_RequestOffice_Category" columns="CategoryId" ref-table="Category" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
@@ -286,6 +290,13 @@
       <primary-key name="PK__sysdiagr__C2B05B611CF15040" columns="diagram_id"/>
       <index name="UK_principal_name" unique="true" columns="principal_id,name"/>
     </table>
+    <procedure name="GetJobCount" schema="dbo" catalog="ors" type="2">
+      <prototype>
+        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
+        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
+        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
+      </prototype>
+    </procedure>
     <procedure name="fn_diagramobjects" schema="dbo" catalog="ors" type="2">
       <prototype>
         <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4" type="5" index="0"/>

@@ -53,6 +53,26 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.requestOffice = function (reOffice, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'requestOffice',
+                    'category': reOffice.category,
+                    'price': reOffice.price,
+                    'area': reOffice.area,
+                    'district': reOffice.district
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.checkLogin = function (callback) {
             $http({
                 method: 'POST',

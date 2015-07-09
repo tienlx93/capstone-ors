@@ -2,8 +2,8 @@
  * Created by Thành on 02/07/2015.
  */
 
-controllers.controller('RegisterController', ['$scope', '$location', 'Api',
-    function ($scope, $location, Api) {
+controllers.controller('RegisterController', ['$scope', '$location', 'Api', 'toastr',
+    function ($scope, $location, Api, toastr ) {
         $scope.register = function (form) {
 
             if (form.$valid) {
@@ -20,7 +20,8 @@ controllers.controller('RegisterController', ['$scope', '$location', 'Api',
 
                 Api.register(username, password, mail, title, fullname, company, phone, address, birthday, function (data) {
                     if (data == "Error") {
-                        $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                        toastr.error('Có lỗi xảy ra. Xin thử lại');
+                     //   $scope.error = "Có lỗi xảy ra. Xin thử lại";
                     } else if (data) {
                         $location.path("#/home").replace();
                     }

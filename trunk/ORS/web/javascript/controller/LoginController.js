@@ -3,8 +3,8 @@
  */
 
 
-controllers.controller('LoginController', ['$scope', '$location', 'Api',
-    function ($scope, $location, Api) {
+controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr',
+    function ($scope, $location, Api, toastr) {
         $scope.login = function (form) {
             console.log('1');
             if (form.$valid) {
@@ -14,9 +14,10 @@ controllers.controller('LoginController', ['$scope', '$location', 'Api',
 
                 Api.login(username, password, function (data) {
                     if (data == "Error") {
-                        $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                        toastr.error('Có lỗi xảy ra. Xin thử lại');
                     } else if (data == "Wrong") {
-                        $scope.error = "Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại";
+                        toastr.error('Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại');
+
                     } else if (data) {
                         Api.account.username = username;
                         Api.account.fullName = data;

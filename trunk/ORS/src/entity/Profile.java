@@ -126,4 +126,5 @@ public class Profile {
     public void setAccountByUsername(Account accountByUsername) {
         this.accountByUsername = accountByUsername;
     }
+
 }

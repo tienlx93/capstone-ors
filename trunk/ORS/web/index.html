@@ -30,7 +30,6 @@
     </script>
     <script type="text/javascript" src="/lib/fullcalendar-2.3.2/lib/moment.min.js"></script>
     <script type="text/javascript" src="/lib/datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
-    <script type="text/javascript" src="/lib/typeahead.bundle.js"></script>
 
 
     <script src="/javascript/app.js" type="application/javascript"></script>
@@ -49,6 +48,9 @@
     <script src="/javascript/controller/OfficeRentalController.js" type="application/javascript"></script>
     <script src="/javascript/controller/OfficeRentalCartController.js" type="application/javascript"></script>
     <script src="/javascript/controller/RequestOfficeController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/ProfileController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/ProfileDetailController.js" type="application/javascript"></script>
+    <script src="/javascript/controller/ChangePassController.js" type="application/javascript"></script>
 
     <script src="/javascript/services/ApiService.js" type="application/javascript"></script>
     <script src="/javascript/services/ShoppingCartService.js" type="application/javascript"></script>
@@ -95,6 +97,8 @@
                 <ul class="dropdown-menu" role="menu">
                     <li><a href="#/contractList">Danh sách hợp đồng</a></li>
                     <li class="divider"></li>
+                    <li><a href="#/profile">Thông tin cá nhân</a></li>
+                    <li class="divider"></li>
                     <li><a href="" ng-click="logout()">Đăng xuất</a></li>
                 </ul>
             </div>
@@ -133,8 +137,6 @@
         </div>
     </div>
 </footer>
-
-<script type="text/javascript" src="/javascript/upload.js" charset="UTF-8"></script>
 
 </body>
 </html>

@@ -72,6 +72,22 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return false;
     }
 
+    public boolean updatePass(String username, String pass) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Account account = (Account) session.get(Account.class, username);
+            account.setPassword(pass);
+            session.update(account);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
+    }
+
     public boolean delete(String username) {
         Transaction trans = session.beginTransaction();
         try {

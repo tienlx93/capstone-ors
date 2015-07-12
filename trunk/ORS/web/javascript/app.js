@@ -74,6 +74,18 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/requestOffice.html',
                 controller: 'RequestOfficeController'
             }).
+            when('/profile', {
+                templateUrl: 'html/profile.html',
+                controller: 'ProfileController'
+            }).
+            when('/profileDetail', {
+                templateUrl: 'html/profileDetail.html',
+                controller: 'ProfileDetailController'
+            }).
+            when('/profilePass', {
+                templateUrl: 'html/profilePass.html',
+                controller: 'ChangePassController'
+            }).
             otherwise({
                 redirectTo: '/home'
             });

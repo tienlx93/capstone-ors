@@ -1,5 +1,5 @@
-controllers.controller('RequestController', ['$scope', '$rootScope', '$location', 'Api',
-    function ($scope, $rootScope, $location, Api) {
+controllers.controller('RequestController', ['$scope', '$rootScope', '$location', 'Api', 'toastr',
+    function ($scope, $rootScope, $location, Api, toastr) {
 
         var date = $('#date').datetimepicker({
             sideBySide: true,
@@ -13,9 +13,11 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$location'
                 var password = $scope.password;
                 Api.login(username, password, function (data) {
                     if (data == "Error") {
-                        $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                        toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+
                     } else if (data == "Wrong") {
-                        $scope.error = "Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại";
+                        toastr.error('Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại');
+
                     } else if (data) {
                         $scope.isLogin = true;
                         Api.updateAccount();
@@ -29,7 +31,8 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$location'
 
                 Api.register($scope.user, function (data) {
                     if (data == "Error") {
-                        $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                        toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+
                     } else if (data) {
                         $location.path("/detail");
                     }
@@ -41,15 +44,17 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$location'
             var txtTime = $('#date').val();
             var time = new Date(txtTime);
             if (!time) {
-                $scope.error = "Mời nhập thời gian hẹn";
+                toastr.error('Mời nhập thời gian hẹn');
+
             } else {
                 time = time.getTime();
                 Api.requestAppointment(time, 9, function (data) {
                     if (data == "Success") {
-                        alert("Đặt lịch hẹn thành công");
+                        toastr.success('Đặt lịch hẹn thành công');
+             //           alert("Đặt lịch hẹn thành công");
                         $location.path("/detail");
                     } else {
-                        alert("Có lỗi xảy ra, xin thử lại");
+                        toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
                     }
                 });
             }

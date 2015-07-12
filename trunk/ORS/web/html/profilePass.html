@@ -1,0 +1,27 @@
+<div class="container">
+
+    <h2>Chỉnh sửa mật khẩu</h2>
+
+    <form ng-submit="editPass(PassForm)" name="PassForm">
+        <div class="panel-body">
+            <div class="form-group">
+                <label for="password">Mật khẩu hiện tại:</label>
+                <input type="password" ng-model="data.password" class="form-control" id="password" required>
+            </div>
+            <div class="form-group">
+                <label for="newPassword">Mật khẩu mới:</label>
+                <input type="password" ng-model="data.newPassword" class="form-control" id="newPassword" value="">
+            </div>
+            <div class="form-group">
+                <label for="reNewPassword">Nhập lại mật khẩu mới</label>
+                <input type="password" ng-model="data.reNewPassword" class="form-control" id="reNewPassword" value="">
+            </div>
+            <div class="button-post">
+                <button type="button" ng-click='editPass(PassForm)' class="btn btn-primary">Chỉnh sửa
+                </button>
+                <button type="reset" class="btn">Hủy</button>
+            </div>
+            <div ng-show="error!=null" class="error">{{error}}</div>
+        </div>
+    </form>
+</div>

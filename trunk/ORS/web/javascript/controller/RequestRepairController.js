@@ -2,8 +2,8 @@
  * Created by Thành on 12/06/2015.
  */
 
-controllers.controller('RequestRepairController', ['$scope', '$location', '$routeParams', '$route', 'Api',
-    function ($scope, $location, $routeParams, $route, Api) {
+controllers.controller('RequestRepairController', ['$scope', '$location', '$routeParams', '$route', 'Api', 'toastr',
+    function ($scope, $location, $routeParams, $route, Api, toastr) {
         var id = $routeParams.id;
         Api.getContractById(id, function (data) {
             if (data == "Error") {
@@ -38,10 +38,11 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
             var description = $scope.description;
             Api.requestRepair(id, amenities, description, function(data){
                 if (data=="Success") {
-                    alert("Gửi yêu cầu thành công");
+                    toastr.success('Gửi yêu cầu thành công', 'Thành công');
                     $location.path("/home");
                 } else {
-                    alert("Có lỗi xảy ra, xin thử lại");
+                    toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+                //    alert("Có lỗi xảy ra, xin thử lại");
                 }
             })
         };

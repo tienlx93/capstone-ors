@@ -53,6 +53,52 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.editProfile = function (data, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'editProfile',
+                    'fullName': data.fullName,
+                    'company': data.company,
+                    'phone': data.phone,
+                    'address': data.address,
+                    'birthday': data.birthday
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.editPass = function (data, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'editPass',
+                    'password': data.password,
+                    'newPassword': data.newPassword,
+                    'reNewPassword': data.reNewPassword
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Pass Error");
+                })
+                .error(function () {
+                    callback("RePass Error");
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.requestOffice = function (reOffice, callback) {
             $http({
                 method: 'POST',
@@ -129,6 +175,22 @@ app.factory("Api", ['$http',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'getContractList'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getProfile = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getProfile'
                 }
             })
                 .success(function (data) {

@@ -55,8 +55,20 @@ public class ApiController extends HttpServlet {
                 break;
             case "requestOffice":
                 requestOffice(request, out);
+                break;
+            case "editProfile":
+                try {
+                    editProfile(request, out);
+                } catch (ParseException e) {
+                    out.print(gson.toJson("Error"));
+                    e.printStackTrace();
+                }
+                break;
             case "checkLogin":
                 checkLogin(request, out);
+                break;
+            case "editPass":
+                editPass(request, out);
                 break;
             case "logout":
                 logout(request, out);
@@ -94,6 +106,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "getContractList":
                 getContractList(request, out);
+                break;
+            case "getProfile":
+                getProfile(request, out);
                 break;
             case "getRentalList":
                 getRentalList(request, out);
@@ -423,8 +438,6 @@ public class ApiController extends HttpServlet {
             company = new String(tokenCompny.getBytes(
                     "iso-8859-1"), "UTF-8");
         }
-        /*String company = new String(request.getParameter("company").getBytes(
-                "iso-8859-1"), "UTF-8");*/
         String phone = request.getParameter("phone");
         String tokenAddress = request.getParameter("address");
         String address;
@@ -458,13 +471,6 @@ public class ApiController extends HttpServlet {
             pf.setCompany(company);
             pf.setAddress(address);
             pf.setBirthday(new Timestamp(parsed.getTime()));
-            /*if (company.equals("") && address.equals("") && parsed!= null) {
-
-            } else {
-                pf.setCompany(null);
-                pf.setAddress(null);
-                pf.setBirthday(null);
-            }*/
 
 
             ProfileDAO profileDAO = new ProfileDAO();
@@ -474,6 +480,75 @@ public class ApiController extends HttpServlet {
                 out.print(gson.toJson("Success"));
             } else {
                 out.print(gson.toJson("Error"));
+            }
+        }
+    }
+
+    private void editProfile(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException, ParseException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        String fullName = new String(request.getParameter("fullName").getBytes(
+                "iso-8859-1"), "UTF-8");
+        String tokenCompny = request.getParameter("company");
+        String company;
+        if (tokenCompny == null) {
+            company = null;
+        } else {
+            company = new String(tokenCompny.getBytes(
+                    "iso-8859-1"), "UTF-8");
+        }
+        String phone = request.getParameter("phone");
+        String tokenAddress = request.getParameter("address");
+        String address;
+        if (tokenAddress == null) {
+            address = null;
+        } else {
+            address = new String(tokenAddress.getBytes(
+                    "iso-8859-1"), "UTF-8");
+        }
+        String birthday = request.getParameter("birthday");
+
+        if (account != null) {
+
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsed = format.parse(birthday);
+
+            ProfileDAO profileDAO = new ProfileDAO();
+            boolean result2 = profileDAO.update(account.getUsername(), fullName, company, phone, address, parsed);
+
+            if (result2) {
+                out.print(gson.toJson("Success"));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
+        }
+    }
+
+    private void editPass(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        String pass = request.getParameter("password");
+        String newPass = request.getParameter("newPassword");
+        String reNewPass = request.getParameter("reNewPassword");
+
+        if (account != null) {
+
+            AccountDAO acc = new AccountDAO();
+            if (pass.equals(account.getPassword())) {
+                if (newPass.equals(reNewPass)) {
+                    boolean result2 = acc.updatePass(account.getUsername(), newPass);
+                    if (result2) {
+                        out.print(gson.toJson("Success"));
+                    } else {
+                        out.print(gson.toJson("Error"));
+                    }
+                } else {
+                    out.print(gson.toJson("RePass Error"));
+                }
+            } else {
+                out.print(gson.toJson("Pass Error"));
             }
         }
     }
@@ -689,6 +764,18 @@ public class ApiController extends HttpServlet {
                         contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription()));
             }
             out.print(gson.toJson(list));
+        }
+    }
+
+    private void getProfile(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            ProfileDAO dao = new ProfileDAO();
+            Profile profile = (Profile) dao.getProfileByUser(account.getUsername());
+            ProfileJSON json = new ProfileJSON(profile.getUsername(), profile.getTitle(), profile.getFullName(), profile.getCompany(), profile.getPhone(), profile.getAddress(), profile.getBirthday());
+            out.print(gson.toJson(json));
         }
     }
 

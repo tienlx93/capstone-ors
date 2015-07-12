@@ -19,8 +19,8 @@
             <tr ng-repeat="item in data">
 
                 <td>{{item.officeName}}</td>
-                <td>{{item.startDay | toLocaleDate}}</td>
-                <td>{{item.endDay | toLocaleDate}}</td>
+                <td>{{item.startDay}}</td>
+                <td>{{item.endDay}}</td>
                 <td>{{item.price}}</td>
                 <td>{{item.paymentTerm}}</td>
                 <td><a class="btn btn-default" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>

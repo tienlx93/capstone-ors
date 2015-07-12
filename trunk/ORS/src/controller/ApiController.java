@@ -617,9 +617,7 @@ public class ApiController extends HttpServlet {
         }
         AmenityDAO amenityDAO = new AmenityDAO();
         RequestAmenityDAO dao = new RequestAmenityDAO();
-        if (amenityDAO.addAmenities(amenityList)) {
-            dao.findAll();
-        }
+        amenityDAO.addAmenities(amenityList);
         return amenityList;
     }
 

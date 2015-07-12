@@ -34,7 +34,7 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                     }
                 });
             }
-        }
+        };
         $scope.requestOffice = function (form) {
 
             if (form.$valid) {

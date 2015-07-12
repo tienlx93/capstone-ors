@@ -74,4 +74,18 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
 
         return null;
     }
+
+    public List<Office> getAllOffice() {
+
+        try {
+            String sql = "from Office where statusId != 3";
+            Query query = session.createQuery(sql);
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

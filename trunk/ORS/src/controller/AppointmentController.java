@@ -4,7 +4,6 @@ import dao.AppointmentDAO;
 import entity.Account;
 import entity.Appointment;
 import service.ScheduleService;
-import service.ScheduleService2;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -59,7 +57,7 @@ public class AppointmentController extends HttpServlet {
                 List<Appointment> list;
                 if (account.getRoleId() == 2) {
                     list = dao.findAll();
-                    ScheduleService2 service = new ScheduleService2();
+                    ScheduleService service = new ScheduleService();
                     Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
                     request.setAttribute("suggestMap", suggestMap);
                 } else {

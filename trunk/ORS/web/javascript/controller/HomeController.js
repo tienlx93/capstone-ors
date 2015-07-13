@@ -1,6 +1,11 @@
-controllers.controller('HomeController', ['$scope','$location', 'Api',
-    function ($scope, $location, Api) {
+controllers.controller('HomeController', ['$scope','$location', 'Api', 'toastr',
+    function ($scope, $location, Api, toastr) {
         $scope.searchKey ='';
+
+        $scope.gPlace = {};
+        $scope.place = {};
+        $scope.priceRange = 0;
+
         $scope.listNewOffice = [];
 
         $scope.getNewOffice = function () {
@@ -17,7 +22,14 @@ controllers.controller('HomeController', ['$scope','$location', 'Api',
 
         $scope.getNewOffice();
 
-        $scope.searchListOffice = function (address) {
-            $location.path("/list/" + address).replace();
+        $scope.searchListOffice = function () {
+            if ($scope.place.latitude) {
+                $location.path("/list/latitude=" + $scope.place.latitude
+                + "&longitude=" + $scope.place.longitude
+                + "&priceRange=" + $scope.priceRange);
+            } else {
+                toastr.error("Mời nhập vào địa chỉ");
+            }
+
         }
     }]);

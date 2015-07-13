@@ -6,41 +6,40 @@
             <fieldset class="search-field">
                 <div class="search-line row">
                     <div class="col-md-12" style="padding: 0">
-                        <span class="search-lable">Địa chỉ</span>
+                        <span class="search-label">Địa chỉ</span>
+
 
                         <div class="search-input">
                             <input type="text" ng-model="searchKey" style="width: 100%"
-                                   placeholder="quận, huyện, địa chỉ,..."/>
+                                   placeholder="quận, huyện, địa chỉ,..." googleplace/>
+                            <input type="hidden" ng-model="place.latitude" id="latitude">
+                            <input type="hidden" ng-model="place.longitude" id="longitude">
                         </div>
                     </div>
                 </div>
                 <div class="search-line row">
                     <div class="col-md-6" style="padding: 0">
-                        <span class="search-lable">Thành phố</span>
+                        <span class="search-label">Khoảng giá</span>
 
                         <div class="search-input">
-                            <select style="width: 95%">
-                                <option>Hồ Chí Minh</option>
-                                <option>Đà Nẵng</option>
-                                <option>Huế</option>
-                                <option>Hà Nội</option>
+                            <select ng-model="priceRange" style="width: 95%">
+                                <option value="0">Thỏa thuận</option>
+                                <option value="1">100.000 - 200.000</option>
+                                <option value="2">200.000 - 300.000</option>
+                                <option value="3">300.000 - 400.000</option>
+                                <option value="4">400.000 - 500.000</option>
+                                <option value="5">&gt; 500.000</option>
                             </select>
                         </div>
                     </div>
                     <div class="col-md-6" style="padding: 0">
-                        <span class="search-lable">Thời gian</span>
-
-                        <div class="search-input">
-                            <select style="width: 100%">
-                                <option>1 tháng</option>
-                                <option>3 tháng</option>
-                                <option>6 tháng</option>
-                                <option>12 tháng</option>
-                            </select>
-                        </div>
+                        <button class="btn btn-green" style="width: 100%" ng-click="searchListOffice()">
+                            Tìm kiếm
+                        </button>
                     </div>
+
                 </div>
-                <div class="search-line row">
+                <!--<div class="search-line row">
                     <div class="col-md-6" style="padding: 0">
                         <span class="search-lable">Số người</span>
 
@@ -58,7 +57,7 @@
                             Search
                         </button>
                     </div>
-                </div>
+                </div>-->
                 <div class="search-line row">
                     <h3 style="text-align: center;">
                         <a href="#/requestOffice" style="color: black;">Đặt yêu cầu văn phòng</a>

@@ -36,6 +36,7 @@ public class Office {
     private Collection<OfficeAmenity> officeAmenitiesById;
     private Timestamp createDate;
     private Integer viewCount;
+    private OfficeGroup officeGroupById;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -356,5 +357,14 @@ public class Office {
 
     public void setViewCount(Integer viewCount) {
         this.viewCount = viewCount;
+    }
+
+    @OneToOne(mappedBy = "officeByOfficeId")
+    public OfficeGroup getOfficeGroupById() {
+        return officeGroupById;
+    }
+
+    public void setOfficeGroupById(OfficeGroup officeGroupById) {
+        this.officeGroupById = officeGroupById;
     }
 }

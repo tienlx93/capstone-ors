@@ -21,19 +21,25 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             }
         });
         function initialize(lat, lng) {
+            var myLatlng = new google.maps.LatLng(lat,lng);
             var mapOptions = {
-                center: {lat: lat, lng: lng},
+                center: myLatlng,
                 zoom: 16
             };
             var map = new google.maps.Map(document.getElementById('map-canvas'),
                 mapOptions);
+            var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+                title: $scope.officeDetail.name
+            });
         }
 
         $scope.relativeOffices = [];
 
-        Api.getNewOffice(function (data) {
+        Api.getRelativeOffice(id, function (data) {
             if (data) {
-                for (var i = 0; i < 3; i++) {
+                for (var i = 0; i < data.length; i++) {
                     $scope.relativeOffices[i] = data[i];
                     $scope.relativeOffices[i].description = data[i].description.length > 200 ?
                     data[i].description.substring(0, 200) + "..." : data[i].description;

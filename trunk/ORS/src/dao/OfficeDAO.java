@@ -3,7 +3,9 @@ package dao;
 import entity.Contract;
 import entity.Office;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Transaction;
+import org.hibernate.type.StandardBasicTypes;
 
 import java.util.List;
 
@@ -87,5 +89,17 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         }
 
         return null;
+    }
+
+    public int countDistrict() {
+        try {
+            String sql = "SELECT COUNT(DISTINCT District) AS DistrictNumber FROM Office";
+            SQLQuery query = session.createSQLQuery(sql).addScalar("DistrictNumber", StandardBasicTypes.INTEGER);
+            return (int) query.uniqueResult();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 2;
     }
 }

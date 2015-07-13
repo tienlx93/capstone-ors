@@ -5,6 +5,7 @@ import com.google.gson.reflect.TypeToken;
 import dao.*;
 import entity.*;
 import json.*;
+import service.MatchingService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -133,7 +134,7 @@ public class ApiController extends HttpServlet {
                 break;
             case "getNewOffice":
                 getNewOffice(request, out);
-                break;
+            break;
             case "getContractById":
                 try {
                     getContractById(request, out);
@@ -149,6 +150,12 @@ public class ApiController extends HttpServlet {
                 break;
             case "getAllOfficeRentalList":
                 getAllOfficeRentalList(request, out);
+                break;
+            case "matching":
+                matching(request, out);
+                break;
+            case "getRelativeOffice":
+                getRelativeOffice(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -851,6 +858,54 @@ public class ApiController extends HttpServlet {
         request.setAttribute("amenityList", list);
         out.print(gson.toJson(list));
         out.flush();
+    }
+
+    private void matching(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+        String latitudeStr = request.getParameter("latitude");
+        String longitudeStr = request.getParameter("longitude");
+        String priceRangeStr = request.getParameter("priceRange");
+
+        List<OfficeListDetail> officeList = new ArrayList<>();
+
+        try {
+            double latitude = Double.parseDouble(latitudeStr);
+            double longitude = Double.parseDouble(longitudeStr);
+            int priceRange = Integer.parseInt(priceRangeStr);
+            MatchingService service = new MatchingService();
+            int group = service.matching(latitude, longitude, priceRange);
+
+            OfficeGroupDAO dao = new OfficeGroupDAO();
+            for (OfficeGroup office : dao.getOfficeList(group)) {
+                officeList.add(new OfficeListDetail(office.getOfficeByOfficeId()));
+            }
+            out.print(gson.toJson(officeList));
+        } catch (Exception e) {
+            e.printStackTrace();
+            out.print(gson.toJson("Error"));
+        }
+
+    }
+
+    private void getRelativeOffice(HttpServletRequest request, PrintWriter out) {
+        String officeId = request.getParameter("officeId");
+        int id = Integer.valueOf(officeId);
+        OfficeDAO dao = new OfficeDAO();
+        Office office = dao.get(id);
+        int group = office.getOfficeGroupById().getOfficeGroup();
+        OfficeGroupDAO groupDAO = new OfficeGroupDAO();
+        List<OfficeListDetail> officeList = new ArrayList<>();
+        for (OfficeGroup officeGroup : groupDAO.getOfficeList(group)) {
+            Office o = officeGroup.getOfficeByOfficeId();
+            if (o.getId()!=id) {
+                officeList.add(new OfficeListDetail(o));
+            }
+        }
+        Collections.shuffle(officeList);
+        if (officeList.size()> 3) {
+            officeList = officeList.subList(0,3);
+        }
+        out.print(gson.toJson(officeList));
+
     }
 }
 

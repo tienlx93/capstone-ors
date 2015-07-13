@@ -136,6 +136,7 @@
       <exported-key name="FK_Contract_Office" table="Contract" schema="dbo" catalog="ors" columns="OfficeId"/>
       <exported-key name="FK_Office_Office" table="Office" schema="dbo" catalog="ors" columns="ParentOfficeId"/>
       <exported-key name="FK_OfficeAmenity_Office" table="OfficeAmenity" schema="dbo" catalog="ors" columns="OfficeId"/>
+      <exported-key name="FK_OfficeGroup_Office" table="OfficeGroup" schema="dbo" catalog="ors" columns="OfficeId"/>
     </table>
     <table name="OfficeAmenity" schema="dbo" catalog="ors" type="TABLE">
       <column name="Id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
@@ -144,6 +145,12 @@
       <primary-key name="PK_OfficeAmenity" columns="Id"/>
       <foreign-key name="FK_OfficeAmenity_Amentity" columns="AmenityId" ref-table="Amenity" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_OfficeAmenity_Office" columns="OfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
+    </table>
+    <table name="OfficeGroup" schema="dbo" catalog="ors" type="TABLE">
+      <column name="OfficeId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="OfficeGroup" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <primary-key name="PK_OfficeGroup" columns="OfficeId"/>
+      <foreign-key name="FK_OfficeGroup_Office" columns="OfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
     </table>
     <table name="OfficeStatus" schema="dbo" catalog="ors" type="TABLE">
       <column name="Id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

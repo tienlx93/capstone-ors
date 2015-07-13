@@ -34,6 +34,7 @@
         <mapping class="entity.AppointmentStatus"/>
         <mapping class="entity.RentalStatus"/>
         <mapping class="entity.AmenityGroup"/>
+        <mapping class="entity.OfficeGroup"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>

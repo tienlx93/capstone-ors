@@ -2,7 +2,7 @@
  * Created by ASUS on 6/7/2015.
  */
 var app = angular.module('ors', [
-    'ngRoute', 'ngAnimate', 'ui.bootstrap','toastr',
+    'ngRoute', 'ngAnimate', 'ui.bootstrap', 'toastr',
     'controllers'
 ]);
 var controllers = angular.module('controllers', []);
@@ -91,6 +91,28 @@ app.config(['$routeProvider', '$httpProvider',
             });
     }]);
 
+app.directive('googleplace', function() {
+    return {
+        require: 'ngModel',
+        link: function(scope, element, attrs, model) {
+            var options = {
+                types: ['geocode'],
+                componentRestrictions: {}
+            };
+            scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
+
+            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
+                scope.$apply(function() {
+                    model.$setViewValue(element.val());
+                    var place = scope.gPlace.getPlace();
+                    scope.place.latitude = place.geometry.location.A;
+                    scope.place.longitude = place.geometry.location.F;
+                });
+            });
+        }
+    };
+});
+
 app.filter('toLocaleDate', function () {
     return function (input) {
         var date = new Date(input);
@@ -100,7 +122,7 @@ app.filter('toLocaleDate', function () {
 
 app.filter('m2', ['$sce', function ($sce) {
     return function (input) {
-        return $sce.trustAsHtml(input.replace("m2","m<sup>2</sup>"));
+        return $sce.trustAsHtml(input.replace("m2", "m<sup>2</sup>"));
     };
 }]);
 

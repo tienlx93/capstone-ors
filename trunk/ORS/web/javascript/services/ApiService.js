@@ -356,5 +356,41 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.searchOfficeByTerm = function(term, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'matching',
+                    'latitude': term.latitude,
+                    'longitude': term.longitude,
+                    'priceRange': term.priceRange
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
+        services.getRelativeOffice = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRelativeOffice',
+                    'officeId': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
         return services;
     }]);

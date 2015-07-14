@@ -21,6 +21,7 @@ controllers.controller('OfficeRentalController', ['$scope', '$location', 'Api', 
             ShoppingCartService.addProduct(item);
             toastr.success('Bạn đã thêm ' + item.number + ' ' + item.name + ' vào giỏ hàng');
             item.number = 1;
+            $scope.cart = ShoppingCartService.getProducts();
         };
 
     }]);

@@ -1,37 +1,46 @@
 <link href="../css/rental.css" rel="stylesheet"/>
 <div class="rental-wrapper">
     <div class="container">
-    <div class="row">
-        <div class="col-md-3" style="padding: 15px;">
-            <div class="list-group">
-                <a href="#/rentalCart/{{contractID}}" class="list-group-item">Xem giỏ hàng</a>
-
-                <a href="#/rental/{{contractID}}" class="list-group-item active">
-                    Tất cả
-                </a>
-                <a href="#/rental/{{contractID}}" class="list-group-item">Bàn</a>
-                <a href="#/rental/{{contractID}}" class="list-group-item">Ghế</a>
-                <a href="#/rental/{{contractID}}" class="list-group-item">Máy in</a>
-                <a href="#/rental/{{contractID}}" class="list-group-item">Quạt</a>
-            </div>
+        <div class="row" style="text-align: right; margin: auto">
+            <a href="#/rentalCart/{{contractID}}" class="btn btn-green">
+                <i class="fa fa-shopping-cart"></i>
+                Xem giỏ hàng
+            </a>
         </div>
+        <div class="row">
+            <div class="col-md-3" style="padding: 15px;border: 1px solid #b5d334;margin: 15px 0;">
 
-        <div class="col-md-9">
-            <div class="col-md-4 item" ng-repeat="item in itemList track by $index" >
-                <div class="image" style="background-image: url({{item.imageUrl}})"></div>
-                <div class="row">
-                    <div class="detail col-md-6">
-                        <div class="title">{{item.name}}</div>
-                        <div class="price">{{item.unitPrice}} VNĐ</div>
+                <div style="margin: 15px 0; font-size: 24px; color: #b5d334">Giỏ hàng</div>
+
+                <div class="item-cart" style="border-bottom: 1px solid darkgrey;margin-top: 10px">
+                    <div style="text-align: left;display: inline-block">Name</div>
+                    <div style="float: right;display: inline-block">Quantity</div>
+                </div>
+                    <div class="item-cart" style="border-bottom: 1px solid darkgrey;margin-top: 10px" ng-repeat="item in cart">
+                        <div style="text-align: left;display: inline-block">{{item.name}}</div>
+                        <div style="float: right;display: inline-block">{{item.quantity}}</div>
                     </div>
-                    <div class="quantity col-md-6">
-                        <div>Số lượng</div>
-                        <div><input class="form-control input" type="number" value="{{item.number}}" ng-model="item.number"></div>
+            </div>
+
+            <div class="col-md-9">
+                <div class="col-md-4 item" ng-repeat="item in itemList track by $index">
+                    <div class="image" style="background-image: url({{item.imageUrl}})"></div>
+                    <div class="row">
+                        <div class="detail col-md-6">
+                            <div class="title truncate-one-line-text">{{item.name}}</div>
+                            <div class="price">{{item.unitPrice}} VNĐ</div>
+                        </div>
+                        <div class="quantity col-md-6">
+                            <div>Số lượng</div>
+                            <div><input class="form-control input" type="number" min="0" value="{{item.number}}"
+                                        ng-model="item.number"></div>
+                        </div>
+                    </div>
+                    <div ng-click="addToCart(item)" style="display:block;margin: 10px 0;min-width: 100px;"
+                         class="btn btn-success">Thuê
                     </div>
                 </div>
-                <div ng-click="addToCart(item)" style="display:block;margin: 10px 0;min-width: 100px;" class="btn btn-success">Thuê</div>
             </div>
         </div>
-    </div>
     </div>
 </div>

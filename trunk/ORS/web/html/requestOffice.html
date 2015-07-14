@@ -44,7 +44,7 @@
                             </div>
                             <div class="error">{{error}}</div>
                             <div class="button-post">
-                                <button type="button" ng-click="login(form)" class="btn btn-primary">
+                                <button type="button" ng-click="login(form)" class="btn btn-success">
                                     Đăng nhập
                                 </button>
                                 <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
@@ -112,7 +112,7 @@
                                 <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="">
                             </div>
                             <div class="button-post">
-                                <button type="button" ng-click='register(registerForm)' class="btn btn-primary">Đăng ký
+                                <button type="button" ng-click='register(registerForm)' class="btn btn-success">Đăng ký
                                 </button>
 
                                 <button type="reset" class="btn">Hủy</button>
@@ -160,8 +160,8 @@
                 </div>
                 <div class="col-lg-4">
                     <div class="input-group">
-                        <input type="text" class="form-control typeahead" autocomplete="off"
-                               id="amenity" style="width: 355px;">
+                        <input type="text" class="form-control typeahead" autocomplete="off" ng-model="amenityInput"
+                               id="amenity" style="width: 355px;" typeahead="amenity for amenity in amenities | filter:$viewValue | limitTo:8" >
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" onclick="addAmenity()" type="button">+</button>
                                     </span>
@@ -172,7 +172,7 @@
             </div>
             <div class="button-post">
                 <input type="hidden" id="amenityList" name="amenityList">
-                <button type="submit" ng-click="requestOffice(requestOfficeForm)" class="btn btn-primary" value="save"
+                <button type="submit" ng-click="requestOffice(requestOfficeForm)" class="btn btn-success" value="save"
                         name="action">Đặt văn phòng
                 </button>
                 <button type="reset" ng-click="back()" class="btn" value="cancel" name="action">Hủy</button>

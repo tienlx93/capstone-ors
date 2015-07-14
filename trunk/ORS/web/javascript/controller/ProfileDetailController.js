@@ -14,18 +14,6 @@ controllers.controller('ProfileDetailController', ['$scope', '$location', '$rout
             }
         });
 
-        $scope.phoneNumberPattern = (function() {
-            var regexp = /^\(?(\d{3})\)?[ .-]?(\d{3})[ .-]?(\d{4})$/;
-            return {
-                test: function(value) {
-                    if( $scope.requireTel === false ) {
-                        return true;
-                    }
-                    return regexp.test(value);
-                }
-            };
-        });
-
         $scope.editProfile = function (form) {
             if (form.$valid) {
 

@@ -2,6 +2,7 @@ package controller;
 
 import dao.*;
 import entity.*;
+import service.ClusteringService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -73,6 +74,8 @@ public class OfficeController extends HttpServlet {
                 }
                 OfficeAmenityDAO officeAmenityDAO = new OfficeAmenityDAO();
                 officeAmenityDAO.saveOfficeAmenity(office.getId(), amenityListInt);
+                ClusteringService service = new ClusteringService();
+                service.doCluster();
                 response.sendRedirect("/admin/office");
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/office/newOffice.jsp");

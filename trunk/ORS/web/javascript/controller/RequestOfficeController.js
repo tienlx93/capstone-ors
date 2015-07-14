@@ -47,5 +47,7 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                     }
                 });
             }
-        }
+        };
+
+        $scope.amenities = ["Máy lạnh", "Phòng họp", "AAA", "BBBB", "CCCC"];
     }]);

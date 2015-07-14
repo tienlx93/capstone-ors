@@ -63,6 +63,34 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         }
         return false;
     }
+    public boolean update(String name, Office newoffice) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Office office = (Office) session.get(Office.class, name);
+            office.setAddress(newoffice.getAddress());
+            office.setDescription(newoffice.getDescription());
+            office.setPrice(newoffice.getPrice());
+            office.setPriceTerm(newoffice.getPriceTerm());
+            office.setFloorNumber(newoffice.getFloorNumber());
+            office.setArea(newoffice.getArea());
+            office.setImageUrls(newoffice.getImageUrls());
+            office.setCategoryId(newoffice.getCategoryId());
+            office.setCity(newoffice.getCity());
+            office.setDistrict(newoffice.getDistrict());
+            office.setLongitude(newoffice.getLongitude());
+            office.setLatitude(newoffice.getLatitude());
+
+
+            session.update(office);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
+    }
 
     public List<Office> getNewOffice() {
         try {

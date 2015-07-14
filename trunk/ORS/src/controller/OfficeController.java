@@ -78,6 +78,26 @@ public class OfficeController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/office/newOffice.jsp");
                 rd.forward(request, response);
             }
+        } else if (action.equals("update")) {
+
+
+            String name = request.getParameter("name");
+            OfficeDAO offDao = new OfficeDAO();
+            Office office = new Office();
+            office.setAddress(request.getParameter("address"));
+            office.setDescription(request.getParameter("description"));
+            office.setPrice(Long.valueOf(request.getParameter("price")));
+            office.setPriceTerm(Integer.parseInt(request.getParameter("priceTerm")));
+            office.setFloorNumber(Integer.parseInt(request.getParameter("floor")));
+            office.setArea(Double.parseDouble(request.getParameter("area")));
+            office.setImageUrls(request.getParameter("imageUrls"));
+            office.setCategoryId(Integer.parseInt(request.getParameter("category")));
+            office.setCity(request.getParameter("city"));
+            office.setDistrict(request.getParameter("district"));
+            office.setLongitude(Double.valueOf(request.getParameter("longtitude")));
+            office.setLatitude(Double.valueOf(request.getParameter("latitude")));
+
+            offDao.update(name , office);
         }
     }
 
@@ -109,8 +129,30 @@ public class OfficeController extends HttpServlet {
 
             rd = request.getRequestDispatcher("/WEB-INF/admin/office/newOffice.jsp");
             rd.forward(request, response);
-        }
+        } else if(action.equals("edit")) {
 
+            PriceTermDAO ptDao = new PriceTermDAO();
+            List<PriceTerm> priceTermList = ptDao.findAll();
+            request.setAttribute("priceTermList", priceTermList);
+
+            CategoryDAO cDao = new CategoryDAO();
+            List<Category> categoryList = cDao.findAll();
+            request.setAttribute("categoryList", categoryList);
+
+
+            int id = Integer.parseInt(request.getParameter("id"));
+            Office office = dao.get(id);
+            request.setAttribute("office", office);
+            List<String> amenityList = new ArrayList<>();
+            for (OfficeAmenity officeAmenity : office.getOfficeAmenitiesById()) {
+                String name = officeAmenity.getAmenityByAmenityId().getName();
+                amenityList.add(name);
+            }
+            request.setAttribute("amenityList", amenityList);
+
+            rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
+            rd.forward(request, response);
+        }
     }
 
     private List<String> saveAmenities(String amenities) {

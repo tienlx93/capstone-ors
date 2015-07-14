@@ -48,7 +48,7 @@ public class AmenityController extends HttpServlet {
             Amenity ame = new Amenity();
             Amenity amedemo = new Amenity();
             amedemo.setWeight(Integer.parseInt(request.getParameter("weight")));
-            ame.setWeight(Integer.parseInt(request.getParameter("priority")));
+            amedemo.setWeight(Integer.parseInt(request.getParameter("priority")));
             amedemo.setDescription(request.getParameter("description"));
 
 /*          String password = request.getParameter("password");
@@ -82,7 +82,9 @@ public class AmenityController extends HttpServlet {
             //String name = request.getParameter("name");
             //Amenity amenity = dao.get(Integer.valueOf(name));
             //request.setAttribute("amenity", amenity);
-
+            int id = Integer.parseInt(request.getParameter("id"));
+            Amenity amenity = dao.get(id);
+            request.setAttribute("amenity", amenity);
             RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/editAmenity.jsp");
             rd.forward(request, response);
         }

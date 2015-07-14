@@ -22,6 +22,7 @@ public class Account {
     private int statusId;
     private AccountStatus accountStatusByStatusId;
     private Collection<Rental> rentalsByUsername;
+    private Collection<EmailQueue> emailQueuesByUsername;
 
     @Id
     @Column(name = "Username", nullable = false, insertable = true, updatable = true)
@@ -178,5 +179,14 @@ public class Account {
 
     public void setRentalsByUsername(Collection<Rental> rentalsByUsername) {
         this.rentalsByUsername = rentalsByUsername;
+    }
+
+    @OneToMany(mappedBy = "accountByUsername")
+    public Collection<EmailQueue> getEmailQueuesByUsername() {
+        return emailQueuesByUsername;
+    }
+
+    public void setEmailQueuesByUsername(Collection<EmailQueue> emailQueuesByUsername) {
+        this.emailQueuesByUsername = emailQueuesByUsername;
     }
 }

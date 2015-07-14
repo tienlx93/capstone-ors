@@ -19,6 +19,7 @@
       <exported-key name="FK_Appointment_Account" table="Appointment" schema="dbo" catalog="ors" columns="CustomerUsername"/>
       <exported-key name="FK_Appointment_Account1" table="Appointment" schema="dbo" catalog="ors" columns="AssignedStaff"/>
       <exported-key name="FK_Contract_Account" table="Contract" schema="dbo" catalog="ors" columns="CustomerUsername"/>
+      <exported-key name="FK_EmailQueue_Account" table="EmailQueue" schema="dbo" catalog="ors" columns="Username"/>
       <exported-key name="FK_Profile_Account" table="Profile" schema="dbo" catalog="ors" columns="Username"/>
       <exported-key name="FK_Rental_Account" table="Rental" schema="dbo" catalog="ors" columns="AssignStaff"/>
       <exported-key name="FK_Repair_Account" table="Repair" schema="dbo" catalog="ors" columns="AssignedStaff"/>
@@ -106,6 +107,14 @@
       <column name="Description" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
       <primary-key name="PK_ContractStatus" columns="Id"/>
       <exported-key name="FK_Contract_ContractStatus" table="Contract" schema="dbo" catalog="ors" columns="StatusId"/>
+    </table>
+    <table name="EmailQueue" schema="dbo" catalog="ors" type="TABLE">
+      <column name="Id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
+      <column name="Username" sqlType="nvarchar" precision="50" scale="0" nullable="false" jdbcType="-9"/>
+      <column name="OfficeIds" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="CreateTime" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93"/>
+      <primary-key name="PK_EmailQueue" columns="Id"/>
+      <foreign-key name="FK_EmailQueue_Account" columns="Username" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
     </table>
     <table name="Office" schema="dbo" catalog="ors" type="TABLE">
       <column name="Id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>

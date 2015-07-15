@@ -48,3 +48,10 @@
     background-color: #5cb85c;
     border-color: #4cae4c;
 }
+
+.truncate-one-line-text {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100px;
+    overflow: hidden;
+}

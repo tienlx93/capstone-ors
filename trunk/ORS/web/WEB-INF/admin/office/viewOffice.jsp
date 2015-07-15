@@ -55,6 +55,7 @@
                                     <th>Đơn vị giá</th>
                                     <th>Diện tích</th>
                                     <th>Địa chỉ</th>
+                                    <th></th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -66,6 +67,10 @@
                                         <td>${item.priceTermByPriceTerm.description}</td>
                                         <td>${item.area}</td>
                                         <td>${item.address}</td>
+                                        <td><a class="btn"
+                                               href="office?action=edit&id=${item.id}">
+                                            Sửa
+                                        </a></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

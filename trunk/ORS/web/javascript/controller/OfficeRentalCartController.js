@@ -2,7 +2,8 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
     function ($scope, $location, Api, $routeParams, ShoppingCartService, toastr) {
         var id = $routeParams.id;
         $scope.description = '';
-        $scope.listItems = ShoppingCartService.getProducts();
+        Api.account.cart = ShoppingCartService.getProducts();
+        $scope.listItems = Api.account.cart;
 
         $scope.removeFromCart = function(item){
             ShoppingCartService.removeProduct(item);
@@ -25,6 +26,7 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
             Api.requestRental(id, rentalList, description, function(data){
                 if (data=="Success") {
                     toastr.success('Gửi yêu cầu thành công', 'Thành công');
+                    Api.account.cart = [];
                     $location.path("/home");
                 } else {
                     toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');

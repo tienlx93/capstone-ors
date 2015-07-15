@@ -2,8 +2,9 @@
  * Created by Thành on 08/07/2015.
  */
 
-controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
-    function ($scope, $location, Api) {
+controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api', 'toastr',
+    function ($scope, $location, Api, toastr) {
+        $scope.reOffice = {};
         $scope.login = function (form) {
             if (form.$valid) {
                 var username = $scope.username;
@@ -43,11 +44,29 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                     if (data == "Error") {
                         $scope.error = "Có lỗi xảy ra. Xin thử lại";
                     } else if (data) {
-                        $location.path("#/home").replace();
+                        $location.path("#/home");
+                        toastr.success('Đặt yêu cầu thành công');
                     }
                 });
             }
         };
 
-        $scope.amenities = ["Máy lạnh", "Phòng họp", "AAA", "BBBB", "CCCC"];
+        Api.getAmenityList(function (data) {
+            if (data == "Error") {
+                $scope.error = true;
+            } else if (data) {
+                $scope.amenities = data;
+            }
+        });
+
+        $scope.reOffice.amenityList = [];
+
+        $scope.add = function() {
+            $scope.reOffice.amenityList.push( $scope.amenityInput );
+            $scope.amenityInput = "";
+        };
+        $scope.remove = function ( idx ) {
+            $scope.reOffice.amenityList.splice( idx, 1 );
+        };
+
     }]);

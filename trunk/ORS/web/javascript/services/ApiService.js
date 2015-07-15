@@ -108,7 +108,8 @@ app.factory("Api", ['$http',
                     'category': reOffice.category,
                     'price': reOffice.price,
                     'area': reOffice.area,
-                    'district': reOffice.district
+                    'district': reOffice.district,
+                    'amenityList': reOffice.amenityList
                 }
             })
                 .success(function (data) {
@@ -191,6 +192,22 @@ app.factory("Api", ['$http',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'getProfile'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getAmenityList = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getAmenityList'
                 }
             })
                 .success(function (data) {

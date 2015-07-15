@@ -1,4 +1,5 @@
 <link rel="stylesheet" type="text/css" href="/css/request.css"/>
+<link rel="stylesheet/less" href="/css/office.less" type="text/css">
 
 <div class="container">
 
@@ -65,21 +66,30 @@
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo"
                      collapse="!isCollapsed">
                     <div class="panel-body">
-                        <form name="registerForm" ng-submit="register(registerForm)">
+                        <form name="registerForm" >
                             <div class="form-group">
                                 <label for="username1">Tên đăng nhập (*)</label>
                                 <input type="text" required ng-model="user.username" class="form-control" id="username1"
-                                       value="">
+                                       name="username">
+                                <span class="error" ng-show="registerForm.username.$dirty && registerForm.username.$invalid">
+                                    <span ng-show="registerForm.username.$error.required">Bắt buộc</span>
+                                </span>
                             </div>
                             <div class="form-group">
                                 <label for="password1">Mật khẩu (*)</label>
                                 <input type="password" required ng-model="user.password" class="form-control"
-                                       id="password1" value="">
+                                       id="password1" name="password">
+                                <span class="error" ng-show="registerForm.password.$dirty && registerForm.password.$invalid">
+                                    <span ng-show="registerForm.password.$error.required">Bắt buộc</span>
+                                </span>
                             </div>
                             <div class="form-group">
                                 <label for="mail">E-mail (*)</label>
-                                <input type="email" required ng-model="user.mail" class="form-control" id="mail"
-                                       value="">
+                                <input type="email" required ng-model="user.mail" class="form-control" id="mail" name="email">
+                                <span class="error" ng-show="registerForm.email.$dirty && registerForm.email.$invalid">
+                                    <span ng-show="registerForm.email.$error.required">Bắt buộc</span>
+                                    <span ng-show="registerForm.email.$error.email">Email không hợp lệ</span>
+                                </span>
                             </div>
                             <div class="form-group">
                                 <label for="title">Chức danh</label>
@@ -91,8 +101,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="fullname">Họ và tên (*)</label>
-                                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" value=""
-                                       required>
+                                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" name="fullname" required>
+                                <span class="error" ng-show="registerForm.fullname.$dirty && registerForm.fullname.$invalid">
+                                    <span ng-show="registerForm.fullname.$error.required">Bắt buộc</span>
+                                </span>
                             </div>
                             <div class="form-group">
                                 <label for="company">Công ty</label>
@@ -100,8 +112,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone">Số điện thoại (*)</label>
-                                <input type="text" ng-model="user.phone" class="form-control" id="phone" value=""
-                                       required>
+                                <input type="text" ng-model="user.phone" class="form-control" id="phone" value="" required
+                                       ng-pattern="/^\d{10,11}$/">
                             </div>
                             <div class="form-group">
                                 <label for="address">Địa chỉ</label>
@@ -109,7 +121,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="birthday">Ngày sinh</label>
-                                <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="">
+                                <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="" name="birthday">
+                                <span class="error" ng-show="registerForm.birthday.$dirty && registerForm.birthday.$invalid">
+                                    <span ng-show="registerForm.birthday.$error.date">Ngày không hợp lệ</span>
+                                </span>
                             </div>
                             <div class="button-post">
                                 <button type="button" ng-click='register(registerForm)' class="btn btn-success">Đăng ký
@@ -131,7 +146,7 @@
 
             <p>Chúng tôi sẽ báo với bạn trong thời gian sớm nhất qua tin nhắn.</p>
         </div>
-        <form name="requestOfficeForm" ng-submit="requestOffice(requestOfficeForm)">
+        <form name="requestOfficeForm">
             <div class="form-group">
                 <label for="category">Loại văn phòng</label>
                 <select ng-model="reOffice.category" class="form-control" id="category" required>
@@ -163,7 +178,7 @@
                         <input type="text" class="form-control typeahead" autocomplete="off" ng-model="amenityInput"
                                id="amenity" style="width: 355px;" typeahead="amenity for amenity in amenities | filter:$viewValue | limitTo:8" >
                                     <span class="input-group-btn">
-                                        <button class="btn btn-default" onclick="addAmenity()" type="button">+</button>
+                                        <button class="btn btn-default" ng-click="add()" type="button">Thêm</button>
                                     </span>
                     </div>
                     <!-- /input-group -->
@@ -171,7 +186,11 @@
                 <!-- /.col-lg-4 -->
             </div>
             <div class="button-post">
-                <input type="hidden" id="amenityList" name="amenityList">
+
+                <ul>
+                    <li ng-repeat="amenityList in reOffice.amenityList" ng-click="remove(idx)">{{amenityList}}</li>
+                </ul>
+
                 <button type="submit" ng-click="requestOffice(requestOfficeForm)" class="btn btn-success" value="save"
                         name="action">Đặt văn phòng
                 </button>
@@ -181,4 +200,6 @@
         </form>
     </div>
 </div>
+
+
 

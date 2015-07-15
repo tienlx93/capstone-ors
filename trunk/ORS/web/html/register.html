@@ -6,15 +6,25 @@
 
             <div class="form-group">
                 <label for="username">Tên đăng nhập (*)</label>
-                <input type="text" required ng-model="user.username" class="form-control" id="username" value="">
+                <input type="text" required ng-model="user.username" class="form-control" id="username" name="username">
+                <span class="error" ng-show="form.username.$dirty && form.username.$invalid">
+                    <span ng-show="form.username.$error.required">Bắt buộc</span>
+                </span>
             </div>
             <div class="form-group">
                 <label for="password">Mật khẩu (*)</label>
-                <input type="password" required ng-model="user.password" class="form-control" id="password" value="">
+                <input type="password" required ng-model="user.password" class="form-control" id="password" name="password">
+                <span class="error" ng-show="form.password.$dirty && form.password.$invalid">
+                    <span ng-show="form.password.$error.required">Bắt buộc</span>
+                </span>
             </div>
             <div class="form-group">
                 <label for="mail">E-mail (*)</label>
-                <input type="email" required ng-model="user.mail" class="form-control" id="mail" value="">
+                <input type="email" required ng-model="user.mail" class="form-control" id="mail" name="email">
+                <span class="error" ng-show="form.email.$dirty && form.email.$invalid">
+                    <span ng-show="form.email.$error.required">Bắt buộc</span>
+                    <span ng-show="form.email.$error.email">Email không hợp lệ</span>
+                </span>
             </div>
             <div class="form-group">
                 <label for="title">Chức danh</label>
@@ -26,7 +36,10 @@
             </div>
             <div class="form-group">
                 <label for="fullname">Họ và tên (*)</label>
-                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" value="" required>
+                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" name="fullname" required>
+                <span class="error" ng-show="form.fullname.$dirty && form.fullname.$invalid">
+                    <span ng-show="form.fullname.$error.required">Bắt buộc</span>
+                </span>
             </div>
             <div class="form-group">
                 <label for="company">Công ty</label>
@@ -34,7 +47,8 @@
             </div>
             <div class="form-group">
                 <label for="phone">Số điện thoại (*)</label>
-                <input type="text" ng-model="user.phone" class="form-control" id="phone" value="" required>
+                <input type="text" ng-model="user.phone" class="form-control" id="phone" value="" required
+                       ng-pattern="/^\d{10,11}$/">
             </div>
             <div class="form-group">
                 <label for="address">Địa chỉ</label>
@@ -42,8 +56,12 @@
             </div>
             <div class="form-group">
                 <label for="birthday">Ngày sinh</label>
-                <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="" required>
+                <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="" name="birthday">
+                <span class="error" ng-show="form.birthday.$dirty && form.birthday.$invalid">
+                    <span ng-show="form.birthday.$error.date">Ngày không hợp lệ</span>
+                </span>
             </div>
+
             <div class="button-post">
                 <button type="button" ng-click='register(form)' class="btn btn-success">Đăng ký
                 </button>

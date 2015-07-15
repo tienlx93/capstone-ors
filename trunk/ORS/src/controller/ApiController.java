@@ -134,7 +134,7 @@ public class ApiController extends HttpServlet {
                 break;
             case "getNewOffice":
                 getNewOffice(request, out);
-            break;
+                break;
             case "getContractById":
                 try {
                     getContractById(request, out);
@@ -417,7 +417,6 @@ public class ApiController extends HttpServlet {
                 } else {
                     out.print(gson.toJson("Wrong"));
                 }
-
             } else {
                 out.print(gson.toJson("Wrong"));
             }
@@ -463,30 +462,33 @@ public class ApiController extends HttpServlet {
             acc.setEmail(mail);
             acc.setRoleId(4);
             acc.setStatusId(1);
-            AccountDAO accountDAO = new AccountDAO();
-            boolean result = accountDAO.save(acc);
 
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date parsed = format.parse(birthday);
-
-
-            Profile pf = new Profile();
-            pf.setUsername(acc.getUsername());
-            pf.setTitle(title);
-            pf.setFullName(fullname);
-            pf.setPhone(phone);
-            pf.setCompany(company);
-            pf.setAddress(address);
-            pf.setBirthday(new Timestamp(parsed.getTime()));
-
-
-            ProfileDAO profileDAO = new ProfileDAO();
-            boolean result2 = profileDAO.save(pf);
-
-            if (result && result2) {
-                out.print(gson.toJson("Success"));
+            if (birthday == null) {
+                out.print(gson.toJson("Error Date"));
             } else {
-                out.print(gson.toJson("Error"));
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+                Date parsed = format.parse(birthday);
+
+                Profile pf = new Profile();
+                pf.setUsername(acc.getUsername());
+                pf.setTitle(title);
+                pf.setFullName(fullname);
+                pf.setPhone(phone);
+                pf.setCompany(company);
+                pf.setAddress(address);
+                pf.setBirthday(new Timestamp(parsed.getTime()));
+
+                AccountDAO accountDAO = new AccountDAO();
+                boolean result = accountDAO.save(acc);
+
+                ProfileDAO profileDAO = new ProfileDAO();
+                boolean result2 = profileDAO.save(pf);
+
+                if (result && result2) {
+                    out.print(gson.toJson("Success"));
+                } else {
+                    out.print(gson.toJson("Error"));
+                }
             }
         }
     }
@@ -569,7 +571,15 @@ public class ApiController extends HttpServlet {
         String area = request.getParameter("area");
         String district = new String(request.getParameter("district").getBytes(
                 "iso-8859-1"), "UTF-8");
-        String amenities = request.getParameter("amenityList");
+
+        String[] amenities = request.getParameterValues("amenityList");
+        List<String> amenityItem = new ArrayList<>();
+
+        for (String amenity : amenities) {
+            amenityItem.add(new String(amenity.getBytes(
+                    "iso-8859-1"), "UTF-8"));
+        }
+
 
         if (account != null) {
 
@@ -587,7 +597,7 @@ public class ApiController extends HttpServlet {
 
             if (result) {
 
-                List<String> amenityList = saveAmenities(amenities);
+                List<String> amenityList = saveAmenity(amenityItem);
                 AmenityDAO amenityDAO = new AmenityDAO();
                 List<Integer> amenityListInt = new ArrayList<>();
                 Amenity amenity;
@@ -654,7 +664,7 @@ public class ApiController extends HttpServlet {
     private void requestRepair(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        String time = request.getParameter("time");
+        //String time = request.getParameter("time");
         String contractId = request.getParameter("contractId");
         String amenities = new String(request.getParameter("amenities").getBytes(
                 "iso-8859-1"), "UTF-8");
@@ -699,7 +709,19 @@ public class ApiController extends HttpServlet {
         }
         AmenityDAO amenityDAO = new AmenityDAO();
         RequestAmenityDAO dao = new RequestAmenityDAO();
-        amenityDAO.addAmenities(amenityList);
+        if (amenityDAO.addAmenities(amenityList)) {
+            dao.findAll();
+        }
+        return amenityList;
+    }
+
+    private List<String> saveAmenity(List<String> amenityList) {
+
+        AmenityDAO amenityDAO = new AmenityDAO();
+        RequestAmenityDAO dao = new RequestAmenityDAO();
+        if (amenityDAO.addAmenities(amenityList)) {
+            dao.findAll();
+        }
         return amenityList;
     }
 
@@ -746,7 +768,6 @@ public class ApiController extends HttpServlet {
 
 
             if (result) {
-//
                 out.print(gson.toJson("Success"));
             } else {
                 out.print(gson.toJson("Error"));
@@ -855,7 +876,7 @@ public class ApiController extends HttpServlet {
         for (Amenity amenity : dao.findAll()) {
             list.add(amenity.getName());
         }
-        request.setAttribute("amenityList", list);
+
         out.print(gson.toJson(list));
         out.flush();
     }
@@ -896,13 +917,13 @@ public class ApiController extends HttpServlet {
         List<OfficeListDetail> officeList = new ArrayList<>();
         for (OfficeGroup officeGroup : groupDAO.getOfficeList(group)) {
             Office o = officeGroup.getOfficeByOfficeId();
-            if (o.getId()!=id) {
+            if (o.getId() != id) {
                 officeList.add(new OfficeListDetail(o));
             }
         }
         Collections.shuffle(officeList);
-        if (officeList.size()> 3) {
-            officeList = officeList.subList(0,3);
+        if (officeList.size() > 3) {
+            officeList = officeList.subList(0, 3);
         }
         out.print(gson.toJson(officeList));
 

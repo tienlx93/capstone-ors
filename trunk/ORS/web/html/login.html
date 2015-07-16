@@ -1,36 +1,33 @@
 <link rel="stylesheet" type="text/css" href="../css/login.css"/>
-<div class="container" id="loginform">
-    <div id="login">
-        <!--<h1><img src="../img/logo-black.png"></h1>-->
-        <form ng-submit="login(form)" name="form">
-            <p>
-                <label>Tên tài khoản</br>
-                    <input type="text" size="20" required ng-model="username">
-                </label>
-            </p>
+<div class="modal-header">
+    <h3 class="modal-title">Đăng nhập</h3>
+</div>
+<form name="form">
+    <div class="modal-body">
+        <div id="login">
+            <div class="form-group">
+                <label>Tên tài khoản</label>
+                <input type="text" size="20" class="form-control" required ng-model="username">
+            </div>
 
-            <p>
-                <label>Mật khẩu</br>
-                    <input type="password" size="20" required ng-model="password">
-                </label>
-            </p>
-
-            <p>
+            <div class="form-group">
+                <label>Mật khẩu</label>
+                <input type="password" size="20" class="form-control" required ng-model="password">
+            </div>
 
             <div class="checkbox">
                 <label>
-                    <input type="checkbox" name="remember">Giữ trạng thái đăng nhập
+                    <input type="checkbox" name="remember">
+                    Giữ trạng thái đăng nhập
                 </label>
             </div>
-            <!--<input name="login" value="Log In" type="submit" class="submit">-->
-            <button ng-click='login(form)'>Đăng nhập</button>
-            </p>
-            <div ng-show="error!=null" class="error">{{error}}</div>
-        </form>
-        <div class="other">
-            <p>
-                <a href="">Quên mật khẩu</a>
-            </p>
+            <div class="other">
+                    <a href="">Quên mật khẩu?</a>
+            </div>
         </div>
     </div>
-</div>
+    <div class="modal-footer">
+        <button class="btn btn-green" type="submit" ng-click="login(form)">Đăng nhập</button>
+        <button class="btn btn-default" ng-click="cancel()">Hủy</button>
+    </div>
+</form>

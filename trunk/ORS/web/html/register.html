@@ -1,57 +1,60 @@
 <link rel="stylesheet" type="text/css" href="/css/request.css"/>
 
-<div class="container">
-    <form ng-submit="register(form)" name="form">
-        <div class="panel-body">
-
-            <div class="form-group">
-                <label for="username">Tên đăng nhập (*)</label>
-                <input type="text" required ng-model="user.username" class="form-control" id="username" value="">
-            </div>
-            <div class="form-group">
-                <label for="password">Mật khẩu (*)</label>
-                <input type="password" required ng-model="user.password" class="form-control" id="password" value="">
-            </div>
-            <div class="form-group">
-                <label for="mail">E-mail (*)</label>
-                <input type="email" required ng-model="user.mail" class="form-control" id="mail" value="">
-            </div>
-            <div class="form-group">
-                <label for="title">Chức danh</label>
-                <select ng-model="user.title" class="form-control" id="title">
-                    <option value=""></option>
-                    <option value="Ông">Ông</option>
-                    <option value="Bà">Bà</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="fullname">Họ và tên (*)</label>
-                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" value="" required>
-            </div>
-            <div class="form-group">
-                <label for="company">Công ty</label>
-                <input type="text" ng-model="user.company" class="form-control" id="company" value="">
-            </div>
-            <div class="form-group">
-                <label for="phone">Số điện thoại (*)</label>
-                <input type="text" ng-model="user.phone" class="form-control" id="phone" value="" required>
-            </div>
-            <div class="form-group">
-                <label for="address">Địa chỉ</label>
-                <input type="text" ng-model="user.address" class="form-control" id="address" value="">
-            </div>
-            <div class="form-group">
-                <label for="birthday">Ngày sinh</label>
-                <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="" required>
-            </div>
-            <div class="button-post">
-                <button type="button" ng-click='register(form)' class="btn btn-success">Đăng ký
-                </button>
-
-                <button type="reset" class="btn">Hủy</button>
-            </div>
-            <div ng-show="error!=null" class="error">{{error}}</div>
-
-        </div>
-    </form>
+<div class="modal-header">
+    <h3 class="modal-title">Đăng kí</h3>
 </div>
+<form ng-submit="register(form)" name="form">
+    <div class="modal-body">
+
+        <div class="form-group">
+            <label for="username">Tên đăng nhập (*)</label>
+            <input type="text" required ng-model="user.username" class="form-control" id="username" value="">
+        </div>
+        <div class="form-group">
+            <label for="password">Mật khẩu (*)</label>
+            <input type="password" required ng-model="user.password" class="form-control" id="password" value="">
+        </div>
+        <div class="form-group">
+            <label for="mail">E-mail (*)</label>
+            <input type="email" required ng-model="user.mail" class="form-control" id="mail" value="">
+        </div>
+        <div class="form-group">
+            <label for="title">Xưng hô</label>
+            <select ng-model="user.title" class="form-control" id="title">
+                <option value=""></option>
+                <option value="Ông">Ông</option>
+                <option value="Bà">Bà</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="fullname">Họ và tên (*)</label>
+            <input type="text" ng-model="user.fullname" class="form-control" id="fullname" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="company">Công ty</label>
+            <input type="text" ng-model="user.company" class="form-control" id="company" value="">
+        </div>
+        <div class="form-group">
+            <label for="phone">Số điện thoại (*)</label>
+            <input type="text" ng-model="user.phone" class="form-control" id="phone" value="" required>
+        </div>
+        <div class="form-group">
+            <label for="address">Địa chỉ</label>
+            <input type="text" ng-model="user.address" class="form-control" id="address" value="">
+        </div>
+        <div class="form-group">
+            <label for="birthday">Ngày sinh</label>
+            <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="" required>
+        </div>
+        <div class="g-recaptcha" ng-model="user.captcha" required id="captcha"></div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" ng-disabled="form.$invalid" ng-click='register(form)' class="btn btn-green">Đăng ký
+        </button>
+
+        <button type="reset" ng-click='cancel' class="btn">Hủy</button>
+        <pre>
+                {{user | json}}
+            </pre>
+    </div>
+</form>

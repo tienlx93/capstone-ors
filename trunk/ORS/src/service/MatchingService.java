@@ -1,5 +1,7 @@
 package service;
 
+import entity.Office;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -15,17 +17,17 @@ public class MatchingService {
 
     }
 
-    public int matching(double latitude, double longitude, long priceRange) {
+    public List<Office> matching(double latitude, double longitude, long priceRange) {
         KMeans kMeans = clusteringService.getkMeans();
         List<NormalizePoint> normalizedData = clusteringService.getOfficeData();
-        double[] distance = new double[normalizedData.size()];
         int dimension = 3;
         double[] queryPoint = new double[dimension];
         double[] rawInput = new double[]{latitude, longitude, priceRange};
+        // normalize input point
         for (int i = 0; i < dimension; i++) {
             queryPoint[i] = (rawInput[i] - kMeans.getMins()[i]) / (kMeans.getMaxs()[i] - kMeans.getMins()[i]);
         }
-
+        // calculate distance
         for (NormalizePoint office : normalizedData) {
             double[] officeDetail = office.getData();
             office.setDistance(MathUtil.euclideanDistance(queryPoint, officeDetail));
@@ -33,11 +35,9 @@ public class MatchingService {
 
         Collections.sort(normalizedData);
 
+        int k = clusteringService.getNumCluster() / 2 + 1;
 
-        int k = (clusteringService.getNumCluster() % 2 == 0) ? clusteringService.getNumCluster() + 1 :
-                clusteringService.getNumCluster() + 2;
-        k = 3;
-
+        //List and sort k nearest neighbor
         List<Neighbor> weighted = new ArrayList<>();
         for (int j = 0; j < k; j++) {
             NormalizePoint office = normalizedData.get(j);
@@ -54,9 +54,23 @@ public class MatchingService {
             }
             found.getDistances().add(office.getDistance());
         }
-
         Collections.sort(weighted);
 
-        return weighted.get(0).getGroup();
+        //List and sort the distance of found group
+        int group = weighted.get(0).getGroup();
+        List<NormalizePoint> foundList = new ArrayList<>();
+        for (NormalizePoint normalizePoint : normalizedData) {
+            if (normalizePoint.getOffice().getOfficeGroupById().getOfficeGroup() == group) {
+                foundList.add(normalizePoint);
+            }
+        }
+        Collections.sort(foundList);
+
+        List<Office> foundOffice = new ArrayList<>();
+        for (NormalizePoint normalizePoint : foundList) {
+            foundOffice.add(normalizePoint.getOffice());
+        }
+
+        return foundOffice;
     }
 }

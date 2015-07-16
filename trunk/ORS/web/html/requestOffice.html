@@ -44,7 +44,7 @@
                             </div>
                             <div class="error">{{error}}</div>
                             <div class="button-post">
-                                <button type="button" ng-click="login(form)" class="btn btn-success">
+                                <button type="button" ng-click="login(form)" class="btn btn-green">
                                     Đăng nhập
                                 </button>
                                 <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
@@ -82,7 +82,7 @@
                                        value="">
                             </div>
                             <div class="form-group">
-                                <label for="title">Chức danh</label>
+                                <label for="title">Xưng hô</label>
                                 <select ng-model="user.title" class="form-control" id="title">
                                     <option value=""></option>
                                     <option value="Ông">Ông</option>
@@ -112,7 +112,7 @@
                                 <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="">
                             </div>
                             <div class="button-post">
-                                <button type="button" ng-click='register(registerForm)' class="btn btn-success">Đăng ký
+                                <button type="button" ng-click='register(registerForm)' class="btn btn-green">Đăng ký
                                 </button>
 
                                 <button type="reset" class="btn">Hủy</button>
@@ -172,7 +172,7 @@
             </div>
             <div class="button-post">
                 <input type="hidden" id="amenityList" name="amenityList">
-                <button type="submit" ng-click="requestOffice(requestOfficeForm)" class="btn btn-success" value="save"
+                <button type="submit" ng-click="requestOffice(requestOfficeForm)" class="btn btn-green" value="save"
                         name="action">Đặt văn phòng
                 </button>
                 <button type="reset" ng-click="back()" class="btn" value="cancel" name="action">Hủy</button>

@@ -8,11 +8,11 @@ import entity.Office;
  */
 public class Test {
     public static void main(final String[] args) {
-        /*ClusteringService service = new ClusteringService();
+        ClusteringService service = new ClusteringService();
         int[] clustering = service.doCluster();
-        service.getkMeans().ShowClustered(clustering, 5, 4);*/
+        service.getkMeans().ShowClustered(clustering, 5, 4);
 
-        MatchingService service = new MatchingService();
+        /*MatchingService service = new MatchingService();
         OfficeDAO dao = new OfficeDAO();
         for (Office office : dao.getAllOffice()) {
             System.out.println(office.getOfficeGroupById().getOfficeGroup());
@@ -45,7 +45,7 @@ public class Test {
             int matching = service.matching(office.getLatitude(), office.getLongitude(), p);
             System.out.println(matching);
             System.out.println();
-        }
+        }*/
 
     }
 }

@@ -65,7 +65,7 @@ public class ClusteringService {
         rawData = new double[listData.size()][];
         listData.toArray(rawData);
         //numCluster = dao.countDistrict();
-        numCluster = allOffice.size() / 5;
+        numCluster = (int) Math.round(Math.floor(Math.sqrt(allOffice.size())));
         kMeans = new KMeans(rawData, numCluster);
         for (int i = 0; i < officeData.size(); i++) {
             NormalizePoint point = officeData.get(i);

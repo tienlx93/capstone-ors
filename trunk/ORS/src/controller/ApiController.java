@@ -1,7 +1,6 @@
 package controller;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import dao.*;
 import entity.*;
 import json.*;
@@ -13,9 +12,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -433,6 +433,7 @@ public class ApiController extends HttpServlet {
                 "iso-8859-1"), "UTF-8");
         String password = request.getParameter("password");
         String mail = request.getParameter("mail");
+        String captcha = request.getParameter("captcha");
         String title = new String(request.getParameter("title").getBytes(
                 "iso-8859-1"), "UTF-8");
         String fullname = new String(request.getParameter("fullname").getBytes(
@@ -456,7 +457,9 @@ public class ApiController extends HttpServlet {
         }
         String birthday = request.getParameter("birthday");
 
-        if (account == null) {
+        boolean captchaResult = validateCaptcha("6Lcn1QkTAAAAAAVCoTxsx8kcVwHXBNKKDS8olmYd", captcha, "");
+
+        if (account == null && captchaResult) {
             Account acc = new Account();
             acc.setUsername(username);
             acc.setPassword(password);
@@ -872,11 +875,9 @@ public class ApiController extends HttpServlet {
             double longitude = Double.parseDouble(longitudeStr);
             int priceRange = Integer.parseInt(priceRangeStr);
             MatchingService service = new MatchingService();
-            int group = service.matching(latitude, longitude, priceRange);
-
-            OfficeGroupDAO dao = new OfficeGroupDAO();
-            for (OfficeGroup office : dao.getOfficeList(group)) {
-                officeList.add(new OfficeListDetail(office.getOfficeByOfficeId()));
+            List<Office> matching = service.matching(latitude, longitude, priceRange);
+            for (Office office : matching) {
+                officeList.add(new OfficeListDetail(office));
             }
             out.print(gson.toJson(officeList));
         } catch (Exception e) {
@@ -906,6 +907,39 @@ public class ApiController extends HttpServlet {
         }
         out.print(gson.toJson(officeList));
 
+    }
+
+    private boolean validateCaptcha(String secret, String response, String remoteip)
+    {
+        URLConnection connection = null;
+        InputStream is = null;
+        String charset = java.nio.charset.StandardCharsets.UTF_8.name();
+
+        String url = "https://www.google.com/recaptcha/api/siteverify";
+        try {
+            String query = String.format("secret=%s&response=%s",
+                    URLEncoder.encode(secret, charset),
+                    URLEncoder.encode(response, charset));
+
+            connection = new URL(url + "?" + query).openConnection();
+            is = connection.getInputStream();
+            Reader in = new InputStreamReader(is);
+            ResponseJSON responseJSON = gson.fromJson(in, ResponseJSON.class);
+            return  responseJSON.isSuccess();
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+        finally {
+            if (is != null) {
+                try {
+                    is.close();
+                } catch (IOException e) {
+                }
+
+            }
+        }
+        return false;
     }
 }
 

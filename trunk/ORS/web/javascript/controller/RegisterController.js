@@ -15,6 +15,10 @@ controllers.controller('RegisterController', ['$scope', '$location', 'Api', 'toa
         }, 100);
 
         $scope.user = {};
+        /*$scope.user = {
+            birthday: new Date(1980, 11, 31)
+        };*/
+
         $scope.register = function (form) {
 
             if (form.$valid) {
@@ -24,6 +28,8 @@ controllers.controller('RegisterController', ['$scope', '$location', 'Api', 'toa
                     if (data == "Error") {
                         toastr.error('Có lỗi xảy ra. Xin thử lại');
                         //   $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                    } else if (data == "Error Date") {
+                        toastr.error('Ngày sinh không hợp lệ');
                     } else if (data) {
                         toastr.success('Mời đăng nhập và kiểm tra email để hoàn tất đăng kí', 'Đăng kí thành công');
                         $modalInstance.close();

@@ -95,5 +95,21 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.countAssigned = function (callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'countAssigned'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                });
+        };
+
         return services;
     }]);

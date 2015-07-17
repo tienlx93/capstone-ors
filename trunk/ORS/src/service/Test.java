@@ -1,5 +1,6 @@
 package service;
 
+import dao.AppointmentDAO;
 import dao.OfficeDAO;
 import entity.Office;
 
@@ -8,9 +9,9 @@ import entity.Office;
  */
 public class Test {
     public static void main(final String[] args) {
-        ClusteringService service = new ClusteringService();
+        /*ClusteringService service = new ClusteringService();
         int[] clustering = service.doCluster();
-        service.getkMeans().ShowClustered(clustering, 5, 4);
+        service.getkMeans().ShowClustered(clustering, 5, 4);*/
 
         /*MatchingService service = new MatchingService();
         OfficeDAO dao = new OfficeDAO();
@@ -46,6 +47,9 @@ public class Test {
             System.out.println(matching);
             System.out.println();
         }*/
+        AppointmentDAO dao = new AppointmentDAO();
+        int count = dao.countAppointment(2, "staff3");
+        System.out.println(count);
 
     }
 }

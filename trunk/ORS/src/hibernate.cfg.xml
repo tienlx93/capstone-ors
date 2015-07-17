@@ -4,11 +4,17 @@
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
+        <!--
+          - Server description
+        <property name="connection.url">jdbc:sqlserver://capstoneors.cgc19ayo6qom.ap-southeast-2.rds.amazonaws.com:1433;databaseName=ors</property>
+        <property name="hibernate.connection.username">capstoneors</property>
+        <property name="hibernate.connection.password">capstoneors</property>
+        -->
         <property name="connection.url">jdbc:sqlserver://localhost:1433;databaseName=ors</property>
-        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
         <property name="hibernate.connection.username">sa</property>
         <property name="hibernate.connection.password">123456</property>
+        <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
         <mapping class="entity.Account"/>
         <mapping class="entity.Amenity"/>
         <mapping class="entity.Appointment"/>

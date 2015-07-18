@@ -1,6 +1,7 @@
 package dao;
 
 import entity.OfficeAmenity;
+import org.hibernate.Query;
 
 import java.util.List;
 
@@ -22,6 +23,23 @@ public class OfficeAmenityDAO extends BaseDAO<OfficeAmenity, Integer> {
                 officeAmenity.setAmenityId(i);
                 session.save(officeAmenity);
             }
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean removeByOffice(int id) {
+        try {
+            session.getTransaction().begin();
+            String sql = "delete from OfficeAmenity where officeId = :officeId";
+            Query query = session.createQuery(sql);
+            query.setInteger("officeId", id);
             session.getTransaction().commit();
             return true;
         } catch (Exception e) {

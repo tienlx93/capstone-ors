@@ -3,6 +3,7 @@ package controller;
 import dao.*;
 import entity.*;
 import service.ClusteringService;
+import service.ConstantService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -25,23 +26,23 @@ public class OfficeController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        OfficeDAO dao = new OfficeDAO();
+        String name = request.getParameter("name");
+        String address = request.getParameter("address");
+        String category = request.getParameter("category");
+        String description = request.getParameter("description");
+        String price = request.getParameter("price");
+        String priceTerm = request.getParameter("priceTerm");
+        String floor = request.getParameter("floor");
+        String area = request.getParameter("area");
+        String imageUrls = request.getParameter("imageUrls");
+        String amenities = request.getParameter("amenityList");
+        String latitude = request.getParameter("latitude");
+        String longitude = request.getParameter("longitude");
+        String district = request.getParameter("district");
+        String city = request.getParameter("city");
         if (action.equals("save")) {
-            OfficeDAO dao = new OfficeDAO();
             Office office = new Office();
-            String name = request.getParameter("name");
-            String address = request.getParameter("address");
-            String category = request.getParameter("category");
-            String description = request.getParameter("description");
-            String price = request.getParameter("price");
-            String priceTerm = request.getParameter("priceTerm");
-            String floor = request.getParameter("floor");
-            String area = request.getParameter("area");
-            String imageUrls = request.getParameter("imageUrls");
-            String amenities = request.getParameter("amenityList");
-            String latitude = request.getParameter("latitude");
-            String longitude = request.getParameter("longitude");
-            String district = request.getParameter("district");
-            String city = request.getParameter("city");
 
             office.setStatusId(1);
             office.setName(name);
@@ -84,23 +85,49 @@ public class OfficeController extends HttpServlet {
         } else if (action.equals("update")) {
 
 
-            String name = request.getParameter("name");
-            OfficeDAO offDao = new OfficeDAO();
-            Office office = new Office();
-            office.setAddress(request.getParameter("address"));
-            office.setDescription(request.getParameter("description"));
-            office.setPrice(Long.valueOf(request.getParameter("price")));
-            office.setPriceTerm(Integer.parseInt(request.getParameter("priceTerm")));
-            office.setFloorNumber(Integer.parseInt(request.getParameter("floor")));
-            office.setArea(Double.parseDouble(request.getParameter("area")));
-            office.setImageUrls(request.getParameter("imageUrls"));
-            office.setCategoryId(Integer.parseInt(request.getParameter("category")));
-            office.setCity(request.getParameter("city"));
-            office.setDistrict(request.getParameter("district"));
-            office.setLongitude(Double.valueOf(request.getParameter("longtitude")));
-            office.setLatitude(Double.valueOf(request.getParameter("latitude")));
+            String id = request.getParameter("id");
+            Office office = dao.get(Integer.parseInt(id));
 
-            offDao.update(name , office);
+            office.setStatusId(1);
+            office.setName(name);
+            office.setAddress(address);
+            office.setCategoryId(Integer.parseInt(category));
+            office.setDescription(description);
+            office.setCreateDate(new Timestamp((new Date()).getTime()));
+            if (!price.equals("")) {
+                office.setPrice(Long.valueOf(price));
+            }
+            office.setPriceTerm(Integer.parseInt(priceTerm));
+            if (!floor.equals("")) {
+                office.setFloorNumber(Integer.parseInt(floor));
+            }
+            office.setArea(Double.parseDouble(area));
+            office.setImageUrls(imageUrls);
+            office.setCity(city);
+            office.setDistrict(district);
+            office.setLatitude(Double.valueOf(latitude));
+            office.setLongitude(Double.valueOf(longitude));
+
+            if(dao.update(Integer.parseInt(id), office)) {
+                List<String> amenityList = saveAmenities(amenities);
+                AmenityDAO amenityDAO = new AmenityDAO();
+                List<Integer> amenityListInt = new ArrayList<>();
+                Amenity amenity;
+                for (String s : amenityList) {
+                    amenity = amenityDAO.searchAmenity(s);
+                    amenityListInt.add(amenity.getId());
+                }
+                OfficeAmenityDAO officeAmenityDAO = new OfficeAmenityDAO();
+                officeAmenityDAO.removeByOffice(office.getId());
+                officeAmenityDAO.saveOfficeAmenity(office.getId(), amenityListInt);
+                ClusteringService service = new ClusteringService();
+                service.doCluster();
+
+                response.sendRedirect("/admin/office");
+            } else {
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
+                rd.forward(request, response);
+            }
         }
     }
 
@@ -109,12 +136,14 @@ public class OfficeController extends HttpServlet {
         String action = request.getParameter("action");
         RequestDispatcher rd;
         if (action == null) {
-            List<Office> list = dao.findAll();
+            int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+            request.setAttribute("pageCount", pageCount);
+
+            List<Office> list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE);
             request.setAttribute("data", list);
             rd = request.getRequestDispatcher("/WEB-INF/admin/office/viewOffice.jsp");
             rd.forward(request, response);
         } else if (action.equals("new")) {
-            //Office office = dao.get(4);
             Office office = new Office();
             request.setAttribute("office", office);
 
@@ -154,6 +183,14 @@ public class OfficeController extends HttpServlet {
             request.setAttribute("amenityList", amenityList);
 
             rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
+            rd.forward(request, response);
+        } else if (action.equals("page")) {
+            String startPage = request.getParameter("startPage");
+            int page = Integer.parseInt(startPage);
+            int startItem = (page - 1) * ConstantService.PAGE_SIZE;
+            List<Office> list = dao.getOfficeByPage(startItem, ConstantService.PAGE_SIZE);
+            request.setAttribute("data", list);
+            rd = request.getRequestDispatcher("/WEB-INF/partial/officeListItem.jsp");
             rd.forward(request, response);
         }
     }

@@ -46,6 +46,9 @@
           </div>
           <div>
             <form action="office" method="post" id="form">
+              <input type="hidden" name="id" class="form-control" id="id"
+                     value="${office.id}">
+
               <div class="form-group clearfix">
                 <label for="name" class="col-sm-2 control-label">Tên văn phòng</label>
 
@@ -77,16 +80,16 @@
                       <td class="wideField" colspan="3">
                         <input class="field" name="district"
                                id="administrative_area_level_2"
-                               disabled="true"></td>
+                               disabled="true" value="${office.district}"></td>
                     </tr>
                     <tr>
                       <td class="label">Thành phố / Tỉnh</td>
                       <td class="wideField" colspan="3">
                         <input class="field" name="city"
                                id="administrative_area_level_1"
-                               disabled="true"></td>
-                      <input type="hidden" name="latitude" id="latitude">
-                      <input type="hidden" name="longitude" id="longitude">
+                               disabled="true" value="${office.city}"></td>
+                      <input type="hidden" name="latitude" id="latitude" value="${office.latitude}">
+                      <input type="hidden" name="longitude" id="longitude" value="${office.longitude}">
 
                     </tr>
                   </table>
@@ -116,6 +119,9 @@
 
                 <div class="clear-float" id="amenity-list">
                   <c:forEach var="item" items="${amenityList}">
+                    <script>
+                      amenityList.push(item);
+                    </script>
                     <div>${item}<span class="color10 fa fa-remove" onclick="deleteAmenity('${item}')"></span></div>
                   </c:forEach>
                 </div>
@@ -188,7 +194,7 @@
               <div class="button-post">
                 <input type="hidden" id="imageUrls" name="imageUrls" value="${office.imageUrls}">
                 <input type="hidden" id="amenityList" name="amenityList">
-                <button type="submit" value="update" class="btn btn-primary" name="action">cập nhật
+                <button type="submit" value="update" class="btn btn-primary" name="action">Cập nhật
                 </button>
                 <a href="/admin/office" class="btn btn-default">Hủy</a>
               </div>

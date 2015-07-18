@@ -63,7 +63,8 @@
                     <span ng-show="form.birthday.$error.date">Ngày không hợp lệ</span>
                 </span>
         </div>
-        <input type="hidden" class="g-recaptcha" ng-model="user.captcha" required id="captcha" name="captcha">
+        <div class="g-recaptcha" id="captcha"></div>
+        <input type="hidden" ng-model="user.captcha" required name="captcha">
         <span class="error" ng-show="form.captcha.$dirty && form.captcha.$invalid">
                     <span ng-show="form.captcha.$error">Mời nhập captcha</span>
                 </span>
@@ -71,10 +72,6 @@
     <div class="modal-footer">
         <button type="submit" ng-disabled="form.$invalid" ng-click='register(form)' class="btn btn-green">Đăng ký
         </button>
-
-        <button type="reset" ng-click='cancel' class="btn">Hủy</button>
-        <pre>
-                {{user | json}}
-            </pre>
+        <button type="reset" ng-click='cancel()' class="btn">Hủy</button>
     </div>
 </form>

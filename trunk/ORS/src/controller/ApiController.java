@@ -33,15 +33,13 @@ public class ApiController extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
 
         PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-        //TODO: get username from session
-        String username = "staff1";
+
         gson = new Gson();
 
         String action = request.getParameter("action");
         switch (action) {
             case "changeStatus":
-                changeStatus(request, out, username);
+                changeStatus(request, out);
                 break;
             case "contractReturn":
                 contractReturn(request, out);
@@ -101,9 +99,7 @@ public class ApiController extends HttpServlet {
         response.setContentType("application/json;charset=UTF-8");
 
         PrintWriter out = response.getWriter();
-        HttpSession session = request.getSession();
-        //TODO: get username from session
-        String username = "staff1";
+
         gson = new Gson();
 
         String action = request.getParameter("action");
@@ -136,10 +132,13 @@ public class ApiController extends HttpServlet {
                 getAllOffice(request, out);
                 break;
             case "listMobile":
-                listMobile(request, out, username);
+                listMobile(request, out);
                 break;
             case "detailMobile":
-                detailMobile(request, out, username);
+                detailMobile(request, out);
+                break;
+            case "countAssigned":
+                countAssigned(request, out);
                 break;
             case "searchOfficeByAddress":
                 searchOfficeByAddress(request, out);
@@ -224,48 +223,61 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(officeList));
     }
 
-    private void listMobile(HttpServletRequest request, PrintWriter out, String username) {
-        String type = request.getParameter("type");
-        List<MobileListJSON> list = new ArrayList<>();
-        switch (type) {
-            case "appointment": {
-                AppointmentDAO dao = new AppointmentDAO();
+    private void listMobile(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account.getRoleId() == 3) {
+            String username = account.getUsername();
+            String type = request.getParameter("type");
+            List<MobileListJSON> list = new ArrayList<>();
+            Office office;
+            Profile profile;
+            switch (type) {
+                case "appointment": {
+                    AppointmentDAO dao = new AppointmentDAO();
 
-                for (Appointment appointment : dao.findAll()) {
-                    Office office = appointment.getOfficeByOfficeId();
-                    Profile profile = appointment.getAccountByCustomerUsername().getProfileByUsername();
+                    for (Appointment appointment : dao.getAppointmentListByStaff(username)) {
+                        office = appointment.getOfficeByOfficeId();
+                        profile = appointment.getAccountByCustomerUsername().getProfileByUsername();
+                        if (appointment.getStatusId() == 2) {
+                            list.add(new MobileListJSON(appointment.getId(), office.getName(), office.getAddress(),
+                                    profile.getFullName(), appointment.getTime().toString(), appointment.getStatusId()));
+                        }
+                    }
 
-                    list.add(new MobileListJSON(appointment.getId(), office.getName(), office.getAddress(),
-                            profile.getFullName(), appointment.getTime().toString(), appointment.getStatusId()));
+                    break;
                 }
+                case "rental": {
+                    RentalDAO dao = new RentalDAO();
 
-                break;
-            }
-            case "rental": {
-                RentalDAO dao = new RentalDAO();
+                    for (Rental rental : dao.getRentalListByStaff(username)) {
+                        office = rental.getContractByContractId().getOfficeByOfficeId();
+                        if (rental.getStatusId() == 2 || rental.getStatusId() == 5) {
+                            list.add(new MobileListJSON(rental.getId(), office.getName(), office.getAddress(),
+                                    rental.getDescription(), rental.getCreateTime().toString(), rental.getStatusId()));
+                        }
+                    }
 
-                for (Rental rental : dao.getRentalListByStaff(username)) {
-                    Office office = rental.getContractByContractId().getOfficeByOfficeId();
-
-                    list.add(new MobileListJSON(rental.getId(), office.getName(), office.getAddress(),
-                            rental.getDescription(), rental.getCreateTime().toString(), rental.getStatusId()));
+                    break;
                 }
+                case "repair": {
+                    RepairDAO dao = new RepairDAO();
 
-                break;
-            }
-            case "repair": {
-                RepairDAO dao = new RepairDAO();
-
-                for (Repair repair : dao.getRepairListByStaff(username)) {
-                    Office office = repair.getContractByContractId().getOfficeByOfficeId();
-
-                    list.add(new MobileListJSON(repair.getId(), office.getName(), office.getAddress(),
-                            repair.getDescription(), repair.getCreateTime().toString(), repair.getRepairStatusId()));
+                    for (Repair repair : dao.getRepairListByStaff(username)) {
+                        office = repair.getContractByContractId().getOfficeByOfficeId();
+                        if (repair.getRepairStatusId() == 2 || repair.getRepairStatusId() == 5) {
+                            list.add(new MobileListJSON(repair.getId(), office.getName(), office.getAddress(),
+                                    repair.getDescription(), repair.getCreateTime().toString(), repair.getRepairStatusId()));
+                        }
+                    }
+                    break;
                 }
-                break;
             }
+            out.print(gson.toJson(list));
+        } else {
+            out.print(gson.toJson("Error"));
         }
-        out.print(gson.toJson(list));
+
     }
 
     private void searchOfficeByAddress(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
@@ -287,9 +299,7 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(officeList));
     }
 
-    ;
-
-    private void detailMobile(HttpServletRequest request, PrintWriter out, String username) {
+    private void detailMobile(HttpServletRequest request, PrintWriter out) {
         String type = request.getParameter("type");
         String id = request.getParameter("id");
         int detailId = Integer.parseInt(id);
@@ -378,7 +388,24 @@ public class ApiController extends HttpServlet {
         out.print(gson.toJson(detail));
     }
 
-    private void changeStatus(HttpServletRequest request, PrintWriter out, String username) {
+
+    private void countAssigned(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account!=null && account.getRoleId() == 3) {
+            String staff = account.getUsername();
+            AppointmentDAO dao = new AppointmentDAO();
+            int[] count = new int[3];
+            count[0] = dao.countAppointment(2, staff);
+            count[1] = dao.countRepair(2, staff);
+            count[2] = dao.countRental(2, staff);
+            out.print(gson.toJson(count));
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
+    private void changeStatus(HttpServletRequest request, PrintWriter out) {
         String type = request.getParameter("type");
         String idString = request.getParameter("id");
         int id = Integer.parseInt(idString);
@@ -446,7 +473,7 @@ public class ApiController extends HttpServlet {
             Account account = dao.login(username, password);
 
             if (account != null) {
-                if (type != null && type.equals("3")) {
+                if (type != null && type.equals("3") && account.getRoleId() == 3) {
                     out.print(gson.toJson("Success"));
                     session.setAttribute("account", account);
                 } else if (type == null && account.getRoleId() == 4) {

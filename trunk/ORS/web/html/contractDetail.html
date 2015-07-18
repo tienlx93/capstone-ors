@@ -1,11 +1,12 @@
+<link rel="stylesheet" type="text/css" href="../css/contract.css"/>
+
 <div class="container">
     <h2>Chi tiết hợp đồng</h2>
-    <div>
+    <br>
 
-    </div>
     <div class="form-group">
         <label>Tên văn phòng</label>
-        {{data.officeName}}
+        {{data.officeName}} (<a href="#/requestRepair/{{data.contractId}}">Yêu cầu sửa chữa</a>)
     </div>
     <div class="form-group">
         <label>Ngày bắt đầu</label>
@@ -13,16 +14,46 @@
     </div>
     <div class="form-group">
         <label>Ngày hết hạn</label>
-        {{data.endDay}}
+        {{data.endDay}} (<a ng-click="contractReturn()">Trả trước hạn</a> hoặc <a ng-click="contractExtend()">Gia
+        hạn</a>)
     </div>
     <div class="form-group">
         <label>Điều khoản giá</label>
         {{data.price}} VND / tháng, trả trong {{data.paymentTerm}}
     </div>
+    <br>
+
+    <div ng-show="!Rentaled">
+        <h4>Danh sách thuê thiết bị hiện tại</h4>
+        <br>
+        <table class="table" >
+            <thead>
+            <tr>
+                <th>Tên thiết bị</th>
+                <th>Mô tả</th>
+                <th>Giá thuê (VNĐ)</th>
+                <th>Số lượng (cái)</th>
+                <th>Thành tiền (VNĐ)</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr ng-repeat="item in rentalList">
+                <td>{{item.name}}</td>
+                <td>{{item.description}}</td>
+                <td>{{item.unitPrice}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.price}}</td>
+            </tr>
+            <tr>
+                <td colspan="4" class="sum"><b>Tổng cộng (VNĐ)</b></td>
+                <td>{{total}}</td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
     <div class="button-post">
-        <a href="" class="btn btn-default">Yêu cầu gia hạn hợp đồng</a> <br>
-        <a href="" class="btn btn-default">Yêu cầu trả văn phòng trước hạn</a> <br>
-        <a href="#/requestRepair/{{data.contractId}}" class="btn btn-default">Yêu cầu sửa chữa</a> <br>
-        <a href="#/rental/{{data.contractId}}" class="btn btn-default">Yêu cầu thuê vật dụng</a> <br>
+        <a href="#/rental/{{data.contractId}}" class="btn btn-default">Yêu cầu thuê thiết bị</a> <br>
     </div>
 </div>

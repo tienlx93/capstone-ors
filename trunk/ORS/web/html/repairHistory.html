@@ -1,12 +1,11 @@
 <div class="container">
-    <h2>Danh sách sửa chữa </h2>
+    <h2>Lịch sử sửa chữa </h2>
     <table class="table">
         <thead>
         <tr>
             <th>Mô tả</th>
             <th>Ngày tạo</th>
             <th>Tình trạng</th>
-            <th>Ngày được sửa chữa</th>
         </tr>
         </thead>
         <tbody>
@@ -15,10 +14,7 @@
             <td>{{item.description}}</td>
             <td>{{item.createTime | toLocaleDate}}</td>
             <td>{{item.status}}</td>
-            <td><span ng-show="item.assignedTime">{{item.assignedTime | toLocaleDate}}</span></td>
         </tr>
-
         </tbody>
     </table>
-    <a class="btn btn-default" href="#/repairHistory/{{id}}">Lịch sử sửa chữa</a>
 </div>

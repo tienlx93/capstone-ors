@@ -9,7 +9,6 @@ controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr'
             if (form.$valid) {
                 var username = $scope.username;
                 var password = $scope.password;
-                console.log('2');
 
                 Api.login(username, password, function (data) {
                     if (data == "Error") {

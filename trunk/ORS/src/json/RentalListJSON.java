@@ -10,17 +10,37 @@ public class RentalListJSON {
     private double unitPrice;
     private int quantity;
     private String imageUrl;
+    private String status;
+    private double price;
 
     public RentalListJSON() {
     }
 
-    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl) {
+    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl, String status, double price) {
         this.rentalId = rentalId;
         this.name = name;
         this.description = description;
         this.unitPrice = unitPrice;
         this.quantity = quantity;
         this.imageUrl = imageUrl;
+        this.status = status;
+        this.price = price;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public int getRentalId() {

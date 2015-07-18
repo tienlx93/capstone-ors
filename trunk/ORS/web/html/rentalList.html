@@ -5,8 +5,9 @@
         <tr>
             <th>Tên thiết bị </th>
             <th>Mô tả</th>
-            <th>Giá thuê</th>
-            <th>Số lượng</th>
+            <th>Trạng thái</th>
+            <th>Giá thuê (VNĐ)</th>
+            <th>Số lượng (cái)</th>
         </tr>
         </thead>
         <tbody>
@@ -14,6 +15,7 @@
         <tr ng-repeat="item in data">
             <td>{{item.name}}</td>
             <td>{{item.description}}</td>
+            <td>{{item.status}}</td>
             <td>{{item.unitPrice}}</td>
             <td>{{item.quantity}}</td>
         </tr>

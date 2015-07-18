@@ -28,6 +28,40 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.contractReturn = function (id, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'contractReturn',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.contractExtend = function (id, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'contractExtend',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.register = function (user, callback) {
             $http({
                 method: 'POST',
@@ -236,6 +270,23 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.getRepairHistoryList = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRepairHistoryList',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.getAllOfficeRentalList = function(callback) {
             $http({
                 method: 'GET',
@@ -263,6 +314,23 @@ app.factory("Api", ['$http',
             })
                 .success(function (data) {
                     callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getRentalListDone = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRentalListDone',
+                    'id': id
+                }
+            })
+                .success(function (rentalList) {
+                    callback(rentalList);
                 })
                 .error(function () {
                     callback("Error");

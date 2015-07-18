@@ -43,6 +43,12 @@ public class ApiController extends HttpServlet {
             case "changeStatus":
                 changeStatus(request, out, username);
                 break;
+            case "contractReturn":
+                contractReturn(request, out);
+                break;
+            case "contractExtend":
+                contractExtend(request, out);
+                break;
             case "login":
                 login(request, out);
                 break;
@@ -114,11 +120,17 @@ public class ApiController extends HttpServlet {
             case "getRentalList":
                 getRentalList(request, out);
                 break;
+            case "getRentalListDone":
+                getRentalListDone(request, out);
+                break;
             case "getAmenityList":
                 getAmenityList(request, out);
                 break;
             case "getRepairList":
                 getRepairList(request, out);
+                break;
+            case "getRepairHistoryList":
+                getRepairHistoryList(request, out);
                 break;
             case "getAllOffice":
                 getAllOffice(request, out);
@@ -394,6 +406,32 @@ public class ApiController extends HttpServlet {
             out.print(gson.toJson("Success"));
         } else {
             out.print(gson.toJson("Error"));
+        }
+    }
+
+    private void contractReturn(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            ContractDAO dao = new ContractDAO();
+            dao.changeStatus(id, 3);
+            out.print(gson.toJson("Success"));
+        } else {
+            out.print(gson.toJson("Wrong"));
+        }
+    }
+
+    private void contractExtend(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            ContractDAO dao = new ContractDAO();
+            dao.changeStatus(id, 2);
+            out.print(gson.toJson("Success"));
+        } else {
+            out.print(gson.toJson("Wrong"));
         }
     }
 
@@ -815,7 +853,7 @@ public class ApiController extends HttpServlet {
         RentalItemDAO dao = new RentalItemDAO();
         for (RentalItem rentalItem : dao.findAll()) {
             list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl()));
+                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl(), null, 0));
         }
         out.print(gson.toJson(list));
     }
@@ -833,8 +871,36 @@ public class ApiController extends HttpServlet {
             for (Rental rental : rentalDAO.getRentalListByContract(id)) {
                 for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
                     RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
-                    list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null));
+                    if (rental.getStatusId() == 1 || rental.getStatusId() == 2 || rental.getStatusId() == 5) {
+                        list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                                rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
+                                rental.getRentalStatusByStatusId().getDescription(), 0));
+                    }
+                }
+            }
+            out.print(gson.toJson(list));
+        }
+    }
+
+    private void getRentalListDone(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            String contractId = request.getParameter("id");
+            int id = Integer.parseInt(contractId);
+            RentalDAO rentalDAO = new RentalDAO();
+            List<RentalListJSON> list = new ArrayList<>();
+
+            for (Rental rental : rentalDAO.getRentalListByContract(id)) {
+                for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
+                    RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
+                    if (rental.getStatusId() == 3) {
+                        double price = rentalDetail.getUnitPrice() * rentalDetail.getQuantity();
+                        list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                                rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
+                                rental.getRentalStatusByStatusId().getDescription(), price));
+                    }
                 }
             }
             out.print(gson.toJson(list));
@@ -850,8 +916,31 @@ public class ApiController extends HttpServlet {
             RepairDAO dao = new RepairDAO();
             List<RepairListJSON> list = new ArrayList<>();
             for (Repair repair : dao.getRepairListByContract(id)) {
-                list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
-                        repair.getAssignedStaff(), repair.getAssignedTime(), repair.getRepairStatusByRepairStatusId().getDescription()));
+                if (repair.getRepairStatusId() == 1 || repair.getRepairStatusId() == 2) {
+                    list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
+                            repair.getAssignedStaff(), null, repair.getRepairStatusByRepairStatusId().getDescription()));
+                } else if (repair.getRepairStatusId() == 5) {
+                    list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
+                            repair.getAssignedStaff(), repair.getAssignedTime(), repair.getRepairStatusByRepairStatusId().getDescription()));
+                }
+            }
+            out.print(gson.toJson(list));
+        }
+    }
+
+    private void getRepairHistoryList(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String contractId = request.getParameter("id");
+        int id = Integer.parseInt(contractId);
+        if (account != null) {
+            RepairDAO dao = new RepairDAO();
+            List<RepairListJSON> list = new ArrayList<>();
+            for (Repair repair : dao.getRepairListByContract(id)) {
+                if (repair.getRepairStatusId() == 3 || repair.getRepairStatusId() == 4) {
+                    list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
+                            repair.getAssignedStaff(), repair.getAssignedTime(), repair.getRepairStatusByRepairStatusId().getDescription()));
+                }
             }
             out.print(gson.toJson(list));
         }
@@ -930,8 +1019,7 @@ public class ApiController extends HttpServlet {
 
     }
 
-    private boolean validateCaptcha(String secret, String response, String remoteip)
-    {
+    private boolean validateCaptcha(String secret, String response, String remoteip) {
         URLConnection connection = null;
         InputStream is = null;
         String charset = java.nio.charset.StandardCharsets.UTF_8.name();
@@ -946,12 +1034,11 @@ public class ApiController extends HttpServlet {
             is = connection.getInputStream();
             Reader in = new InputStreamReader(is);
             ResponseJSON responseJSON = gson.fromJson(in, ResponseJSON.class);
-            return  responseJSON.isSuccess();
+            return responseJSON.isSuccess();
 
         } catch (IOException ex) {
             ex.printStackTrace();
-        }
-        finally {
+        } finally {
             if (is != null) {
                 try {
                     is.close();

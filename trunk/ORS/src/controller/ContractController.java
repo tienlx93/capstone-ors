@@ -115,7 +115,7 @@ public class ContractController extends HttpServlet {
             ContractDAO dao = new ContractDAO();
             switch (button) {
                 case "confirm":
-                    dao.changeStatus(id, 4);
+                    dao.changeStatus(id, 3);
                     break;
                 case "cancel":
                     dao.changeStatus(id, 1);
@@ -131,9 +131,9 @@ public class ContractController extends HttpServlet {
         RequestDispatcher rd;
         PaymentTermDAO ptDao = new PaymentTermDAO();
         List<PaymentTerm> paymentTermList = ptDao.findAll();
+        List<Contract> list = dao.findAll();
+        request.setAttribute("data", list);
         if (action == null) {
-            List<Contract> list = dao.findAll();
-            request.setAttribute("data", list);
             rd = request.getRequestDispatcher("/WEB-INF/admin/contract/viewContract.jsp");
             rd.forward(request, response);
         } else {

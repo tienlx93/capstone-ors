@@ -12,6 +12,13 @@ controllers.controller('ProfileController', ['$scope', '$location', '$routeParam
                 $scope.error = true;
             } else {
                 $scope.data = data;
+                if (data.company == null || data.company == "") {
+                    $scope.data.company = "Không có";
+                }
+                if (data.address == null || data.address == "") {
+                    $scope.data.address = "Không có";
+                }
+                $scope.data.birthday2 = Date.parse($scope.data.birthday);
             }
         })
     }]);

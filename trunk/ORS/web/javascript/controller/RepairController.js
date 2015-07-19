@@ -12,6 +12,7 @@ controllers.controller('RepairController', ['$scope', '$location', '$routeParams
                 $scope.error = true;
             } else {
                 $scope.data = data;
+                $scope.id = id;
             }
         })
     }]);

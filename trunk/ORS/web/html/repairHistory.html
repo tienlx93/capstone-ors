@@ -1,0 +1,20 @@
+<div class="container">
+    <h2>Lịch sử sửa chữa </h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Mô tả</th>
+            <th>Ngày tạo</th>
+            <th>Tình trạng</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="item in data">
+            <td>{{item.description}}</td>
+            <td>{{item.createTime | toLocaleDate}}</td>
+            <td>{{item.status}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

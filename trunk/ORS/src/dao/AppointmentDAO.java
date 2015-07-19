@@ -2,7 +2,9 @@ package dao;
 
 import entity.Appointment;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Transaction;
+import org.hibernate.type.StandardBasicTypes;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -100,21 +102,6 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         return null;
     }
 
-    public List<Appointment> getAppointmentListByStaffInRange(String username, Date startDate, Date endDate) {
-        try {
-            String sql = "from Appointment where assignedStaff = :username and time >= :startDate and time < :endDate";
-            Query query = session.createQuery(sql);
-            query.setString("username", username);
-            query.setDate("startDate", startDate);
-            query.setDate("endDate", endDate);
-
-            return query.list();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public List<Appointment> getAppointmentListByStatus(int status) {
         try {
             String sql = "from Appointment where statusId = :status";
@@ -126,5 +113,59 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public int countAppointment(int status, String username) {
+        try {
+            String sql = "SELECT COUNT(Id) AS Quantity FROM Appointment WHERE StatusId = :status";
+            if (username!=null) {
+                sql += " AND AssignedStaff = :username";
+            }
+            SQLQuery query = session.createSQLQuery(sql).addScalar("Quantity", StandardBasicTypes.INTEGER);
+            query.setInteger("status", status);
+            if (username!=null) {
+                query.setString("username", username);
+            }
+            return (int) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int countRental(int status, String username) {
+        try {
+            String sql = "SELECT COUNT(Id) AS Quantity FROM Rental WHERE StatusId = :status";
+            if (username!=null) {
+                sql += " AND AssignStaff = :username";
+            }
+            SQLQuery query = session.createSQLQuery(sql).addScalar("Quantity", StandardBasicTypes.INTEGER);
+            query.setInteger("status", status);
+            if (username!=null) {
+                query.setString("username", username);
+            }
+            return (int) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public int countRepair(int status, String username) {
+        try {
+            String sql = "SELECT COUNT(Id) AS Quantity FROM Repair WHERE RepairStatusId = :status";
+            if (username!=null) {
+                sql += " AND AssignedStaff = :username";
+            }
+            SQLQuery query = session.createSQLQuery(sql).addScalar("Quantity", StandardBasicTypes.INTEGER);
+            query.setInteger("status", status);
+            if (username!=null) {
+                query.setString("username", username);
+            }
+            return (int) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

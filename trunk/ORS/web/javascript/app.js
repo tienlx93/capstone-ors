@@ -36,6 +36,14 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/login.html',
                 controller: 'LoginController'
             }).
+            when('/contractReturn', {
+                templateUrl: 'html/contractReturn.html',
+                controller: 'ContractReturnController'
+            }).
+            when('/contractExtend', {
+                templateUrl: 'html/contractExtend.html',
+                controller: 'ContractExtendController'
+            }).
             when('/contractList', {
                 templateUrl: 'html/contractList.html',
                 controller: 'ContractController'
@@ -44,15 +52,13 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/contractDetail.html',
                 controller: 'ContractDetailController'
             }).
-            when('/repairList', {
-
+            when('/repairHistory/:id', {
+                templateUrl: 'html/repairHistory.html',
+                controller: 'RepairHistoryController'
             }).
             when('/repairList/:id', {
                 templateUrl: 'html/repairList.html',
                 controller: 'RepairController'
-            }).
-            when('/rentalList', {
-
             }).
             when('/rentalList/:id', {
                 templateUrl: 'html/rentalList.html',
@@ -125,5 +131,6 @@ app.filter('m2', ['$sce', function ($sce) {
         return $sce.trustAsHtml(input.replace("m2", "m<sup>2</sup>"));
     };
 }]);
+
 
 var BACK_END_URL = "";

@@ -64,7 +64,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <c:forEach items="${dataList}" var="item">
+                            <c:forEach items="${data}" var="item">
 
                                 <c:choose>
                                     <c:when test="${item.statusId == 3 && titleName == 'huy'}">
@@ -97,7 +97,6 @@
                                         </tr>
                                     </c:otherwise>
                                 </c:choose>
-
                             </c:forEach>
                             </tbody>
                         </table>

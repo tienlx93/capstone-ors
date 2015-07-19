@@ -2,9 +2,9 @@
 
     <h2>Thông tin cá nhân</h2>
 
-    <div class="panel-body">
+    <div class="panel-body" >
         <div class="form-group">
-            <h4>Chức danh</h4>
+            <h4>Xưng hô</h4>
             {{data.title}}
         </div>
         <div class="form-group">
@@ -24,8 +24,8 @@
             {{data.address}}
         </div>
         <div class="form-group">
-            <h4 for="birthday">Ngày sinh</h4>
-            {{data.birthday | date: "yyyy-MM-dd"}}
+            <h4>Ngày sinh</h4>
+            {{data.birthday2 | date:'MM/dd/yyyy'}}
         </div>
         <div class="button-post">
             <a class="btn btn-default" href="#/profileDetail">Sửa thông tin</a>

@@ -1,8 +1,8 @@
 /**
  * Created by ASUS on 6/15/2015.
  */
-controllers.controller('MenuController', ['$scope', '$rootScope', '$location', 'Api',
-    function ($scope, $rootScope, $location, Api) {
+controllers.controller('MenuController', ['$scope', '$rootScope', '$location', 'Api', '$modal',
+    function ($scope, $rootScope, $location, Api, $modal) {
         $scope.loggedIn = false;
         $rootScope.isLogin = false;
 
@@ -31,6 +31,21 @@ controllers.controller('MenuController', ['$scope', '$rootScope', '$location', '
                 $rootScope.isLogin = true;
                 $scope.fullName = Api.account.fullName;
             }
-        }
+        };
+
+        $scope.login = function () {
+            $modal.open({
+                animation: true,
+                templateUrl: 'html/login.html',
+                controller: 'LoginController'
+            });
+        };
+        $scope.register = function () {
+            $modal.open({
+                animation: true,
+                templateUrl: 'html/register.html',
+                controller: 'RegisterController'
+            });
+        };
 
     }]);

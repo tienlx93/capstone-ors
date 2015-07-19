@@ -3,14 +3,12 @@
  */
 
 
-controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr',
-    function ($scope, $location, Api, toastr) {
+controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr', '$modalInstance',
+    function ($scope, $location, Api, toastr, $modalInstance) {
         $scope.login = function (form) {
-            console.log('1');
             if (form.$valid) {
                 var username = $scope.username;
                 var password = $scope.password;
-                console.log('2');
 
                 Api.login(username, password, function (data) {
                     if (data == "Error") {
@@ -22,12 +20,16 @@ controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr'
                         Api.account.username = username;
                         Api.account.fullName = data;
                         Api.updateAccount();
-                        $location.path("#/home").replace();
+                        toastr.success("Đăng nhập thành công");
+                        $modalInstance.close();
+                        //$location.path("#/home").replace();
                     }
 
 
                 });
             }
-
-        }
+        };
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
     }]);

@@ -1,10 +1,12 @@
 package dao;
 
-import entity.Contract;
 import entity.Office;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StandardBasicTypes;
 
 import java.util.List;
@@ -63,22 +65,23 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         }
         return false;
     }
-    public boolean update(String name, Office newoffice) {
+    public boolean update(int id, Office newOffice) {
         Transaction trans = session.beginTransaction();
         try {
-            Office office = (Office) session.get(Office.class, name);
-            office.setAddress(newoffice.getAddress());
-            office.setDescription(newoffice.getDescription());
-            office.setPrice(newoffice.getPrice());
-            office.setPriceTerm(newoffice.getPriceTerm());
-            office.setFloorNumber(newoffice.getFloorNumber());
-            office.setArea(newoffice.getArea());
-            office.setImageUrls(newoffice.getImageUrls());
-            office.setCategoryId(newoffice.getCategoryId());
-            office.setCity(newoffice.getCity());
-            office.setDistrict(newoffice.getDistrict());
-            office.setLongitude(newoffice.getLongitude());
-            office.setLatitude(newoffice.getLatitude());
+            Office office = (Office) session.get(Office.class, id);
+            office.setName(newOffice.getName());
+            office.setAddress(newOffice.getAddress());
+            office.setDescription(newOffice.getDescription());
+            office.setPrice(newOffice.getPrice());
+            office.setPriceTerm(newOffice.getPriceTerm());
+            office.setFloorNumber(newOffice.getFloorNumber());
+            office.setArea(newOffice.getArea());
+            office.setImageUrls(newOffice.getImageUrls());
+            office.setCategoryId(newOffice.getCategoryId());
+            office.setCity(newOffice.getCity());
+            office.setDistrict(newOffice.getDistrict());
+            office.setLongitude(newOffice.getLongitude());
+            office.setLatitude(newOffice.getLatitude());
 
 
             session.update(office);
@@ -117,6 +120,38 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         }
 
         return null;
+    }
+
+    public List<Office> getOfficeByPage(int firstResult, int pageSize) {
+
+        try {
+
+            Criteria criteria = session.createCriteria(Office.class);
+            criteria.add(Restrictions.ne("statusId", 3));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getPageCount(int pageSize) {
+        try {
+
+            Criteria criteriaCount = session.createCriteria(Office.class);
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     public int countDistrict() {

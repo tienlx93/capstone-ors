@@ -13,6 +13,7 @@ body {
 
 .right {
     float: right;
+    margin-top: 5px;
 }
 
 /* Header CSS */
@@ -87,13 +88,13 @@ body {
     vertical-align: middle;
 }
 
-.navigation-wrapper .login-wrapper li {
+.navigation-wrapper .login-wrapper li a {
     border: 1px solid white;
     padding: 5px 10px;
     cursor: pointer;
 }
 
-.navigation-wrapper .login-wrapper li:hover {
+.navigation-wrapper .login-wrapper li a:hover {
     background-color: white;
 }
 

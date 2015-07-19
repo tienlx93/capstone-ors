@@ -28,6 +28,40 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.contractReturn = function (id, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'contractReturn',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.contractExtend = function (id, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'contractExtend',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.register = function (user, callback) {
             $http({
                 method: 'POST',
@@ -42,7 +76,8 @@ app.factory("Api", ['$http',
                     'company': user.company,
                     'phone': user.phone,
                     'address': user.address,
-                    'birthday': user.birthday
+                    'birthday': user.birthday,
+                    'captcha': user.captcha
                 }
             })
                 .success(function (data) {
@@ -108,7 +143,8 @@ app.factory("Api", ['$http',
                     'category': reOffice.category,
                     'price': reOffice.price,
                     'area': reOffice.area,
-                    'district': reOffice.district
+                    'district': reOffice.district,
+                    'amenityList': reOffice.amenityList
                 }
             })
                 .success(function (data) {
@@ -201,12 +237,45 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.getAmenityList = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getAmenityList'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.getRepairList = function(id, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'getRepairList',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getRepairHistoryList = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRepairHistoryList',
                     'id': id
                 }
             })
@@ -245,6 +314,23 @@ app.factory("Api", ['$http',
             })
                 .success(function (data) {
                     callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getRentalListDone = function(id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRentalListDone',
+                    'id': id
+                }
+            })
+                .success(function (rentalList) {
+                    callback(rentalList);
                 })
                 .error(function () {
                     callback("Error");

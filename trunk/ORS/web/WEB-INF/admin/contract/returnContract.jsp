@@ -63,7 +63,7 @@
                                 <label for="nameOfiice" class="col-sm-2 control-label">Văn phòng</label>
 
                                 <div class="col-sm-10">
-                                    ${info.officeByOfficeId.id}
+                                    ${info.officeByOfficeId.name}
                                     <input type="hidden" id="nameOfiice"
                                            value="${info.officeByOfficeId.id}">
                                 </div>

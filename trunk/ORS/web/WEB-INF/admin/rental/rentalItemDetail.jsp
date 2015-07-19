@@ -52,6 +52,7 @@
 
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2 control-label">Tên</label>
+
                                 <div class="col-sm-10">
                                     <input type="text" name="name" class="form-control" id="name"
                                            value="${info.name}" required>
@@ -70,9 +71,12 @@
                             <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Hình ảnh</label><br>
                                 <input type="hidden" name="imageUrl" id="imageUrl" value="${info.imageUrl}">
+
                                 <div class="images clearfix" id="images">
                                     <div class="upload-img">
-                                        <div class="img"><img src="${info.imageUrl!=null?info.imageUrl:'/upload/placeholder.jpg'}"></div>
+                                        <div class="img"><img
+                                                src="${info.imageUrl!=null?info.imageUrl:'/upload/placeholder.jpg'}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="clear-float"></div>
@@ -97,10 +101,10 @@
                                 </div>
                             </div>
 
-
                             <div class="button-post">
-                                <button type="submit" name="action">Lưu</button>
-
+                                <button type="submit" name="action" class="btn btn-default">Lưu</button>
+                                <a href="${pageContext.request.contextPath}/admin/rentalItem"
+                                   class="btn btn-default">Quay về</a>
                             </div>
                         </form>
                     </div>

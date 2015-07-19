@@ -1,6 +1,7 @@
 package dao;
 
 import entity.EmailQueue;
+import org.hibernate.Query;
 
 /**
  * Created by xps on 7/15/2015.

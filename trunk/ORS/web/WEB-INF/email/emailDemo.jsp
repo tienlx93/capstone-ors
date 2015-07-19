@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
@@ -19,10 +20,12 @@
 <body>
     <h1>Chào mừng</h1>
     <p>Test image</p>
-    <div><img src="http://tienlx.me/img/ban-1.jpg"></div>
+    <%--<div><img src="http://tienlx.me/img/ban-1.jpg"></div>--%>
     <p>Test link</p>
-    <p><a href="http://google.com">Google</a> </p>
+    <c:forEach items="${offices}" var="item">
+        <p><a href="http://tienlx.me/#/detail/${item}">Office</a> </p>
+    </c:forEach>
     <p>Test dynamic content</p>
-    <p class="myStyle">${data}</p>
+    <%--<p class="myStyle">${data}</p>--%>
 </body>
 </html>

@@ -20,7 +20,6 @@ public class ScheduleCheckContract implements Job {
         ContractDAO dao = new ContractDAO();
         List<Contract> contractList = dao.getContractListAvailable();
 
-
         Date date = new Date();
 
         for (Contract contract : contractList) {

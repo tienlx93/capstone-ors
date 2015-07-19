@@ -12,6 +12,7 @@ public class EmailQueue {
     private String officeIds;
     private Timestamp createTime;
     private Account accountByUsername;
+    private String username;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -74,5 +75,15 @@ public class EmailQueue {
 
     public void setAccountByUsername(Account accountByUsername) {
         this.accountByUsername = accountByUsername;
+    }
+
+    @Basic
+    @Column(name = "Username")
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 }

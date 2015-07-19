@@ -30,6 +30,18 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return null;
     }
 
+    public  List<Contract> getContractListAvailable() {
+        try {
+            String sql = "from Contract where statusId = 1";
+            Query query = session.createQuery(sql);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public boolean changeStatus(int id, int status) {
         Transaction trans = session.beginTransaction();
         try {

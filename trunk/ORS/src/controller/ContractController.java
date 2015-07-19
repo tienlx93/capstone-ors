@@ -25,103 +25,112 @@ public class ContractController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         String button = request.getParameter("button");
-        if (action.equals("save")) {
-            if(Integer.parseInt(request.getParameter("categoryId")) == 2) {
-                OfficeDAO officeDao = new OfficeDAO();
-                Office officeParent = officeDao.get(Integer.parseInt(request.getParameter("officeID")));
+        switch (action) {
+            case "save": {
+                if (Integer.parseInt(request.getParameter("categoryId")) == 2) {
+                    OfficeDAO officeDao = new OfficeDAO();
+                    Office officeParent = officeDao.get(Integer.parseInt(request.getParameter("officeID")));
 
-                String area = request.getParameter("officeArea");
-                String address = request.getParameter("officeAddress");
-                Office officeChildren = new Office();
+                    String area = request.getParameter("officeArea");
+                    String address = request.getParameter("officeAddress");
+                    Office officeChildren = new Office();
 
-                officeChildren.setStatusId(2);
-                officeChildren.setName(officeParent.getName());
-                officeChildren.setAddress(address);
-                officeChildren.setCategoryId(officeParent.getCategoryId());
-                officeChildren.setDescription("");
-                officeChildren.setCreateDate(new Timestamp((new java.util.Date()).getTime()));
-                if (!officeChildren.equals("")) {
-                    officeChildren.setPrice(officeParent.getPrice());
+                    officeChildren.setStatusId(2);
+                    officeChildren.setName(officeParent.getName());
+                    officeChildren.setAddress(address);
+                    officeChildren.setCategoryId(officeParent.getCategoryId());
+                    officeChildren.setDescription("");
+                    officeChildren.setCreateDate(new Timestamp((new java.util.Date()).getTime()));
+                    if (!officeChildren.equals("")) {
+                        officeChildren.setPrice(officeParent.getPrice());
+                    }
+                    officeChildren.setPriceTerm(officeParent.getPriceTerm());
+                    if (!officeChildren.equals("")) {
+                        officeChildren.setFloorNumber(officeParent.getFloorNumber());
+                    }
+                    officeChildren.setArea(Double.parseDouble(area));
+                    officeChildren.setImageUrls("");
+                    officeChildren.setLatitude(officeParent.getLatitude());
+                    officeChildren.setLongitude(officeParent.getLongitude());
+                    officeChildren.setDistrict(officeParent.getDistrict());
+                    officeChildren.setCity(officeParent.getCity());
+                    officeChildren.setParentOfficeId(officeParent.getId());
+
+                    officeDao.save(officeChildren);
+
+                    officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
                 }
-                officeChildren.setPriceTerm(officeParent.getPriceTerm());
-                if (!officeChildren.equals("")) {
-                    officeChildren.setFloorNumber(officeParent.getFloorNumber());
+
+                ContractDAO dao = new ContractDAO();
+                Contract contract = new Contract();
+
+                AppointmentDAO appointmentDao = new AppointmentDAO();
+                String appointmentID = request.getParameter("appointmentID");
+
+                appointmentDao.updateStatus(Integer.parseInt(appointmentID), 4);
+
+                String customerName = request.getParameter("customerName");
+                String officeID = request.getParameter("officeID");
+                String startDateStr = request.getParameter("startDate");
+                String endDateStr = request.getParameter("endDate");
+                String paymentTerm = request.getParameter("paymentTerm");
+                String paymentFee = request.getParameter("paymentFee");
+
+
+                contract.setStatusId(1);
+                contract.setCustomerUsername(customerName);
+                contract.setOfficeId(Integer.parseInt(officeID));
+                contract.setStartDate(Date.valueOf(startDateStr));
+                contract.setEndDate(Date.valueOf(endDateStr));
+                contract.setPaymentFee(Integer.parseInt(paymentFee));
+                contract.setPaymentTerm(Integer.parseInt(paymentTerm));
+
+                dao.save(contract);
+                response.sendRedirect("/admin/contract");
+                break;
+            }
+            case "cancel": {
+                AppointmentDAO appointmentDao = new AppointmentDAO();
+                String appointmentID = request.getParameter("appointmentID");
+
+                appointmentDao.updateStatus(Integer.parseInt(appointmentID), 4);
+                response.sendRedirect("/admin/contract");
+                break;
+            }
+            case "editExtend": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                ContractDAO dao = new ContractDAO();
+                String customerUsername = request.getParameter("customerUsername");
+                int officeId = Integer.parseInt(request.getParameter("officeId"));
+                Date startDate = Date.valueOf(request.getParameter("startDate"));
+                Date endDate = Date.valueOf(request.getParameter("endDate"));
+                int paymentFee = Integer.parseInt(request.getParameter("paymentFee"));
+                int paymentTerm = Integer.parseInt(request.getParameter("paymentTerm"));
+                switch (button) {
+                    case "confirm":
+                        dao.update(id, customerUsername, officeId, startDate, endDate, paymentFee, paymentTerm, 1);
+                        break;
+                    case "cancel":
+                        dao.changeStatus(id, 1);
+                        break;
                 }
-                officeChildren.setArea(Double.parseDouble(area));
-                officeChildren.setImageUrls("");
-                officeChildren.setLatitude(officeParent.getLatitude());
-                officeChildren.setLongitude(officeParent.getLongitude());
-                officeChildren.setDistrict(officeParent.getDistrict());
-                officeChildren.setCity(officeParent.getCity());
-                officeChildren.setParentOfficeId(officeParent.getId());
-
-                officeDao.save(officeChildren);
-
-                officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
+                response.sendRedirect("/admin/contract");
+                break;
             }
-
-            ContractDAO dao = new ContractDAO();
-            Contract contract = new Contract();
-
-            AppointmentDAO appointmentDao = new AppointmentDAO();
-            String appointmentID = request.getParameter("appointmentID");
-
-            appointmentDao.updateStatus(Integer.parseInt(appointmentID),4);
-
-            String customerName = request.getParameter("customerName");
-            String officeID = request.getParameter("officeID");
-            String startDateStr = request.getParameter("startDate");
-            String endDateStr = request.getParameter("endDate");
-            String paymentTerm = request.getParameter("paymentTerm");
-            String paymentFee = request.getParameter("paymentFee");
-
-
-            contract.setStatusId(1);
-            contract.setCustomerUsername(customerName);
-            contract.setOfficeId(Integer.parseInt(officeID));
-            contract.setStartDate(java.sql.Date.valueOf(startDateStr));
-            contract.setEndDate(java.sql.Date.valueOf(endDateStr));
-            contract.setPaymentFee(Integer.parseInt(paymentFee));
-            contract.setPaymentTerm(Integer.parseInt(paymentTerm));
-
-            dao.save(contract);
-            response.sendRedirect("/admin/contract");
-        } else if (action.equals("cancel")) {
-            AppointmentDAO appointmentDao = new AppointmentDAO();
-            String appointmentID = request.getParameter("appointmentID");
-
-            appointmentDao.updateStatus(Integer.parseInt(appointmentID),4);
-            response.sendRedirect("/admin/contract");
-        } else if (action.equals("editExtend")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            ContractDAO dao = new ContractDAO();
-            String customerUsername = request.getParameter("customerUsername");
-            int officeId = Integer.parseInt(request.getParameter("officeId"));
-            Date startDate = Date.valueOf(request.getParameter("startDate"));
-            Date endDate = Date.valueOf(request.getParameter("endDate"));
-            int paymentFee = Integer.parseInt(request.getParameter("paymentFee"));
-            int paymentTerm = Integer.parseInt(request.getParameter("paymentTerm"));
-            switch (button) {
-                case "confirm":
-                    dao.update(id, customerUsername, officeId, startDate, endDate, paymentFee, paymentTerm, 1);
-                    break;
-                case "cancel":
-                    dao.changeStatus(id, 1);
-                    break;
+            case "editReturn": {
+                int id = Integer.parseInt(request.getParameter("id"));
+                ContractDAO dao = new ContractDAO();
+                switch (button) {
+                    case "confirm":
+                        dao.changeStatus(id, 3);
+                        break;
+                    case "cancel":
+                        dao.changeStatus(id, 1);
+                        break;
+                }
+                response.sendRedirect("/admin/contract");
+                break;
             }
-            response.sendRedirect("/admin/contract");
-        } else if (action.equals("editReturn")) {
-            int id = Integer.parseInt(request.getParameter("id"));
-            ContractDAO dao = new ContractDAO();
-            switch (button) {
-                case "confirm":
-                    dao.changeStatus(id, 3);
-                    break;
-                case "cancel":
-                    dao.changeStatus(id, 1);
-                    break;
-            }
-            response.sendRedirect("/admin/contract");
         }
     }
 
@@ -179,19 +188,5 @@ public class ContractController extends HttpServlet {
             }
         }
 
-    }
-
-    private List<String> saveAmenities(String amenities) {
-        StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
-        List<String> amenityList = new ArrayList<>();
-        while (tokenizer.hasMoreTokens()) {
-            amenityList.add(tokenizer.nextToken());
-        }
-        AmenityDAO amenityDAO = new AmenityDAO();
-        OfficeAmenityDAO officeAmenityDAO = new OfficeAmenityDAO();
-        if (amenityDAO.addAmenities(amenityList)) {
-            officeAmenityDAO.findAll();
-        }
-        return amenityList;
     }
 }

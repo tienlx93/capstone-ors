@@ -3666,3 +3666,6 @@ Widgets
     font-size: 11px;
     opacity: 0.7;
 }
+.panel-title .tooltip {
+    text-transform: none;
+}

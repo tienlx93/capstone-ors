@@ -96,7 +96,7 @@
                                                 <c:forEach var="item" items="${list}">
                                                     <c:if test="${item.statusId == 1}">
                                                         <tr>
-                                                            <form>
+                                                            <form action="rental" method="post">
                                                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                                 <td>${item.contractByContractId.customerUsername}</td>
                                                                 <td>${item.createTime}</td>
@@ -131,6 +131,7 @@
                                                                             type="submit" name="button"
                                                                             value="assign">Giao việc
                                                                     </button>
+                                                                    <input type="hidden" name="action" value="editing">
                                                                     <a class="btn"
                                                                        href="rental?action=edit&id=${item.id}">
                                                                         Chi tiết

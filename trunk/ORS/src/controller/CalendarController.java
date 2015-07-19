@@ -45,32 +45,30 @@ public class CalendarController extends HttpServlet {
         List<CalendarItemJSON> itemList;
         CalendarJSON calendar;
         CalendarItemJSON item;
-        if (staffName!= null && !staffName.equals("")) {
+        if (staffName != null && !staffName.equals("")) {
             Account staff = accountDAO.get(staffName);
             calendar = new CalendarJSON(staff.getUsername());
             itemList = new ArrayList<>();
 
             //appointment by assigned staff
             for (Appointment appointment : staff.getAppointmentsByUsername_0()) {
-                if (appointment.getStatusId() == 2) {
-                    item = new CalendarItemJSON();
-                    item.setId(appointment.getId());
-                    item.setStaff(staff.getUsername());
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                    item.setStart(format.format(appointment.getTime()));
-                    item.setTitle("Xem văn phòng");
-                    item.setType(1);
-                    item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
+                item = new CalendarItemJSON();
+                item.setId(appointment.getId());
+                item.setStaff(staff.getUsername());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                item.setStart(format.format(appointment.getTime()));
+                item.setTitle("Xem văn phòng");
+                item.setType(1);
+                item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
 
-                    itemList.add(item);
-                }
+                itemList.add(item);
             }
             for (Rental rental : staff.getRentalsByUsername()) {
-                if (rental.getStatusId() == 2 || rental.getStatusId() == 5) {
-                    item = new CalendarItemJSON();
-                    item.setId(rental.getId());
-                    item.setStaff(staff.getUsername());
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                item = new CalendarItemJSON();
+                item.setId(rental.getId());
+                item.setStaff(staff.getUsername());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                if (rental.getAssignedTime()!= null) {
                     item.setStart(format.format(rental.getAssignedTime()));
                     item.setTitle("Thuê thiết bị");
                     item.setType(3);
@@ -80,12 +78,12 @@ public class CalendarController extends HttpServlet {
             }
 
             for (Repair repair : staff.getRepairsByUsername()) {
-                if (repair.getRepairStatusId() == 2 || repair.getRepairStatusId() == 5) {
-                    item = new CalendarItemJSON();
-                    item.setId(repair.getId());
-                    item.setStaff(staff.getUsername());
-                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                    item.setStart(format.format(repair.getAssignedTime() == null ? new Date() : repair.getAssignedTime()));
+                item = new CalendarItemJSON();
+                item.setId(repair.getId());
+                item.setStaff(staff.getUsername());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                if (repair.getAssignedTime() != null) {
+                    item.setStart(format.format(repair.getAssignedTime()));
                     item.setTitle("Sửa chữa");
                     item.setType(2);
                     item.setUrl("/admin/repair?action=edit&id=" + repair.getId());
@@ -102,53 +100,50 @@ public class CalendarController extends HttpServlet {
                 itemList = new ArrayList<>();
 
                 List<String> typeList = new ArrayList<>();
-                if (type!=null) {
-                    StringTokenizer tokenizer = new StringTokenizer(type,",");
+                if (type != null) {
+                    StringTokenizer tokenizer = new StringTokenizer(type, ",");
                     while (tokenizer.hasMoreTokens()) {
                         typeList.add(tokenizer.nextToken());
                     }
                 }
-                if (typeList.size()==0 || typeList.contains("appointment")) {
+                if (typeList.size() == 0 || typeList.contains("appointment")) {
                     //appointment by assigned staff
                     for (Appointment appointment : staff.getAppointmentsByUsername_0()) {
-                        if (appointment.getStatusId() == 2) {
-                            item = new CalendarItemJSON();
-                            item.setId(appointment.getId());
-                            item.setStaff(staff.getUsername());
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                            item.setStart(format.format(appointment.getTime()));
-                            item.setTitle("Xem văn phòng");
-                            item.setType(1);
-                            item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
+                        item = new CalendarItemJSON();
+                        item.setId(appointment.getId());
+                        item.setStaff(staff.getUsername());
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        item.setStart(format.format(appointment.getTime()));
+                        item.setTitle("Xem văn phòng");
+                        item.setType(1);
+                        item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
 
-                            itemList.add(item);
-                        }
+                        itemList.add(item);
                     }
                 }
-                if (typeList.size()==0 || typeList.contains("rental")) {
+                if (typeList.size() == 0 || typeList.contains("rental")) {
                     for (Rental rental : staff.getRentalsByUsername()) {
-                        if (rental.getStatusId() == 2 || rental.getStatusId() == 5) {
-                            item = new CalendarItemJSON();
-                            item.setId(rental.getId());
-                            item.setStaff(staff.getUsername());
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        item = new CalendarItemJSON();
+                        item.setId(rental.getId());
+                        item.setStaff(staff.getUsername());
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        if (rental.getAssignedTime()!= null) {
                             item.setStart(format.format(rental.getAssignedTime()));
                             item.setTitle("Thuê thiết bị");
                             item.setType(3);
                             item.setUrl("/admin/rental?action=edit&id=" + rental.getId());
-
                             itemList.add(item);
                         }
                     }
                 }
-                if (typeList.size()==0 || typeList.contains("repair")) {
+                if (typeList.size() == 0 || typeList.contains("repair")) {
                     for (Repair repair : staff.getRepairsByUsername()) {
-                        if (repair.getRepairStatusId() == 2 || repair.getRepairStatusId() == 5) {
-                            item = new CalendarItemJSON();
-                            item.setId(repair.getId());
-                            item.setStaff(staff.getUsername());
-                            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-                            item.setStart(format.format(repair.getAssignedTime() == null ? new Date() : repair.getAssignedTime()));
+                        item = new CalendarItemJSON();
+                        item.setId(repair.getId());
+                        item.setStaff(staff.getUsername());
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        if (repair.getAssignedTime() != null) {
+                            item.setStart(format.format(repair.getAssignedTime()));
                             item.setTitle("Sửa chữa");
                             item.setType(2);
                             item.setUrl("/admin/repair?action=edit&id=" + repair.getId());
@@ -164,7 +159,7 @@ public class CalendarController extends HttpServlet {
         }
 
 
-            out.print(gson.toJson(calendarList));
+        out.print(gson.toJson(calendarList));
         out.flush();
     }
 
@@ -174,8 +169,8 @@ public class CalendarController extends HttpServlet {
 
         String staff = request.getParameter("staff");
         String type = request.getParameter("type");
-        request.setAttribute("staff",staff);
-        request.setAttribute("type",type);
+        request.setAttribute("staff", staff);
+        request.setAttribute("type", type);
 
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/calendar/view.jsp");
         rd.forward(request, response);

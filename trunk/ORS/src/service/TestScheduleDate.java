@@ -22,7 +22,7 @@ public class TestScheduleDate {
         //Creating Job and link to our Job class
         JobDetailImpl jobDetail = new JobDetailImpl();
         jobDetail.setName("First Job");
-        jobDetail.setJobClass(scheduleDate.class);
+        jobDetail.setJobClass(ScheduleCheckRequestOffice.class);
 
         //Creating schedule time with trigger
         SimpleTriggerImpl simpleTrigger = new SimpleTriggerImpl();
@@ -34,7 +34,9 @@ public class TestScheduleDate {
         //Start scheduler
         scheduler.start();
         scheduler.scheduleJob(jobDetail, simpleTrigger);
+
     }
+
 }
 
 

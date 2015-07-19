@@ -137,4 +137,24 @@ public class AccountDAO extends BaseDAO<Account, String> {
 
         return null;
     }
+
+    public Account findByUsername(String username) {
+        try {
+            String sql = "from Account where username = ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, username);
+            entity.Account account = (Account) query.uniqueResult();
+            if (account != null) {
+                return account;
+            }
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+            return null;
+        }
+
+        return null;
+    }
 }

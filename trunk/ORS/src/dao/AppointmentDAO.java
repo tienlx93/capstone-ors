@@ -1,9 +1,13 @@
 package dao;
 
 import entity.Appointment;
+import entity.Office;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StandardBasicTypes;
 
 import java.sql.Timestamp;
@@ -35,6 +39,37 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
                 trans.rollback();
             }
         }
+    }
+    public List<Appointment> getAppointmentByPage(int firstResult, int pageSize) {
+
+        try {
+
+            Criteria criteria = session.createCriteria(Appointment.class);
+            //criteria.add(Restrictions.ne("statusId", 3));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getPageCount(int pageSize) {
+        try {
+
+            Criteria criteriaCount = session.createCriteria(Appointment.class);
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 
     public boolean updateStatus(int id, int statusId) {

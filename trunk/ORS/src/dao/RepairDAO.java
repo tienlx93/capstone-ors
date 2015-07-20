@@ -1,10 +1,14 @@
 package dao;
 
-import entity.Appointment;
+
+
 import entity.Repair;
+import org.hibernate.Criteria;
 import org.hibernate.Transaction;
 
 import org.hibernate.Query;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -98,7 +102,37 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         }
         return null;
     }
+    public List<Repair> getRepairByPage(int firstResult, int pageSize) {
 
+        try {
+
+            Criteria criteria = session.createCriteria(Repair.class);
+            //criteria.add(Restrictions.ne("statusId", 3));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getPageCount(int pageSize) {
+        try {
+
+            Criteria criteriaCount = session.createCriteria(Repair.class);
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
     public List<Repair> getRepairListByStatus(int status) {
         try {
             String sql = "from Repair where repairStatusId = :status";

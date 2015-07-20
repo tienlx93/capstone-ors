@@ -2,6 +2,7 @@ package controller;
 
 import dao.*;
 import entity.*;
+import service.ConstantService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -142,51 +144,69 @@ public class ContractController extends HttpServlet {
         List<PaymentTerm> paymentTermList = ptDao.findAll();
         List<Contract> list = dao.findAll();
         request.setAttribute("data", list);
-        if (action == null) {
-            rd = request.getRequestDispatcher("/WEB-INF/admin/contract/viewContract.jsp");
-            rd.forward(request, response);
-        } else {
-            switch (action) {
-                case "new":
-                    AppointmentDAO appointmentDao = new AppointmentDAO();
-                    Appointment appointment = appointmentDao.get(Integer.parseInt(request.getParameter("id")));
-                    request.setAttribute("appointmentList", appointment);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+        if (account != null && (account.getRoleId() == 2)) {
+            if (action == null) {
+                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                request.setAttribute("pageCount", pageCount);
+                List<Contract> list1 = dao.getContractByPage(0, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list1);
+                rd = request.getRequestDispatcher("/WEB-INF/admin/contract/viewContract.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("page")) {
+                String startPage = request.getParameter("startPage");
+                int page = Integer.parseInt(startPage);
+                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
+                List<Contract> list1 = dao.getContractByPage(startItem, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list1);
+                rd = request.getRequestDispatcher("/WEB-INF/partial/contractListItem.jsp");
+                rd.forward(request, response);
+            } else {
+                switch (action) {
+                    case "new":
+                        AppointmentDAO appointmentDao = new AppointmentDAO();
+                        Appointment appointment = appointmentDao.get(Integer.parseInt(request.getParameter("id")));
+                        request.setAttribute("appointmentList", appointment);
 
-                    OfficeDAO officeDao = new OfficeDAO();
-                    request.setAttribute("office", officeDao.get(appointment.getOfficeId()));
+                        OfficeDAO officeDao = new OfficeDAO();
+                        request.setAttribute("office", officeDao.get(appointment.getOfficeId()));
 
 
-                    request.setAttribute("paymentTermList", paymentTermList);
+                        request.setAttribute("paymentTermList", paymentTermList);
 
-                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/newContract.jsp");
-                    rd.forward(request, response);
-                    break;
-                case "return":
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/newContract.jsp");
+                        rd.forward(request, response);
+                        break;
+                    case "return":
 
-                    request.setAttribute("titleName", "huy");
-                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/request.jsp");
-                    rd.forward(request, response);
-                    break;
-                case "extend":
-                    request.setAttribute("titleName", "giahan");
-                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/request.jsp");
-                    rd.forward(request, response);
-                    break;
-                case "viewReturn":
+                        request.setAttribute("titleName", "huy");
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/request.jsp");
+                        rd.forward(request, response);
+                        break;
+                    case "extend":
+                        request.setAttribute("titleName", "giahan");
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/request.jsp");
+                        rd.forward(request, response);
+                        break;
+                    case "viewReturn":
 
-                    request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/returnContract.jsp");
-                    rd.forward(request, response);
-                    break;
-                case "viewExtend":
+                        request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/returnContract.jsp");
+                        rd.forward(request, response);
+                        break;
+                    case "viewExtend":
 
-                    request.setAttribute("paymentTermList", paymentTermList);
-                    request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-                    rd = request.getRequestDispatcher("/WEB-INF/admin/contract/extendContract.jsp");
-                    rd.forward(request, response);
-                    break;
+                        request.setAttribute("paymentTermList", paymentTermList);
+                        request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/extendContract.jsp");
+                        rd.forward(request, response);
+                        break;
+                }
             }
-        }
 
+        }else {
+            response.sendRedirect("/admin");
+        }
     }
 }

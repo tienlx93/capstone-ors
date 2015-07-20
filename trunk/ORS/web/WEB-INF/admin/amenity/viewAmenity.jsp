@@ -72,6 +72,26 @@
               </tbody>
             </table>
           </div>
+          <div>
+            <nav>
+              <ul class="pagination">
+                <li id="prev" class="disabled">
+                  <a href="#" onclick="prev()" aria-label="Previous">
+                    <span aria-hidden="true">«</span>
+                  </a>
+                </li>
+                <c:forEach var="i" begin="1" end="${pageCount}">
+                  <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+
+                </c:forEach>
+                <li id="next">
+                  <a href="#" onclick="next()" aria-label="Next">
+                    <span aria-hidden="true">»</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
         </div>
       </div>
     </div>
@@ -79,4 +99,47 @@
   <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
 </body>
+<script>
+  var pageNumber = 1;
+  var pageCount = ${pageCount};
+  var prev = function () {
+    if (pageNumber > 1) {
+      pageNumber --;
+      getPage(pageNumber);
+    }
+  };
+  var next = function () {
+    if (pageNumber < pageCount) {
+      pageNumber ++;
+      getPage(pageNumber);
+    }
+  };
+  var goto = function(i) {
+    pageNumber = i;
+    getPage(pageNumber);
+  };
+  var getPage = function(page) {
+    var selector = $(".items");
+    selector.removeClass("active");
+    $(selector[page-1]).addClass("active");
+    $("#next").removeClass("disabled");
+    $("#prev").removeClass("disabled");
+    if (page == pageCount) {
+      $("#next").addClass("disabled");
+    }
+    if (page == 1) {
+      $("#prev").addClass("disabled");
+    }
+    $.ajax({
+      method: "GET",
+      url: "amenity",
+      data: {
+        action: "page",
+        startPage: page
+      }
+    }).done(function (data) {
+      $("#table-body").html(data);
+    });
+  };
+</script>
 </html>

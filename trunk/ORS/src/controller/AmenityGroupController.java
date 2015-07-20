@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,20 +56,25 @@ public class AmenityGroupController extends HttpServlet {
         AmenityGroupDAO dao = new AmenityGroupDAO();
         List<AmenityGroup> list = dao.findAll();
 
-
-        if (action == null) {
-            request.setAttribute("list", list);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/groupAmenity/viewGroupAmenity.jsp");
-            rd.forward(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+        if (account != null && (account.getRoleId() == 2)) {
+            if (action == null) {
+                request.setAttribute("list", list);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/groupAmenity/viewGroupAmenity.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("edit")) {
+                int id = Integer.parseInt(request.getParameter("id"));
+                AmenityGroup amenitygroup = dao.get(id);
+                request.setAttribute("amenitygroup", amenitygroup);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/groupAmenity/editGroupAmenity.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("new")) {
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/groupAmenity/addGroupAmenity.jsp");
+                rd.forward(request, response);
+            }
+        }else {
+            response.sendRedirect("/admin");
         }
-        else if (action.equals("edit")){
-            String name = request.getParameter("name");
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/groupAmenity/editGroupAmenity.jsp");
-            rd.forward(request, response);
-        }
-        else if (action.equals("new")) {
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/groupAmenity/addGroupAmenity.jsp");
-            rd.forward(request, response);
-        }
-        }
+    }
     }

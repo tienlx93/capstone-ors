@@ -5,6 +5,7 @@ import dao.RentalDetailDAO;
 import entity.Account;
 import entity.Rental;
 import entity.RentalDetail;
+import service.ConstantService;
 import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
@@ -74,7 +75,11 @@ public class RentalController extends HttpServlet {
                 } else {
                     list = rentalDAO.getRentalListByStaff(account.getUsername());
                 }
-                request.setAttribute("list", list);
+                request.setAttribute("data", list);
+
+                /*int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                request.setAttribute("pageCount", pageCount);*/
+
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/rental/rental.jsp");
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
@@ -86,7 +91,14 @@ public class RentalController extends HttpServlet {
 
             } else if (action.equals("new")) {
                 request.getRequestDispatcher("/WEB-INF/admin/rental/newRentalItem.jsp").forward(request, response);
-            }
+            } /*else if (action.equals("page")) {
+                String startPage = request.getParameter("startPage");
+                int page = Integer.parseInt(startPage);
+                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
+                List<Rental> list = dao.getRentalByPage(startItem, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list);
+                request.getRequestDispatcher("/WEB-INF/partial/officeListItem.jsp");
+            }*/
         } else {
             response.sendRedirect("/admin");
         }

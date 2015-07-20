@@ -93,7 +93,7 @@
                                                 </tr>
                                                 </thead>
                                                 <tbody>
-                                                <c:forEach var="item" items="${list}">
+                                                <c:forEach var="item" items="${data}">
                                                     <c:if test="${item.statusId == 1}">
                                                         <tr>
                                                             <form action="rental" method="post">
@@ -162,7 +162,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <c:forEach var="item" items="${list}">
+                                            <c:forEach var="item" items="${data}">
                                                 <c:if test="${item.statusId == 2}">
                                                     <tr>
                                                         <td>${item.contractByContractId.officeByOfficeId.name}</td>
@@ -197,7 +197,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <c:forEach var="item" items="${list}">
+                                            <c:forEach var="item" items="${data}">
                                                 <c:if test="${item.statusId == 3}">
                                                     <tr>
                                                         <td>${item.contractByContractId.officeByOfficeId.name}</td>
@@ -231,7 +231,7 @@
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            <c:forEach var="item" items="${list}">
+                                            <c:forEach var="item" items="${data}">
                                                 <c:if test="${item.statusId == 4}">
                                                     <tr>
                                                         <td>${item.contractByContractId.officeByOfficeId.name}</td>
@@ -265,4 +265,47 @@
 
 </div>
 </body>
+<%--<script>
+    var pageNumber = 1;
+    var pageCount = ${pageCount};
+    var prev = function () {
+        if (pageNumber > 1) {
+            pageNumber --;
+            getPage(pageNumber);
+        }
+    };
+    var next = function () {
+        if (pageNumber < pageCount) {
+            pageNumber ++;
+            getPage(pageNumber);
+        }
+    };
+    var goto = function(i) {
+        pageNumber = i;
+        getPage(pageNumber);
+    };
+    var getPage = function(page) {
+        var selector = $(".items");
+        selector.removeClass("active");
+        $(selector[page-1]).addClass("active");
+        $("#next").removeClass("disabled");
+        $("#prev").removeClass("disabled");
+        if (page == pageCount) {
+            $("#next").addClass("disabled");
+        }
+        if (page == 1) {
+            $("#prev").addClass("disabled");
+        }
+        $.ajax({
+            method: "GET",
+            url: "office",
+            data: {
+                action: "page",
+                startPage: page
+            }
+        }).done(function (data) {
+            $("#table-body").html(data);
+        });
+    };
+</script>--%>
 </html>

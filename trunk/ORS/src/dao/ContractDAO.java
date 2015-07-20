@@ -2,8 +2,11 @@ package dao;
 
 import entity.Contract;
 import entity.Repair;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.sql.Date;
 import java.util.List;
@@ -41,7 +44,37 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         }
         return null;
     }
+    public List<Contract> getContractByPage(int firstResult, int pageSize) {
 
+        try {
+
+            Criteria criteria = session.createCriteria(Contract.class);
+            //criteria.add(Restrictions.ne("statusId", 3));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getPageCount(int pageSize) {
+        try {
+
+            Criteria criteriaCount = session.createCriteria(Contract.class);
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
     public boolean changeStatus(int id, int status) {
         Transaction trans = session.beginTransaction();
         try {

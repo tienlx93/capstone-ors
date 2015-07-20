@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 
@@ -64,28 +65,33 @@ public class UserController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         AccountDAO dao = new AccountDAO();
         String action = request.getParameter("action");
-
-        if (action==null){
-            //view list
-            List<Account> list = dao.getAccountList();
-            request.setAttribute("data", list);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/viewUser.jsp");
-            rd.forward(request, response);
-        } else if (action.equals("new")){
-            RoleDAO roleDAO = new RoleDAO();
-            List<Role> roleList = roleDAO.findAll();
-            request.setAttribute("roleList", roleList);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/addUser.jsp");
-            rd.forward(request, response);
-        } else if (action.equals("edit")){
-            String username = request.getParameter("username");
-            Account acc = dao.get(username);
-            request.setAttribute("account", acc);
-            RoleDAO roleDAO = new RoleDAO();
-            List<Role> roleList = roleDAO.findAll();
-            request.setAttribute("roleList", roleList);
-            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/editUser.jsp");
-            rd.forward(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+        if (account != null && (account.getRoleId() == 1)) {
+            if (action == null) {
+                //view list
+                List<Account> list = dao.getAccountList();
+                request.setAttribute("data", list);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/viewUser.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("new")) {
+                RoleDAO roleDAO = new RoleDAO();
+                List<Role> roleList = roleDAO.findAll();
+                request.setAttribute("roleList", roleList);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/addUser.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("edit")) {
+                String username = request.getParameter("username");
+                Account acc = dao.get(username);
+                request.setAttribute("account", acc);
+                RoleDAO roleDAO = new RoleDAO();
+                List<Role> roleList = roleDAO.findAll();
+                request.setAttribute("roleList", roleList);
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/editUser.jsp");
+                rd.forward(request, response);
+            }
+        } else {
+            response.sendRedirect("/admin");
         }
     }
 }

@@ -3,6 +3,7 @@ package controller;
 import dao.RepairDAO;
 import entity.Account;
 import entity.Repair;
+import service.ConstantService;
 import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
@@ -65,12 +66,18 @@ public class RepairController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
+        RequestDispatcher rd;
         if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
             RepairDAO dao = new RepairDAO();
             String action = request.getParameter("action");
             if (action == null) {
                 RepairDAO repairDAO = new RepairDAO();
-                List<Repair> list;
+                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                request.setAttribute("pageCount", pageCount);
+
+                List<Repair> list = dao.getRepairByPage(0, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list);
+                //List<Repair> list;
                 if (account.getRoleId() == 2) {
                     list = repairDAO.findAll();
                     ScheduleService service = new ScheduleService();
@@ -80,12 +87,21 @@ public class RepairController extends HttpServlet {
                     list = repairDAO.getRepairListByStaff(account.getUsername());
                 }
                 request.setAttribute("list", list);
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
 
+            }
+            else if (action.equals("page")) {
+                String startPage = request.getParameter("startPage");
+                int page = Integer.parseInt(startPage);
+                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
+                List<Repair> list = dao.getRepairByPage(startItem, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list);
+                rd = request.getRequestDispatcher("/WEB-INF/partial/repairListItem.jsp");
+                rd.forward(request, response);
             }
         } else {
             response.sendRedirect("/admin");

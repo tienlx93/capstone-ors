@@ -1,6 +1,7 @@
 package controller;
 
 import dao.RentalItemDAO;
+import entity.Account;
 import entity.RentalItem;
 
 import javax.servlet.RequestDispatcher;
@@ -9,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
@@ -19,31 +21,36 @@ public class RentalItemController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+        if (account != null && (account.getRoleId() == 2)) {
+            if (action.equals("editing")) {
+                RentalItemDAO dao = new RentalItemDAO();
+                dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("name"),
+                        request.getParameter("description"), Double.parseDouble(request.getParameter("price")),
+                        Integer.parseInt(request.getParameter("quantity")), request.getParameter("imageUrl"));
+                response.sendRedirect("/admin/rentalItem");
+            } else if (action.equals("save")) {
+                RentalItemDAO dao = new RentalItemDAO();
+                RentalItem rtItem = new RentalItem();
+                String name = request.getParameter("name");
+                String description = request.getParameter("description");
+                String price = request.getParameter("price");
+                String quantity = request.getParameter("quantity");
+                String imageUrl = request.getParameter("imageUrl");
 
-        if (action.equals("editing")) {
-            RentalItemDAO dao = new RentalItemDAO();
-            dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("name"),
-                    request.getParameter("description"), Double.parseDouble(request.getParameter("price")),
-                    Integer.parseInt(request.getParameter("quantity")), request.getParameter("imageUrl"));
-            response.sendRedirect("/admin/rentalItem");
-        } else if (action.equals("save")) {
-            RentalItemDAO dao = new RentalItemDAO();
-            RentalItem rtItem = new RentalItem();
-            String name = request.getParameter("name");
-            String description = request.getParameter("description");
-            String price = request.getParameter("price");
-            String quantity = request.getParameter("quantity");
-            String imageUrl = request.getParameter("imageUrl");
+                rtItem.setName(name);
+                rtItem.setDescription(description);
+                rtItem.setPrice(Double.parseDouble(price));
+                rtItem.setQuantity(Integer.parseInt(quantity));
+                rtItem.setImageUrl(imageUrl);
 
-            rtItem.setName(name);
-            rtItem.setDescription(description);
-            rtItem.setPrice(Double.parseDouble(price));
-            rtItem.setQuantity(Integer.parseInt(quantity));
-            rtItem.setImageUrl(imageUrl);
+                dao.save(rtItem);
 
-            dao.save(rtItem);
-
-            response.sendRedirect("/admin/rentalItem");
+                response.sendRedirect("/admin/rentalItem");
+            }
+        } else {
+            response.sendRedirect("/admin");
         }
     }
 

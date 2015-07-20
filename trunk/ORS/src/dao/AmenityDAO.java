@@ -3,8 +3,11 @@ package dao;
 import entity.Account;
 import entity.Amenity;
 import entity.AmenityGroup;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -62,6 +65,37 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
             e.printStackTrace();
         }
         return null;
+    }
+    public List<Amenity> getAmenityByPage(int firstResult, int pageSize) {
+
+        try {
+
+            Criteria criteria = session.createCriteria(Amenity.class);
+            //criteria.add(Restrictions.ne("statusId", 3));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getPageCount(int pageSize) {
+        try {
+
+            Criteria criteriaCount = session.createCriteria(Amenity.class);
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
     public boolean update(String name, Amenity newAmenity) {
         Transaction trans = session.beginTransaction();

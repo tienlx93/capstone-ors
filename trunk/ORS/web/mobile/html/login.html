@@ -1,5 +1,7 @@
 <div class="black">
-    <img class='logo' src='/img/logo-white.png' />
+    <div class="login-logo">
+        <img class='logo' src='/img/logo-white.png' />
+    </div>
     <form name="form" class='login clearfix'>
 
         <p class='large'>Office Rental Service</p>
@@ -10,7 +12,7 @@
 
         <div ng-show="error!=null" class="error">{{error}}</div>
         <div style="text-align: center">
-            <button class='clearfix' ng-click='direction();login(form)'>Đăng nhập</button>
+            <button class='clearfix' type="submit" ng-click='direction();login(form)'>Đăng nhập</button>
         </div>
 
     </form>

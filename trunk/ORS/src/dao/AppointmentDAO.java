@@ -18,23 +18,6 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         super(Appointment.class);
     }
 
-    public boolean changeStatus(int id, int statusId) {
-        Transaction trans = session.beginTransaction();
-        try {
-            Appointment appointment = (Appointment) session.get(Appointment.class, id);
-            appointment.setStatusId(statusId);
-            appointment.setUpdateTime(new Timestamp((new Date()).getTime()));
-            session.update(appointment);
-            trans.commit();
-            return true;
-        } catch (Exception e) {
-            if (trans.isActive()) {
-                trans.rollback();
-            }
-        }
-        return false;
-    }
-
     public void update(int id, String assignedStaff, Date time, int statusId) {
 
         Transaction trans = session.beginTransaction();
@@ -54,7 +37,7 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         }
     }
 
-    public void updateStatus(int id, int statusId) {
+    public boolean updateStatus(int id, int statusId) {
 
         Transaction trans = session.beginTransaction();
         try {
@@ -63,15 +46,16 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
             appointment.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(appointment);
             trans.commit();
-
+            return true;
         } catch (Exception e) {
             if (trans.isActive()) {
                 trans.rollback();
             }
         }
+        return false;
     }
 
-    public void updateComment(int id, int statusId, String comment) {
+    public boolean updateComment(int id, int statusId, String comment) {
 
         Transaction trans = session.beginTransaction();
         try {
@@ -81,12 +65,13 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
             appointment.setUpdateTime(new Timestamp(new Date().getTime()));
             session.update(appointment);
             trans.commit();
-
+            return true;
         } catch (Exception e) {
             if (trans.isActive()) {
                 trans.rollback();
             }
         }
+        return false;
     }
 
     public List<Appointment> getAppointmentListByStaff(String username) {

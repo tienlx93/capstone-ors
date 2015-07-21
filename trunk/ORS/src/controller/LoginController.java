@@ -27,10 +27,14 @@ public class LoginController extends HttpServlet {
             String username = request.getParameter("txtUsername");
             String password = request.getParameter("txtPassword");
             acc = accDAO.login(username, password);
-            if (acc!=null && acc.getRoleId() != 4) {
+            if (acc != null && (acc.getRoleId()== 2|| acc.getRoleId()==3)) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", acc);
                 response.sendRedirect("/admin/office");
+            } else if (acc != null && acc.getRoleId() == 1) {
+                HttpSession session = request.getSession();
+                session.setAttribute("user", acc);
+                response.sendRedirect("/admin/user");
             } else {
                 request.setAttribute("username", username);
                 request.setAttribute("password", password);

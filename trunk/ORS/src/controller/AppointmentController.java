@@ -5,6 +5,7 @@ import entity.Account;
 import entity.Appointment;
 import entity.Office;
 import service.ConstantService;
+import service.SMSService;
 import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
@@ -15,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -28,17 +31,27 @@ public class AppointmentController extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
         String button = request.getParameter("button");
-        String time = request.getParameter("time");
+        String id = request.getParameter("id");
         AppointmentDAO dao = new AppointmentDAO();
+        Appointment appointment = dao.get(Integer.valueOf(id));
+        String phone = appointment.getAccountByCustomerUsername().getProfileByUsername().getPhone();
+        SMSService sms = new SMSService();
+        sms.setPhone(phone);
         if (action.equals("editing")) {
             switch (button) {
                 case "assign":
-                    Date date = java.sql.Date.valueOf(time);
-                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"), date, 2);
+                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"),
+                            appointment.getTime(), 2);
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy - hh:mm");
+                    sms.setMessage("Lich hen cua ban da duoc chap nhan. Hen ban vao thoi gian: "
+                            + df.format(appointment.getTime()));
+                    sms.send();
                     break;
                 case "reject":
                     String comment = request.getParameter("comment");
                     dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
+                    sms.setMessage("Lich hen cua ban khong duoc chap nhan. Ly do: " + comment);
+                    sms.send();
                     break;
                 case "update3":
                     dao.updateStatus(Integer.parseInt(request.getParameter("id")), 3);

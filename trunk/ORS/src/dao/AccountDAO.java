@@ -1,9 +1,12 @@
 package dao;
 
 import entity.Account;
+import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.List;
 
@@ -52,7 +55,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return null;
     }
 
-    public boolean update(String username, Account newAccount) {
+    public void update(String username, Account newAccount) {
         Transaction trans = session.beginTransaction();
         try {
             Account account = (Account) session.get(Account.class, username);
@@ -63,13 +66,13 @@ public class AccountDAO extends BaseDAO<Account, String> {
 
             session.update(account);
             trans.commit();
-            return true;
+
         } catch (Exception e) {
             if (trans.isActive()) {
                 trans.rollback();
             }
         }
-        return false;
+
     }
 
     public boolean updatePass(String username, String pass) {
@@ -137,7 +140,37 @@ public class AccountDAO extends BaseDAO<Account, String> {
 
         return null;
     }
+    public List<Account> getAccountByPage(int firstResult, int pageSize) {
 
+        try {
+
+            Criteria criteria = session.createCriteria(Account.class);
+            //criteria.add(Restrictions.ne("statusId", 3));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getPageCount(int pageSize) {
+        try {
+
+            Criteria criteriaCount = session.createCriteria(Account.class);
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
+    }
     public Account findByUsername(String username) {
         try {
             String sql = "from Account where username = ?";

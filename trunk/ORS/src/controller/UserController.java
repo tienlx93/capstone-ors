@@ -4,6 +4,7 @@ import dao.AccountDAO;
 import dao.RoleDAO;
 import entity.Account;
 import entity.Role;
+import service.ConstantService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ public class UserController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         String action = request.getParameter("action");
+        //String button = request.getParameter("button");
         AccountDAO dao = new AccountDAO();
         if (action.equals("save")) {
             Account acc = new Account();
@@ -48,11 +50,12 @@ public class UserController extends HttpServlet {
         } else if (action.equals("update")) {
             String username = request.getParameter("username");
             AccountDAO accDAO = new AccountDAO();
-            Account acc = new Account();
+            //Account acc = new Account();
             Account accdemo = new Account();
             accdemo.setPassword(request.getParameter("password"));
             accdemo.setEmail(request.getParameter("email"));
             accdemo.setRoleId(Integer.parseInt(request.getParameter("role")));
+            accdemo.setStatusId(Integer.parseInt(request.getParameter("statusId")));
 
 /*          String password = request.getParameter("password");
             String email = request.getParameter("email");*/
@@ -67,18 +70,23 @@ public class UserController extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
+        RequestDispatcher rd;
         if (account != null && (account.getRoleId() == 1)) {
             if (action == null) {
                 //view list
-                List<Account> list = dao.getAccountList();
-                request.setAttribute("data", list);
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/viewUser.jsp");
+                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                request.setAttribute("pageCount", pageCount);
+
+                List<Account> list1 = dao.getAccountByPage(0, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list1);
+
+                rd = request.getRequestDispatcher("/WEB-INF/admin/user/viewUser.jsp");
                 rd.forward(request, response);
             } else if (action.equals("new")) {
                 RoleDAO roleDAO = new RoleDAO();
                 List<Role> roleList = roleDAO.findAll();
                 request.setAttribute("roleList", roleList);
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/addUser.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/admin/user/addUser.jsp");
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 String username = request.getParameter("username");
@@ -87,7 +95,16 @@ public class UserController extends HttpServlet {
                 RoleDAO roleDAO = new RoleDAO();
                 List<Role> roleList = roleDAO.findAll();
                 request.setAttribute("roleList", roleList);
-                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/user/editUser.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/admin/user/editUser.jsp");
+                rd.forward(request, response);
+            }
+            else if (action.equals("page")) {
+                String startPage = request.getParameter("startPage");
+                int page = Integer.parseInt(startPage);
+                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
+                List<Account> list1 = dao.getAccountByPage(startItem, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list1);
+                rd = request.getRequestDispatcher("/WEB-INF/partial/accountListItem.jsp");
                 rd.forward(request, response);
             }
         } else {

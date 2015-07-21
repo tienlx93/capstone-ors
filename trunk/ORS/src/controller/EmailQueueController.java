@@ -19,10 +19,15 @@ import java.util.List;
 /**
  * Created by xps on 7/19/2015.
  */
-@WebServlet(name = "EmailQueueController", urlPatterns = {"/sendMail"})
+@WebServlet(name = "EmailQueueController", urlPatterns = {"/sendMail"}, loadOnStartup = 1)
 public class EmailQueueController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    }
+
+    @Override
+    public void init() throws ServletException {
+        super.init();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -30,6 +35,7 @@ public class EmailQueueController extends HttpServlet {
         List<EmailQueue> emailQueueList = emailQueueDAO.findAll();
 
         for (EmailQueue emailQueue : emailQueueList) {
+
             List<String> items = Arrays.asList(emailQueue.getOfficeIds().split("\\s*,\\s*"));
 
             request.setAttribute("data", emailQueue);
@@ -45,7 +51,7 @@ public class EmailQueueController extends HttpServlet {
             service.setContent(res2.getOutput());
             service.sendEmail();
 
-            emailQueueDAO.remove(emailQueue);
+//            emailQueueDAO.remove(emailQueue);
         }
     }
 }

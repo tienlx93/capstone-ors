@@ -30,7 +30,7 @@ public class LoginController extends HttpServlet {
             if (acc!=null && acc.getRoleId() != 4) {
                 HttpSession session = request.getSession();
                 session.setAttribute("user", acc);
-                response.sendRedirect("/admin/office");
+                response.sendRedirect("/admin/home");
             } else {
                 request.setAttribute("username", username);
                 request.setAttribute("password", password);

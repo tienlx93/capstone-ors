@@ -3064,6 +3064,10 @@ div[data-role="editor-toolbar"] {
 .panel-closed .panel-body {
     display: none;
 }
+.huge {
+    font-size: 40px;
+    line-height: 1.1;
+}
 /* Widget Tools */
 .widget-tools {
     font-family: 'Open Sans', sans-serif;

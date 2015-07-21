@@ -10,8 +10,7 @@
 <div class="sidebar clearfix">
 
     <ul class="sidebar-panel nav">
-        <li class="sidetitle">MAIN</li>
-        <li><a href="">
+        <li><a href="${pageContext.request.contextPath}/admin/home">
             <span class="icon color5"><i class="fa fa-home"></i></span>
             Trang chủ</a>
         </li>
@@ -34,11 +33,6 @@
                 <span class="label label-default"></span></a>
             </li>
             <c:if test="${user.roleId != 3}">
-                <li><a href="${pageContext.request.contextPath}/admin/calendar">
-                    <span class="icon color6"><i class="fa fa fa-calendar"></i></span>
-                    Quản lí thời gian nhân viên
-                    <span class="label label-default"></span></a>
-                </li>
                 <li><a href="${pageContext.request.contextPath}/admin/contract">
                     <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
                     Hợp đồng
@@ -47,9 +41,9 @@
                 </li>
                 <li>
                     <a href="#">
-                    <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
-                    Yêu cầu của khách hàng
-                    <span class="caret"></span>
+                        <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
+                        Yêu cầu của khách hàng
+                        <span class="caret"></span>
                     </a>
                     <ul>
                         <li>
@@ -73,19 +67,45 @@
                     <%--TODO: số lượng thuê thiết bị chưa xử lí--%>
                 <span class="label label-default"></span></a>
             </li>
+        </ul>
+        <ul class="sidebar-panel nav">
             <li><a href="${pageContext.request.contextPath}/admin/rentalItem">
                 <span class="icon color6"><i class="fa fa-cubes"></i></span>
                 Quản lý thiết bị</a>
             </li>
-            <li><a href="${pageContext.request.contextPath}/admin/amenity">
-                <span class="icon color6"><i class="fa fa-cubes"></i></span>
-                Quản lý tiện nghi</a>
-            </li>
-            <li><a href="${pageContext.request.contextPath}/admin/groupAmenity">
-                <span class="icon color6"><i class="fa fa-cubes"></i></span>
-                Quản lý nhóm tiện nghi</a>
-            </li>
-
+            <c:if test="${user.roleId != 3}">
+                <li><a href="${pageContext.request.contextPath}/admin/amenity">
+                    <span class="icon color6"><i class="fa fa-lightbulb-o"></i></span>
+                    Quản lý tiện nghi</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/admin/groupAmenity">
+                    <span class="icon color6"><i class="fa fa-lightbulb-o"></i></span>
+                    Quản lý nhóm tiện nghi</a>
+                </li>
+                <li><a href="${pageContext.request.contextPath}/admin/calendar">
+                    <span class="icon color6"><i class="fa fa fa-calendar"></i></span>
+                    Quản lí thời gian nhân viên
+                    <span class="label label-default"></span></a>
+                </li>
+                <li>
+                    <a href="#">
+                        <span class="icon color6"><i class="fa fa-bar-chart"></i></span>
+                        Thống kê
+                        <span class="caret"></span>
+                    </a>
+                    <ul>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/staffStatics">Doanh thu</a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/staffStatics">Số lượng sửa chữa</a>
+                        </li>
+                        <li>
+                            <a href="${pageContext.request.contextPath}/admin/staffStatics">Số việc của nhân viên</a>
+                        </li>
+                    </ul>
+                </li>
+            </c:if>
         </c:if>
 
     </ul>

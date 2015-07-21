@@ -115,18 +115,6 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         return null;
     }
 
-    public List<Appointment> getAppointmentListSendSMS() {
-        try {
-            String sql = "from Appointment where statusId in (3, 5)";
-            Query query = session.createQuery(sql);
-
-            return query.list();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
     public int countAppointment(int status, String username) {
         try {
             String sql = "SELECT COUNT(Id) AS Quantity FROM Appointment WHERE StatusId = :status";

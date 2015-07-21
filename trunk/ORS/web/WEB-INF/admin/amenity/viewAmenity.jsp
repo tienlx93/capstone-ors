@@ -58,7 +58,7 @@
                 <th></th>
               </tr>
               </thead>
-              <tbody>
+              <tbody id="table-body">
               <c:forEach items="${data}" var="item">
                 <tr>
                   <td>${item.name}</td>

@@ -70,7 +70,7 @@
                             </div>
 
                             <div class="button-post">
-                                <button type="button" value="cancel" name="action">Hủy</button>
+                                <a href="${pageContext.request.contextPath}/admin/user" class="btn btn-default">Hủy</a>
                                 <button type="submit" value="save" name="action">Tạo mới</button>
                             </div>
                         </form>

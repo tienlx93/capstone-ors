@@ -48,6 +48,7 @@
               <div class="form-group">
                 <label>Tên tài khoản</label>
                 <span>${account.username}</span>
+                <input type="hidden" name="username" class="" value="${account.username}">
               </div>
 
               <div class="form-group">
@@ -61,6 +62,10 @@
               </div>
 
               <div class="form-group">
+                <input type="hidden" name="statusId" class="" value="${account.statusId}">
+              </div>
+
+              <div class="form-group">
                 <label for="role">Chức vụ</label>
                 <select name="role" class="" id="role">
                   <c:forEach var="item" items="${roleList}">
@@ -68,14 +73,14 @@
                   </c:forEach>
                 </select>
               </div>
-              <div>
+              <%--<div>
               <form action="${pageContext.request.contextPath}/admin/user" method="post">
                 <input type="hidden" value="${item.username}" name="username">
               </form>
-              </div>
+              </div>--%>
               <div class="button-post">
 
-                <button type="button" value="cancel" name="action">Hủy</button>
+                <a href="${pageContext.request.contextPath}/admin/user" class="btn btn-default">Hủy</a>
                 <button type="submit" value="update" name="action">Cập nhật</button>
                 <button type="submit" value="ban" name="action">Khóa tài khoản</button>
                 <button type="submit" value="unban" name="action">Mở tài khoản</button>

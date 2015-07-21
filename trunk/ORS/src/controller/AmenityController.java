@@ -105,7 +105,7 @@ public class AmenityController extends HttpServlet {
                 rd = request.getRequestDispatcher("/WEB-INF/partial/amenityListItem.jsp");
                 rd.forward(request, response);
             }
-        }else {
+         } else {
             response.sendRedirect("/admin");
         }
     }

@@ -60,7 +60,7 @@
                                 <th>Thời hạn thanh toán</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="table-body">
                             <c:forEach items="${data}" var="item">
                                 <c:if test="${item.statusId != 4}">
                                     <tr>

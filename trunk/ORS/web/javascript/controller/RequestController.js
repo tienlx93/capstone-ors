@@ -1,6 +1,6 @@
-controllers.controller('RequestController', ['$scope', '$rootScope', '$location', 'Api', 'toastr',
-    function ($scope, $rootScope, $location, Api, toastr) {
-
+controllers.controller('RequestController', ['$scope', '$rootScope', '$routeParams', '$location', 'Api', 'toastr',
+    function ($scope, $rootScope, $routeParams, $location, Api, toastr) {
+        var id = $routeParams.id;
         var date = $('#date').datetimepicker({
             sideBySide: true,
             minDate: new Date(),
@@ -48,7 +48,7 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$location'
 
             } else {
                 time = time.getTime();
-                Api.requestAppointment(time, 9, function (data) {
+                Api.requestAppointment(time, id, function (data) {
                     if (data == "Success") {
                         toastr.success('Đặt lịch hẹn thành công');
              //           alert("Đặt lịch hẹn thành công");

@@ -1,7 +1,6 @@
 package service;
 
 import org.joda.time.Duration;
-import org.joda.time.Period;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
@@ -57,7 +56,7 @@ public class ScheduleListener implements ServletContextListener {
             //Creating Job and link to our Job class
             JobDetailImpl jobDetail3 = new JobDetailImpl();
             jobDetail3.setName("Third Job");
-            jobDetail3.setJobClass(ScheduleSendEmail.class);
+            jobDetail3.setJobClass(ScheduleSendEmailQueue.class);
 
             //Creating schedule time with trigger
             SimpleTriggerImpl simpleTrigger3= new SimpleTriggerImpl();
@@ -69,7 +68,7 @@ public class ScheduleListener implements ServletContextListener {
 
             //Start scheduler
             scheduler.start();
-            scheduler.scheduleJob(jobDetail1, simpleTrigger1);
+//            scheduler.scheduleJob(jobDetail1, simpleTrigger1);
             scheduler.scheduleJob(jobDetail2, simpleTrigger2);
             scheduler.scheduleJob(jobDetail3, simpleTrigger3);
         } catch (SchedulerException e) {
@@ -81,6 +80,14 @@ public class ScheduleListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         System.out.println("On shutdown web app");
+        SchedulerFactory factory = new StdSchedulerFactory();
+        Scheduler scheduler = null;
+        try {
+            scheduler = factory.getScheduler();
+            scheduler.shutdown();
+        } catch (SchedulerException e) {
+            e.printStackTrace();
+        }
     }
 
 }

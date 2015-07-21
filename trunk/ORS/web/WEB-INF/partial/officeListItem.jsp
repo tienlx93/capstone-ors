@@ -11,7 +11,7 @@
         <td>${item.address}</td>
         <td><a class="btn"
                href="office?action=edit&id=${item.id}">
-            Sửa
-        </a></td>
-    </tr>
+Sửa
+</a></td>
+</tr>
 </c:forEach>

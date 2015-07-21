@@ -405,17 +405,23 @@ public class ApiController extends HttpServlet {
         }
     }
 
-    private void changeStatus(HttpServletRequest request, PrintWriter out) {
+    private void changeStatus(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
         String type = request.getParameter("type");
         String idString = request.getParameter("id");
         int id = Integer.parseInt(idString);
         String statusString = request.getParameter("status");
+        String comment = request.getParameter("comment");
         int status = Integer.parseInt(statusString);
         boolean result = false;
         switch (type) {
             case "appointment": {
                 AppointmentDAO dao = new AppointmentDAO();
-                result = dao.changeStatus(id, status);
+                if (comment != null) {
+                    comment = new String(comment.getBytes("iso-8859-1"), "UTF-8");
+                    result = dao.updateComment(id, status, comment);
+                } else {
+                    result = dao.updateStatus(id, status);
+                }
                 break;
             }
             case "rental": {
@@ -823,7 +829,7 @@ public class ApiController extends HttpServlet {
                 rentalListItem.add(rentalListJSON);
             }
 
-            RentalDetailDAO rentalDatailDao = new RentalDetailDAO();
+            RentalDetailDAO rentalDetailDAO = new RentalDetailDAO();
             for (RentalListJSON json : rentalListItem) {
                 RentalDetail rentalDetail = new RentalDetail();
                 rentalDetail.setRentalId(rental.getId());
@@ -831,7 +837,7 @@ public class ApiController extends HttpServlet {
                 rentalDetail.setQuantity(json.getQuantity());
                 rentalDetail.setUnitPrice(json.getUnitPrice());
 
-                rentalDatailDao.save(rentalDetail);
+                rentalDetailDAO.save(rentalDetail);
             }
 
 

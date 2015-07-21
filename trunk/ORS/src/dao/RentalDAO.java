@@ -3,8 +3,11 @@ package dao;
 import entity.Appointment;
 import entity.Contract;
 import entity.Rental;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -44,7 +47,20 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
             String sql = "from Rental where assignStaff = ?";
             Query query = session.createQuery(sql);
             query.setString(0, username);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    public List<Rental> getRentalListByStaffPage(String username, int firstResult, int pageSize) {
+        try {
+            String sql = "from Rental where assignStaff = ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, username);
+            query.setFirstResult(firstResult);
+            query.setMaxResults(pageSize);
             return query.list();
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,5 +125,37 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public List<Rental> getRentalByPage(int firstResult, int pageSize) {
+
+        try {
+
+            Criteria criteria = session.createCriteria(Rental.class);
+            criteria.add(Restrictions.ne("statusId", 3));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public int getPageCount(int pageSize) {
+        try {
+
+            Criteria criteriaCount = session.createCriteria(Rental.class);
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return 0;
     }
 }

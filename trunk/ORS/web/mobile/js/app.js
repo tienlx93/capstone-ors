@@ -5,7 +5,7 @@ var app = angular.module("orsMobile", [
     'ngRoute', 'ngAnimate',
     'controllers', 'filters'
 ]);
-
+var DEVICE_HEIGHT = $(window).height();
 var controllers = angular.module('controllers', []);
 
 app.factory("timeoutService", function ($q, $timeout) {
@@ -58,7 +58,7 @@ app.config(['$routeProvider', '$httpProvider', '$compileProvider',
                 }
             }).
             otherwise({
-                redirectTo: '/login'
+                redirectTo: '/home'
             });
     }]);
 
@@ -74,36 +74,24 @@ angular.module('filters', []).filter('encode', function () {
 });
 
 var BACK_END_URL = "";
-var APPOINTMENT_STATUS = [{
-    'id': 1,
-    'name': 'Pending',
-    'description': 'Chờ xử lí'
-}, {
+var APPOINTMENT_STATUS = [{}, {
     'id': 2,
     'name': 'Assigned',
-    'description': 'Đã được giao'
+    'description': 'Lịch hẹn của tôi'
 }, {
     'id': 3,
     'name': 'Accepted',
-    'description': 'Chấp nhận'
-}, {
-    'id': 4,
-    'name': 'Done',
-    'description': 'Hoàn thành'
-}, {
+    'description': 'Khách hàng chấp nhận'
+}, {}, {
     'id': 5,
     'name': 'Rejected',
     'description': 'Hủy'
 }];
-var REPAIR_STATUS = [{
-    'id': 1,
-    'name': 'Requested',
-    'description': 'Chờ xử lí'
-}, {
+var REPAIR_STATUS = [{}, {
     'id': 2,
     'name': 'Assigned',
-    'description': 'Đã được giao'
-}, {
+    'description': 'Cần xác nhận'
+}, {}, {
     'id': 3,
     'name': 'Done',
     'description': 'Hoàn thành'
@@ -114,7 +102,7 @@ var REPAIR_STATUS = [{
 }, {
     'id': 5,
     'name': 'WaitingConfirm',
-    'description': 'Chờ khách hàng xác nhận'
+    'description': 'Việc của tôi'
 }];
 var url = "";
 controllers.controller('MainController', ['$scope', '$location', '$rootScope',

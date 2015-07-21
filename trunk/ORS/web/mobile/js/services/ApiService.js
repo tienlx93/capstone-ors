@@ -76,7 +76,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.changeStatus = function (type, id, status, callback) {
+        services.changeStatus = function (type, id, status, callback, comment) {
             $http({
                 method: 'POST',
                 url: BACK_END_URL + '/api',
@@ -84,7 +84,8 @@ app.factory("Api", ['$http',
                     'action': 'changeStatus',
                     'type': type,
                     'id': id,
-                    'status': status
+                    'status': status,
+                    'comment': comment
                 }
             })
                 .success(function () {

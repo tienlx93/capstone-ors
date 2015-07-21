@@ -3,6 +3,9 @@
  */
 controllers.controller('LoginController', ['$scope', '$location', 'Api',
     function ($scope, $location, Api) {
+        $(".black").css({
+            height: DEVICE_HEIGHT
+        });
         $scope.login = function(form) {
             if (form.$valid) {
                 var username = $scope.username;
@@ -10,7 +13,8 @@ controllers.controller('LoginController', ['$scope', '$location', 'Api',
 
                 Api.login(username,password,function(data){
                     if (data=="Success") {
-                        $location.path("home").replace();
+                        $location.path("home");
+                        //$location.replace();
                     } else if (data=="Error") {
                         $scope.error="Có lỗi xảy ra. Xin thử lại";
                     } else if (data=="Wrong") {

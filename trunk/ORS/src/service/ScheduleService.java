@@ -30,28 +30,35 @@ public class ScheduleService {
     private Map<String, Map<String, Integer>> dayJobCount;
     private DateFormat df;
 
+    public List<Account> getStaffList() {
+        return staffList;
+    }
+
     public ScheduleService() {
         session = util.HibernateUtil.getSession();
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        startDate = calendar.getTime();
-        calendar.add(Calendar.DATE, 7);
-        endDate = calendar.getTime();
+        startDate = getStartOfWeek(calendar);
+        endDate = addDays(startDate, 7);
 
         staffList = new AccountDAO().findStaff();
         appointmentDAO = new AppointmentDAO();
         rentalDAO = new RentalDAO();
         repairDAO = new RepairDAO();
-        weekJobCount = getWeekJobCount();
         dayJobCount = new HashMap<>();
         df = new SimpleDateFormat("yyyy-MM-dd");
     }
 
+    public Date getStartOfWeek(Calendar calendar) {
+        calendar.set(Calendar.DAY_OF_WEEK, Calendar.MONDAY);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar.getTime();
+    }
+
     public Map<Integer, String> makeAppointmentSchedule() {
+        weekJobCount = getWeekJobCount(startDate, endDate);
         Map<Integer, String> result = new HashMap<>();
         List<Appointment> appointmentList = appointmentDAO.getAppointmentListByStatus(1);
 
@@ -91,6 +98,7 @@ public class ScheduleService {
     }
 
     public Map<Integer, Repair> makeRepairSchedule() {
+        weekJobCount = getWeekJobCount(startDate, endDate);
         Map<Integer, Repair> result = new HashMap<>();
         List<Repair> repairList = repairDAO.getRepairListByStatus(1);
         Date begin = new Date();
@@ -145,6 +153,7 @@ public class ScheduleService {
     }
 
     public Map<Integer, Rental> makeRentalSchedule() {
+        weekJobCount = getWeekJobCount(startDate, endDate);
         Map<Integer, Rental> result = new HashMap<>();
         List<Rental> rentalList = rentalDAO.getRentalListByStatus(1);
         Date begin = addDays(endDate, -2);
@@ -202,7 +211,7 @@ public class ScheduleService {
         return availableStaff;
     }
 
-    private Map<String, Integer> getWeekJobCount() {
+    public Map<String, Integer> getWeekJobCount(Date startDate, Date endDate) {
         Map<String, Integer> result = new HashMap<>();
         Map<String, Integer> weekJobCount = getJobCountInRange(startDate, endDate);
 
@@ -218,7 +227,7 @@ public class ScheduleService {
         return result;
     }
 
-    private Map<String, Integer> getJobCountInRange(Date startDate, Date endDate) {
+    public Map<String, Integer> getJobCountInRange(Date startDate, Date endDate) {
         Map<String, Integer> result = new HashMap<>();
         Transaction trans = session.getTransaction();
         try {
@@ -250,14 +259,14 @@ public class ScheduleService {
         todayJobCount.put(suggest, (todayJobCount.get(suggest) != null ? todayJobCount.get(suggest) : 0) + number);
     }
 
-    private Date addDays(Date date, int day) {
+    public Date addDays(Date date, int day) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.DATE, day);
         return calendar.getTime();
     }
 
-    private Date getStartOfDay(Date date) {
+    public Date getStartOfDay(Date date) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.set(Calendar.HOUR_OF_DAY, 0);

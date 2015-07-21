@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -135,63 +136,71 @@ public class OfficeController extends HttpServlet {
         OfficeDAO dao = new OfficeDAO();
         String action = request.getParameter("action");
         RequestDispatcher rd;
-        if (action == null) {
-            int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
-            request.setAttribute("pageCount", pageCount);
 
-            List<Office> list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE);
-            request.setAttribute("data", list);
-            rd = request.getRequestDispatcher("/WEB-INF/admin/office/viewOffice.jsp");
-            rd.forward(request, response);
-        } else if (action.equals("new")) {
-            Office office = new Office();
-            request.setAttribute("office", office);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
 
-            PriceTermDAO ptDao = new PriceTermDAO();
-            List<PriceTerm> priceTermList = ptDao.findAll();
-            request.setAttribute("priceTermList", priceTermList);
+            if (action == null) {
+                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                request.setAttribute("pageCount", pageCount);
 
-            CategoryDAO cDao = new CategoryDAO();
-            List<Category> categoryList = cDao.findAll();
-            request.setAttribute("categoryList", categoryList);
+                List<Office> list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list);
+                rd = request.getRequestDispatcher("/WEB-INF/admin/office/viewOffice.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("new")) {
+                Office office = new Office();
+                request.setAttribute("office", office);
 
-            AmenityDAO aDao = new AmenityDAO();
-            List<Amenity> amenityList = aDao.findAll();
-            request.setAttribute("amenityList", amenityList);
+                PriceTermDAO ptDao = new PriceTermDAO();
+                List<PriceTerm> priceTermList = ptDao.findAll();
+                request.setAttribute("priceTermList", priceTermList);
 
-            rd = request.getRequestDispatcher("/WEB-INF/admin/office/newOffice.jsp");
-            rd.forward(request, response);
-        } else if(action.equals("edit")) {
+                CategoryDAO cDao = new CategoryDAO();
+                List<Category> categoryList = cDao.findAll();
+                request.setAttribute("categoryList", categoryList);
 
-            PriceTermDAO ptDao = new PriceTermDAO();
-            List<PriceTerm> priceTermList = ptDao.findAll();
-            request.setAttribute("priceTermList", priceTermList);
+                AmenityDAO aDao = new AmenityDAO();
+                List<Amenity> amenityList = aDao.findAll();
+                request.setAttribute("amenityList", amenityList);
 
-            CategoryDAO cDao = new CategoryDAO();
-            List<Category> categoryList = cDao.findAll();
-            request.setAttribute("categoryList", categoryList);
+                rd = request.getRequestDispatcher("/WEB-INF/admin/office/newOffice.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("edit")) {
+
+                PriceTermDAO ptDao = new PriceTermDAO();
+                List<PriceTerm> priceTermList = ptDao.findAll();
+                request.setAttribute("priceTermList", priceTermList);
+
+                CategoryDAO cDao = new CategoryDAO();
+                List<Category> categoryList = cDao.findAll();
+                request.setAttribute("categoryList", categoryList);
 
 
-            int id = Integer.parseInt(request.getParameter("id"));
-            Office office = dao.get(id);
-            request.setAttribute("office", office);
-            List<String> amenityList = new ArrayList<>();
-            for (OfficeAmenity officeAmenity : office.getOfficeAmenitiesById()) {
-                String name = officeAmenity.getAmenityByAmenityId().getName();
-                amenityList.add(name);
+                int id = Integer.parseInt(request.getParameter("id"));
+                Office office = dao.get(id);
+                request.setAttribute("office", office);
+                List<String> amenityList = new ArrayList<>();
+                for (OfficeAmenity officeAmenity : office.getOfficeAmenitiesById()) {
+                    String name = officeAmenity.getAmenityByAmenityId().getName();
+                    amenityList.add(name);
+                }
+                request.setAttribute("amenityList", amenityList);
+
+                rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("page")) {
+                String startPage = request.getParameter("startPage");
+                int page = Integer.parseInt(startPage);
+                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
+                List<Office> list = dao.getOfficeByPage(startItem, ConstantService.PAGE_SIZE);
+                request.setAttribute("data", list);
+                rd = request.getRequestDispatcher("/WEB-INF/partial/officeListItem.jsp");
+                rd.forward(request, response);
             }
-            request.setAttribute("amenityList", amenityList);
-
-            rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
-            rd.forward(request, response);
-        } else if (action.equals("page")) {
-            String startPage = request.getParameter("startPage");
-            int page = Integer.parseInt(startPage);
-            int startItem = (page - 1) * ConstantService.PAGE_SIZE;
-            List<Office> list = dao.getOfficeByPage(startItem, ConstantService.PAGE_SIZE);
-            request.setAttribute("data", list);
-            rd = request.getRequestDispatcher("/WEB-INF/partial/officeListItem.jsp");
-            rd.forward(request, response);
+        } else {
+            response.sendRedirect("/admin");
         }
     }
 

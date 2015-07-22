@@ -71,8 +71,8 @@
                                     <td>${item.area}</td>
                                     <td>${item.address}</td>
                                     <td><a class="btn"
-                                           href="office?action=edit&id=${item.id}">
-                                        Sửa
+                                           href="office?action=editing&id=${item.id}">
+                                        Xem chi tiết
                                     </a></td>
                                 </tr>
                             </c:forEach>

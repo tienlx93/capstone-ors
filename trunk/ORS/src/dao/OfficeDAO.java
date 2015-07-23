@@ -9,6 +9,7 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StandardBasicTypes;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -164,5 +165,37 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             e.printStackTrace();
         }
         return 2;
+    }
+
+    public List<String> allDistrict() {
+        List<String> result = null;
+        try {
+            String sql = "SELECT DISTINCT (district) FROM Office";
+            Query query = session.createQuery(sql);
+            result = query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public Long calculateIncome(Date startDate, Date endDate, String district) {
+        Long result = 0L;
+        try {
+            String sql = "EXEC CalculateIncome :startDate, :endDate, :district";
+            SQLQuery query = session.createSQLQuery(sql)
+                    .addScalar("Income", StandardBasicTypes.LONG);
+            query.setDate("startDate", startDate);
+            query.setDate("endDate", endDate);
+            query.setString("district", district);
+            Object o = query.uniqueResult();
+            if (o != null) {
+                result = (Long) o;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

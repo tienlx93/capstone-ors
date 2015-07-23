@@ -3,6 +3,9 @@ package service;
 import dao.AppointmentDAO;
 import dao.OfficeDAO;
 import entity.Office;
+import org.joda.time.DateTime;
+
+import java.util.Date;
 
 /**
  * Created by ASUS on 7/4/2015.
@@ -47,9 +50,17 @@ public class Test {
             System.out.println(matching);
             System.out.println();
         }*/
-        AppointmentDAO dao = new AppointmentDAO();
-        int count = dao.countAppointment(2, "staff3");
-        System.out.println(count);
+        OfficeDAO dao = new OfficeDAO();
+        DateTime dt = new DateTime(2015, 12, 1, 0, 0);
+        System.out.println(dt.toString());
+        Date startDate = dt.toDate();
+        dt = dt.plusMonths(1);
+        Date endDate = dt.toDate();
+        String district = "";
+        //Long income = dao.calculateIncome(startDate, endDate, district);
+        System.out.println(dt.toString());
+
+
 
     }
 }

@@ -89,6 +89,12 @@
             <li>
                 <a href="#/">Tìm văn phòng</a>
             </li>
+            <li ng-show="loggedIn">
+                |
+            </li>
+            <li ng-show="loggedIn">
+                <a href="#/contractList">Hợp đồng của bạn</a>
+            </li>
         </ul>
         <ul class="right login-wrapper default" ng-show="!loggedIn">
             <li>
@@ -104,8 +110,6 @@
                     Chào mừng, {{fullName}} <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#/contractList">Danh sách hợp đồng</a></li>
-                    <li class="divider"></li>
                     <li><a href="#/profile">Thông tin cá nhân</a></li>
                     <li class="divider"></li>
                     <li><a href="" ng-click="logout()">Đăng xuất</a></li>

@@ -1,12 +1,20 @@
 package service;
 
 import dao.ContractDAO;
+import dao.EmailQueueDAO;
 import entity.Contract;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.ObjectOutputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
 
@@ -31,13 +39,45 @@ public class ScheduleCheckContract implements Job {
             if (currentDate - endDate > 0){
                 if(contract.getStatusId() == 1) {
                     dao.changeStatus(contract.getId(), 4);
+                    sendEmail(contract.getId(), contract.getStatusId());
                 }
-                System.out.println(contract.getId());
             } else if (dayTime == 7) {
-                System.out.println(contract.getId());
+//                System.out.println(contract.getId());
+                sendEmail(contract.getId(), contract.getStatusId());
             }
         }
 
+    }
+
+    private void sendEmail(int id, int status) {
+        String charset = "UTF-8";
+        String param1 = Integer.toString(id);
+        String param2 = Integer.toString(status);
+
+        URL gwtServlet = null;
+        try {
+            String query = String.format("id=%s&status=%s",
+                    URLEncoder.encode(param1, charset),
+                    URLEncoder.encode(param2, charset));
+
+            gwtServlet = new URL("http://localhost:8080/contractMail" + "?" + query);
+            HttpURLConnection servletConnection = (HttpURLConnection) gwtServlet.openConnection();
+            servletConnection.setRequestMethod("GET");
+            servletConnection.setDoOutput(true);
+            InputStream response = gwtServlet.openStream();
+
+            ObjectOutputStream objOut = new ObjectOutputStream(servletConnection.getOutputStream());
+//            objOut.writeObject(p);
+            objOut.flush();
+            objOut.close();
+
+        } catch (MalformedURLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 }
 

@@ -190,6 +190,63 @@ public class OfficeController extends HttpServlet {
 
                 rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
                 rd.forward(request, response);
+            } else if (action.equals("editing")) {
+
+                request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                /*OfficeAmenityDAO dao1 = new OfficeAmenityDAO();
+                List<OfficeAmenity> officeAmenities = dao1.findAll();
+                request.setAttribute("officeAmenity", officeAmenities);
+                AmenityDAO dao2 = new AmenityDAO();*/
+                List<String> amenities = new ArrayList<>();
+
+                Office office = dao.get(Integer.parseInt(request.getParameter("id")));
+                for (OfficeAmenity officeAmenity : office.getOfficeAmenitiesById()) {
+                    String name = officeAmenity.getAmenityByAmenityId().getName();
+                    amenities.add(name);
+                }
+                request.setAttribute("amenity", amenities);
+
+                List<Integer> status = new ArrayList<>();
+                for (Contract contract : office.getContractsById()) {
+                    for (Repair repair : contract.getRepairsById()) {
+                        int statusId = repair.getRepairStatusId();
+                        status.add(statusId);
+                    }
+                }
+                int i;
+                int count = 0;
+                for ( i = 0; i < status.size(); i++) {
+                    int y = status.get(i);
+                    if (y != 4) {
+                        count = count+1;
+                    }
+                }
+                request.setAttribute("count", count);
+                request.setAttribute("statusId", status);
+
+                request.getRequestDispatcher("/WEB-INF/admin/office/detailOffice.jsp").forward(request, response);
+
+                /*PriceTermDAO ptDao = new PriceTermDAO();
+                List<PriceTerm> priceTermList = ptDao.findAll();
+                request.setAttribute("priceTermList", priceTermList);
+
+                CategoryDAO cDao = new CategoryDAO();
+                List<Category> categoryList = cDao.findAll();
+                request.setAttribute("categoryList", categoryList);
+
+
+                int id = Integer.parseInt(request.getParameter("id"));
+                Office office = dao.get(id);
+                request.setAttribute("office", office);
+                List<String> amenityList = new ArrayList<>();
+                for (OfficeAmenity officeAmenity : office.getOfficeAmenitiesById()) {
+                    String name = officeAmenity.getAmenityByAmenityId().getName();
+                    amenityList.add(name);
+                }
+                request.setAttribute("amenityList", amenityList);
+
+                rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
+                rd.forward(request, response);*/
             } else if (action.equals("page")) {
                 String startPage = request.getParameter("startPage");
                 int page = Integer.parseInt(startPage);

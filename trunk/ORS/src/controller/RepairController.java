@@ -74,7 +74,6 @@ public class RepairController extends HttpServlet {
                 RepairDAO repairDAO = new RepairDAO();
                 int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
                 request.setAttribute("pageCount", pageCount);
-
                 List<Repair> list = dao.getRepairByPage(0, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list);
                 //List<Repair> list;
@@ -89,10 +88,16 @@ public class RepairController extends HttpServlet {
                 request.setAttribute("list", list);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
                 rd.forward(request, response);
-            } else if (action.equals("edit")) {
+            } else if (action.equals("filter")) {
+                RepairDAO repairDAO = new RepairDAO();
+                List<Repair> list = repairDAO.getRepairListByFilter("office");
+                request.setAttribute("list",list);
+                rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
+                rd.forward(request, response);
+            }
+            else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
-
             }
             else if (action.equals("page")) {
                 String startPage = request.getParameter("startPage");

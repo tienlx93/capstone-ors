@@ -103,6 +103,8 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
             Amenity amenity = (Amenity) session.get(Amenity.class, name);
             amenity.setWeight(newAmenity.getWeight());
             amenity.setDescription(newAmenity.getDescription());
+            amenity.setPriority(newAmenity.getPriority());
+            amenity.setId(newAmenity.getId());
 
 
             session.update(amenity);

@@ -48,7 +48,7 @@ public class ScheduleCheckRequestOffice implements Job {
                 dao.updateOfficeSuggest(request.getId(), officeIds);
                 emailDao.save(emailQueue);
             }
-            System.out.println(emailQueue.getOfficeIds());
+            System.out.println("Check request office: " + emailQueue.getOfficeIds());
 
         }
     }

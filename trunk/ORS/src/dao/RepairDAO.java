@@ -118,6 +118,18 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
 
         return null;
     }
+    public List<Repair> getRepairListByFilter(String name) {
+        try {
+            String sql = "from Repair where contractByContractId.officeByOfficeId.name = ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, name);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public int getPageCount(int pageSize) {
         try {

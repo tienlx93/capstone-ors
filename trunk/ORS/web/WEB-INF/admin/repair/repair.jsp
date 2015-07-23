@@ -53,6 +53,19 @@
                     <div>
 
                         <div class="panel-body">
+                            <div>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Văn phòng
+                                            <div class="input-typeahead">
+                                                <input type="text" class="form-control typeahead" id="office"
+                                                       name="office">
+                                            </div>
+                                        </label>
+                                    </div>
+                                    <button type="submit" value="filter"  class="btn btn-default" name="action">Lọc kết quả</button>
+                                </form>
+                            </div>
 
                             <div role="tabpanel">
 

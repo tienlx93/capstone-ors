@@ -48,6 +48,7 @@
               <div class="form-group">
                 <label for="">Tên tiện nghi</label>
                 <span>${amenity.name}</span>
+                <input type="hidden" name="username" class="" value="${amenity.name}">
               </div>
 
               <div class="form-group">
@@ -65,6 +66,10 @@
                 <input type="text" name="priority" class="" id="priority" value="${amenity.priority}">
               </div>
 
+              <div class="form-group">
+                <input type="hidden" name="id" class="" value="${amenity.id}">
+              </div>
+
               <div>
                 <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
                   <input type="hidden" value="${item.name}" name="name">
@@ -72,7 +77,7 @@
               </div>
               <div class="button-post">
 
-                <button type="button" value="cancel" name="action">Hủy</button>
+                <a href="${pageContext.request.contextPath}/admin/amenity" class="btn btn-default">Hủy</a>
                 <button type="submit" value="update" name="action">Cập nhật</button>
               </div>
             </form>

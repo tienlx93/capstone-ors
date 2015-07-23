@@ -46,8 +46,9 @@ public class AmenityController extends HttpServlet {
         } else if (action.equals("update")) {
             String name = request.getParameter("name");
             AmenityDAO accDAO = new AmenityDAO();
-            Amenity ame = new Amenity();
+           // Amenity ame = new Amenity();
             Amenity amedemo = new Amenity();
+            amedemo.setId(Integer.parseInt(request.getParameter("id")));
             amedemo.setWeight(Integer.parseInt(request.getParameter("weight")));
             amedemo.setWeight(Integer.parseInt(request.getParameter("priority")));
             amedemo.setDescription(request.getParameter("description"));

@@ -54,6 +54,20 @@
                     <%--List<Rental> list = dao.findAll();%>--%>
                     <div>
                         <div class="panel-body">
+                            <div>
+                                <form class="form-inline">
+                                    <div class="form-group">
+                                        <label>Văn phòng
+                                            <div class="input-typeahead">
+                                                <input type="text" class="form-control typeahead" id="office"
+                                                       name="office">
+                                            </div>
+                                        </label>
+                                    </div>
+
+                                    <button type="submit" class="btn btn-default">Lọc kết quả</button>
+                                </form>
+                            </div>
 
                             <div role="tabpanel">
 

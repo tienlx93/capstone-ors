@@ -95,10 +95,7 @@
                     </a>
                     <ul>
                         <li>
-                            <a href="${pageContext.request.contextPath}/admin/staffStatics">Doanh thu</a>
-                        </li>
-                        <li>
-                            <a href="${pageContext.request.contextPath}/admin/staffStatics">Số lượng sửa chữa</a>
+                            <a href="${pageContext.request.contextPath}/admin/incomeStatics">Doanh thu</a>
                         </li>
                         <li>
                             <a href="${pageContext.request.contextPath}/admin/staffStatics">Số việc của nhân viên</a>

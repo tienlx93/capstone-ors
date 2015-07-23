@@ -168,6 +168,9 @@ public class ApiController extends HttpServlet {
             case "getRelativeOffice":
                 getRelativeOffice(request, out);
                 break;
+            case "getResultRequestOffice":
+                getResultRequestOffice(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -392,7 +395,7 @@ public class ApiController extends HttpServlet {
     private void countAssigned(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        if (account!=null && account.getRoleId() == 3) {
+        if (account != null && account.getRoleId() == 3) {
             String staff = account.getUsername();
             AppointmentDAO dao = new AppointmentDAO();
             int[] count = new int[3];
@@ -1081,6 +1084,30 @@ public class ApiController extends HttpServlet {
             }
         }
         return false;
+    }
+
+    private void getResultRequestOffice(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            RequestOfficeDAO requestOfficeDAO = new RequestOfficeDAO();
+            OfficeDAO officeDAO = new OfficeDAO();
+//            List<RequestOfficeJSON> requestOfficeJSONList = new ArrayList<>();
+            List<RequestOffice> requestOfficeList = requestOfficeDAO.getAllRequestOfficeByUsername(account.getUsername());
+            List<OfficeListDetail> officeList = new ArrayList<>();
+            for (RequestOffice requestOffice : requestOfficeList) {
+                List<String> officeSuggest = Arrays.asList(requestOffice.getOfficeSuggested().split("\\s*,\\s*"));
+                for (String office : officeSuggest) {
+                    Office office1 = officeDAO.get(Integer.parseInt(office));
+                    officeList.add(new OfficeListDetail(office1));
+                }
+//                RequestOfficeJSON json = new RequestOfficeJSON(requestOffice.getId(), requestOffice.getCustomerUsername(), requestOffice.getCategoryId(), requestOffice.getPrice(),
+//                        requestOffice.getArea(), requestOffice.getDistrict(), officeList, requestOffice.isAvailable());
+//                requestOfficeJSONList.add(json);
+            }
+            out.print(gson.toJson(officeList));
+        }
     }
 }
 

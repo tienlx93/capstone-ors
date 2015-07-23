@@ -889,7 +889,7 @@ public class ApiController extends HttpServlet {
         RentalItemDAO dao = new RentalItemDAO();
         for (RentalItem rentalItem : dao.findAll()) {
             list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl(), null, 0));
+                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl(), null, 0, null, null));
         }
         out.print(gson.toJson(list));
     }
@@ -907,10 +907,14 @@ public class ApiController extends HttpServlet {
             for (Rental rental : rentalDAO.getRentalListByContract(id)) {
                 for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
                     RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
-                    if (rental.getStatusId() == 1 || rental.getStatusId() == 2 || rental.getStatusId() == 5) {
+                    if (rental.getStatusId() == 1 || rental.getStatusId() == 2) {
                         list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                                 rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                rental.getRentalStatusByStatusId().getDescription(), 0));
+                                "Chờ xử lý", 0, rental.getAssignedTime(), rental.getCreateTime()));
+                    } else if (rental.getStatusId() == 5) {
+                        list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                                rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
+                                rental.getRentalStatusByStatusId().getDescription(), 0, rental.getAssignedTime(), rental.getCreateTime()));
                     }
                 }
             }
@@ -935,7 +939,7 @@ public class ApiController extends HttpServlet {
                         double price = rentalDetail.getUnitPrice() * rentalDetail.getQuantity();
                         list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                                 rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                rental.getRentalStatusByStatusId().getDescription(), price));
+                                rental.getRentalStatusByStatusId().getDescription(), price, null, null));
                     }
                 }
             }
@@ -954,7 +958,7 @@ public class ApiController extends HttpServlet {
             for (Repair repair : dao.getRepairListByContract(id)) {
                 if (repair.getRepairStatusId() == 1 || repair.getRepairStatusId() == 2) {
                     list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
-                            repair.getAssignedStaff(), null, repair.getRepairStatusByRepairStatusId().getDescription()));
+                            repair.getAssignedStaff(), null, "Chờ xử lý"));
                 } else if (repair.getRepairStatusId() == 5) {
                     list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
                             repair.getAssignedStaff(), repair.getAssignedTime(), repair.getRepairStatusByRepairStatusId().getDescription()));

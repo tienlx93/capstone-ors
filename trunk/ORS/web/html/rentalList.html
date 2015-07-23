@@ -5,9 +5,9 @@
         <tr>
             <th>Tên thiết bị </th>
             <th>Mô tả</th>
+            <th>Ngày tạo</th>
             <th>Trạng thái</th>
-            <th>Giá thuê (VNĐ)</th>
-            <th>Số lượng (cái)</th>
+            <th>Ngày giao thiết bị</th>
         </tr>
         </thead>
         <tbody>
@@ -15,9 +15,9 @@
         <tr ng-repeat="item in data">
             <td>{{item.name}}</td>
             <td>{{item.description}}</td>
+            <td>{{item.createTime | toLocaleDate}}</td>
             <td>{{item.status}}</td>
-            <td>{{item.unitPrice}}</td>
-            <td>{{item.quantity}}</td>
+            <td><span ng-show="item.assignedTime">{{item.assignedTime | toLocaleDate}}</span></td>
         </tr>
 
         </tbody>

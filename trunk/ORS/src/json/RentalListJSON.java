@@ -1,5 +1,7 @@
 package json;
 
+import java.util.Date;
+
 /**
  * Created by Thành on 19/06/2015.
  */
@@ -12,11 +14,13 @@ public class RentalListJSON {
     private String imageUrl;
     private String status;
     private double price;
+    private Date assignedTime;
+    private Date createTime;
 
     public RentalListJSON() {
     }
 
-    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl, String status, double price) {
+    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl, String status, double price, Date assignedTime, Date createTime) {
         this.rentalId = rentalId;
         this.name = name;
         this.description = description;
@@ -25,6 +29,24 @@ public class RentalListJSON {
         this.imageUrl = imageUrl;
         this.status = status;
         this.price = price;
+        this.assignedTime = assignedTime;
+        this.createTime = createTime;
+    }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getAssignedTime() {
+        return assignedTime;
+    }
+
+    public void setAssignedTime(Date assignedTime) {
+        this.assignedTime = assignedTime;
     }
 
     public double getPrice() {

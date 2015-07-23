@@ -1,7 +1,10 @@
 package dao;
 
 import entity.RequestOffice;
+import org.hibernate.Query;
 import org.hibernate.Transaction;
+
+import java.util.List;
 
 /**
  * Created by Thành on 08/07/2015.
@@ -26,5 +29,19 @@ public class RequestOfficeDAO extends BaseDAO<RequestOffice, Integer> {
             }
         }
         return false;
+    }
+
+    public List<RequestOffice> getAllRequestOfficeByUsername(String username) {
+        try {
+            String sql = "from RequestOffice where customerUsername LIKE ?";
+            Query query = session.createQuery(sql);
+            query.setString(0, '%' + username + '%');
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

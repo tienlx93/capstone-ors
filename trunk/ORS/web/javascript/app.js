@@ -92,6 +92,11 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/profilePass.html',
                 controller: 'ChangePassController'
             }).
+            when('/resultRequestOffice', {
+                templateUrl: 'html/resultRequestOffice.html',
+                controller: 'resultRequestOfficeController'
+            }).
+
             otherwise({
                 redirectTo: '/home'
             });

@@ -1,0 +1,37 @@
+<link rel="stylesheet" href="../css/resultRequestOffice.css">
+
+<div class="result-request-office-wrapper">
+    <div class="container">
+        <div class="title">
+            Danh sách các văn phòng phù hợp với yêu cầu của bạn
+        </div>
+        <div class="row item" ng-repeat="office in resultRequestOffice">
+            <div class="col-md-3 item-image" style="background: url('{{office.images[0]}}');background-repeat: no-repeat;">
+                <!--<img src="{{office.images[0]}}">-->
+            </div>
+            <div class="col-md-6 item-detail">
+                <div class="item-title">
+                    <a href="#/detail/{{office.id}}">{{office.name}}</a>
+                </div>
+                <div class="item-address">{{office.address}}</div>
+                <div>{{office.description}}</div>
+                <div class="row" style="margin: auto">
+                    <div class="col-md-6" ng-repeat="amenity in office.amenityList">{{amenity}}</div>
+                </div>
+            </div>
+            <div class="col-md-3 item-price">
+                <div class="item-category">{{office.category}}</div>
+                <div class="item-price-money" ng-if="office.priceTerm=='Nguyên căn'">{{office.price  | currency:'VND':0}}
+                    <div class="price-detail">Trên tháng</div>
+                </div>
+                <div class="item-price-money" ng-if="office.priceTerm!='Nguyên căn'">
+                    <span ng-if="office.price">{{office.price | currency:'VND':0}}</span>
+                    <span ng-if="!office.price">Liên hệ</span>
+                    <div class="item-price-term" ng-if="office.price" ng-bind-html="office.priceTerm+' / Tháng' | m2"></div>
+                </div>
+                <div class="item-detail-button"><a href="#/detail/{{office.id}}">Chi tiết</a></div>
+                <!--<div class="item-price-term">{{office.priceTerm}}</div>-->
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,7 +15,7 @@ public class EmailQueueDAO extends BaseDAO<EmailQueue, Integer> {
             String sql = "select id from EmailQueue";
             Query query = session.createQuery(sql);
 
-            return query.uniqueResult() != null ? (int) query.uniqueResult() : -1 ;
+            return query.setMaxResults(1).uniqueResult() != null ? (int) query.setMaxResults(1).uniqueResult() : -1 ;
 
         } catch (Exception e) {
             e.printStackTrace();

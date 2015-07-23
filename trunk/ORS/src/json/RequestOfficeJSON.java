@@ -14,20 +14,18 @@ public class RequestOfficeJSON {
     private int price;
     private Double area;
     private String district;
-    private List<Office> officeSuggest;
     private boolean available;
 
     public RequestOfficeJSON() {
     }
 
-    public RequestOfficeJSON(int id, String customerUsername, int categoryId, int price, Double area, String district, List<Office> officeSuggest, boolean available) {
+    public RequestOfficeJSON(int id, String customerUsername, int categoryId, int price, Double area, String district, boolean available) {
         this.id = id;
         this.customerUsername = customerUsername;
         this.categoryId = categoryId;
         this.price = price;
         this.area = area;
         this.district = district;
-        this.officeSuggest = officeSuggest;
         this.available = available;
     }
 
@@ -77,14 +75,6 @@ public class RequestOfficeJSON {
 
     public void setDistrict(String district) {
         this.district = district;
-    }
-
-    public List<Office> getOfficeSuggest() {
-        return officeSuggest;
-    }
-
-    public void setOfficeSuggest(List<Office> officeSuggest) {
-        this.officeSuggest = officeSuggest;
     }
 
     public boolean isAvailable() {

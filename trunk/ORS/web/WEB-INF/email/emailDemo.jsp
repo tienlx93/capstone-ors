@@ -18,14 +18,13 @@
     <title></title>
 </head>
 <body>
-    <h1>Chào mừng</h1>
-    <p>Test image</p>
+<div style="text-align: center;"><h1>Các văn phòng phù hợp với yêu cầu của bạn</h1></div>
+
     <%--<div><img src="http://tienlx.me/img/ban-1.jpg"></div>--%>
-    <p>Test link</p>
     <c:forEach items="${offices}" var="item">
-        <p><a href="http://tienlx.me/#/detail/${item}">Office</a> </p>
+        <div><a href="http://tienlx.me/#/detail/${item.id}">${item.name}</a></div>
+        <div><img src="http://tienlx.me/${item.imageUrls}" width="150px" height="120px"></div>
     </c:forEach>
-    <p>Test dynamic content</p>
     <%--<p class="myStyle">${data}</p>--%>
 </body>
 </html>

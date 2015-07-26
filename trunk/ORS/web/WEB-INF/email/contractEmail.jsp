@@ -18,7 +18,7 @@
   <title></title>
 </head>
 <body>
-<h1>Thông báo hợp đồng</h1>
+<div style="text-align: center;"><h1>Thông báo hợp đồng</h1></div>
 <p class="myStyle">${content}</p>
 </body>
 </html>

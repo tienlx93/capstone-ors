@@ -1,7 +1,9 @@
 package service;
 
+import dao.AccountDAO;
 import dao.ContractDAO;
 import dao.EmailQueueDAO;
+import entity.Account;
 import entity.Contract;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
@@ -15,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.nio.channels.AcceptPendingException;
 import java.util.Date;
 import java.util.List;
 
@@ -39,26 +42,31 @@ public class ScheduleCheckContract implements Job {
             if (currentDate - endDate > 0){
                 if(contract.getStatusId() == 1) {
                     dao.changeStatus(contract.getId(), 4);
-                    sendEmail(contract.getId(), contract.getStatusId());
+                    sendEmail(contract.getId(), contract.getStatusId(), contract.getCustomerUsername());
                 }
             } else if (dayTime == 7) {
 //                System.out.println(contract.getId());
-                sendEmail(contract.getId(), contract.getStatusId());
+                sendEmail(contract.getId(), contract.getStatusId(), contract.getCustomerUsername());
             }
         }
 
     }
 
-    private void sendEmail(int id, int status) {
+    private void sendEmail(int id, int status, String username) {
         String charset = "UTF-8";
+        AccountDAO accountDAO = new AccountDAO();
+        Account account = accountDAO.findByUsername(username);
+
         String param1 = Integer.toString(id);
         String param2 = Integer.toString(status);
+        String param3 = account.getEmail();
 
         URL gwtServlet = null;
         try {
-            String query = String.format("id=%s&status=%s",
+            String query = String.format("id=%s&status=%s&email=%s",
                     URLEncoder.encode(param1, charset),
-                    URLEncoder.encode(param2, charset));
+                    URLEncoder.encode(param2, charset),
+                    URLEncoder.encode(param3, charset));
 
             gwtServlet = new URL("http://localhost:8080/contractMail" + "?" + query);
             HttpURLConnection servletConnection = (HttpURLConnection) gwtServlet.openConnection();

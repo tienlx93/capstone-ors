@@ -3,10 +3,41 @@
 <div class="result-request-office-wrapper">
     <div class="container">
         <div class="title">
+            Danh sách các yêu cầu của bạn
+        </div>
+        <div style="margin-bottom: 70px;">
+            <table style="width: 100%" class="table">
+                <thead>
+                <tr>
+                    <th>Loại văn phòng</th>
+                    <th>Diện tích</th>
+                    <th>Giá</th>
+                    <th>Địa chỉ</th>
+                    <th>Ngày tạo</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat="request in requestOffice">
+                    <td ng-if="request.categoryId === 1">Văn phòng nguyên căn</td>
+                    <td ng-if="request.categoryId !== 1">Tòa nhà văn phòng</td>
+                    <td>{{request.area}}</td>
+                    <td>{{request.price}}</td>
+                    <td>{{request.district}}</td>
+                    <td>{{request.createDate}}</td>
+                    <td><button class="btn btn-danger" ng-click="unsubscribeRequest(request.id)">Hủy yêu cầu</button></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="title">
             Danh sách các văn phòng phù hợp với yêu cầu của bạn
         </div>
         <div class="row item" ng-repeat="office in resultRequestOffice">
-            <div class="col-md-3 item-image" style="background: url('{{office.images[0]}}');background-repeat: no-repeat;background-size: 100% 100%;">
+            <div class="col-md-3 item-image"
+                 style="background: url('{{office.images[0]}}');background-repeat: no-repeat;background-size: 100% 100%;">
                 <!--<img src="{{office.images[0]}}">-->
             </div>
             <div class="col-md-6 item-detail">
@@ -21,13 +52,15 @@
             </div>
             <div class="col-md-3 item-price">
                 <div class="item-category">{{office.category}}</div>
-                <div class="item-price-money" ng-if="office.priceTerm=='Nguyên căn'">{{office.price  | currency:'VND':0}}
+                <div class="item-price-money" ng-if="office.priceTerm=='Nguyên căn'">{{office.price | currency:'VND':0}}
                     <div class="price-detail">Trên tháng</div>
                 </div>
                 <div class="item-price-money" ng-if="office.priceTerm!='Nguyên căn'">
                     <span ng-if="office.price">{{office.price | currency:'VND':0}}</span>
                     <span ng-if="!office.price">Liên hệ</span>
-                    <div class="item-price-term" ng-if="office.price" ng-bind-html="office.priceTerm+' / Tháng' | m2"></div>
+
+                    <div class="item-price-term" ng-if="office.price"
+                         ng-bind-html="office.priceTerm+' / Tháng' | m2"></div>
                 </div>
                 <div class="item-detail-button"><a href="#/detail/{{office.id}}">Chi tiết</a></div>
                 <!--<div class="item-price-term">{{office.priceTerm}}</div>-->

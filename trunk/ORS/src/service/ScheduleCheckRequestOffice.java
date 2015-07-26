@@ -40,13 +40,15 @@ public class ScheduleCheckRequestOffice implements Job {
                 officeIds += office.getId() + ",";
             }
 
-            if ((request.getOfficeSuggested() != null) && (request.getOfficeSuggested().equals(officeIds))) {
+            if(officeIds != "") {
+                if ((request.getOfficeSuggested() != null) && (request.getOfficeSuggested().equals(officeIds))) {
 
-            } else {
-                emailQueue.setOfficeIds(officeIds);
+                } else {
+                    emailQueue.setOfficeIds(officeIds);
 
-                dao.updateOfficeSuggest(request.getId(), officeIds);
-                emailDao.save(emailQueue);
+                    dao.updateOfficeSuggest(request.getId(), officeIds);
+                    emailDao.save(emailQueue);
+                }
             }
             System.out.println("Check request office: " + emailQueue.getOfficeIds());
 

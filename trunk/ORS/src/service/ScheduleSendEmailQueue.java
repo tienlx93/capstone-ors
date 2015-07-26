@@ -1,7 +1,10 @@
 package service;
 
 
+import dao.AccountDAO;
 import dao.EmailQueueDAO;
+import entity.Account;
+import entity.EmailQueue;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -27,12 +30,18 @@ public class ScheduleSendEmailQueue implements Job {
         EmailQueueDAO emailQueueDAO = new EmailQueueDAO();
         int id = emailQueueDAO.getFirstEmailQueue();
         if (id != -1) {
+            EmailQueue emailQueue = emailQueueDAO.get(id);
+            AccountDAO accountDAO = new AccountDAO();
+            Account account = accountDAO.findByUsername(emailQueue.getUsername());
+
             String param1 = Integer.toString(id);
+            String param2 = account.getEmail();
 
             URL gwtServlet = null;
             try {
-                String query = String.format("id=%s",
-                        URLEncoder.encode(param1, charset));
+                String query = String.format("id=%s&email=%s",
+                        URLEncoder.encode(param1, charset),
+                        URLEncoder.encode(param2, charset));
 
                 gwtServlet = new URL("http://localhost:8080/sendMail" + "?" + query);
                 HttpURLConnection servletConnection = (HttpURLConnection) gwtServlet.openConnection();

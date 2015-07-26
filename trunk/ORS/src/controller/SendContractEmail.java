@@ -30,6 +30,7 @@ public class SendContractEmail extends HttpServlet {
         ContractDAO contractDAO = new ContractDAO();
         int id = Integer.parseInt(request.getParameter("id"));
         int status = Integer.parseInt(request.getParameter("status"));
+        String email = request.getParameter("email");
 
         Contract contract = contractDAO.get(id);
         switch (status){
@@ -51,7 +52,7 @@ public class SendContractEmail extends HttpServlet {
         rd.forward(request, res2);
 
         EmailService service = new EmailService();
-        service.setReceiver("quoc0212@gmail.com");
+        service.setReceiver(email);
         service.setSubject("Thông báo hợp đồng thuê văn phòng");
         service.setContent(res2.getOutput());
         service.sendEmail();

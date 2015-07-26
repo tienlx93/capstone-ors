@@ -87,6 +87,9 @@ public class ApiController extends HttpServlet {
             case "requestRental":
                 requestRental(request, out);
                 break;
+            case "unsubscribeRequest":
+                unsubscribeRequest(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
@@ -170,6 +173,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "getResultRequestOffice":
                 getResultRequestOffice(request, out);
+                break;
+            case "getRequestOffice":
+                getRequestOffice(request, out);
                 break;
             default:
                 out.print(gson.toJson("Error"));
@@ -1112,6 +1118,40 @@ public class ApiController extends HttpServlet {
             }
             out.print(gson.toJson(officeList));
         }
+    }
+    private void getRequestOffice(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            RequestOfficeDAO requestOfficeDAO = new RequestOfficeDAO();
+            List<RequestOffice> requestOfficeList = requestOfficeDAO.getAllRequestOfficeByUsername(account.getUsername());
+            List<RequestOfficeJSON> requestOfficeJSONs = new ArrayList<>();
+
+            for (RequestOffice requestOffice : requestOfficeList) {
+                requestOfficeJSONs.add(new RequestOfficeJSON(requestOffice.getId(),requestOffice.getCustomerUsername(),requestOffice.getCategoryId(),
+                        requestOffice.getPrice(),requestOffice.getArea(),
+                        requestOffice.getDistrict(),requestOffice.getCreateDate(),requestOffice.isAvailable()));
+            }
+
+            out.print(gson.toJson(requestOfficeJSONs));
+        }
+    }
+
+    private void unsubscribeRequest(HttpServletRequest request, PrintWriter out) {
+        int requestId = Integer.parseInt(request.getParameter("requestId"));
+
+        RequestOfficeDAO requestOfficeDAO = new RequestOfficeDAO();
+        RequestOffice requestOffice = requestOfficeDAO.get(requestId);
+
+        boolean result = requestOfficeDAO.remove(requestOffice);
+
+        if (result) {
+            out.print(gson.toJson("Success"));
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+
     }
 }
 

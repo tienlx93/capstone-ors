@@ -478,12 +478,45 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getResultRequestOffice = function( callback) {
+        services.getResultRequestOffice = function(callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'getResultRequestOffice'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
+        services.getRequestOffice = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getRequestOffice'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
+        services.unsubscribeRequest = function(id, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'unsubscribeRequest',
+                    'requestId': id
                 }
             })
                 .success(function (data) {

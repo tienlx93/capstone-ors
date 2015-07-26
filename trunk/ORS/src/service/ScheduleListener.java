@@ -19,12 +19,12 @@ import java.util.Date;
  */
 @WebListener
 public class ScheduleListener implements ServletContextListener {
+    private SchedulerFactory factory = new StdSchedulerFactory();
+    private Scheduler scheduler = null;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
         //Creating scheduler factory and scheduler
-        SchedulerFactory factory = new StdSchedulerFactory();
-        Scheduler scheduler = null;
         try {
             scheduler = factory.getScheduler();
 
@@ -80,8 +80,6 @@ public class ScheduleListener implements ServletContextListener {
     @Override
     public void contextDestroyed(ServletContextEvent sce) {
         System.out.println("On shutdown web app");
-        SchedulerFactory factory = new StdSchedulerFactory();
-        Scheduler scheduler = null;
         try {
             scheduler = factory.getScheduler();
             scheduler.shutdown();

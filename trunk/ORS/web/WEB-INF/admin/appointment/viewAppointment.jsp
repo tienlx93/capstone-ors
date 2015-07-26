@@ -83,127 +83,202 @@
 
                                         <!-- Nav tabs -->
                                         <ul class="nav nav-tabs" role="tablist">
-                                            <li role="presentation" class="active">
-                                                <a href="#pending" aria-controls="home"
-                                                   role="tab" data-toggle="tab">Cần Giao Việc</a>
-                                            </li>
-                                            <li role="presentation" class="">
-                                                <a href="#Assigned"
-                                                   aria-controls="Assigned" role="tab"
-                                                   data-toggle="tab">Đã Giao</a>
-                                            </li>
-                                            <li role="presentation" class="">
-                                                <a href="#Accepted"
-                                                   aria-controls="Accepted" role="tab"
-                                                   data-toggle="tab">Chấp Nhận</a>
-                                            </li>
-                                            <li role="presentation" class="">
-                                                <a href="#done" aria-controls="done"
-                                                   role="tab" data-toggle="tab">Hoàn Thành</a>
-                                            </li>
-                                            <li role="presentation" class="">
-                                                <a href="#cancel" aria-controls="cancel"
-                                                   role="tab" data-toggle="tab">Hủy</a>
-                                            </li>
+                                            <c:choose>
+                                                <c:when test="${user.roleId == 2}">
+                                                    <li role="presentation" class="active">
+                                                        <a href="#pending" aria-controls="home"
+                                                           role="tab" data-toggle="tab">Cần Giao Việc</a>
+                                                    </li>
+                                                    <li role="presentation" class="">
+                                                        <a href="#Assigned"
+                                                           aria-controls="Assigned" role="tab"
+                                                           data-toggle="tab">Đã Giao</a>
+                                                    </li>
+                                                    <li role="presentation" class="">
+                                                        <a href="#Accepted"
+                                                           aria-controls="Accepted" role="tab"
+                                                           data-toggle="tab">Chấp Nhận</a>
+                                                    </li>
+                                                    <li role="presentation" class="">
+                                                        <a href="#done" aria-controls="done"
+                                                           role="tab" data-toggle="tab">Hoàn Thành</a>
+                                                    </li>
+                                                    <li role="presentation" class="">
+                                                        <a href="#cancel" aria-controls="cancel"
+                                                           role="tab" data-toggle="tab">Hủy</a>
+                                                    </li>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <li role="presentation" class="active">
+                                                        <a href="#Assigned"
+                                                           aria-controls="Assigned" role="tab"
+                                                           data-toggle="tab">Được Giao</a>
+                                                    </li>
+                                                    <li role="presentation" class="">
+                                                        <a href="#Accepted"
+                                                           aria-controls="Accepted" role="tab"
+                                                           data-toggle="tab">Chấp Nhận</a>
+                                                    </li>
+                                                    <li role="presentation" class="">
+                                                        <a href="#done" aria-controls="done"
+                                                           role="tab" data-toggle="tab">Hoàn Thành</a>
+                                                    </li>
+                                                    <li role="presentation" class="">
+                                                        <a href="#cancel" aria-controls="cancel"
+                                                           role="tab" data-toggle="tab">Hủy</a>
+                                                    </li>
+                                                </c:otherwise>
+                                            </c:choose>
+
                                         </ul>
 
                                         <!-- Tab panes -->
+
                                         <div class="tab-content">
-                                            <div role="tabpanel" class="tab-pane active" id="pending">
-                                                <div>
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Khách hàng</th>
-                                                            <th>Văn phòng</th>
-                                                            <th>Thời gian gặp</th>
-                                                            <th>Đề xuất nhân viên</th>
+                                            <c:if test="${user.roleId == 2}">
+                                                <div role="tabpanel" class="tab-pane active" id="pending">
+                                                    <div>
+                                                        <table class="table">
+                                                            <thead>
+                                                            <tr>
+                                                                <th>Khách hàng</th>
+                                                                <th>Văn phòng</th>
+                                                                <th>Thời gian gặp</th>
+                                                                <th>Đề xuất nhân viên</th>
 
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <c:forEach items="${data}" var="item" varStatus="index">
-                                                            <c:if test="${item.statusId == 1}">
-                                                                <tr>
-                                                                    <form action="/admin/appointment?action=editing"
-                                                                          method="post" name="appointment">
-                                                                        <td>${item.accountByCustomerUsername.username}</td>
-                                                                        <td>${item.officeByOfficeId.name}</td>
-                                                                        <td>${item.time}</td>
-                                                                        <td>
-                                                                            <input type="hidden" name="id"
-                                                                                   value="${item.id}">
-                                                                            <select name="assignedStaff"
-                                                                                    id="assignedStaff"
-                                                                                    class="form-control">
-                                                                                <option value="">(Không có đề xuất)</option>
-                                                                                <c:forEach var="itemAcc"
-                                                                                           items="<%= listAcc %>">
-                                                                                    <option value="${itemAcc.username}"
-                                                                                            <c:if test="${suggestMap[item.id] == itemAcc.username}">selected</c:if> >
-                                                                                            ${itemAcc.username}</option>
-                                                                                </c:forEach>
-                                                                            </select>
-                                                                        </td>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <c:forEach items="${data}" var="item" varStatus="index">
+                                                                <c:if test="${item.statusId == 1}">
+                                                                    <tr>
+                                                                        <form action="/admin/appointment?action=editing"
+                                                                              method="post" name="appointment">
+                                                                            <td>${item.accountByCustomerUsername.username}</td>
+                                                                            <td>${item.officeByOfficeId.name}</td>
+                                                                            <td>${item.time}</td>
+                                                                            <td>
+                                                                                <input type="hidden" name="id"
+                                                                                       value="${item.id}">
+                                                                                <select name="assignedStaff"
+                                                                                        id="assignedStaff"
+                                                                                        class="form-control">
+                                                                                    <option value="">(Không có đề xuất)
+                                                                                    </option>
+                                                                                    <c:forEach var="itemAcc"
+                                                                                               items="<%= listAcc %>">
+                                                                                        <option value="${itemAcc.username}"
+                                                                                                <c:if test="${suggestMap[item.id] == itemAcc.username}">selected</c:if> >
+                                                                                                ${itemAcc.username}</option>
+                                                                                    </c:forEach>
+                                                                                </select>
+                                                                            </td>
 
-                                                                        <td>
-                                                                            <button class="btn btn-default" id="assign"
-                                                                                    type="submit" name="button"
-                                                                                    value="assign">Giao việc
-                                                                            </button>
-                                                                            <a class="btn"
-                                                                               href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                                Chi tiết
-                                                                            </a>
-                                                                        </td>
-                                                                    </form>
-                                                                </tr>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        </tbody>
-                                                    </table>
+                                                                            <td>
+                                                                                <button class="btn btn-default"
+                                                                                        id="assign"
+                                                                                        type="submit" name="button"
+                                                                                        value="assign">Giao việc
+                                                                                </button>
+                                                                                <a class="btn"
+                                                                                   href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
+                                                                                    Chi tiết
+                                                                                </a>
+                                                                            </td>
+                                                                        </form>
+                                                                    </tr>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <!--end table-->
                                                 </div>
-                                                <!--end table-->
-                                            </div>
-                                            <div role="tabpanel" class="tab-pane" id="Assigned">
-                                                <div>
-                                                    <table class="table">
-                                                        <thead>
-                                                        <tr>
-                                                            <th>Khách hàng</th>
-                                                            <c:if test="${user.roleId == 2}">
-                                                                <th>Nhân viên</th>
-                                                            </c:if>
-                                                            <th>Văn phòng</th>
-                                                            <th>Thời gian gặp</th>
-
-                                                        </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                        <c:forEach items="${data}" var="item">
-                                                            <c:if test="${item.statusId == 2}">
+                                            </c:if>
+                                            <c:choose>
+                                                <c:when test="${user.roleId == 3}">
+                                                    <div role="tabpanel" class="tab-pane active" id="Assigned">
+                                                        <div>
+                                                            <table class="table">
+                                                                <thead>
                                                                 <tr>
-                                                                    <td>${item.accountByCustomerUsername.username}</td>
+                                                                    <th>Khách hàng</th>
                                                                     <c:if test="${user.roleId == 2}">
-                                                                        <td>${item.accountByAssignedStaff.username}</td>
+                                                                        <th>Nhân viên</th>
                                                                     </c:if>
-                                                                    <td>${item.officeByOfficeId.name}</td>
-                                                                    <td>${item.time}</td>
+                                                                    <th>Văn phòng</th>
+                                                                    <th>Thời gian gặp</th>
 
-                                                                    <td>
-                                                                        <a class="btn"
-                                                                           href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
-                                                                            Chi tiết
-                                                                        </a>
-                                                                    </td>
                                                                 </tr>
-                                                            </c:if>
-                                                        </c:forEach>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-                                                <!--end table-->
-                                            </div>
+                                                                </thead>
+                                                                <tbody>
+                                                                <c:forEach items="${data}" var="item">
+                                                                    <c:if test="${item.statusId == 2}">
+                                                                        <tr>
+                                                                            <td>${item.accountByCustomerUsername.username}</td>
+                                                                            <c:if test="${user.roleId == 2}">
+                                                                                <td>${item.accountByAssignedStaff.username}</td>
+                                                                            </c:if>
+                                                                            <td>${item.officeByOfficeId.name}</td>
+                                                                            <td>${item.time}</td>
+
+                                                                            <td>
+                                                                                <a class="btn"
+                                                                                   href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
+                                                                                    Chi tiết
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--end table-->
+                                                    </div>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <div role="tabpanel" class="tab-pane" id="Assigned">
+                                                        <div>
+                                                            <table class="table">
+                                                                <thead>
+                                                                <tr>
+                                                                    <th>Khách hàng</th>
+                                                                    <c:if test="${user.roleId == 2}">
+                                                                        <th>Nhân viên</th>
+                                                                    </c:if>
+                                                                    <th>Văn phòng</th>
+                                                                    <th>Thời gian gặp</th>
+
+                                                                </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                <c:forEach items="${data}" var="item">
+                                                                    <c:if test="${item.statusId == 2}">
+                                                                        <tr>
+                                                                            <td>${item.accountByCustomerUsername.username}</td>
+                                                                            <c:if test="${user.roleId == 2}">
+                                                                                <td>${item.accountByAssignedStaff.username}</td>
+                                                                            </c:if>
+                                                                            <td>${item.officeByOfficeId.name}</td>
+                                                                            <td>${item.time}</td>
+
+                                                                            <td>
+                                                                                <a class="btn"
+                                                                                   href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}">
+                                                                                    Chi tiết
+                                                                                </a>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <!--end table-->
+                                                    </div>
+                                                </c:otherwise>
+                                            </c:choose>
                                             <div role="tabpanel" class="tab-pane" id="Accepted">
                                                 <div>
                                                     <table class="table">
@@ -335,7 +410,8 @@
                                                 </a>
                                             </li>
                                             <c:forEach var="i" begin="1" end="${pageCount}">
-                                                <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+                                                <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a
+                                                        href="#" onclick="goto(${i})">${i}</a></li>
 
                                             </c:forEach>
                                             <li id="next">
@@ -384,24 +460,24 @@
     var pageCount = ${pageCount};
     var prev = function () {
         if (pageNumber > 1) {
-            pageNumber --;
+            pageNumber--;
             getPage(pageNumber);
         }
     };
     var next = function () {
         if (pageNumber < pageCount) {
-            pageNumber ++;
+            pageNumber++;
             getPage(pageNumber);
         }
     };
-    var goto = function(i) {
+    var goto = function (i) {
         pageNumber = i;
         getPage(pageNumber);
     };
-    var getPage = function(page) {
+    var getPage = function (page) {
         var selector = $(".items");
         selector.removeClass("active");
-        $(selector[page-1]).addClass("active");
+        $(selector[page - 1]).addClass("active");
         $("#next").removeClass("disabled");
         $("#prev").removeClass("disabled");
         if (page == pageCount) {
@@ -422,6 +498,6 @@
         });
     };
 </script>
-</script>
+
 </body>
 </html>

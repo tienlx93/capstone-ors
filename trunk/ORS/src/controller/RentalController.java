@@ -1,8 +1,10 @@
 package controller;
 
+import dao.OfficeDAO;
 import dao.RentalDAO;
 import dao.RentalDetailDAO;
 import entity.Account;
+import entity.Office;
 import entity.Rental;
 import entity.RentalDetail;
 import service.ConstantService;
@@ -67,7 +69,7 @@ public class RentalController extends HttpServlet {
             if (action == null) {
                 RentalDAO rentalDAO = new RentalDAO();
                 List<Rental> list;
-                if (account.getRoleId()==2) {
+                if (account.getRoleId() == 2) {
                     ScheduleService service = new ScheduleService();
                     Map<Integer, Rental> suggestMap = service.makeRentalSchedule();
                     request.setAttribute("suggestMap", suggestMap);
@@ -76,10 +78,6 @@ public class RentalController extends HttpServlet {
                     list = rentalDAO.getRentalListByStaff(account.getUsername());
                 }
                 request.setAttribute("data", list);
-
-                /*int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
-                request.setAttribute("pageCount", pageCount);*/
-
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/rental/rental.jsp");
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
@@ -91,14 +89,18 @@ public class RentalController extends HttpServlet {
 
             } else if (action.equals("new")) {
                 request.getRequestDispatcher("/WEB-INF/admin/rental/newRentalItem.jsp").forward(request, response);
-            } /*else if (action.equals("page")) {
-                String startPage = request.getParameter("startPage");
-                int page = Integer.parseInt(startPage);
-                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
-                List<Rental> list = dao.getRentalByPage(startItem, ConstantService.PAGE_SIZE);
+            } else if (action.equals("filter")) {
+                String office = new String(request.getParameter("office").getBytes(
+                        "iso-8859-1"), "UTF-8");
+                String staff = request.getParameter("staff");
+                List<Rental> list;
+                list = dao.getRentalListByFilter(office, staff);
+                request.setAttribute("office", office);
+                request.setAttribute("staff", staff);
                 request.setAttribute("data", list);
-                request.getRequestDispatcher("/WEB-INF/partial/officeListItem.jsp");
-            }*/
+                RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/rental/rental.jsp");
+                rd.forward(request, response);
+            }
         } else {
             response.sendRedirect("/admin");
         }

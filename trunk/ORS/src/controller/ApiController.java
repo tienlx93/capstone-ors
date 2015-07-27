@@ -245,7 +245,7 @@ public class ApiController extends HttpServlet {
                 case "appointment": {
                     AppointmentDAO dao = new AppointmentDAO();
 
-                    for (Appointment appointment : dao.getAppointmentListByStaff(username)) {
+                    for (Appointment appointment : dao.getAppointmentListByStaffAndOffice(username, "")) {
                         office = appointment.getOfficeByOfficeId();
                         profile = appointment.getAccountByCustomerUsername().getProfileByUsername();
                         if (appointment.getStatusId() == 2) {
@@ -1119,6 +1119,7 @@ public class ApiController extends HttpServlet {
             out.print(gson.toJson(officeList));
         }
     }
+
     private void getRequestOffice(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
@@ -1129,9 +1130,9 @@ public class ApiController extends HttpServlet {
             List<RequestOfficeJSON> requestOfficeJSONs = new ArrayList<>();
 
             for (RequestOffice requestOffice : requestOfficeList) {
-                requestOfficeJSONs.add(new RequestOfficeJSON(requestOffice.getId(),requestOffice.getCustomerUsername(),requestOffice.getCategoryId(),
-                        requestOffice.getPrice(),requestOffice.getArea(),
-                        requestOffice.getDistrict(),requestOffice.getCreateDate(),requestOffice.isAvailable()));
+                requestOfficeJSONs.add(new RequestOfficeJSON(requestOffice.getId(), requestOffice.getCustomerUsername(), requestOffice.getCategoryId(),
+                        requestOffice.getPrice(), requestOffice.getArea(),
+                        requestOffice.getDistrict(), requestOffice.getCreateDate(), requestOffice.isAvailable()));
             }
 
             out.print(gson.toJson(requestOfficeJSONs));

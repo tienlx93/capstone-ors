@@ -1,7 +1,6 @@
 package dao;
 
 
-
 import entity.Repair;
 import org.hibernate.Criteria;
 import org.hibernate.Transaction;
@@ -102,6 +101,7 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         }
         return null;
     }
+
     public List<Repair> getRepairByPage(int firstResult, int pageSize) {
 
         try {
@@ -118,16 +118,47 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
 
         return null;
     }
-    public List<Repair> getRepairListByFilter(String name) {
+
+    public List<Repair> getRepairListByFilter(int officeId) {
         try {
-            String sql = "from Repair where contractByContractId.officeByOfficeId.name = ?";
+            String sql = "from Repair ";
+            if (officeId >= 0) {
+                sql += "where contractByContractId.officeId = :officeId";
+            }
             Query query = session.createQuery(sql);
-            query.setString(0, name);
+            query.setInteger("officeId", officeId);
 
             return query.list();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public List<Repair> getRepairListByFilter(String officeName, String staff) {
+        try {
+            String sql = "from Repair ";
+            if (!officeName.equals("")) {
+                sql += "where contractByContractId.officeByOfficeId.name like :officeName";
+                if (!staff.equals("")) {
+                    sql += " and assignedStaff like :staff";
+                }
+            } else if (!staff.equals("")) {
+                sql += "where assignedStaff like :staff";
+            }
+            Query query = session.createQuery(sql);
+            if (!officeName.equals("")) {
+                query.setString("officeName", "%" + officeName + "%");
+            }
+            if (!staff.equals("")) {
+                query.setString("staff", staff);
+            }
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         return null;
     }
 
@@ -137,7 +168,7 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
             Criteria criteriaCount = session.createCriteria(Repair.class);
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();
-            return (int) Math.ceil((double)count / pageSize);
+            return (int) Math.ceil((double) count / pageSize);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -145,6 +176,7 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
 
         return 0;
     }
+
     public List<Repair> getRepairListByStatus(int status) {
         try {
             String sql = "from Repair where repairStatusId = :status";
@@ -157,4 +189,5 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         }
         return null;
     }
+
 }

@@ -3,8 +3,6 @@ package controller;
 import dao.AppointmentDAO;
 import entity.Account;
 import entity.Appointment;
-import entity.Office;
-import service.ConstantService;
 import service.SMSService;
 import service.ScheduleService;
 
@@ -18,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -64,39 +61,43 @@ public class AppointmentController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
-        if (account != null && (account.getRoleId()==2 || account.getRoleId() == 3)) {
+        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
             AppointmentDAO dao = new AppointmentDAO();
             String action = request.getParameter("action");
             RequestDispatcher rd;
             if (action == null) {
-                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
-                request.setAttribute("pageCount", pageCount);
-
-                List<Appointment> list = dao.getAppointmentByPage(0, ConstantService.PAGE_SIZE);
-                request.setAttribute("data", list);
-                //List<Appointment> list;
+                ScheduleService service = new ScheduleService();
+                Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
+                request.setAttribute("suggestMap", suggestMap);
+                List<Appointment> list;
                 if (account.getRoleId() == 2) {
                     list = dao.findAll();
-                    ScheduleService service = new ScheduleService();
-                    Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
-                    request.setAttribute("suggestMap", suggestMap);
                 } else {
-                    list = dao.getAppointmentListByStaff(account.getUsername());
+                    list = dao.getAppointmentListByStaffAndOffice(account.getUsername(), "");
                 }
                 request.setAttribute("data", list);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/appointment/viewAppointment.jsp");
                 rd.forward(request, response);
-            } else if (action.equals("edit")){
+            } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                 request.getRequestDispatcher("/WEB-INF/admin/appointment/appointmentDetail.jsp").forward(request, response);
-            }
-            else if (action.equals("page")) {
-                String startPage = request.getParameter("startPage");
-                int page = Integer.parseInt(startPage);
-                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
-                List<Appointment> list = dao.getAppointmentByPage(startItem, ConstantService.PAGE_SIZE);
+            } else if (action.equals("filter")) {
+                String office = new String(request.getParameter("office").getBytes(
+                        "iso-8859-1"), "UTF-8");
+                String staff = request.getParameter("staff");
+                if (staff == null) {
+                    staff = "";
+                }
+                List<Appointment> list;
+                if (account.getRoleId() == 2) {
+                    list = dao.getAppointmentListByStaffAndOffice(staff, office);
+                } else {
+                    list = dao.getAppointmentListByStaffAndOffice(account.getUsername(), office);
+                }
+                request.setAttribute("office", office);
+                request.setAttribute("staff", staff);
                 request.setAttribute("data", list);
-                rd = request.getRequestDispatcher("/WEB-INF/partial/appointmentListItem.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/admin/appointment/viewAppointment.jsp");
                 rd.forward(request, response);
             }
         } else {

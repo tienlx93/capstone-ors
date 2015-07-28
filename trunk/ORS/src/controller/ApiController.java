@@ -658,11 +658,12 @@ public class ApiController extends HttpServlet {
         String[] amenities = request.getParameterValues("amenityList");
         List<String> amenityItem = new ArrayList<>();
 
-        for (String amenity : amenities) {
-            amenityItem.add(new String(amenity.getBytes(
-                    "iso-8859-1"), "UTF-8"));
+        if (amenities != null) {
+            for (String amenity : amenities) {
+                amenityItem.add(new String(amenity.getBytes(
+                        "iso-8859-1"), "UTF-8"));
+            }
         }
-
 
         if (account != null) {
 
@@ -1107,10 +1108,13 @@ public class ApiController extends HttpServlet {
             List<RequestOffice> requestOfficeList = requestOfficeDAO.getAllRequestOfficeByUsername(account.getUsername());
             List<OfficeListDetail> officeList = new ArrayList<>();
             for (RequestOffice requestOffice : requestOfficeList) {
-                List<String> officeSuggest = Arrays.asList(requestOffice.getOfficeSuggested().split("\\s*,\\s*"));
-                for (String office : officeSuggest) {
-                    Office office1 = officeDAO.get(Integer.parseInt(office));
-                    officeList.add(new OfficeListDetail(office1));
+                String OfficeSuggested = requestOffice.getOfficeSuggested();
+                if (OfficeSuggested != null) {
+                    List<String> officeSuggest = Arrays.asList(requestOffice.getOfficeSuggested().split("\\s*,\\s*"));
+                    for (String office : officeSuggest) {
+                        Office office1 = officeDAO.get(Integer.parseInt(office));
+                        officeList.add(new OfficeListDetail(office1));
+                    }
                 }
 //                RequestOfficeJSON json = new RequestOfficeJSON(requestOffice.getId(), requestOffice.getCustomerUsername(), requestOffice.getCategoryId(), requestOffice.getPrice(),
 //                        requestOffice.getArea(), requestOffice.getDistrict(), officeList, requestOffice.isAvailable());
@@ -1119,6 +1123,7 @@ public class ApiController extends HttpServlet {
             out.print(gson.toJson(officeList));
         }
     }
+
     private void getRequestOffice(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
@@ -1129,9 +1134,9 @@ public class ApiController extends HttpServlet {
             List<RequestOfficeJSON> requestOfficeJSONs = new ArrayList<>();
 
             for (RequestOffice requestOffice : requestOfficeList) {
-                requestOfficeJSONs.add(new RequestOfficeJSON(requestOffice.getId(),requestOffice.getCustomerUsername(),requestOffice.getCategoryId(),
-                        requestOffice.getPrice(),requestOffice.getArea(),
-                        requestOffice.getDistrict(),requestOffice.getCreateDate(),requestOffice.isAvailable()));
+                requestOfficeJSONs.add(new RequestOfficeJSON(requestOffice.getId(), requestOffice.getCustomerUsername(), requestOffice.getCategoryId(),
+                        requestOffice.getPrice(), requestOffice.getArea(),
+                        requestOffice.getDistrict(), requestOffice.getCreateDate(), requestOffice.isAvailable()));
             }
 
             out.print(gson.toJson(requestOfficeJSONs));

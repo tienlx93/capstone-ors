@@ -5,6 +5,13 @@
 controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api', 'toastr',
     function ($scope, $location, Api, toastr) {
         $scope.reOffice = {};
+        $scope.districts = [
+            'Tân Bình', 'Phú Nhuận', 'Bình Thạch', 'Gò Vấp', 'Bình Tân', 'Thủ Đức', 'Tân Phú',
+            'Củ Chi', 'Hóc Môn', 'Nhà Bè', 'Cần Giờ', 'Bình Chánh',
+            'Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6',
+            'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12'
+        ];
+
         $scope.login = function (form) {
             if (form.$valid) {
                 var username = $scope.username;

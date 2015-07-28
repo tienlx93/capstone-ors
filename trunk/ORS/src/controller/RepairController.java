@@ -1,7 +1,9 @@
 package controller;
 
+import dao.OfficeDAO;
 import dao.RepairDAO;
 import entity.Account;
+import entity.Office;
 import entity.Repair;
 import service.ConstantService;
 import service.ScheduleService;
@@ -71,42 +73,43 @@ public class RepairController extends HttpServlet {
             RepairDAO dao = new RepairDAO();
             String action = request.getParameter("action");
             if (action == null) {
-                RepairDAO repairDAO = new RepairDAO();
-                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
-                request.setAttribute("pageCount", pageCount);
-                List<Repair> list = dao.getRepairByPage(0, ConstantService.PAGE_SIZE);
-                request.setAttribute("data", list);
-                //List<Repair> list;
+                List<Repair> list;
                 if (account.getRoleId() == 2) {
-                    list = repairDAO.findAll();
-                    ScheduleService service = new ScheduleService();
-                    Map<Integer, Repair> suggestMap = service.makeRepairSchedule();
-                    request.setAttribute("suggestMap", suggestMap);
+                    list = dao.findAll();
                 } else {
-                    list = repairDAO.getRepairListByStaff(account.getUsername());
+                    list = dao.getRepairListByStaff(account.getUsername());
                 }
                 request.setAttribute("list", list);
+                ScheduleService service = new ScheduleService();
+                Map<Integer, Repair> suggestMap = service.makeRepairSchedule();
+                request.setAttribute("suggestMap", suggestMap);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
                 rd.forward(request, response);
             } else if (action.equals("filter")) {
-                RepairDAO repairDAO = new RepairDAO();
-                List<Repair> list = repairDAO.getRepairListByFilter("office");
-                request.setAttribute("list",list);
+                String sId = request.getParameter("officeId");
+                String officeName = new String(request.getParameter("office").getBytes(
+                        "iso-8859-1"), "UTF-8");
+                String staff = request.getParameter("staff");
+                int id = -1;
+                OfficeDAO officeDAO = new OfficeDAO();
+                List<Repair> list;
+                Office office = null;
+                if (sId != null) {
+                    id = Integer.parseInt(sId);
+                    office = officeDAO.get(id);
+                    request.setAttribute("office", office.getName());
+                    list = dao.getRepairListByFilter(id);
+                } else {
+                    list = dao.getRepairListByFilter(officeName, staff);
+                }
+                request.setAttribute("office", office != null ? office.getName() : officeName);
+                request.setAttribute("staff", staff);
+                request.setAttribute("list", list);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
                 rd.forward(request, response);
-            }
-            else if (action.equals("edit")) {
+            } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
-            }
-            else if (action.equals("page")) {
-                String startPage = request.getParameter("startPage");
-                int page = Integer.parseInt(startPage);
-                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
-                List<Repair> list = dao.getRepairByPage(startItem, ConstantService.PAGE_SIZE);
-                request.setAttribute("data", list);
-                rd = request.getRequestDispatcher("/WEB-INF/partial/repairListItem.jsp");
-                rd.forward(request, response);
             }
         } else {
             response.sendRedirect("/admin");

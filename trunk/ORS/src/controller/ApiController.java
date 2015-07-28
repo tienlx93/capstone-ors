@@ -245,7 +245,7 @@ public class ApiController extends HttpServlet {
                 case "appointment": {
                     AppointmentDAO dao = new AppointmentDAO();
 
-                    for (Appointment appointment : dao.getAppointmentListByStaff(username)) {
+                    for (Appointment appointment : dao.getAppointmentListByStaffAndOffice(username, "")) {
                         office = appointment.getOfficeByOfficeId();
                         profile = appointment.getAccountByCustomerUsername().getProfileByUsername();
                         if (appointment.getStatusId() == 2) {

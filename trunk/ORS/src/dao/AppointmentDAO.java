@@ -109,11 +109,27 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         return false;
     }
 
-    public List<Appointment> getAppointmentListByStaff(String username) {
+    public List<Appointment> getAppointmentListByStaffAndOffice(String username, String officeName) {
         try {
-            String sql = "from Appointment where assignedStaff = ?";
+            String sql;
+            if (officeName.equals("")) {
+                sql = "from Appointment";
+                if (!username.equals("")) {
+                    sql += " where assignedStaff like :username";
+                }
+            } else {
+                sql = "from Appointment where officeByOfficeId.name like :office";
+                if (!username.equals("")) {
+                    sql += " and assignedStaff like :username";
+                }
+            }
             Query query = session.createQuery(sql);
-            query.setString(0, username);
+            if (!username.equals("")) {
+                query.setString("username", "%" + username + "%");
+            }
+            if (!officeName.equals("")) {
+                query.setString("office", "%" + officeName + "%");
+            }
 
             return query.list();
         } catch (Exception e) {

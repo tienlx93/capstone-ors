@@ -25,7 +25,7 @@ public class RentalItemController extends HttpServlet {
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
-        if (account != null && (account.getRoleId() == 2)) {
+        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
             if (action.equals("editing")) {
                 RentalItemDAO dao = new RentalItemDAO();
                 dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("name"),

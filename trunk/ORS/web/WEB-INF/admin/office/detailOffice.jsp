@@ -52,61 +52,44 @@
                             </div>--%>
 
                             <div class="form-group clearfix">
-                                <label for="nameOffice" class="col-sm-2 control-label">Tên văn phòng</label>
-
-                                <div class="col-sm-10" id="nameOffice">
-                                    ${info.name}
-                                    <%--<input type="hidden" id="nameOffice" value="${info.name}">--%>
+                                <div class="col-sm-10">
+                                    <b>Tên văn phòng: </b>${info.name}
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="category" class="col-sm-2 control-label">Loại văn phòng</label>
-
-                                <div class="col-sm-10" id="category">
-                                    <%--<input type="hidden" name="categoryId" class="form-control" id="category">--%>
-                                    ${info.categoryByCategoryId.description}
+                                <div class="col-sm-10">
+                                    <b>Loại văn phòng: </b>${info.categoryByCategoryId.description}
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2 control-label">Giá</label>
-
-                                <div class="col-sm-10" id="price">
-                                    <c:choose>
-                                        <c:when test="${info.price == null}">
-                                            ${info.priceTermByPriceTerm.description}
-                                        </c:when>
-                                        <c:otherwise>
-                                            ${info.price} VNĐ (${info.priceTermByPriceTerm.description})
-                                        </c:otherwise>
-                                    </c:choose>
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="floorNumber" class="col-sm-2 control-label">Số tầng</label>
-
-                                <div class="col-sm-10" id="floorNumber">
-                                    ${info.floorNumber}
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="area" class="col-sm-2 control-label">Diện tích</label>
-
-                                <div class="col-sm-10" id="area">
-                                    ${info.area}
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="address" class="col-sm-2 control-label">Địa chỉ</label>
-
                                 <div class="col-sm-10" id="address">
-                                    ${info.address}
+                                    <b>Địa chỉ: </b>${info.address}
                                 </div>
                             </div>
+
+                            <div class="form-group clearfix">
+                                <div class="col-sm-10">
+                                    <b>Số tầng: </b>${info.floorNumber}
+                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <b>Diện tích: </b>${info.area} m<SUP>2</SUP>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <div class="col-sm-10">
+                                    <b>Giá: </b><c:choose>
+                                    <c:when test="${info.price == null}">
+                                        ${info.priceTermByPriceTerm.description}
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${info.price} VNĐ (${info.priceTermByPriceTerm.description})
+                                    </c:otherwise>
+                                </c:choose>
+                                </div>
+                            </div>
+
 
                             <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Hình ảnh</label><br>
@@ -118,19 +101,17 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="amenity" class="col-sm-2 control-label">Tiện nghi</label>
-
                                 <div class="col-sm-10" id="amenity">
-                                    <c:choose>
-                                        <c:when test="${amenity == '[]'}">
-                                            Không có tiện nghi
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:forEach var="item" items="${amenity}">
-                                                <span>${item}, </span>
-                                            </c:forEach>
-                                        </c:otherwise>
-                                    </c:choose>
+                                    <b>Tiện nghi: </b><c:choose>
+                                    <c:when test="${amenity == '[]'}">
+                                        Không có tiện nghi
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:forEach var="item" items="${amenity}">
+                                            <span>${item}, </span>
+                                        </c:forEach>
+                                    </c:otherwise>
+                                </c:choose>
                                 </div>
                             </div>
 
@@ -144,14 +125,14 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="fix" class="col-sm-2 control-label">Số lần sửa chữa</label>
                                 <div class="col-sm-10" id="fix">
-                                    ${count}
+                                    <b>Số lần sửa chữa: </b>${count}
                                 </div>
                             </div>
 
                             <div class="button-post">
-                                <a class="btn btn-default" href="repair?action=filter&officeId=${info.id}">Danh sách sửa chữa</a>
+                                <a class="btn btn-default" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
+                                    chữa</a>
                                 <a class="btn btn-default" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
                                 <a href="${pageContext.request.contextPath}/admin/office"
                                    class="btn btn-default">Quay về</a>

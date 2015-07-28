@@ -96,6 +96,7 @@ table {
     position: relative;
     display: inline-table;
     vertical-align: bottom;
+    font-weight: normal;
 }
 
 .tt-query {

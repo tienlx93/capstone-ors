@@ -1,6 +1,8 @@
 package dao;
 
+import entity.Amenity;
 import entity.RequestAmenity;
+import org.hibernate.Query;
 
 import java.util.List;
 

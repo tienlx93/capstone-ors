@@ -38,7 +38,7 @@
             <div class="button-post">
                 <button type="button" ng-click='editProfile(ProfileForm)' class="btn btn-green">Chỉnh sửa
                 </button>
-                <button type="reset" class="btn">Hủy</button>
+                <button type="button" class="btn" onclick="window.history.back()">Hủy</button>
             </div>
             <div ng-show="error!=null" class="error">{{error}}</div>
         </div>

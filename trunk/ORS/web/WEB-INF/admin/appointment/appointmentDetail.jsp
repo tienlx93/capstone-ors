@@ -172,19 +172,19 @@
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
-                                        <button class="btn btn-default" type="submit" name="button" value="update3">
+                                        <button class="btn btn-primary" type="submit" name="button" value="update3">
                                             Khách hàng đồng ý kí hợp đồng
                                         </button>
-                                        <br>
-                                        <button class="btn btn-default" type="submit" name="button" value="reject">
+                                        <button class="btn btn-danger" type="submit" name="button" value="reject">
                                             Khách hàng không đồng ý kí hợp đồng
                                         </button>
                                     </c:when>
 
                                 </c:choose>
 
-                                <a href="${pageContext.request.contextPath}/admin/appointment"
+                                <a onclick="window.history.back()"
                                    class="btn btn-default">Quay về</a>
+
                             </div>
 
                         </form>

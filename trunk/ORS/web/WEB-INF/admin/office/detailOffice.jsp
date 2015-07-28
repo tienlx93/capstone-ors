@@ -131,9 +131,9 @@
                             </div>
 
                             <div class="button-post">
-                                <a class="btn btn-default" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
+                                <a class="btn btn-primary" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
                                     chữa</a>
-                                <a class="btn btn-default" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
+                                <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
                                 <a href="${pageContext.request.contextPath}/admin/office"
                                    class="btn btn-default">Quay về</a>
                             </div>
@@ -148,7 +148,7 @@
 
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
 
 </body>
 </html>

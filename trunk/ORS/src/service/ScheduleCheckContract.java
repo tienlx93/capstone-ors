@@ -1,10 +1,7 @@
 package service;
 
-import dao.AccountDAO;
-import dao.ContractDAO;
-import dao.EmailQueueDAO;
-import entity.Account;
-import entity.Contract;
+import dao.*;
+import entity.*;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -43,6 +40,30 @@ public class ScheduleCheckContract implements Job {
                 if(contract.getStatusId() == 1) {
                     dao.changeStatus(contract.getId(), 4);
                     sendEmail(contract.getId(), contract.getStatusId(), contract.getCustomerUsername());
+
+                    // Update area for office parent when contract expired
+                    OfficeDAO officeDAO = new OfficeDAO();
+                    Office office = officeDAO.get(contract.getOfficeId());
+                    if(office.getParentOfficeId() != null) {
+                        Office officeParent = officeDAO.get(office.getParentOfficeId());
+                        officeDAO.updateArea(officeParent.getId(), officeParent.getArea() + office.getArea());
+                    }
+
+                    // Update rental item when contract expired
+                    RentalDAO rentalDAO = new RentalDAO();
+                    List<Rental> rentals = rentalDAO.getRentalListByContract(contract.getId());
+
+                    RentalDetailDAO rentalDetailDAO = new RentalDetailDAO();
+                    RentalItemDAO rentalItemDAO = new RentalItemDAO();
+                    if(rentals != null) {
+                        for (Rental rental : rentals) {
+                            List<RentalDetail> rentalDetailList = rentalDetailDAO.getRentalDetailByRental(rental.getId());
+                            for (RentalDetail rentalDetail : rentalDetailList) {
+                                RentalItem rentalItem = rentalItemDAO.get(rentalDetail.getRentalItemId());
+                                rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItem.getQuantity() + rentalDetail.getQuantity());
+                            }
+                        }
+                    }
                 }
             } else if (dayTime == 7) {
 //                System.out.println(contract.getId());

@@ -30,7 +30,7 @@ controllers.controller('resultRequestOfficeController', ['$scope', '$location', 
         $scope.unsubscribeRequest = function(requestId) {
             Api.unsubscribeRequest(requestId, function (data){
                 if (data=="Success") {
-                    toastr.success('Gửi yêu cầu thành công', 'Thành công');
+                    toastr.success('Hủy yêu cầu thành công', 'Thành công');
                     $route.reload();
                 } else {
                     toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');

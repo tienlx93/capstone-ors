@@ -36,6 +36,21 @@ public class RentalItemDAO extends BaseDAO<RentalItem, Integer> {
         }
     }
 
+    public void updateQuantity(int id, Integer quantity) {
+        Transaction trans = session.beginTransaction();
+        try {
+            RentalItem rtItem = (RentalItem)session.get(RentalItem.class,id);
+            rtItem.setQuantity(quantity);
+            session.update(rtItem);
+            trans.commit();
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+    }
+
     public List<RentalItem> getRentalItemByPage(int firstResult, int pageSize) {
 
         try {

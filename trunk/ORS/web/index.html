@@ -79,7 +79,7 @@
         <div class="middle-header">
             <i class="fa fa-phone"></i>
 
-            <span class="phone-number">0123456789</span>
+            <span class="phone-number">0163016405</span>
         </div>
     </div>
 </header>
@@ -89,20 +89,20 @@
             <li>
                 <a href="#/">Tìm văn phòng</a>
             </li>
-            <li ng-show="loggedIn">
+            <li ng-show="isLogin">
                 |
             </li>
-            <li ng-show="loggedIn">
+            <li ng-show="isLogin">
                 <a href="#/contractList">Hợp đồng của bạn</a>
             </li>
-            <li ng-show="loggedIn">
+            <li ng-show="isLogin">
                 |
             </li>
-            <li ng-show="loggedIn">
+            <li ng-show="isLogin">
                 <a href="#/resultRequestOffice">Yêu cầu văn phòng của bạn</a>
             </li>
         </ul>
-        <ul class="right login-wrapper default" ng-show="!loggedIn">
+        <ul class="right login-wrapper default" ng-show="!isLogin">
             <li>
                 <a href="" ng-click="login()">Đăng nhập</a>
             </li>
@@ -110,7 +110,7 @@
                 <a href="" ng-click="register()">Đăng ký</a>
             </li>
         </ul>
-        <ul class="right" ng-show="loggedIn">
+        <ul class="right" ng-show="isLogin">
             <div class="btn-group wrapper" dropdown is-open="status.isopen">
                 <a href="" class="dropdown-toggle name" dropdown-toggle ng-disabled="disabled">
                     Chào mừng, {{fullName}} <span class="caret"></span>
@@ -135,7 +135,7 @@
             <div>
                 <i class="fa fa-phone"></i>
 
-                <span class="phone-number">0123456789</span>
+                <span class="phone-number">0163016405</span>
             </div>
             <div class="social-wrapper">
                 <ul>

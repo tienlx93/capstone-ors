@@ -9,7 +9,6 @@
             <div class="img">
                 <img src="/img/office.jpg">
             </div>
-            <div class="office-title">Lê Thánh Tôn, Quận 1, Hồ Chí Minh</div>
         </div>
     </div>
     <div class="right-request" id="info" ng-show="!isLogin">
@@ -47,7 +46,7 @@
                                 <button type="button" ng-click="login(form)" class="btn btn-green">
                                     Đăng nhập
                                 </button>
-                                <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
+                                <button type="reset" class="btn" value="cancel" onclick="window.history.back()">Hủy</button>
                             </div>
                         </form>
                     </div>
@@ -126,10 +125,10 @@
                                 </span>
                             </div>
                             <div class="button-post">
-                                <button type="button" ng-click='register(registerForm)' class="btn btn-green">Đăng ký
+                                <button type="button" ng-disabled="form.$invalid" ng-click='register(registerForm)' class="btn btn-green">Đăng ký
                                 </button>
 
-                                <button type="reset" class="btn">Hủy</button>
+                                <button type="button" class="btn" onclick="window.history.back()">Hủy</button>
                             </div>
                             <div ng-show="error!=null" class="error">{{error}}</div>
                         </form>
@@ -171,7 +170,7 @@
                 <button type="submit" ng-click="request(requestTime)" class="btn btn-green" value="save"
                         name="action">Đặt lịch hẹn
                 </button>
-                <button type="reset" ng-click="back()" class="btn" value="cancel" name="action">Hủy</button>
+                <button type="button" onclick="window.history.back()" class="btn" value="cancel">Hủy</button>
             </div>
         </form>
 

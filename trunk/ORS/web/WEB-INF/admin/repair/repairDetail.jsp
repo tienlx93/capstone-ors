@@ -130,11 +130,12 @@
 
 
                             <div class="form-group clearfix">
-                                <label for="description" class="col-sm-2 control-label">Mô tả</label>
+                                <label class="col-sm-2 control-label">Mô tả</label>
 
                                 <div class="col-sm-10">
-                                    <textarea type="text" name="description" class="form-control"
-                                              id="description">${info.description}</textarea>
+                                    ${info.description}
+                                    <input type="hidden" name="description" class="form-control"
+                                              value="${info.description}" />
                                 </div>
                             </div>
 
@@ -169,15 +170,15 @@
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
                                         <c:if test="${info.repairStatusId == 1}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-default">
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
                                                 Giao việc
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn btn-default">
+                                            <button type="submit" value="reject" name="button" class="btn btn-danger">
                                                 Từ chối sửa chữa
                                             </button>
                                         </c:if>
                                         <c:if test="${info.repairStatusId == 2}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-default">
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
                                                 Giao việc lại
                                             </button>
                                         </c:if>
@@ -186,28 +187,28 @@
                                         <c:choose>
                                             <c:when test="${info.repairStatusId == 2}">
                                                 <button type="submit" value="change5" name="button"
-                                                        class="btn btn-default">
+                                                        class="btn btn-primary">
                                                     Đồng ý sửa chữa
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
-                                                        class="btn btn-default">
+                                                        class="btn btn-danger">
                                                     Không đồng ý sửa chữa
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.repairStatusId == 5}">
                                                 <button type="submit" value="change3" name="button"
-                                                        class="btn btn-default">
+                                                        class="btn btn-primary">
                                                     Khách hàng hài lòng
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
-                                                        class="btn btn-default">
+                                                        class="btn btn-danger">
                                                     Khách hàng không hài lòng
                                                 </button>
                                             </c:when>
                                         </c:choose>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="${pageContext.request.contextPath}/admin/repair"
+                                <a onclick="window.history.back()"
                                    class="btn btn-default">Quay về</a>
                             </div>
                         </form>

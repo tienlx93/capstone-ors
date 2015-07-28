@@ -48,7 +48,7 @@
                                 <button type="button" ng-click="login(form)" class="btn btn-green">
                                     Đăng nhập
                                 </button>
-                                <button type="reset" class="btn" value="cancel" name="action">Hủy</button>
+                                <button type="reset" class="btn" value="cancel" onclick="window.history.back()">Hủy</button>
                             </div>
                         </form>
                     </div>
@@ -127,10 +127,10 @@
                                 </span>
                             </div>
                             <div class="button-post">
-                                <button type="button" ng-click='register(registerForm)' class="btn btn-green">Đăng ký
+                                <button type="button" ng-disabled="form.$invalid" ng-click='register(registerForm)' class="btn btn-green">Đăng ký
                                 </button>
 
-                                <button type="reset" class="btn">Hủy</button>
+                                <button type="button" class="btn" onclick="window.history.back()">Hủy</button>
                             </div>
                             <div ng-show="error!=null" class="error">{{error}}</div>
                         </form>

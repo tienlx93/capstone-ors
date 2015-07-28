@@ -58,7 +58,7 @@ app.config(['$routeProvider', '$httpProvider', '$compileProvider',
                 }
             }).
             otherwise({
-                redirectTo: '/home'
+                redirectTo: '/login'
             });
     }]);
 
@@ -107,6 +107,7 @@ var REPAIR_STATUS = [{}, {
 var url = "";
 controllers.controller('MainController', ['$scope', '$location', '$rootScope',
     function ($scope, $location, $rootScope) {
+        DEVICE_HEIGHT = $(window).height();
         $scope.back = function () {
             if ($location.path().lastIndexOf("home/") < 0) {
                 $location.replace();

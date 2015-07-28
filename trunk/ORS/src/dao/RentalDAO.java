@@ -158,4 +158,31 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
 
         return 0;
     }
+
+    public List<Rental> getRentalListByFilter(String officeName, String staff) {
+        try {
+            String sql = "from Rental ";
+            if (!officeName.equals("")) {
+                sql += "where contractByContractId.officeByOfficeId.name like :officeName";
+                if (!staff.equals("")) {
+                    sql += " and assignedStaff like :staff";
+                }
+            } else if (!staff.equals("")) {
+                sql += "where assignStaff like :staff";
+            }
+            Query query = session.createQuery(sql);
+            if (!officeName.equals("")) {
+                query.setString("officeName", "%" + officeName + "%");
+            }
+            if (!staff.equals("")) {
+                query.setString("staff", staff);
+            }
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

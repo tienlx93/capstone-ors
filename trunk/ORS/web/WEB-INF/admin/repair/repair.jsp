@@ -27,7 +27,11 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
-
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/listjs/list.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/listjs/list.pagination.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript"
@@ -51,23 +55,40 @@
                         Danh sách sửa chữa
                     </div>
                     <div>
-
+                        <% AccountDAO acc = new AccountDAO();
+                            List<Account> listAcc = acc.findStaff();%>
                         <div class="panel-body">
                             <div>
-                                <form class="form-inline">
+                                <form class="form-inline" action="repair">
+                                    <input type="hidden" name="action" value="filter">
+
                                     <div class="form-group">
                                         <label>Văn phòng
                                             <div class="input-typeahead">
                                                 <input type="text" class="form-control typeahead" id="office"
-                                                       name="office">
+                                                       name="office" value="${office}">
                                             </div>
                                         </label>
                                     </div>
-                                    <button type="submit" value="filter" class="btn btn-default" name="action">Lọc kết
-                                        quả
-                                    </button>
+                                    <c:if test="${user.roleId == 2}">
+                                        <div class="form-group">
+                                            <label for="staff">Nhân viên</label>
+                                            <select name="staff" id="staff" class="form-control">
+                                                <option value="">Chọn nhân viên...</option>
+                                                <c:forEach var="itemAcc"
+                                                           items="<%= listAcc %>">
+                                                    <option value="${itemAcc.username}"
+                                                            <c:if test="${staff==itemAcc.username}">selected</c:if>>
+                                                            ${itemAcc.username}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </c:if>
+                                    <button type="submit" class="btn btn-default">Lọc kết quả</button>
+                                    <a href="/admin/repair" class="btn btn-default">Bỏ lọc</a>
                                 </form>
                             </div>
+                            <div>&nbsp;</div>
 
                             <div role="tabpanel">
 
@@ -83,8 +104,12 @@
                                             </li>
 
                                             <li role="presentation">
-                                                <a href="#Assigned" aria-controls="Assigned" role="tab"
+                                                <a href="#assigned" aria-controls="assigned" role="tab"
                                                    data-toggle="tab">Đã giao</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#confirm" aria-controls="confirm" role="tab"
+                                                   data-toggle="tab">Chờ khách hàng xác nhận</a>
                                             </li>
                                             <li role="presentation">
                                                 <a href="#done" aria-controls="done" role="tab"
@@ -97,8 +122,12 @@
                                         </c:when>
                                         <c:otherwise>
                                             <li role="presentation" class="active">
-                                                <a href="#Assigned" aria-controls="Assigned" role="tab"
-                                                   data-toggle="tab">Đã nhận</a>
+                                                <a href="#assigned" aria-controls="assigned" role="tab"
+                                                   data-toggle="tab">Cần xác nhận</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#confirm" aria-controls="confirm" role="tab"
+                                                   data-toggle="tab">Việc của tôi</a>
                                             </li>
                                             <li role="presentation">
                                                 <a href="#done" aria-controls="done" role="tab"
@@ -113,13 +142,12 @@
                                     </c:choose>
 
                                 </ul>
-                                <% AccountDAO acc = new AccountDAO();
-                                    List<Account> listAcc = acc.findStaff();%>
+
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <c:if test="${user.roleId == 2}">
                                         <div role="tabpanel" class="tab-pane active" id="request">
-                                            <table class="table">
+                                            <table class="table striped">
                                                 <thead>
                                                 <tr>
                                                     <th>Tên văn phòng</th>
@@ -132,7 +160,7 @@
                                                     <th></th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody class="list">
                                                 <c:forEach var="item" items="${list}" varStatus="index">
                                                     <c:if test="${item.repairStatusId == 1}">
                                                         <tr>
@@ -188,35 +216,31 @@
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
+                                            <ul class="pagination pagination-request"></ul>
                                         </div>
                                     </c:if>
+
                                     <c:choose>
                                         <c:when test="${user.roleId == 3}">
-                                            <div role="tabpanel" class="tab-pane active" id="Assigned">
-                                                <table class="table">
+                                            <div role="tabpanel" class="tab-pane active" id="assigned">
+                                                <table class="table striped">
                                                     <thead>
                                                     <tr>
                                                         <th>Tên văn phòng</th>
                                                         <th>Khách hàng</th>
                                                         <th>Ngày sửa chữa</th>
-                                                        <c:if test="${user.roleId == 2}">
-                                                            <th>Nhân viên được giao</th>
-                                                        </c:if>
                                                         <th>Mô tả</th>
 
                                                         <th></th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="list">
                                                     <c:forEach var="item" items="${list}">
                                                         <c:if test="${item.repairStatusId == 2}">
                                                             <tr>
                                                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                                 <td>${item.contractByContractId.customerUsername}</td>
                                                                 <td>${item.assignedTime}</td>
-                                                                <c:if test="${user.roleId == 2}">
-                                                                    <td>${item.assignedStaff}</td>
-                                                                </c:if>
                                                                 <td>${item.description}</td>
 
                                                                 <td><a href="repair?action=edit&id=${item.id}">Xem chi
@@ -227,34 +251,31 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
+                                                <ul class="pagination pagination-assigned"></ul>
                                             </div>
                                         </c:when>
                                         <c:otherwise>
-                                            <div role="tabpanel" class="tab-pane" id="Assigned">
-                                                <table class="table">
+                                            <div role="tabpanel" class="tab-pane" id="assigned">
+                                                <table class="table striped">
                                                     <thead>
                                                     <tr>
                                                         <th>Tên văn phòng</th>
                                                         <th>Khách hàng</th>
                                                         <th>Ngày sửa chữa</th>
-                                                        <c:if test="${user.roleId == 2}">
-                                                            <th>Nhân viên được giao</th>
-                                                        </c:if>
+                                                        <th>Nhân viên được giao</th>
                                                         <th>Mô tả</th>
 
                                                         <th></th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="list">
                                                     <c:forEach var="item" items="${list}">
                                                         <c:if test="${item.repairStatusId == 2}">
                                                             <tr>
                                                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                                 <td>${item.contractByContractId.customerUsername}</td>
                                                                 <td>${item.assignedTime}</td>
-                                                                <c:if test="${user.roleId == 2}">
-                                                                    <td>${item.assignedStaff}</td>
-                                                                </c:if>
+                                                                <td>${item.assignedStaff}</td>
                                                                 <td>${item.description}</td>
 
                                                                 <td><a href="repair?action=edit&id=${item.id}">Xem chi
@@ -265,12 +286,13 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
+                                                <ul class="pagination pagination-assigned"></ul>
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
 
-                                    <div role="tabpanel" class="tab-pane" id="done">
-                                        <table class="table">
+                                    <div role="tabpanel" class="tab-pane" id="confirm">
+                                        <table class="table striped">
                                             <thead>
                                             <tr>
                                                 <th>Tên văn phòng</th>
@@ -283,7 +305,42 @@
                                                 <th></th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="list">
+                                            <c:forEach var="item" items="${list}">
+                                                <c:if test="${item.repairStatusId == 5}">
+                                                    <tr>
+                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                        <td>${item.contractByContractId.customerUsername}</td>
+                                                        <c:if test="${user.roleId == 2}">
+                                                            <td>${item.assignedStaff}</td>
+                                                        </c:if>
+                                                        <td>${item.description}</td>
+
+                                                        <td><a href="repair?action=edit&id=${item.id}">Xem chi tiết</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:if>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                        <ul class="pagination pagination-confirm"></ul>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="done">
+                                        <table class="table striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Tên văn phòng</th>
+                                                <th>Khách hàng</th>
+                                                <c:if test="${user.roleId == 2}">
+                                                    <th>Nhân viên được giao</th>
+                                                </c:if>
+                                                <th>Mô tả</th>
+
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="list">
                                             <c:forEach var="item" items="${list}">
                                                 <c:if test="${item.repairStatusId == 3}">
                                                     <tr>
@@ -301,9 +358,11 @@
                                             </c:forEach>
                                             </tbody>
                                         </table>
+                                        <ul class="pagination pagination-done"></ul>
                                     </div>
+
                                     <div role="tabpanel" class="tab-pane" id="cancel">
-                                        <table class="table">
+                                        <table class="table striped">
                                             <thead>
                                             <tr>
                                                 <th>Tên văn phòng</th>
@@ -316,7 +375,7 @@
                                                 <th></th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="list">
                                             <c:forEach var="item" items="${list}">
                                                 <c:if test="${item.repairStatusId == 4}">
                                                     <tr>
@@ -334,28 +393,9 @@
                                             </c:forEach>
                                             </tbody>
                                         </table>
+                                        <ul class="pagination pagination-cancel"></ul>
                                     </div>
-                                    <div>
-                                        <nav>
-                                            <ul class="pagination">
-                                                <li id="prev" class="disabled">
-                                                    <a href="#" onclick="prev()" aria-label="Previous">
-                                                        <span aria-hidden="true">«</span>
-                                                    </a>
-                                                </li>
-                                                <c:forEach var="i" begin="1" end="${pageCount}">
-                                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>">
-                                                        <a href="#" onclick="goto(${i})">${i}</a></li>
 
-                                                </c:forEach>
-                                                <li id="next">
-                                                    <a href="#" onclick="next()" aria-label="Next">
-                                                        <span aria-hidden="true">»</span>
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </nav>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -381,48 +421,42 @@
             }
         }).data('datepicker');
 
-    });
-    var pageNumber = 1;
-    var pageCount = ${pageCount};
-    var prev = function () {
-        if (pageNumber > 1) {
-            pageNumber--;
-            getPage(pageNumber);
-        }
-    };
-    var next = function () {
-        if (pageNumber < pageCount) {
-            pageNumber++;
-            getPage(pageNumber);
-        }
-    };
-    var goto = function (i) {
-        pageNumber = i;
-        getPage(pageNumber);
-    };
-    var getPage = function (page) {
-        var selector = $(".items");
-        selector.removeClass("active");
-        $(selector[page - 1]).addClass("active");
-        $("#next").removeClass("disabled");
-        $("#prev").removeClass("disabled");
-        if (page == pageCount) {
-            $("#next").addClass("disabled");
-        }
-        if (page == 1) {
-            $("#prev").addClass("disabled");
-        }
         $.ajax({
-            method: "GET",
-            url: "repair",
-            data: {
-                action: "page",
-                startPage: page
+            url: "/api?action=officeName", success: function (result) {
+                var data = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.whitespace,
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    local: result
+                });
+                $('input.typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 2
+                }, {
+                    name: 'office',
+                    source: data,
+                    limit: 5
+                });
             }
-        }).done(function (data) {
-            $("#table-body").html(data);
         });
-    };
+
+        var options = function (name) {
+            return {
+                valueNames: ['name'],
+                page: 10,
+                plugins: [
+                    ListPagination({paginationClass: 'pagination-' + name})
+                ]
+            }
+        };
+
+        var request = new List('request', options('request'));
+        var assigned = new List('assigned', options('assigned'));
+        var confirm = new List('confirm', options('confirm'));
+        var done = new List('done', options('done'));
+        var cancel = new List('cancel', options('cancel'));
+    });
+
 </script>
 
 </body>

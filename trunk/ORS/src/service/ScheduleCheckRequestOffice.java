@@ -9,6 +9,7 @@ import org.quartz.JobExecutionException;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 public class ScheduleCheckRequestOffice implements Job {
@@ -25,6 +26,9 @@ public class ScheduleCheckRequestOffice implements Job {
 
         for (RequestOffice request : requests) {
 
+            Collection<RequestAmenity> amenities = request.getRequestAmenitiesById();
+
+//            List<Office> officeAmenities = checkAmenity(offices, amenities);
             List<Office> officeCategories = checkCategory(offices, request);
             List<Office> officePrices = checkPrice(officeCategories, request);
             List<Office> officeAreas = checkArea(officePrices, request);
@@ -40,7 +44,7 @@ public class ScheduleCheckRequestOffice implements Job {
                 officeIds += office.getId() + ",";
             }
 
-            if(officeIds != "") {
+            if (officeIds != "") {
                 if ((request.getOfficeSuggested() != null) && (request.getOfficeSuggested().equals(officeIds))) {
 
                 } else {
@@ -55,6 +59,20 @@ public class ScheduleCheckRequestOffice implements Job {
         }
     }
 
+    private List<Office> checkAmenity(List<Office> offices, Collection<RequestAmenity> amenities) {
+        List<Office> officeAmenities = new ArrayList<>();
+
+        for (Office office : offices) {
+            int count = 0;
+            Collection<OfficeAmenity> amenityCollection = office.getOfficeAmenitiesById();
+            for (RequestAmenity amenity : amenities) {
+                if (amenityCollection.contains(amenity)) {
+                    count++;
+                }
+            }
+        }
+        return offices;
+    }
 
     private List<Office> checkCategory(List<Office> offices, RequestOffice request) {
         List<Office> officeCategories = new ArrayList<>();
@@ -73,7 +91,7 @@ public class ScheduleCheckRequestOffice implements Job {
 
         for (Office office : offices) {
             if (office.getPrice() != null) {
-                if (((office.getPrice() - (office.getPrice() / 10)) <= request.getPrice()) && ((office.getPrice() + (office.getPrice() / 10)) >= request.getPrice())) {
+                if (((office.getPrice() - (office.getPrice() / 5)) <= request.getPrice()) && ((office.getPrice() + (office.getPrice() / 5)) >= request.getPrice())) {
                     officePrices.add(office);
                 }
             }
@@ -86,8 +104,14 @@ public class ScheduleCheckRequestOffice implements Job {
         List<Office> officeAreas = new ArrayList<>();
 
         for (Office office : offices) {
-            if (((office.getArea() - (office.getArea() / 10)) <= request.getArea()) && ((office.getArea() + (office.getArea() / 10)) >= request.getArea())) {
-                officeAreas.add(office);
+            if (request.getCategoryId() == 1) {
+                if (((office.getArea() - (office.getArea() / 5)) <= request.getArea()) && ((office.getArea() + (office.getArea() / 5)) >= request.getArea())) {
+                    officeAreas.add(office);
+                }
+            } else {
+                if(request.getArea() <= office.getArea()) {
+                    officeAreas.add(office);
+                }
             }
         }
 

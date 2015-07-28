@@ -1,6 +1,4 @@
 <%@ page import="java.util.List" %>
-<%@ page import="dao.RentalDAO" %>
-<%@ page import="entity.Rental" %>
 <%@ page import="entity.Account" %>
 <%@ page import="dao.AccountDAO" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -20,16 +18,23 @@
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
           type="text/css">
-
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+          type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
-
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/listjs/list.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/listjs/list.pagination.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -55,19 +60,36 @@
                     <div>
                         <div class="panel-body">
                             <div>
-                                <form class="form-inline">
+                                <form class="form-inline" action="rental">
+                                    <input type="hidden" name="action" value="filter">
+
                                     <div class="form-group">
                                         <label>Văn phòng
                                             <div class="input-typeahead">
                                                 <input type="text" class="form-control typeahead" id="office"
-                                                       name="office">
+                                                       name="office" value="${office}">
                                             </div>
                                         </label>
                                     </div>
-
+                                    <c:if test="${user.roleId == 2}">
+                                        <div class="form-group">
+                                            <label for="staff">Nhân viên</label>
+                                            <select name="staff" id="staff" class="form-control">
+                                                <option value="">Chọn nhân viên...</option>
+                                                <c:forEach var="itemAcc"
+                                                           items="<%= listAcc %>">
+                                                    <option value="${itemAcc.username}"
+                                                            <c:if test="${staff==itemAcc.username}">selected</c:if>>
+                                                            ${itemAcc.username}</option>
+                                                </c:forEach>
+                                            </select>
+                                        </div>
+                                    </c:if>
                                     <button type="submit" class="btn btn-default">Lọc kết quả</button>
+                                    <a href="/admin/rental" class="btn btn-default">Bỏ lọc</a>
                                 </form>
                             </div>
+                            <div>&nbsp;</div>
 
                             <div role="tabpanel">
 
@@ -76,27 +98,33 @@
                                     <c:choose>
                                         <c:when test="${user.roleId == 2}">
                                             <li role="presentation" class="active">
-                                                <a href="#managerRequest" aria-controls="managerRequest"
+                                                <a href="#request" aria-controls="request"
                                                    role="tab" data-toggle="tab">Cần giao việc</a></li>
                                             <li role="presentation">
-                                                <a href="#managerAssign" aria-controls="managerAssign" role="tab"
+                                                <a href="#assigned" aria-controls="assigned" role="tab"
                                                    data-toggle="tab">Việc đã giao</a></li>
                                             <li role="presentation">
-                                                <a href="#managerDone" aria-controls="managerDone" role="tab"
+                                                <a href="#confirm" aria-controls="confirm" role="tab"
+                                                   data-toggle="tab">Chờ khách hàng xác nhận</a></li>
+                                            <li role="presentation">
+                                                <a href="#done" aria-controls="done" role="tab"
                                                    data-toggle="tab">Hoàn thành</a></li>
                                             <li role="presentation">
-                                                <a href="#managerCancel" aria-controls="managerCancel" role="tab"
+                                                <a href="#cancel" aria-controls="cancel" role="tab"
                                                    data-toggle="tab">Hủy</a></li>
                                         </c:when>
                                         <c:otherwise>
                                             <li role="presentation" class="active">
-                                                <a href="#managerAssign" aria-controls="managerAssign" role="tab"
-                                                   data-toggle="tab">Việc đã nhận</a></li>
+                                                <a href="#assigned" aria-controls="assigned" role="tab"
+                                                   data-toggle="tab">Cần xác nhận</a></li>
                                             <li role="presentation">
-                                                <a href="#managerDone" aria-controls="managerDone" role="tab"
+                                                <a href="#confirm" aria-controls="confirm" role="tab"
+                                                   data-toggle="tab">Việc của tôi</a></li>
+                                            <li role="presentation">
+                                                <a href="#done" aria-controls="done" role="tab"
                                                    data-toggle="tab">Hoàn thành</a></li>
                                             <li role="presentation">
-                                                <a href="#managerCancel" aria-controls="managerCancel" role="tab"
+                                                <a href="#cancel" aria-controls="cancel" role="tab"
                                                    data-toggle="tab">Hủy</a></li>
                                         </c:otherwise>
                                     </c:choose>
@@ -105,8 +133,8 @@
                                 <!-- Tab panes -->
                                 <div class="tab-content">
                                     <c:if test="${user.roleId == 2}">
-                                        <div role="tabpanel" class="tab-pane active" id="managerRequest">
-                                            <table class="table">
+                                        <div role="tabpanel" class="tab-pane active" id="request">
+                                            <table class="table table-striped">
                                                 <thead>
                                                 <tr>
                                                     <th>Tên văn phòng</th>
@@ -118,14 +146,15 @@
                                                     <th></th>
                                                 </tr>
                                                 </thead>
-                                                <tbody>
+                                                <tbody class="list">
                                                 <c:forEach var="item" items="${data}">
                                                     <c:if test="${item.statusId == 1}">
                                                         <tr>
                                                             <form action="rental" method="post">
                                                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                                 <td>${item.contractByContractId.customerUsername}</td>
-                                                                <td>${item.createTime}</td>
+                                                                <td><fmt:formatDate value="${item.createTime}"
+                                                                                    pattern="yyyy-MM-dd hh:mm"/></td>
                                                                 <td>${item.description}</td>
                                                                 <td>
                                                                     <input type="hidden" name="id"
@@ -170,12 +199,13 @@
                                                 </c:forEach>
                                                 </tbody>
                                             </table>
+                                            <ul class="pagination pagination-request"></ul>
                                         </div>
                                     </c:if>
                                     <c:choose>
                                         <c:when test="${user.roleId == 3}">
-                                            <div role="tabpanel" class="tab-pane active" id="managerAssign">
-                                                <table class="table">
+                                            <div role="tabpanel" class="tab-pane active" id="assigned">
+                                                <table class="table table-striped">
                                                     <thead>
                                                     <tr>
                                                         <th>Tên văn phòng</th>
@@ -189,7 +219,7 @@
                                                         <th></th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="list">
                                                     <c:forEach var="item" items="${data}">
                                                         <c:if test="${item.statusId == 2}">
                                                             <tr>
@@ -209,11 +239,12 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
+                                                <ul class="pagination pagination-assigned"></ul>
                                             </div>
                                         </c:when>
                                         <c:otherwise>
-                                            <div role="tabpanel" class="tab-pane" id="managerAssign">
-                                                <table class="table">
+                                            <div role="tabpanel" class="tab-pane" id="assigned">
+                                                <table class="table table-striped">
                                                     <thead>
                                                     <tr>
                                                         <th>Tên văn phòng</th>
@@ -227,7 +258,7 @@
                                                         <th></th>
                                                     </tr>
                                                     </thead>
-                                                    <tbody>
+                                                    <tbody class="list">
                                                     <c:forEach var="item" items="${data}">
                                                         <c:if test="${item.statusId == 2}">
                                                             <tr>
@@ -247,11 +278,13 @@
                                                     </c:forEach>
                                                     </tbody>
                                                 </table>
+                                                <ul class="pagination pagination-assigned"></ul>
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
-                                    <div role="tabpanel" class="tab-pane" id="managerDone">
-                                        <table class="table">
+
+                                    <div role="tabpanel" class="tab-pane" id="confirm">
+                                        <table class="table table-striped">
                                             <thead>
                                             <tr>
                                                 <th>Tên văn phòng</th>
@@ -264,7 +297,43 @@
                                                 <th></th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="list">
+                                            <c:forEach var="item" items="${data}">
+                                                <c:if test="${item.statusId == 5}">
+                                                    <tr>
+                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                        <td>${item.contractByContractId.customerUsername}</td>
+                                                        <c:if test="${user.roleId == 2}">
+                                                            <td>${item.assignStaff}</td>
+                                                        </c:if>
+                                                        <td>${item.description}</td>
+
+                                                        <td><a href="rental?action=edit&id=${item.id}">Xem chi
+                                                            tiết</a>
+                                                        </td>
+                                                    </tr>
+                                                </c:if>
+                                            </c:forEach>
+                                            </tbody>
+                                        </table>
+                                        <ul class="pagination pagination-confirm"></ul>
+                                    </div>
+
+                                    <div role="tabpanel" class="tab-pane" id="done">
+                                        <table class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th>Tên văn phòng</th>
+                                                <th>Khách hàng</th>
+                                                <c:if test="${user.roleId == 2}">
+                                                    <th>Nhân viên được giao</th>
+                                                </c:if>
+                                                <th>Mô tả</th>
+
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="list">
                                             <c:forEach var="item" items="${data}">
                                                 <c:if test="${item.statusId == 3}">
                                                     <tr>
@@ -283,9 +352,11 @@
                                             </c:forEach>
                                             </tbody>
                                         </table>
+                                        <ul class="pagination pagination-done"></ul>
                                     </div>
-                                    <div role="tabpanel" class="tab-pane" id="managerCancel">
-                                        <table class="table">
+
+                                    <div role="tabpanel" class="tab-pane" id="cancel">
+                                        <table class="table table-striped">
                                             <thead>
                                             <tr>
                                                 <th>Tên văn phòng</th>
@@ -298,7 +369,7 @@
                                                 <th></th>
                                             </tr>
                                             </thead>
-                                            <tbody>
+                                            <tbody class="list">
                                             <c:forEach var="item" items="${data}">
                                                 <c:if test="${item.statusId == 4}">
                                                     <tr>
@@ -317,6 +388,7 @@
                                             </c:forEach>
                                             </tbody>
                                         </table>
+                                        <ul class="pagination pagination-cancel"></ul>
                                     </div>
                                 </div>
                             </div>
@@ -333,47 +405,52 @@
 
 </div>
 </body>
-<%--<script>
-    var pageNumber = 1;
-    var pageCount = ${pageCount};
-    var prev = function () {
-        if (pageNumber > 1) {
-            pageNumber --;
-            getPage(pageNumber);
-        }
-    };
-    var next = function () {
-        if (pageNumber < pageCount) {
-            pageNumber ++;
-            getPage(pageNumber);
-        }
-    };
-    var goto = function(i) {
-        pageNumber = i;
-        getPage(pageNumber);
-    };
-    var getPage = function(page) {
-        var selector = $(".items");
-        selector.removeClass("active");
-        $(selector[page-1]).addClass("active");
-        $("#next").removeClass("disabled");
-        $("#prev").removeClass("disabled");
-        if (page == pageCount) {
-            $("#next").addClass("disabled");
-        }
-        if (page == 1) {
-            $("#prev").addClass("disabled");
-        }
-        $.ajax({
-            method: "GET",
-            url: "office",
-            data: {
-                action: "page",
-                startPage: page
+<script>
+    $(document).ready(function () {
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        $('.datetime').datepicker({
+            format: 'yyyy-mm-dd',
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
             }
-        }).done(function (data) {
-            $("#table-body").html(data);
+        }).data('datepicker');
+
+        $.ajax({
+            url: "/api?action=officeName", success: function (result) {
+                var data = new Bloodhound({
+                    datumTokenizer: Bloodhound.tokenizers.whitespace,
+                    queryTokenizer: Bloodhound.tokenizers.whitespace,
+                    local: result
+                });
+                $('input.typeahead').typeahead({
+                    hint: true,
+                    highlight: true,
+                    minLength: 2
+                }, {
+                    name: 'office',
+                    source: data,
+                    limit: 5
+                });
+            }
         });
-    };
-</script>--%>
+
+        var options = function (name) {
+            return {
+                valueNames: ['name'],
+                page: 10,
+                plugins: [
+                    ListPagination({paginationClass: 'pagination-' + name})
+                ]
+            }
+        };
+
+        var request = new List('request', options('request'));
+        var assigned = new List('assigned', options('assigned'));
+        var confirm = new List('confirm', options('confirm'));
+        var done = new List('done', options('done'));
+        var cancel = new List('cancel', options('cancel'));
+    });
+</script>
 </html>

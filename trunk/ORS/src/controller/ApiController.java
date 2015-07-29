@@ -514,8 +514,14 @@ public class ApiController extends HttpServlet {
         String mail = request.getParameter("mail");
         String captcha = request.getParameter("captcha");
         String captcha3 = request.getParameter("captcha3");
-        String title = new String(request.getParameter("title").getBytes(
-                "iso-8859-1"), "UTF-8");
+        String tokenTitle = request.getParameter("title");
+        String title;
+        if (tokenTitle == null) {
+            title = "Ông";
+        } else {
+            title = new String(tokenTitle.getBytes(
+                    "iso-8859-1"), "UTF-8");
+        }
         String fullname = new String(request.getParameter("fullname").getBytes(
                 "iso-8859-1"), "UTF-8");
         String tokenCompny = request.getParameter("company");

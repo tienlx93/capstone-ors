@@ -26,8 +26,8 @@ controllers.controller('RegisterController', ['$scope', '$location', 'Api', 'toa
 
                 Api.register($scope.user, function (data) {
                     if (data == "Error") {
-                        toastr.error('Có lỗi xảy ra. Xin thử lại');
-                        //   $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                        toastr.error('Hãy chọn tên khác','Tên đăng nhập đã được sử dụng');
+                        $modalInstance.close();//   $scope.error = "Có lỗi xảy ra. Xin thử lại";
                     } else if (data == "Error Date") {
                         toastr.error('Ngày sinh không hợp lệ');
                     } else if (data) {

@@ -22,6 +22,7 @@ controllers.controller('ProfileDetailController', ['$scope', '$location', '$rout
                         toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
 
                     } else if (data) {
+                        toastr.success('Chỉnh sửa thành công');
                         $location.path("/profile");
                     }
                 });

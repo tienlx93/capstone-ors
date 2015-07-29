@@ -77,7 +77,8 @@ app.factory("Api", ['$http',
                     'phone': user.phone,
                     'address': user.address,
                     'birthday': user.birthday,
-                    'captcha': user.captcha
+                    'captcha': user.captcha,
+                    'captcha3': user.captcha3
                 }
             })
                 .success(function (data) {

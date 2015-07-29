@@ -513,6 +513,7 @@ public class ApiController extends HttpServlet {
         String password = request.getParameter("password");
         String mail = request.getParameter("mail");
         String captcha = request.getParameter("captcha");
+        String captcha3 = request.getParameter("captcha3");
         String title = new String(request.getParameter("title").getBytes(
                 "iso-8859-1"), "UTF-8");
         String fullname = new String(request.getParameter("fullname").getBytes(
@@ -536,9 +537,16 @@ public class ApiController extends HttpServlet {
         }
         String birthday = request.getParameter("birthday");
 
-        boolean captchaResult = validateCaptcha("6Lcn1QkTAAAAAAVCoTxsx8kcVwHXBNKKDS8olmYd", captcha, "");
+        boolean captchaResult = false;
+        boolean captchaResult3 = false;
 
-        if (account == null && captchaResult) {
+        if (captcha3 == null && captcha != null) {
+            captchaResult = validateCaptcha("6Lcn1QkTAAAAAAVCoTxsx8kcVwHXBNKKDS8olmYd", captcha, "");
+        } else if (captcha == null && captcha3 != null) {
+            captchaResult3 = validateCaptcha("6LereAoTAAAAAJ2apdnszAT731OiD1-HQYbHtUV2", captcha3, "");
+        }
+
+        if (account == null && (captchaResult || captchaResult3)) {
             Account acc = new Account();
             acc.setUsername(username);
             acc.setPassword(password);

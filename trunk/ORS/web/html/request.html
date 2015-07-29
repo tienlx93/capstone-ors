@@ -46,7 +46,8 @@
                                 <button type="button" ng-click="login(form)" class="btn btn-green">
                                     Đăng nhập
                                 </button>
-                                <button type="reset" class="btn" value="cancel" onclick="window.history.back()">Hủy</button>
+                                <button type="reset" class="btn" value="cancel" onclick="window.history.back()">Hủy
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -64,12 +65,13 @@
                 <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo"
                      collapse="!isCollapsed">
                     <div class="panel-body">
-                        <form name="registerForm" >
+                        <form name="registerForm">
                             <div class="form-group">
                                 <label for="username1">Tên đăng nhập (*)</label>
                                 <input type="text" required ng-model="user.username" class="form-control" id="username1"
                                        name="username">
-                                <span class="error" ng-show="registerForm.username.$dirty && registerForm.username.$invalid">
+                                <span class="error"
+                                      ng-show="registerForm.username.$dirty && registerForm.username.$invalid">
                                     <span ng-show="registerForm.username.$error.required">Bắt buộc</span>
                                 </span>
                             </div>
@@ -77,13 +79,15 @@
                                 <label for="password1">Mật khẩu (*)</label>
                                 <input type="password" required ng-model="user.password" class="form-control"
                                        id="password1" name="password">
-                                <span class="error" ng-show="registerForm.password.$dirty && registerForm.password.$invalid">
+                                <span class="error"
+                                      ng-show="registerForm.password.$dirty && registerForm.password.$invalid">
                                     <span ng-show="registerForm.password.$error.required">Bắt buộc</span>
                                 </span>
                             </div>
                             <div class="form-group">
                                 <label for="mail">E-mail (*)</label>
-                                <input type="email" required ng-model="user.mail" class="form-control" id="mail" name="email">
+                                <input type="email" required ng-model="user.mail" class="form-control" id="mail"
+                                       name="email">
                                 <span class="error" ng-show="registerForm.email.$dirty && registerForm.email.$invalid">
                                     <span ng-show="registerForm.email.$error.required">Bắt buộc</span>
                                     <span ng-show="registerForm.email.$error.email">Email không hợp lệ</span>
@@ -99,8 +103,10 @@
                             </div>
                             <div class="form-group">
                                 <label for="fullname">Họ và tên (*)</label>
-                                <input type="text" ng-model="user.fullname" class="form-control" id="fullname" name="fullname" required>
-                                <span class="error" ng-show="registerForm.fullname.$dirty && registerForm.fullname.$invalid">
+                                <input type="text" ng-model="user.fullname" class="form-control" id="fullname"
+                                       name="fullname" required>
+                                <span class="error"
+                                      ng-show="registerForm.fullname.$dirty && registerForm.fullname.$invalid">
                                     <span ng-show="registerForm.fullname.$error.required">Bắt buộc</span>
                                 </span>
                             </div>
@@ -110,7 +116,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="phone">Số điện thoại (*)</label>
-                                <input type="text" ng-model="user.phone" class="form-control" id="phone" value="" required
+                                <input type="text" ng-model="user.phone" class="form-control" id="phone" value=""
+                                       required
                                        ng-pattern="/^\d{10,11}$/">
                             </div>
                             <div class="form-group">
@@ -119,13 +126,22 @@
                             </div>
                             <div class="form-group">
                                 <label for="birthday">Ngày sinh</label>
-                                <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value="" name="birthday">
-                                <span class="error" ng-show="registerForm.birthday.$dirty && registerForm.birthday.$invalid">
+                                <input type="date" ng-model="user.birthday" class="form-control" id="birthday" value=""
+                                       name="birthday" required>
+                                <span class="error"
+                                      ng-show="registerForm.birthday.$dirty && registerForm.birthday.$invalid">
                                     <span ng-show="registerForm.birthday.$error.date">Ngày không hợp lệ</span>
                                 </span>
                             </div>
+                            <div class="g-recaptcha" id="captcha3"></div>
+                            <input type="hidden" ng-model="user.captcha3" name="captcha3">
+                            <span class="error" ng-show="registerForm.captcha3.$dirty && registerForm.captcha3.$invalid">
+                                <span ng-show="registerForm.captcha3.$error">Mời nhập captcha</span>
+                            </span>
+
                             <div class="button-post">
-                                <button type="button" ng-disabled="form.$invalid" ng-click='register(registerForm)' class="btn btn-green">Đăng ký
+                                <button type="button" ng-disabled="registerForm.$invalid" ng-click='register(registerForm)'
+                                        class="btn btn-green">Đăng ký
                                 </button>
 
                                 <button type="button" class="btn" onclick="window.history.back()">Hủy</button>

@@ -10,6 +10,7 @@ controllers.controller('ProfileController', ['$scope', '$location', '$routeParam
         Api.getProfile(function (data) {
             if (data == "Error") {
                 $scope.error = true;
+                //$scope.error = "Lỗi kết nối cơ sở dữ liệu, vui lòng thử lại sau";
             } else {
                 $scope.data = data;
                 if (data.company == null || data.company == "") {

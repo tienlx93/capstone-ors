@@ -10,6 +10,12 @@
     width: 480px;
     border-left: 1px solid #b5b5b5;
 }
+.right-info {
+    padding: 40px;
+    float: left;
+    width: 480px;
+    border-left: 1px solid #b5b5b5;
+}
 .title {
     font-size: larger;
     font-weight: bold;

@@ -5,11 +5,17 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
     function ($scope, $location, $routeParams, $route, Api, $modal) {
         var id = $routeParams.id;
         $scope.data = {};
+        $scope.show = {};
 
         //get data
         Api.getContractById(id, function (data) {
             if (data == "Error") {
-                $scope.error = true;
+                $scope.WrongCus = true;
+                $scope.RightCus = true;
+            } else if (data == "Expire") {
+                $scope.Expire = true;
+                $scope.RightCus = true;
+                $scope.error = "Hợp đồng đã hết hạn";
             } else {
                 $scope.data = data;
             }
@@ -30,6 +36,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 }
                 if (sum == 0) {
                     $scope.Rentaled = true;
+
                 } else {
                     $scope.total = sum;
                 }

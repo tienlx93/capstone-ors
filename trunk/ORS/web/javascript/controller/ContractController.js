@@ -9,7 +9,8 @@ controllers.controller('ContractController', ['$scope', '$location', '$routePara
         //get data
         Api.getContractList(function (data) {
             if (data == "Error") {
-                $scope.error = true;
+                $scope.Exist = true;
+                $scope.RightCus = true;
             } else {
                 $scope.data = data;
             }

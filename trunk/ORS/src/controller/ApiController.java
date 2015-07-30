@@ -513,8 +513,15 @@ public class ApiController extends HttpServlet {
         String password = request.getParameter("password");
         String mail = request.getParameter("mail");
         String captcha = request.getParameter("captcha");
-        String title = new String(request.getParameter("title").getBytes(
-                "iso-8859-1"), "UTF-8");
+        String captcha3 = request.getParameter("captcha3");
+        String tokenTitle = request.getParameter("title");
+        String title;
+        if (tokenTitle == null) {
+            title = "Ông";
+        } else {
+            title = new String(tokenTitle.getBytes(
+                    "iso-8859-1"), "UTF-8");
+        }
         String fullname = new String(request.getParameter("fullname").getBytes(
                 "iso-8859-1"), "UTF-8");
         String tokenCompny = request.getParameter("company");
@@ -536,9 +543,16 @@ public class ApiController extends HttpServlet {
         }
         String birthday = request.getParameter("birthday");
 
-        boolean captchaResult = validateCaptcha("6Lcn1QkTAAAAAAVCoTxsx8kcVwHXBNKKDS8olmYd", captcha, "");
+        boolean captchaResult = false;
+        boolean captchaResult3 = false;
 
-        if (account == null && captchaResult) {
+        if (captcha3 == null && captcha != null) {
+            captchaResult = validateCaptcha("6Lcn1QkTAAAAAAVCoTxsx8kcVwHXBNKKDS8olmYd", captcha, "");
+        } else if (captcha == null && captcha3 != null) {
+            captchaResult3 = validateCaptcha("6LereAoTAAAAAJ2apdnszAT731OiD1-HQYbHtUV2", captcha3, "");
+        }
+
+        if (account == null && (captchaResult || captchaResult3)) {
             Account acc = new Account();
             acc.setUsername(username);
             acc.setPassword(password);
@@ -875,7 +889,11 @@ public class ApiController extends HttpServlet {
                 list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
                         contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription()));
             }
-            out.print(gson.toJson(list));
+            if (list.size() > 0) {
+                out.print(gson.toJson(list));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
         }
     }
 
@@ -917,7 +935,7 @@ public class ApiController extends HttpServlet {
                     if (rental.getStatusId() == 1 || rental.getStatusId() == 2) {
                         list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                                 rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                "Chờ xử lý", 0, rental.getAssignedTime(), rental.getCreateTime()));
+                                "Đang xử lý", 0, rental.getAssignedTime(), rental.getCreateTime()));
                     } else if (rental.getStatusId() == 5) {
                         list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                                 rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
@@ -994,16 +1012,25 @@ public class ApiController extends HttpServlet {
     }
 
     private void getContractById(HttpServletRequest request, PrintWriter out) throws ParseException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
         String contractId = request.getParameter("id");
         int id = Integer.parseInt(contractId);
         ContractDAO dao = new ContractDAO();
         Contract contract = dao.get(id);
         Office office = contract.getOfficeByOfficeId();
         PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
-        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
-
-        out.print(gson.toJson(json));
+        if (account.getUsername().equals(contract.getCustomerUsername())) {
+            if (contract.getStatusId() == 2 || contract.getStatusId() == 3) {
+                ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                        contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
+                out.print(gson.toJson(json));
+            } else {
+                out.print(gson.toJson("Expire"));
+            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
     }
 
     private void getAmenityList(HttpServletRequest request, PrintWriter out) {

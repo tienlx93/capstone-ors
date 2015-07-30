@@ -1113,7 +1113,9 @@ public class ApiController extends HttpServlet {
                     List<String> officeSuggest = Arrays.asList(requestOffice.getOfficeSuggested().split("\\s*,\\s*"));
                     for (String office : officeSuggest) {
                         Office office1 = officeDAO.get(Integer.parseInt(office));
-                        officeList.add(new OfficeListDetail(office1));
+                        if(officeList.indexOf(office1) == -1) {
+                            officeList.add(new OfficeListDetail(office1));
+                        }
                     }
                 }
 //                RequestOfficeJSON json = new RequestOfficeJSON(requestOffice.getId(), requestOffice.getCustomerUsername(), requestOffice.getCategoryId(), requestOffice.getPrice(),

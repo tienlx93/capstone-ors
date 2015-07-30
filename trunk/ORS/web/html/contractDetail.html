@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../css/contract.css"/>
 
-<div class="container">
+<div class="container" ng-show="!RightCus">
     <h2>Chi tiết hợp đồng</h2>
     <br>
 
@@ -55,5 +55,21 @@
     </div>
     <div class="button-post">
         <a href="#/rental/{{data.contractId}}" class="btn btn-green">Yêu cầu thuê thiết bị</a> <br>
+    </div>
+</div>
+<div class="container" ng-show="WrongCus">
+    <h2>Bạn không sở hữu hợp đồng này!</h2>
+    <br>
+    <br>
+    <div class="button-post">
+        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
+    </div>
+</div>
+<div class="container" ng-show="Expire">
+    <h2 class="error">{{error}}</h2>
+    <br>
+    <br>
+    <div class="button-post">
+        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
     </div>
 </div>

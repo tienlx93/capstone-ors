@@ -70,6 +70,15 @@ public class ScheduleCheckRequestOffice implements Job {
                     count++;
                 }
             }
+            if(amenities.size() == 1) {
+                if(count > 0) {
+                    officeAmenities.add(office);
+                }
+            } else if(amenities.size() >= 2) {
+                if (count >= 2) {
+                    officeAmenities.add(office);
+                }
+            }
         }
         return offices;
     }

@@ -11,6 +11,7 @@ app.service('ShoppingCartService', function() {
             }
         }
         if (!duplicate) {
+            newObj.quantity = newObj.number;
             productList.push(newObj);
         }
     };

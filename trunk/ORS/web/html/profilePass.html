@@ -1,27 +1,55 @@
+<link rel="stylesheet" type="text/css" href="/css/request.css"/>
 <div class="container">
 
-    <h2>Chỉnh sửa mật khẩu</h2>
+    <div class="panel-body">
+        <div class="left-request">
+            <div class="office clearfix">
+                <div class="img">
+                    <img src="/img/office.jpg">
+                </div>
+            </div>
+        </div>
+        <div class="right-info" id="info">
+            <div class="info"><h2>Chỉnh sửa mật khẩu</h2></div>
+            <!--<div ng-show="error!=null" class="error">{{error}}</div>-->
 
-    <form ng-submit="editPass(PassForm)" name="PassForm">
-        <div class="panel-body">
-            <div class="form-group">
-                <label for="password">Mật khẩu hiện tại:</label>
-                <input type="password" ng-model="data.password" class="form-control" id="password" required>
-            </div>
-            <div class="form-group">
-                <label for="newPassword">Mật khẩu mới:</label>
-                <input type="password" ng-model="data.newPassword" class="form-control" id="newPassword" value="">
-            </div>
-            <div class="form-group">
-                <label for="reNewPassword">Nhập lại mật khẩu mới</label>
-                <input type="password" ng-model="data.reNewPassword" class="form-control" id="reNewPassword" value="">
-            </div>
+            <form name="PassForm">
+                <div class="form-group">
+                    <label for="password">Mật khẩu hiện tại:</label>
+                    <input type="password" ng-model="data.password" class="form-control" id="password" required
+                           name="password1" ng-minlength="8" ng-maxlength="20">
+                    <span class="error" ng-show="PassForm.password1.$dirty && PassForm.password1.$invalid">
+                        <span ng-show="PassForm.password1.$error.required">Bắt buộc</span>
+                        <span ng-show="PassForm.password1.$error.minlength">Nhập ít nhất 8 ký tự</span>
+                        <span ng-show="PassForm.password1.$error.maxlength">Số ký tự tối đa là 20</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Mật khẩu mới:</label>
+                    <input type="password" ng-model="data.newPassword" class="form-control" id="newPassword" required
+                           name="password2" ng-minlength="8" ng-maxlength="20">
+                    <span class="error" ng-show="PassForm.password2.$dirty && PassForm.password2.$invalid">
+                        <span ng-show="PassForm.password2.$error.required">Bắt buộc</span>
+                        <span ng-show="PassForm.password2.$error.minlength">Nhập ít nhất 8 ký tự</span>
+                        <span ng-show="PassForm.password2.$error.maxlength">Số ký tự tối đa là 20</span>
+                    </span>
+                </div>
+                <div class="form-group">
+                    <label for="reNewPassword">Nhập lại mật khẩu mới</label>
+                    <input type="password" ng-model="data.reNewPassword" class="form-control" id="reNewPassword"
+                           required name="password" ng-minlength="8" ng-maxlength="20">
+                    <span class="error" ng-show="PassForm.password.$dirty && PassForm.password.$invalid">
+                        <span ng-show="PassForm.password.$error.required">Bắt buộc</span>
+                        <span ng-show="PassForm.password.$error.minlength">Nhập ít nhất 8 ký tự</span>
+                        <span ng-show="PassForm.password.$error.maxlength">Số ký tự tối đa là 20</span>
+                    </span>
+                </div>
+            </form>
             <div class="button-post">
-                <button type="button" ng-click='editPass(PassForm)' class="btn btn-green">Chỉnh sửa
+                <button type="button" ng-disabled="PassForm.$invalid" ng-click='editPass(PassForm)' class="btn btn-green">Chỉnh sửa
                 </button>
                 <button type="button" class="btn" onclick="window.history.back()">Hủy</button>
             </div>
-            <div ng-show="error!=null" class="error">{{error}}</div>
         </div>
-    </form>
+    </div>
 </div>

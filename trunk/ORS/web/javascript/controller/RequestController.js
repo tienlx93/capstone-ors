@@ -30,7 +30,7 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
                         toastr.error('Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại');
 
                     } else if (data) {
-                        //$scope.isLogin = true;
+                        $scope.isLogin = true;
                         Api.updateAccount();
                     }
                 });

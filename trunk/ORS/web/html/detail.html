@@ -16,7 +16,11 @@
             <div>Diện tích: {{officeDetail.area | number:0}} m<sup>2</sup></div>
             <div>Địa chỉ: {{officeDetail.address}}</div>
             <hr class="line"/>
-
+            <h4 style="padding-bottom: 10px">Tiện nghi</h4>
+            <ul>
+                <li ng-repeat="amenity in officeDetail.amenities">+ {{amenity}}</li>
+            </ul>
+            <hr class="line"/>
         </div>
         <div id="down">
             <!--<input type="button" value="Request"/>-->
@@ -39,11 +43,9 @@
 
 
         </div>
-        <div id="amenity">
-            <ul>
-                <li ng-repeat="amenity in officeDetail.amenities">{{amenity}}</li>
-            </ul>
-        </div>
+        <!--<div id="amenity">
+
+        </div>-->
         <div id="description">
             <h1 class="detail">Mô tả</h1>
 

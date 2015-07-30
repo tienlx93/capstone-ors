@@ -1,46 +1,70 @@
+<link rel="stylesheet" type="text/css" href="/css/request.css"/>
 <div class="container">
 
-    <h2>Chỉnh sửa thông tin cá nhân</h2>
 
-    <form ng-submit="editProfile(ProfileForm)" name="ProfileForm">
-        <div class="panel-body">
-            <!--<div class="form-group">
-                <label for="title">Chức danh</label>
-                <select ng-model="data.title" class="form-control" id="title">
-                    <option value=""></option>
-                    <option value="Ông">Ông</option>
-                    <option value="Bà">Bà</option>
-                </select>
-            </div>-->
-
-            <div class="form-group">
-                <label for="fullname">Họ và tên (*)</label>
-                <input type="text" ng-model="data.fullName" class="form-control" id="fullname" required>
+    <div class="panel-body">
+        <div class="left-request">
+            <div class="office clearfix">
+                <div class="img">
+                    <img src="/img/office.jpg">
+                </div>
             </div>
-            <div class="form-group">
-                <label for="company">Công ty</label>
-                <input type="text" ng-model="data.company" class="form-control" id="company" value="">
-            </div>
-            <div class="form-group">
-                <label for="phone">Số điện thoại (*)</label>
-                <input type="text" ng-model="data.phone" class="form-control" id="phone" value=""
-                       ng-required="requireTel"
-                       ng-pattern="/^\d{10,11}$/">
-            </div>
-            <div class="form-group">
-                <label for="address">Địa chỉ</label>
-                <input type="text" ng-model="data.address" class="form-control" id="address" value="">
-            </div>
-            <div class="form-group">
-                <label for="birthday">Ngày sinh</label>
-                <input type="date" ng-model="data.birthday" class="form-control" id="birthday" value="" required>
-            </div>
+        </div>
+        <div class="right-info" id="info">
+            <div class="info"><h2>Chỉnh sửa thông tin cá nhân</h2></div>
+            <!--<div ng-show="error!=null" class="error">{{error}}</div>-->
+            <form name="ProfileForm">
+                <div class="form-group">
+                    <label for="fullName">Họ và tên (*)</label>
+                    <input type="text" ng-model="data.fullName" class="form-control" id="fullName" required
+                           name="fullName" ng-minlength="6" ng-maxlength="50">
+                        <span class="error" ng-show="ProfileForm.fullName.$dirty && ProfileForm.fullName.$invalid">
+                            <span ng-show="ProfileForm.fullName.$error.required">Bắt buộc</span>
+                            <span ng-show="ProfileForm.fullName.$error.minlength">Nhập ít nhất 6 ký tự</span>
+                            <span ng-show="ProfileForm.fullName.$error.maxlength">Số ký tự tối đa là 50</span>
+                        </span>
+                </div>
+                <div class="form-group">
+                    <label for="company">Công ty</label>
+                    <input type="text" ng-model="data.company" class="form-control" id="company" name="company"
+                           ng-maxlength="50">
+                        <span class="error" ng-show="ProfileForm.company.$dirty && ProfileForm.company.$invalid">
+                            <span ng-show="ProfileForm.company.$error.maxlength">Số ký tự tối đa là 50</span>
+                        </span>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Số điện thoại (*)</label>
+                    <input type="text" ng-model="data.phone" class="form-control" id="phone" name="phone"
+                           ng-pattern="/^\d{10,11}$/" ng-minlength="10" ng-maxlength="11" required>
+                        <span class="error" ng-show="ProfileForm.phone.$dirty && ProfileForm.phone.$invalid">
+                            <span ng-show="ProfileForm.phone.$error.required">Bắt buộc</span>
+                            <span ng-show="ProfileForm.phone.$error.minlength">Nhập ít nhất 10 ký tự</span>
+                            <span ng-show="ProfileForm.phone.$error.maxlength">Số ký tự tối đa là 11</span>
+                        </span>
+                </div>
+                <div class="form-group">
+                    <label for="address">Địa chỉ</label>
+                    <input type="text" ng-model="data.address" class="form-control" id="address" name="address"
+                           ng-maxlength="100">
+                        <span class="error" ng-show="ProfileForm.address.$dirty && ProfileForm.address.$invalid">
+                            <span ng-show="ProfileForm.address.$error.maxlength">Số ký tự tối đa là 100</span>
+                        </span>
+                </div>
+                <div class="form-group">
+                    <label for="birthday">Ngày sinh</label>
+                    <input type="date" ng-model="data.birthday" class="form-control" id="birthday" name="birthday">
+                        <span class="error" ng-show="ProfileForm.birthday.$dirty && ProfileForm.birthday.$invalid">
+                            <span ng-show="ProfileForm.birthday.$error.date">Ngày không hợp lệ</span>
+                        </span>
+                </div>
+            </form>
             <div class="button-post">
-                <button type="button" ng-click='editProfile(ProfileForm)' class="btn btn-green">Chỉnh sửa
+                <button type="button" ng-disabled="ProfileForm.$invalid" ng-click='editProfile(ProfileForm)' class="btn btn-green">Chỉnh sửa
                 </button>
                 <button type="button" class="btn" onclick="window.history.back()">Hủy</button>
             </div>
-            <div ng-show="error!=null" class="error">{{error}}</div>
+
         </div>
-    </form>
+    </div>
+
 </div>

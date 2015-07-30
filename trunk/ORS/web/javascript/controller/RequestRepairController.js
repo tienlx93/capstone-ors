@@ -5,6 +5,7 @@
 controllers.controller('RequestRepairController', ['$scope', '$location', '$routeParams', '$route', 'Api', 'toastr',
     function ($scope, $location, $routeParams, $route, Api, toastr) {
         var id = $routeParams.id;
+        $scope.img = {};
         Api.getContractById(id, function (data) {
             if (data == "Error") {
                 $scope.error = true;
@@ -15,6 +16,7 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                     } else {
                         $scope.officeName = data.name;
                         $scope.amenities = data.amenities;
+                        $scope.img = data.images[0];
                     }
                 });
             }

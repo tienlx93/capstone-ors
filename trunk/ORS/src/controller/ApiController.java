@@ -894,6 +894,8 @@ public class ApiController extends HttpServlet {
             } else {
                 out.print(gson.toJson("Error"));
             }
+        } else {
+            out.print(gson.toJson("Error"));
         }
     }
 
@@ -906,6 +908,8 @@ public class ApiController extends HttpServlet {
             Profile profile = (Profile) dao.getProfileByUser(account.getUsername());
             ProfileJSON json = new ProfileJSON(profile.getUsername(), profile.getTitle(), profile.getFullName(), profile.getCompany(), profile.getPhone(), profile.getAddress(), profile.getBirthday());
             out.print(gson.toJson(json));
+        } else {
+            out.print(gson.toJson("Error"));
         }
     }
 

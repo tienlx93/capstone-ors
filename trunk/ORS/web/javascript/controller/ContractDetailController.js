@@ -11,13 +11,26 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
         Api.getContractById(id, function (data) {
             if (data == "Error") {
                 $scope.WrongCus = true;
-                $scope.RightCus = true;
+                $scope.RightCus = false;
+                $scope.isLogin = true;
+                $scope.Expire = false;
             } else if (data == "Expire") {
                 $scope.Expire = true;
-                $scope.RightCus = true;
+                $scope.RightCus = false;
+                $scope.WrongCus = false;
+                $scope.isLogin = true;
                 $scope.error = "Hợp đồng đã hết hạn";
+            } else if (data == "Wrong") {
+                $scope.RightCus = false;
+                $scope.WrongCus = false;
+                $scope.Expire = false;
+                $scope.isLogin = false;
             } else {
                 $scope.data = data;
+                $scope.RightCus = true;
+                $scope.WrongCus = false;
+                $scope.Expire = false;
+                $scope.isLogin = true;
             }
         });
 

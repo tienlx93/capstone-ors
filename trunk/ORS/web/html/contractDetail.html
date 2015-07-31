@@ -1,6 +1,6 @@
 <link rel="stylesheet" type="text/css" href="../css/contract.css"/>
 
-<div class="container" ng-show="!RightCus">
+<div class="container" ng-show="RightCus">
     <h2>Chi tiết hợp đồng</h2>
     <br>
 
@@ -67,6 +67,14 @@
 </div>
 <div class="container" ng-show="Expire">
     <h2 class="error">{{error}}</h2>
+    <br>
+    <br>
+    <div class="button-post">
+        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
+    </div>
+</div>
+<div class="container" ng-show="!isLogin">
+    <h2>Vui lòng đăng nhập để xem thông tin</h2>
     <br>
     <br>
     <div class="button-post">

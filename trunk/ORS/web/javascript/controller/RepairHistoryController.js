@@ -10,9 +10,18 @@ controllers.controller('RepairHistoryController', ['$scope', '$location', '$rout
         //get data
         Api.getRepairHistoryList(id, function (data) {
             if (data == "Error") {
-                $scope.error = true;
+                $scope.WrongCus = true;
+                $scope.RightCus = false;
+                $scope.isLogin = true;
+            } else if (data == "Wrong") {
+                $scope.RightCus = false;
+                $scope.WrongCus = false;
+                $scope.isLogin = false;
             } else {
                 $scope.data = data;
+                $scope.isLogin = true;
+                $scope.RightCus = true;
+                $scope.WrongCus = false;
             }
         })
     }]);

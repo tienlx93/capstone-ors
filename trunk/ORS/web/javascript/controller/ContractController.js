@@ -11,10 +11,16 @@ controllers.controller('ContractController', ['$scope', '$location', '$routePara
             if (data == "Error") {
                 $scope.exist1 = true;
                 $scope.rightCus1 = false;
+                $scope.exist2 = false;
+            } else if (data == "Wrong") {
+                $scope.exist1 = false;
+                $scope.exist2 = true;
+                $scope.rightCus1 = false;
             } else {
                 $scope.data = data;
                 $scope.rightCus1 = true;
                 $scope.exist1 = false;
+                $scope.exist2 = false;
             }
         })
     }]);

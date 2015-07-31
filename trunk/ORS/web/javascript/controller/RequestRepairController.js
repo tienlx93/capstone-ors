@@ -40,10 +40,10 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
             var description = $scope.description;
             Api.requestRepair(id, amenities, description, function(data){
                 if (data=="Success") {
-                    toastr.success('Gửi yêu cầu thành công', 'Thành công');
-                    $location.path("/home");
+                    toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
+                    $location.path("/contractList");
                 } else {
-                    toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+                    toastr.error('Vui lòng chọn ít nhất một tiện nghi để sửa');
                 //    alert("Có lỗi xảy ra, xin thử lại");
                 }
             })

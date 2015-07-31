@@ -45,12 +45,21 @@
                 <div class="descriptionRepair">
                     <label class="">Mô tả yêu cầu sửa chữa:</label>
                     <br>
-                    <textarea ng-model="description" required></textarea>
+                    <textarea ng-model="description" required name="description"></textarea>
+                    <div>
+                    <span style="color: #ef4836;" ng-show="form.description.$dirty && form.description.$invalid">
+                        <span ng-show="form.description.$error.required">Vui lòng điền mô tả </span>
+                    </span>
+                    </div>
                 </div>
-                <div class="descriptionRepair">
-                    <button ng-click="submit(form)" class="btn btn-green">Gửi yêu cầu</button>
-                </div>
+
             </form>
+            <div class="descriptionRepair">
+                <div class="button-post">
+                    <a ng-click="submit(form)" ng-disabled="form.$invalid" class="btn btn-green">Gửi yêu cầu</a>
+                    <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
+                </div>
+            </div>
         </div>
     </div>
 

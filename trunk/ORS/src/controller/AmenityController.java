@@ -44,20 +44,16 @@ public class AmenityController extends HttpServlet {
         } else if (action.equals("delete")) {
             String name = request.getParameter("name");
         } else if (action.equals("update")) {
-            String name = request.getParameter("name");
             AmenityDAO accDAO = new AmenityDAO();
-           // Amenity ame = new Amenity();
-            Amenity amedemo = new Amenity();
-            amedemo.setId(Integer.parseInt(request.getParameter("id")));
-            amedemo.setWeight(Integer.parseInt(request.getParameter("weight")));
-            amedemo.setWeight(Integer.parseInt(request.getParameter("priority")));
-            amedemo.setDescription(request.getParameter("description"));
 
-/*          String password = request.getParameter("password");
-            String email = request.getParameter("email");*/
-     /**//* String role = request.getParameter("role");*/
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            Integer weight = Integer.parseInt(request.getParameter("weight"));
+            Integer amenityGroupId = Integer.parseInt(request.getParameter("group"));
+            Integer priority = Integer.parseInt(request.getParameter("priority"));
 
-            accDAO.update(name, amedemo);
+            accDAO.updateN(id, name, description, weight, amenityGroupId, priority);
         }
         response.sendRedirect("/admin/amenity");
     }
@@ -70,7 +66,7 @@ public class AmenityController extends HttpServlet {
 
         AmenityDAO dao = new AmenityDAO();
         RequestDispatcher rd;
-        List<Amenity> list =  dao.findAll();
+        List<Amenity> list = dao.findAll();
         Account account = (Account) session.getAttribute("user");
         if (account != null && (account.getRoleId() == 2)) {
             if (action == null) {
@@ -106,7 +102,7 @@ public class AmenityController extends HttpServlet {
                 rd = request.getRequestDispatcher("/WEB-INF/partial/amenityListItem.jsp");
                 rd.forward(request, response);
             }
-         } else {
+        } else {
             response.sendRedirect("/admin");
         }
     }

@@ -114,4 +114,17 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         }
 
     }
+
+    public Object getCusNameByIdContract(int id) {
+        try {
+            String sql = "from Contract where id = ?";
+            Query query = session.createQuery(sql);
+            query.setInteger(0, id);
+
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

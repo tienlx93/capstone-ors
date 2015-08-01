@@ -1,6 +1,7 @@
 
-<div class="container" ng-show="!RightCus">
+<div class="container" ng-show="rightCus1">
     <h2>Danh sách hợp đồng</h2>
+    <br>
     <table class="table">
         <thead>
         <tr>
@@ -8,7 +9,7 @@
             <th>Tên văn phòng</th>
             <th>Ngày bắt đầu</th>
             <th>Ngày kết thúc</th>
-            <th>Giá</th>
+            <th>Giá (VNĐ)</th>
             <th>Thời hạn thanh toán</th>
             <th></th>
 
@@ -32,8 +33,16 @@
     </table>
 </div>
 
-<div class="container" ng-show="Exist">
+<div class="container" ng-show="exist1">
     <h2>Bạn chưa tạo hợp đồng với chúng tôi</h2>
+    <br>
+    <br>
+    <div class="button-post">
+        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
+    </div>
+</div>
+<div class="container" ng-show="exist2">
+    <h2>Vui lòng đăng nhập để xem thông tin</h2>
     <br>
     <br>
     <div class="button-post">

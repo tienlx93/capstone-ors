@@ -5,6 +5,7 @@
 controllers.controller('RequestRepairController', ['$scope', '$location', '$routeParams', '$route', 'Api', 'toastr',
     function ($scope, $location, $routeParams, $route, Api, toastr) {
         var id = $routeParams.id;
+        $scope.img = {};
         Api.getContractById(id, function (data) {
             if (data == "Error") {
                 $scope.error = true;
@@ -15,6 +16,7 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                     } else {
                         $scope.officeName = data.name;
                         $scope.amenities = data.amenities;
+                        $scope.img = data.images[0];
                     }
                 });
             }
@@ -38,10 +40,10 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
             var description = $scope.description;
             Api.requestRepair(id, amenities, description, function(data){
                 if (data=="Success") {
-                    toastr.success('Gửi yêu cầu thành công', 'Thành công');
-                    $location.path("/home");
+                    toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
+                    $location.path("/contractList");
                 } else {
-                    toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+                    toastr.error('Vui lòng chọn ít nhất một tiện nghi để sửa');
                 //    alert("Có lỗi xảy ra, xin thử lại");
                 }
             })

@@ -9,22 +9,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css"
-        type="text/css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
-        type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css"
+          type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
+          type="text/css">
 
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
-  <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
-  <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
+    <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 
-  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
 
-  <script type="text/javascript"
-          src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
-  <title>Office Rental Service</title>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <title>Office Rental Service</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/admin/top.jsp"/>
@@ -32,61 +32,59 @@
 <jsp:include page="/WEB-INF/admin/left.jsp"/>
 
 <div class="content">
-  <div class="page-header">
-    <h1 class="title"></h1>
-  </div>
-
-  <div class="container-padding">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="panel panel-default">
-          <div class="panel-title">
-            Cập nhật tiện nghi
-          </div>
-          <div>
-            <form action="${pageContext.request.contextPath}/admin/user" method="post">
-              <div class="form-group">
-                <label for="">Tên tiện nghi</label>
-                <span>${amenity.name}</span>
-                <input type="hidden" name="username" class="" value="${amenity.name}">
-              </div>
-
-              <div class="form-group">
-                <label for="description">Mô tả</label>
-                <input type="text" name="description" class="" id="description" value="${amenity.description}">
-              </div>
-
-              <div class="form-group">
-                <label for="weight">Trọng số</label>
-                <input type="text" name="weight" class="" id="weight" value="${amenity.weight}">
-              </div>
-
-              <div class="form-group">
-                <label for="priority">Độ ưu tiên</label>
-                <input type="text" name="priority" class="" id="priority" value="${amenity.priority}">
-              </div>
-
-              <div class="form-group">
-                <input type="hidden" name="id" class="" value="${amenity.id}">
-              </div>
-
-              <div>
-                <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
-                  <input type="hidden" value="${item.name}" name="name">
-                </form>
-              </div>
-              <div class="button-post">
-
-                <a href="${pageContext.request.contextPath}/admin/amenity" class="btn btn-default">Hủy</a>
-                <button type="submit" value="update" name="action">Cập nhật</button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
+    <div class="page-header">
+        <h1 class="title"></h1>
     </div>
-  </div>
-  <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
+
+    <div class="container-padding">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-title">
+                        Cập nhật tiện nghi
+                    </div>
+                    <div>
+                        <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
+                            <div class="form-group">
+                                <label for="name">Tên tiện nghi</label>
+                                <span>${amenity.name}</span>
+                                <input type="hidden" name="name" class="" value="${amenity.name}" id="name">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="description">Mô tả</label>
+                                <input type="text" name="description" class="" id="description"
+                                       value="${amenity.description}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="weight">Trọng số</label>
+                                <input type="text" name="weight" class="" id="weight" value="${amenity.weight}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="priority">Độ ưu tiên</label>
+                                <input type="text" name="priority" class="" id="priority" value="${amenity.priority}">
+                            </div>
+
+                            <div class="form-group">
+                                <input type="hidden" name="id" class="" value="${amenity.id}">
+                                <input type="hidden" name="group" class="" value="${amenity.amenityGroupId}">
+                            </div>
+
+
+                            <div class="button-post">
+                                <button class="btn btn-primary" type="submit" value="update" name="action">Cập nhật
+                                </button>
+                                <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>

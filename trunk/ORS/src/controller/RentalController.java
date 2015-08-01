@@ -1,9 +1,6 @@
 package controller;
 
-import dao.ContractDAO;
-import dao.OfficeDAO;
-import dao.RentalDAO;
-import dao.RentalDetailDAO;
+import dao.*;
 import entity.*;
 import service.ConstantService;
 import service.SMSService;
@@ -20,6 +17,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -39,6 +37,9 @@ public class RentalController extends HttpServlet {
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignStaff = request.getParameter("assignStaff");
             String description = request.getParameter("description");
+            Rental rental = dao.get(id);
+            Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
+            RentalItemDAO rentalItemDAO = new RentalItemDAO();
             String assignedTime = request.getParameter("assignedTime");
             
             SMSService sms = new SMSService();
@@ -49,6 +50,9 @@ public class RentalController extends HttpServlet {
             switch (button) {
                 case "reject":
                     dao.changeStatus(id, 4);
+                    for (RentalDetail rentalDetail : rentalDetailCollection) {
+                        rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
+                    }
                     sms.setMessage("Yeu cau thue vat dung cua ban khong duoc chap nhan.");
                     sms.send();
                     break;
@@ -58,9 +62,17 @@ public class RentalController extends HttpServlet {
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     sms.setMessage("Yeu cau thue vat dung cua ban da duoc chap nhan. Thoi gian du kien: " + df.format(date));
                     sms.send();
+
+                    for (RentalDetail rentalDetail : rentalDetailCollection) {
+                        rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
+                    }
+
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
+                    for (RentalDetail rentalDetail : rentalDetailCollection) {
+                        rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
+                    }
                     break;
                 case "change3":
                     dao.changeStatus(id, 3);

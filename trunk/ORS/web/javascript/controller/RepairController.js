@@ -9,10 +9,19 @@ controllers.controller('RepairController', ['$scope', '$location', '$routeParams
         //get data
         Api.getRepairList(id, function (data) {
             if (data == "Error") {
-                $scope.error = true;
+                $scope.WrongCus = true;
+                $scope.RightCus = false;
+                $scope.isLogin = true;
+            } else if (data == "Wrong") {
+                $scope.RightCus = false;
+                $scope.WrongCus = false;
+                $scope.isLogin = false;
             } else {
                 $scope.data = data;
                 $scope.id = id;
+                $scope.isLogin = true;
+                $scope.RightCus = true;
+                $scope.WrongCus = false;
             }
         })
     }]);

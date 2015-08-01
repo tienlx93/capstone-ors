@@ -186,11 +186,11 @@
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${info.statusId == 2}">
-                                                <button type="submit" value="change5" name="button" class="btn-primary">Đồng ý
-                                                    sửa chữa
+                                                <button type="submit" value="change5" name="button" class="btn btn-primary">Đồng ý
+                                                    thuê
                                                 </button>
                                                 <button type="submit" value="change1" name="button" class="btn btn-danger">Không
-                                                    đồng ý sửa chữa
+                                                    đồng ý thuê
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.statusId == 5}">

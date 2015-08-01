@@ -8,7 +8,7 @@
                 </div>
             </div>
         </div>
-        <div class="right-info" id="info">
+        <div class="right-info" id="info" ng-show="Login">
             <div class="info"><h2>Thông tin cá nhân</h2></div>
             <!--<div ng-show="error!=null" class="error">{{error}}</div>-->
 
@@ -41,6 +41,8 @@
                 <a class="btn btn-green" href="#/profilePass">Sửa mật khẩu</a>
             </div>
         </div>
-
+        <div class="right-info"ng-show="isLogin">
+            <div class="info" ><h2>Vui lòng đăng nhập để xem thông tin</h2></div>
+        </div>
     </div>
 </div>

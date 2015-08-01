@@ -40,16 +40,18 @@ public class RentalController extends HttpServlet {
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignStaff = request.getParameter("assignStaff");
             String description = request.getParameter("description");
+            Rental rental = dao.get(id);
+            Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
+            RentalItemDAO rentalItemDAO = new RentalItemDAO();
             switch (button) {
                 case "reject":
                     dao.changeStatus(id, 4);
+                    for (RentalDetail rentalDetail : rentalDetailCollection) {
+                        rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
+                    }
                     break;
                 case "assign":
-                    Rental rental = dao.get(id);
                     dao.update(id, contractId, assignStaff, 2, description);
-
-                    Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
-                    RentalItemDAO rentalItemDAO = new RentalItemDAO();
 
                     for (RentalDetail rentalDetail : rentalDetailCollection) {
                         rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
@@ -58,6 +60,9 @@ public class RentalController extends HttpServlet {
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
+                    for (RentalDetail rentalDetail : rentalDetailCollection) {
+                        rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
+                    }
                     break;
                 case "change3":
                     dao.changeStatus(id, 3);

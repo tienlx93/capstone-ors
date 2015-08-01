@@ -1050,7 +1050,7 @@ public class ApiController extends HttpServlet {
         PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
         if (account != null) {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
-                if (contract.getStatusId() == 2 || contract.getStatusId() == 3) {
+                if (contract.getStatusId() != 4) {
                     ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
                             contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
                     out.print(gson.toJson(json));

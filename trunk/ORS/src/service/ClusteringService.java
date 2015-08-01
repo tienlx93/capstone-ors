@@ -15,7 +15,6 @@ public class ClusteringService {
     private int numCluster;
     private Integer[] officeIdList;
     private KMeans kMeans;
-    private List<Office> allOffice;
     private List<NormalizePoint> officeData;
 
     public ClusteringService() {
@@ -24,7 +23,7 @@ public class ClusteringService {
         officeData = new ArrayList<>();
         double[] data;
         double price;
-        allOffice = dao.getAllOffice();
+        List<Office> allOffice = dao.getAllOffice();
         officeIdList = new Integer[allOffice.size()];
         for (int i = 0; i < allOffice.size(); i++) {
             Office office = allOffice.get(i);

@@ -156,10 +156,11 @@
 
                                 <c:choose>
                                     <c:when test="${info.statusId == 1 && user.roleId == 2}">
+
+                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao việc</button>
                                         <button class="btn btn-danger" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
                                             lịch hẹn
                                         </button>
-                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao việc</button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 2}">
                                         <button class="btn btn-primary" type="submit" name="button" value="assign">Giao việc lại</button>

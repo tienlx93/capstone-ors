@@ -1207,9 +1207,16 @@ public class ApiController extends HttpServlet {
 
     private void unsubscribeRequest(HttpServletRequest request, PrintWriter out) {
         int requestId = Integer.parseInt(request.getParameter("requestId"));
-
         RequestOfficeDAO requestOfficeDAO = new RequestOfficeDAO();
         RequestOffice requestOffice = requestOfficeDAO.get(requestId);
+
+        Collection<RequestAmenity> requestAmenities = requestOffice.getRequestAmenitiesById();
+        RequestAmenityDAO requestAmenityDAO = new RequestAmenityDAO();
+
+        for (RequestAmenity requestAmenity : requestAmenities) {
+            requestAmenityDAO.remove(requestAmenity);
+        }
+
 
         boolean result = requestOfficeDAO.remove(requestOffice);
 

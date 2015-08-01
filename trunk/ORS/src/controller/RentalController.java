@@ -3,6 +3,7 @@ package controller;
 import dao.OfficeDAO;
 import dao.RentalDAO;
 import dao.RentalDetailDAO;
+import dao.RentalItemDAO;
 import entity.Account;
 import entity.Office;
 import entity.Rental;
@@ -18,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +45,16 @@ public class RentalController extends HttpServlet {
                     dao.changeStatus(id, 4);
                     break;
                 case "assign":
+                    Rental rental = dao.get(id);
                     dao.update(id, contractId, assignStaff, 2, description);
+
+                    Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
+                    RentalItemDAO rentalItemDAO = new RentalItemDAO();
+
+                    for (RentalDetail rentalDetail : rentalDetailCollection) {
+                        rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
+                    }
+
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);

@@ -61,18 +61,25 @@
                 <input type="email" name="email" class="" id="email" value="${account.email}">
               </div>
 
-              <div class="form-group">
+              <div class="form-group" hidden>
                 <input type="hidden" name="statusId" class="" value="${account.statusId}">
               </div>
+              <c:choose>
+                <c:when test="${account.username == 'admin'}">
 
-              <div class="form-group">
-                <label for="role">Chức vụ</label>
-                <select name="role" class="" id="role">
-                  <c:forEach var="item" items="${roleList}">
-                    <option value="${item.id}" <c:if test="${account.roleId==item.id}">selected</c:if> >${item.roleName}</option>
-                  </c:forEach>
-                </select>
-              </div>
+                </c:when>
+                <c:otherwise>
+                  <div class="form-group">
+                    <label for="role">Chức vụ</label>
+                    <select name="role" class="" id="role">
+                      <c:forEach var="item" items="${roleList}">
+                        <option value="${item.id}" <c:if test="${account.roleId==item.id}">selected</c:if> >${item.roleName}</option>
+                      </c:forEach>
+                    </select>
+                  </div>
+                </c:otherwise>
+              </c:choose>
+
               <%--<div>
               <form action="${pageContext.request.contextPath}/admin/user" method="post">
                 <input type="hidden" value="${item.username}" name="username">
@@ -81,9 +88,20 @@
               <div class="button-post">
 
                 <a href="${pageContext.request.contextPath}/admin/user" class="btn btn-default">Hủy</a>
-                <button type="submit" value="update" name="action">Cập nhật</button>
-                <button type="submit" value="ban" name="action">Khóa tài khoản</button>
-                <button type="submit" value="unban" name="action">Mở tài khoản</button>
+                <button type="submit" class="btn btn-primary" value="update" name="action">Cập nhật</button>
+                <c:choose>
+                  <c:when test="${account.username == 'admin'}">
+
+                  </c:when>
+                  <c:otherwise>
+                    <c:if test="${account.statusId == 1}">
+                    <button type="submit" class="btn btn-danger" value="ban" name="action">Khóa tài khoản</button>
+                    </c:if>
+                    <c:if test="${account.statusId == 2}">
+                    <button type="submit" class="btn btn-success" value="unban" name="action">Mở tài khoản</button>
+                    </c:if>
+                  </c:otherwise>
+                </c:choose>
               </div>
             </form>
           </div>

@@ -76,9 +76,9 @@
                 </form>
               </div>
               <div class="button-post">
-
+                <button type="submit" class="btn btn-primary" value="update" name="action">Cập nhật</button>
+                <button type="submit" class="btn btn-danger" value="delete" name="action">Xóa</button>
                 <a href="${pageContext.request.contextPath}/admin/amenity" class="btn btn-default">Hủy</a>
-                <button type="submit" value="update" name="action">Cập nhật</button>
               </div>
             </form>
           </div>

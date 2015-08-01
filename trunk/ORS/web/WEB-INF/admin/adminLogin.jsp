@@ -18,9 +18,9 @@
                 src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
         <title>Office Rental Service</title>
         <title>Login</title>
+    <jsp:include page="/WEB-INF/admin/top.jsp"/>
     </head>
     <body>
-    <jsp:include page="/WEB-INF/admin/top.jsp"/>
         <div id="container">
             <form class="form-signin" id="login" action="${pageContext.request.contextPath}/admin" method="post">
                 <h2>Đăng nhập vào hệ thống</h2>

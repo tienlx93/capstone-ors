@@ -22,7 +22,7 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
         super(Rental.class);
     }
 
-    public void update(int id, int contractId, String assignStaff, int statusId, String description) {
+    public void update(int id, int contractId, String assignStaff, int statusId, String description, Date assignedTime) {
 
         Transaction trans = session.beginTransaction();
         try {
@@ -32,6 +32,7 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
             rt.setStatusId(statusId);
             rt.setDescription(description);
             rt.setUpdateTime(new Timestamp(new Date().getTime()));
+            rt.setAssignedTime(new Timestamp(assignedTime.getTime()));
             session.update(rt);
             trans.commit();
 

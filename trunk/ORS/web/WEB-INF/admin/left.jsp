@@ -7,7 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<div class="sidebar clearfix">
+<div class="sidebar clearfix hidden">
 
     <ul class="sidebar-panel nav">
         <li><a href="${pageContext.request.contextPath}/admin/home">

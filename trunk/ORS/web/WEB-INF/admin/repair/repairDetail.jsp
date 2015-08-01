@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="dao.RepairStatusDAO" %>
-<%@ page import="entity.RepairStatus" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page import="java.util.List" %>
 <%@ page import="dao.AccountDAO" %>
 <%@ page import="entity.Account" %>
@@ -142,7 +141,7 @@
                             <div class="form-group clearfix">
                                 <label for="assignedTime" class="col-sm-2 control-label">Ngày sửa chữa</label>
                                 <c:choose>
-                                    <c:when test="${user.roleId==2}">
+                                    <c:when test="${user.roleId==2 && (info.repairStatusId == 1 || info.repairStatusId == 2)}">
                                         <div class="col-sm-10">
                                             <input type='text' class="form-control"
                                                    name="assignedTime"
@@ -151,7 +150,9 @@
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                        ${info.assignedTime}
+                                        <div class="col-sm-10">
+                                          <fmt:formatDate value="${info.assignedTime}" pattern="yyyy-MM-dd"/>
+                                        </div>
                                     </c:otherwise>
                                 </c:choose>
 

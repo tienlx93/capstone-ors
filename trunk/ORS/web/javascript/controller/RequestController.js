@@ -1,21 +1,24 @@
 controllers.controller('RequestController', ['$scope', '$rootScope', '$routeParams', '$location', 'Api', 'toastr',
     function ($scope, $rootScope, $routeParams, $location, Api, toastr) {
+        $scope.user = {};
         var verifyCallback = function (response) {
             $scope.user.captcha3 = response;
             $scope.$$phase || $scope.$apply();
         };
         setTimeout(function () {
-            grecaptcha.render('captcha3', {
-                'sitekey': '6LereAoTAAAAAMC3pFh9lblF7U8tLMuiCUjENLYW',
-                'callback': verifyCallback
-            });
+            if (typeof grecaptcha != 'undefined') {
+                grecaptcha.render('captcha3', {
+                    'sitekey': '6LereAoTAAAAAMC3pFh9lblF7U8tLMuiCUjENLYW',
+                    'callback': verifyCallback
+                });
+            }
         }, 100);
 
         var id = $routeParams.id;
         var date = $('#date').datetimepicker({
             sideBySide: true,
             minDate: new Date(),
-            daysOfWeekDisabled: [6],
+            daysOfWeekDisabled: [0],
             disabledHours: [0, 1, 2, 3, 4, 5, 6, 7, 18, 19, 20, 21, 22, 23, 24]
         });
         $scope.login = function (form) {
@@ -30,8 +33,10 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
                         toastr.error('Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại');
 
                     } else if (data) {
-                        $scope.isLogin = true;
+                        Api.account.username = username;
+                        Api.account.fullName = data;
                         Api.updateAccount();
+                        $scope.isLogin = true;
                     }
                 });
 
@@ -53,23 +58,24 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
         };
 
         $scope.request = function (form) {
-            var txtTime = $('#date').val();
-            var time = new Date(txtTime);
-            if (!time) {
-                toastr.error('Mời nhập thời gian hẹn');
+            if (form.$valid) {
+                var txtTime = $('#date').val();
+                var time = new Date(txtTime);
+                if (isNaN(time.getTime())) {
+                    toastr.error('Thời gian hẹn không hợp lệ');
 
-            } else {
-                time = time.getTime();
-                Api.requestAppointment(time, id, function (data) {
-                    if (data == "Success") {
-                        toastr.success('Đặt lịch hẹn thành công');
-             //           alert("Đặt lịch hẹn thành công");
-                        $location.path("/detail");
-                    } else {
-                        toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
-                    }
-                });
+                } else {
+                    time = time.getTime();
+                    Api.requestAppointment(time, id, function (data) {
+                        if (data == "Success") {
+                            toastr.success('Đặt lịch hẹn thành công');
+                            //           alert("Đặt lịch hẹn thành công");
+                            $location.path("/detail");
+                        } else {
+                            toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+                        }
+                    });
+                }
             }
-
         }
     }]);

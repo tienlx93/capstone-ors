@@ -875,10 +875,10 @@ Sidepanel
 Content 
 ================================================================================= */
 .content {
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 5px;
+    padding-right: 5px;
     padding-top: 80px;
-    margin-left: 250px;
+    margin-left: 0;
     background: #f5f5f5;
 }
 /* =================================================================================
@@ -886,8 +886,8 @@ FOOTER
 ================================================================================= */
 .footer {
     border-top: 1px solid #e2e2e2;
-    margin-left: -30px;
-    margin-right: -30px;
+    margin-left: -4px;
+    margin-right: -4px;
     margin-bottom: 0;
     padding: 10px;
     font-size: 11px;
@@ -902,7 +902,7 @@ Page Header
 ================================================================================= */
 .page-header {
     background: #fff;
-    margin: -20px -30px 20px -30px;
+    margin: -20px -4px 20px -4px;
     padding: 20px;
     border-bottom: none;
     position: relative;

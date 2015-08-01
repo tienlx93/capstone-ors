@@ -10,6 +10,7 @@ controllers.controller('resultRequestOfficeController', ['$scope', '$location', 
         Api.getResultRequestOffice(function (data) {
             if (data == "Error") {
                 $scope.error = true;
+                toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
             } else {
                 $scope.resultRequestOffice = data;
                 for (var i = 0; i < $scope.resultRequestOffice.length; i++) {
@@ -22,6 +23,7 @@ controllers.controller('resultRequestOfficeController', ['$scope', '$location', 
         Api.getRequestOffice(function (data) {
             if (data == "Error") {
                 $scope.error = true;
+                toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
             } else {
                 $scope.requestOffice = data;
             }

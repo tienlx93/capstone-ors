@@ -1050,7 +1050,7 @@ public class ApiController extends HttpServlet {
         PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
         if (account != null) {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
-                if (contract.getStatusId() == 2 || contract.getStatusId() == 3) {
+                if (contract.getStatusId() != 4) {
                     ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
                             contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
                     out.print(gson.toJson(json));
@@ -1207,9 +1207,16 @@ public class ApiController extends HttpServlet {
 
     private void unsubscribeRequest(HttpServletRequest request, PrintWriter out) {
         int requestId = Integer.parseInt(request.getParameter("requestId"));
-
         RequestOfficeDAO requestOfficeDAO = new RequestOfficeDAO();
         RequestOffice requestOffice = requestOfficeDAO.get(requestId);
+
+        Collection<RequestAmenity> requestAmenities = requestOffice.getRequestAmenitiesById();
+        RequestAmenityDAO requestAmenityDAO = new RequestAmenityDAO();
+
+        for (RequestAmenity requestAmenity : requestAmenities) {
+            requestAmenityDAO.remove(requestAmenity);
+        }
+
 
         boolean result = requestOfficeDAO.remove(requestOffice);
 

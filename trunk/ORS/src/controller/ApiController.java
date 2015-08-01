@@ -563,8 +563,7 @@ public class ApiController extends HttpServlet {
             if (birthday == null) {
                 out.print(gson.toJson("Error Date"));
             } else {
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-                Date parsed = format.parse(birthday);
+                Timestamp parse = new Timestamp(Long.valueOf(birthday));
 
                 Profile pf = new Profile();
                 pf.setUsername(acc.getUsername());
@@ -573,7 +572,7 @@ public class ApiController extends HttpServlet {
                 pf.setPhone(phone);
                 pf.setCompany(company);
                 pf.setAddress(address);
-                pf.setBirthday(new Timestamp(parsed.getTime()));
+                pf.setBirthday(parse);
 
                 AccountDAO accountDAO = new AccountDAO();
                 boolean result = accountDAO.save(acc);
@@ -616,9 +615,7 @@ public class ApiController extends HttpServlet {
         String birthday = request.getParameter("birthday");
 
         if (account != null) {
-
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-            Date parsed = format.parse(birthday);
+            Timestamp parsed = new Timestamp(Long.valueOf(birthday));
 
             ProfileDAO profileDAO = new ProfileDAO();
             boolean result2 = profileDAO.update(account.getUsername(), fullName, company, phone, address, parsed);

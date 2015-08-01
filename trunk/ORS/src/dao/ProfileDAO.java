@@ -30,7 +30,7 @@ public class ProfileDAO extends BaseDAO<Profile, Integer> {
         return null;
     }
 
-    public boolean update(String username, String fullName, String company, String phone, String address, Date birthday) {
+    public boolean update(String username, String fullName, String company, String phone, String address, Timestamp birthday) {
 
         Transaction trans = session.beginTransaction();
         try {
@@ -39,7 +39,7 @@ public class ProfileDAO extends BaseDAO<Profile, Integer> {
             pr.setCompany(company);
             pr.setPhone(phone);
             pr.setAddress(address);
-            pr.setBirthday(new Timestamp(birthday.getTime()));
+            pr.setBirthday(birthday);
 
             session.update(pr);
             trans.commit();

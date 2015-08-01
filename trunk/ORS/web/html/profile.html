@@ -1,35 +1,48 @@
+<link rel="stylesheet" type="text/css" href="/css/request.css"/>
 <div class="container">
+    <div class="panel-body">
+        <div class="left-request">
+            <div class="office clearfix">
+                <div class="img">
+                    <img src="/img/office.jpg">
+                </div>
+            </div>
+        </div>
+        <div class="right-info" id="info" ng-show="Login">
+            <div class="info"><h2>Thông tin cá nhân</h2></div>
+            <!--<div ng-show="error!=null" class="error">{{error}}</div>-->
 
-    <h2>Thông tin cá nhân</h2>
-
-    <div class="panel-body" >
-        <div class="form-group">
-            <h4>Xưng hô</h4>
-            {{data.title}}
+            <div class="form-group">
+                <h4>Họ và tên </h4>
+                {{data.fullName}}
+            </div>
+            <div class="form-group">
+                <h4>Xưng hô</h4>
+                {{data.title}}
+            </div>
+            <div class="form-group">
+                <h4>Công ty</h4>
+                {{data.company}}
+            </div>
+            <div class="form-group">
+                <h4>Số điện thoại</h4>
+                {{data.phone}}
+            </div>
+            <div class="form-group">
+                <h4>Địa chỉ</h4>
+                {{data.address}}
+            </div>
+            <div class="form-group">
+                <h4>Ngày sinh</h4>
+                {{data.birthday2 | date:'MM/dd/yyyy'}}
+            </div>
+            <div class="button-post">
+                <a class="btn btn-green" href="#/profileDetail">Sửa thông tin</a>
+                <a class="btn btn-green" href="#/profilePass">Sửa mật khẩu</a>
+            </div>
         </div>
-        <div class="form-group">
-            <h4>Họ và tên </h4>
-            {{data.fullName}}
-        </div>
-        <div class="form-group">
-            <h4>Công ty</h4>
-            {{data.company}}
-        </div>
-        <div class="form-group">
-            <h4>Số điện thoại</h4>
-            {{data.phone}}
-        </div>
-        <div class="form-group">
-            <h4>Địa chỉ</h4>
-            {{data.address}}
-        </div>
-        <div class="form-group">
-            <h4>Ngày sinh</h4>
-            {{data.birthday2 | date:'MM/dd/yyyy'}}
-        </div>
-        <div class="button-post">
-            <a class="btn btn-default" href="#/profileDetail">Sửa thông tin</a>
-            <a class="btn btn-default" href="#/profilePass">Sửa mật khẩu</a>
+        <div class="right-info"ng-show="isLogin">
+            <div class="info" ><h2>Vui lòng đăng nhập để xem thông tin</h2></div>
         </div>
     </div>
 </div>

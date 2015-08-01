@@ -101,11 +101,11 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
         Transaction trans = session.beginTransaction();
         try {
             Amenity amenity = (Amenity) session.get(Amenity.class, name);
+            amenity.setId(newAmenity.getId());
             amenity.setWeight(newAmenity.getWeight());
             amenity.setDescription(newAmenity.getDescription());
             amenity.setPriority(newAmenity.getPriority());
-            amenity.setId(newAmenity.getId());
-
+            amenity.setAmenityGroupId(newAmenity.getAmenityGroupId());
 
             session.update(amenity);
             trans.commit();
@@ -116,5 +116,26 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
             }
         }
         return false;
+    }
+
+    public void updateN(int id, String name, String description, Integer weight, Integer amenityGroupId, Integer priority) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Amenity amenity = (Amenity) session.get(Amenity.class, id);
+            amenity.setName(name);
+            amenity.setDescription(description);
+            amenity.setWeight(weight);
+            amenity.setPriority(priority);
+            amenity.setAmenityGroupId(amenityGroupId);
+
+            session.update(amenity);
+            trans.commit();
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+
     }
 }

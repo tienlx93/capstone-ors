@@ -156,35 +156,35 @@
 
                                 <c:choose>
                                     <c:when test="${info.statusId == 1 && user.roleId == 2}">
-                                        <button class="btn btn-default" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
+                                        <button class="btn btn-danger" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
                                             lịch hẹn
                                         </button>
-                                        <button type="submit" name="button" value="assign" class="btn btn-default">Giao việc</button>
+                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao việc</button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 2}">
-                                        <button class="btn btn-default" type="submit" name="button" value="assign">Giao việc lại</button>
+                                        <button class="btn btn-primary" type="submit" name="button" value="assign">Giao việc lại</button>
                                     </c:when>
                                     <c:when test="${info.statusId == 3 && user.roleId == 2}">
                                         <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
-                                           class="btn btn-default">Tạo hợp đồng</a>
-                                        <button class="btn btn-default" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
+                                           class="btn btn-primary">Tạo hợp đồng</a>
+                                        <button class="btn btn-danger" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
                                             lịch hẹn
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
-                                        <button class="btn btn-default" type="submit" name="button" value="update3">
+                                        <button class="btn btn-primary" type="submit" name="button" value="update3">
                                             Khách hàng đồng ý kí hợp đồng
                                         </button>
-                                        <br>
-                                        <button class="btn btn-default" type="submit" name="button" value="reject">
+                                        <button class="btn btn-danger" type="submit" name="button" value="reject">
                                             Khách hàng không đồng ý kí hợp đồng
                                         </button>
                                     </c:when>
 
                                 </c:choose>
 
-                                <a href="${pageContext.request.contextPath}/admin/appointment"
+                                <a onclick="window.history.back()"
                                    class="btn btn-default">Quay về</a>
+
                             </div>
 
                         </form>

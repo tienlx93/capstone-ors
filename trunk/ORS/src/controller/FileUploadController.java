@@ -26,7 +26,7 @@ public class FileUploadController extends HttpServlet {
 
         // Create path components to save the file
         String office = request.getParameter("office");
-        final String path = getServletContext().getRealPath("") + "\\upload\\" + office;
+        final String path = getServletContext().getRealPath("") + File.separator + "upload" + File.separator + office;
         final Part filePart = request.getPart("file");
         String fileName = getFileName(filePart);
 
@@ -36,9 +36,10 @@ public class FileUploadController extends HttpServlet {
 
         try {
             File uploadDir = new File(path);
+            LOGGER.log(Level.INFO, "upload directory = {0} ", uploadDir.getAbsolutePath());
             if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-                LOGGER.log(Level.INFO, "upload directory = {0} ", new Object[]{uploadDir.mkdir()});
+                boolean mkdir = uploadDir.mkdir();
+                LOGGER.log(Level.INFO, "upload directory = {0} ", new Object[]{mkdir});
             }
             if (office.equals("rental")) {
                 assert fileName != null;
@@ -55,7 +56,7 @@ public class FileUploadController extends HttpServlet {
                 out.write(bytes, 0, read);
             }
             writer.print("/upload/"+office+"/"+fileName);
-            LOGGER.log(Level.INFO, "File{0}being uploaded to {1}",
+            LOGGER.log(Level.INFO, "File {0} being uploaded to {1}",
                     new Object[]{fileName, path});
         } catch (FileNotFoundException fne) {
             writer.println("You either did not specify a file to upload or are "

@@ -5,6 +5,7 @@ import dao.RoleDAO;
 import entity.Account;
 import entity.Role;
 import service.ConstantService;
+import dao.ProfileDAO;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -97,6 +98,16 @@ public class UserController extends HttpServlet {
                 request.setAttribute("roleList", roleList);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/user/editUser.jsp");
                 rd.forward(request, response);
+            } else if (action.equals("view")) {
+                String username = request.getParameter("username");
+                Account acc = dao.get(username);
+                request.setAttribute("account", acc);
+
+
+                rd = request.getRequestDispatcher("/WEB-INF/admin/user/editUser.jsp");
+                rd.forward(request, response);
+
+
             }
             else if (action.equals("page")) {
                 String startPage = request.getParameter("startPage");

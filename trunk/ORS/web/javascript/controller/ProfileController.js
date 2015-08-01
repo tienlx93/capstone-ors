@@ -10,7 +10,12 @@ controllers.controller('ProfileController', ['$scope', '$location', '$routeParam
         Api.getProfile(function (data) {
             if (data == "Error") {
                 $scope.error = true;
+                $scope.isLogin = true;
+                $scope.Login = false;
+                //$scope.error = "Lỗi kết nối cơ sở dữ liệu, vui lòng thử lại sau";
             } else {
+                $scope.isLogin = false;
+                $scope.Login = true;
                 $scope.data = data;
                 if (data.company == null || data.company == "") {
                     $scope.data.company = "Không có";

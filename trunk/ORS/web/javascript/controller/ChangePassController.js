@@ -20,7 +20,7 @@ controllers.controller('ChangePassController', ['$scope', '$location', '$routePa
 
                     } else if (data == "Success") {
                         toastr.success('Chỉnh sửa thành công');
-                        $location.path("/home");
+                        $location.path("/profile");
                     }
                 });
             }

@@ -106,11 +106,12 @@
                             </c:if>
 
                             <div class="form-group clearfix">
-                                <label for="description" class="col-sm-2 control-label">Mô tả</label>
+                                <label class="col-sm-2 control-label">Mô tả</label>
 
                                 <div class="col-sm-10">
-                                    <textarea type="text" name="description" class="form-control"
-                                              id="description">${info.description}</textarea>
+                                    ${info.description}
+                                    <input type="hidden" name="description" class="form-control"
+                                           value="${info.description}" />
                                 </div>
                             </div>
 
@@ -157,38 +158,38 @@
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
                                         <c:if test="${info.statusId == 1}">
-                                            <button type="submit" value="assign" name="button" class="btn">Giao việc
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary">Giao việc
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn">Từ chối
+                                            <button type="submit" value="reject" name="button" class="btn btn-danger">Từ chối
                                             </button>
                                         </c:if>
                                         <c:if test="${info.statusId == 2}">
-                                            <button type="submit" value="assign" name="button" class="btn">Giao việc lại
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary">Giao việc lại
                                             </button>
                                         </c:if>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${info.statusId == 2}">
-                                                <button type="submit" value="change5" name="button" class="btn">Đồng ý
+                                                <button type="submit" value="change5" name="button" class="btn-primary">Đồng ý
                                                     sửa chữa
                                                 </button>
-                                                <button type="submit" value="change1" name="button" class="btn">Không
+                                                <button type="submit" value="change1" name="button" class="btn btn-danger">Không
                                                     đồng ý sửa chữa
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.statusId == 5}">
-                                                <button type="submit" value="change3" name="button" class="btn">Khách
+                                                <button type="submit" value="change3" name="button" class="btn btn-primary">Khách
                                                     hàng hài lòng
                                                 </button>
-                                                <button type="submit" value="change1" name="button" class="btn">Khách
+                                                <button type="submit" value="change1" name="button" class="btn btn-danger">Khách
                                                     hàng không hài lòng
                                                 </button>
                                             </c:when>
                                         </c:choose>
                                     </c:otherwise>
                                 </c:choose>
-                                <a href="${pageContext.request.contextPath}/admin/rental"
+                                <a onclick="window.history.back()"
                                    class="btn btn-default">Quay về</a>
                             </div>
 

@@ -3,6 +3,7 @@
  */
 controllers.controller('LoginController', ['$scope', '$location', 'Api',
     function ($scope, $location, Api) {
+        DEVICE_HEIGHT = $(window).height();
         $(".black").css({
             height: DEVICE_HEIGHT
         });

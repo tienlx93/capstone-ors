@@ -4,7 +4,25 @@
 
 controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api', 'toastr',
     function ($scope, $location, Api, toastr) {
+        var verifyCallback = function (response) {
+            $scope.user.captcha3 = response;
+            $scope.$$phase || $scope.$apply();
+        };
+        setTimeout(function () {
+            grecaptcha.render('captcha3', {
+                'sitekey': '6LereAoTAAAAAMC3pFh9lblF7U8tLMuiCUjENLYW',
+                'callback': verifyCallback
+            });
+        }, 100);
+
         $scope.reOffice = {};
+        $scope.districts = [
+            'Tân Bình', 'Phú Nhuận', 'Bình Thạch', 'Gò Vấp', 'Bình Tân', 'Thủ Đức', 'Tân Phú',
+            'Củ Chi', 'Hóc Môn', 'Nhà Bè', 'Cần Giờ', 'Bình Chánh',
+            'Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6',
+            'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12'
+        ];
+
         $scope.login = function (form) {
             if (form.$valid) {
                 var username = $scope.username;
@@ -29,8 +47,11 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
 
                 Api.register($scope.user, function (data) {
                     if (data == "Error") {
-                        $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                        toastr.error('Có lỗi xảy ra. Xin thử lại');
+                    } else if (data == "Error Date") {
+                        toastr.error('Ngày sinh không hợp lệ');
                     } else if (data) {
+                        toastr.success('Mời đăng nhập và kiểm tra email để hoàn tất đăng kí', 'Đăng kí thành công');
                         $location.path("#/home").replace();
                     }
                 });

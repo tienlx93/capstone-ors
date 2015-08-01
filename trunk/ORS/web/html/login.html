@@ -7,12 +7,18 @@
         <div id="login">
             <div class="form-group">
                 <label>Tên tài khoản</label>
-                <input type="text" size="20" class="form-control" required ng-model="username">
+                <input type="text" size="20" class="form-control" required ng-model="username" name="username">
+                <span style="color: #ef4836;" ng-show="form.username.$dirty && form.username.$invalid">
+                    <span ng-show="form.username.$error.required">Vui lòng nhập tên đăng nhập</span>
+                </span>
             </div>
 
             <div class="form-group">
                 <label>Mật khẩu</label>
-                <input type="password" size="20" class="form-control" required ng-model="password">
+                <input type="password" size="20" class="form-control" required ng-model="password" name="password">
+                <span style="color: #ef4836;" ng-show="form.password.$dirty && form.password.$invalid">
+                    <span ng-show="form.password.$error.required">Vui lòng nhập mật khẩu</span>
+                </span>
             </div>
 
             <div class="checkbox">
@@ -27,7 +33,7 @@
         </div>
     </div>
     <div class="modal-footer">
-        <button class="btn btn-green" type="submit" ng-click="login(form)">Đăng nhập</button>
-        <button class="btn btn-default" ng-click="cancel()">Hủy</button>
+        <button class="btn btn-green" ng-disabled="form.$invalid" type="submit" ng-click="login(form)">Đăng nhập</button>
+        <button class="btn btn-default" type="button" ng-click="cancel()">Hủy</button>
     </div>
 </form>

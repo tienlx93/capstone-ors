@@ -3,15 +3,14 @@
  */
 controllers.controller('MenuController', ['$scope', '$rootScope', '$location', 'Api', '$modal',
     function ($scope, $rootScope, $location, Api, $modal) {
-        $scope.loggedIn = false;
         $rootScope.isLogin = false;
 
         $scope.logout = function() {
             Api.logout(function(data){
                 if (data&& data!="Error") {
                     Api.account = {};
-                    $scope.loggedIn = false;
                     $scope.fullName = "";
+                    $rootScope.isLogin = false;
                     $location.path("/home");
                 }
             });
@@ -27,7 +26,6 @@ controllers.controller('MenuController', ['$scope', '$rootScope', '$location', '
 
         Api.updateAccount = function(){
             if (Api.account.username) {
-                $scope.loggedIn = true;
                 $rootScope.isLogin = true;
                 $scope.fullName = Api.account.fullName;
             }

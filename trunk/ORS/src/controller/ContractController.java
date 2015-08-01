@@ -124,7 +124,32 @@ public class ContractController extends HttpServlet {
                 ContractDAO dao = new ContractDAO();
                 switch (button) {
                     case "confirm":
-                        dao.changeStatus(id, 3);
+                        dao.changeStatus(id, 4);
+
+                        // Update area for office parent when contract has been confirmed to expire
+                        Contract contract = dao.get(id);
+                        OfficeDAO officeDAO = new OfficeDAO();
+                        Office office = officeDAO.get(contract.getOfficeId());
+                        if(office.getParentOfficeId() != null) {
+                            Office officeParent = officeDAO.get(office.getParentOfficeId());
+                            officeDAO.updateArea(officeParent.getId(), officeParent.getArea() + office.getArea());
+                        }
+
+                        // Update rental item when contract has been confirmed to expire
+                        RentalDAO rentalDAO = new RentalDAO();
+                        List<Rental> rentals = rentalDAO.getRentalListByContract(contract.getId());
+
+                        RentalDetailDAO rentalDetailDAO = new RentalDetailDAO();
+                        RentalItemDAO rentalItemDAO = new RentalItemDAO();
+                        if(rentals != null) {
+                            for (Rental rental : rentals) {
+                                List<RentalDetail> rentalDetailList = rentalDetailDAO.getRentalDetailByRental(rental.getId());
+                                for (RentalDetail rentalDetail : rentalDetailList) {
+                                    RentalItem rentalItem = rentalItemDAO.get(rentalDetail.getRentalItemId());
+                                    rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItem.getQuantity() + rentalDetail.getQuantity());
+                                }
+                            }
+                        }
                         break;
                     case "cancel":
                         dao.changeStatus(id, 1);

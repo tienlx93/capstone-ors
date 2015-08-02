@@ -631,7 +631,7 @@ public class ApiController extends HttpServlet {
     private void editPass(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-
+        String username = request.getParameter("username");
         String pass = request.getParameter("password");
         String newPass = request.getParameter("newPassword");
         String reNewPass = request.getParameter("reNewPassword");
@@ -639,6 +639,7 @@ public class ApiController extends HttpServlet {
         if (account != null) {
 
             AccountDAO acc = new AccountDAO();
+            account = acc.findByUsername(username);
             if (pass.equals(account.getPassword())) {
                 if (newPass.equals(reNewPass)) {
                     boolean result2 = acc.updatePass(account.getUsername(), newPass);

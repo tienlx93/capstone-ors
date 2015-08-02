@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label for="newPassword">Mật khẩu mới:</label>
-                    <input type="password" ng-model="data.newPassword" class="form-control" id="newPassword" required
+                    <input ng-class="{'errorpass': data.error == true}" type="password" ng-model="data.newPassword" class="form-control" id="newPassword" required
                            name="password2" ng-minlength="8" ng-maxlength="20">
                     <span class="error" ng-show="PassForm.password2.$dirty && PassForm.password2.$invalid">
                         <span ng-show="PassForm.password2.$error.required">Bắt buộc</span>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label for="reNewPassword">Nhập lại mật khẩu mới</label>
-                    <input type="password" ng-model="data.reNewPassword" class="form-control" id="reNewPassword"
+                    <input ng-class="{'errorpass': data.error == true}" type="password" ng-model="data.reNewPassword" class="form-control" id="reNewPassword"
                            required name="password" ng-minlength="8" ng-maxlength="20">
                     <span class="error" ng-show="PassForm.password.$dirty && PassForm.password.$invalid">
                         <span ng-show="PassForm.password.$error.required">Bắt buộc</span>

@@ -5,6 +5,7 @@ import entity.Account;
 import entity.Appointment;
 import service.SMSService;
 import service.ScheduleService;
+import util.AccentRemover;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -31,8 +32,8 @@ public class AppointmentController extends HttpServlet {
         String id = request.getParameter("id");
         AppointmentDAO dao = new AppointmentDAO();
         Appointment appointment = dao.get(Integer.valueOf(id));
-        String phone = appointment.getAccountByCustomerUsername().getProfileByUsername().getPhone();
         SMSService sms = new SMSService();
+        String phone = appointment.getAccountByCustomerUsername().getProfileByUsername().getPhone();
         sms.setPhone(phone);
         if (action.equals("editing")) {
             switch (button) {
@@ -47,7 +48,8 @@ public class AppointmentController extends HttpServlet {
                 case "reject":
                     String comment = request.getParameter("comment");
                     dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
-                    sms.setMessage("Lich hen cua ban khong duoc chap nhan. Ly do: " + comment);
+                    String nonUTF8Comment = AccentRemover.removeAccent(comment);
+                    sms.setMessage("Lich hen cua ban khong duoc chap nhan. Ly do: " + nonUTF8Comment);
                     sms.send();
                     break;
                 case "update3":

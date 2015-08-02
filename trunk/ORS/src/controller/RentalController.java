@@ -1,14 +1,9 @@
 package controller;
 
-import dao.OfficeDAO;
-import dao.RentalDAO;
-import dao.RentalDetailDAO;
-import dao.RentalItemDAO;
-import entity.Account;
-import entity.Office;
-import entity.Rental;
-import entity.RentalDetail;
+import dao.*;
+import entity.*;
 import service.ConstantService;
+import service.SMSService;
 import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
@@ -19,6 +14,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -35,7 +33,6 @@ public class RentalController extends HttpServlet {
         String button = request.getParameter("button");
 
         if (action.equals("editing")) {
-
             int id = Integer.parseInt(request.getParameter("id"));
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignStaff = request.getParameter("assignStaff");
@@ -43,15 +40,28 @@ public class RentalController extends HttpServlet {
             Rental rental = dao.get(id);
             Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
             RentalItemDAO rentalItemDAO = new RentalItemDAO();
+            String assignedTime = request.getParameter("assignedTime");
+            
+            SMSService sms = new SMSService();
+            ContractDAO contractDAO = new ContractDAO();
+            Contract current = contractDAO.get(contractId);
+            String phone = current.getAccountByCustomerUsername().getProfileByUsername().getPhone();
+            sms.setPhone(phone);
             switch (button) {
                 case "reject":
                     dao.changeStatus(id, 4);
                     for (RentalDetail rentalDetail : rentalDetailCollection) {
                         rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
                     }
+                    sms.setMessage("Yeu cau thue vat dung cua ban khong duoc chap nhan.");
+                    sms.send();
                     break;
                 case "assign":
-                    dao.update(id, contractId, assignStaff, 2, description);
+                    Date date = java.sql.Date.valueOf(assignedTime);
+                    dao.update(id, contractId, assignStaff, 2, description, date);
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    sms.setMessage("Yeu cau thue vat dung cua ban da duoc chap nhan. Thoi gian du kien: " + df.format(date));
+                    sms.send();
 
                     for (RentalDetail rentalDetail : rentalDetailCollection) {
                         rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());

@@ -1,12 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="dao.AccountDAO" %>
 <%@ page import="entity.Account" %>
-<%@ page import="dao.RentalDetailDAO" %>
-<%@ page import="entity.RentalDetail" %>
-<%@ page import="entity.Rental" %>
-<%@ page import="dao.RentalDAO" %>
-<%@ page import="entity.RentalItem" %>
-<%@ page import="java.util.ArrayList" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
@@ -104,6 +99,26 @@
                                     </div>
                                 </div>
                             </c:if>
+
+                            <div class="form-group clearfix">
+                                <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
+                                <c:choose>
+                                    <c:when test="${user.roleId==2 && (info.repairStatusId == 1 || info.repairStatusId == 2)}">
+                                        <div class="col-sm-10">
+                                            <input type='text' class="form-control"
+                                                   name="assignedTime"
+                                                   id="assignedTime"
+                                                   value="${info.assignedTime}"/>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="col-sm-10">
+                                            <fmt:formatDate value="${info.assignedTime}" pattern="yyyy-MM-dd"/>
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+
+                            </div>
 
                             <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Mô tả</label>
@@ -204,6 +219,20 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var nowTemp = new Date();
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
+        $('#assignedTime').datepicker({
+            format: 'yyyy-mm-dd',
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).data('datepicker');
+
+    });
+
+</script>
 </body>
 </html>

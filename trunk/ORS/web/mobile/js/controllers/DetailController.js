@@ -16,11 +16,6 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             }
         });
 
-        $scope.goto = function (item) {
-            if (!$scope.showLegend) {
-                $location.path("/home/" + type + "/" + item);
-            }
-        };
         //switch state
         if (type == 'appointment') {
             $scope.type = "lịch hẹn";

@@ -1,11 +1,14 @@
 package controller;
 
+import dao.ContractDAO;
 import dao.OfficeDAO;
 import dao.RepairDAO;
 import entity.Account;
+import entity.Contract;
 import entity.Office;
 import entity.Repair;
 import service.ConstantService;
+import service.SMSService;
 import service.ScheduleService;
 
 import javax.servlet.RequestDispatcher;
@@ -16,6 +19,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -34,19 +39,29 @@ public class RepairController extends HttpServlet {
         String button = request.getParameter("button");
 
         if (action.equals("editing")) {
-
             int id = Integer.parseInt(request.getParameter("id"));
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignedStaff = request.getParameter("assignedStaff");
             String description = request.getParameter("description");
             String assignedTime = request.getParameter("assignedTime");
+
+            SMSService sms = new SMSService();
+            ContractDAO contractDAO = new ContractDAO();
+            Contract current = contractDAO.get(contractId);
+            String phone = current.getAccountByCustomerUsername().getProfileByUsername().getPhone();
+            sms.setPhone(phone);
             switch (button) {
                 case "reject":
                     dao.changeStatus(id, 4);
+                    sms.setMessage("Yeu cau sua chua cua ban khong duoc chap nhan.");
+                    sms.send();
                     break;
                 case "assign":
                     Date date = java.sql.Date.valueOf(assignedTime);
                     dao.update(id, contractId, assignedStaff, description, date, 2);
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    sms.setMessage("Yeu cau sua chua cua ban da duoc chap nhan. Thoi gian du kien: " + df.format(date));
+                    sms.send();
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);

@@ -54,8 +54,8 @@ function fillInAddress() {
         window.alert("Autocomplete's returned place contains no geometry");
         return;
     }
-    document.getElementById('latitude').value = place.geometry.location.A;
-    document.getElementById('longitude').value = place.geometry.location.F;
+    document.getElementById('latitude').value = place.geometry.location.lat();
+    document.getElementById('longitude').value = place.geometry.location.lng();
     // If the place has a geometry, then present it on a map.
     if (place.geometry.viewport) {
         map.fitBounds(place.geometry.viewport);

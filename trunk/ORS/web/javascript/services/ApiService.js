@@ -116,6 +116,7 @@ app.factory("Api", ['$http',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'editPass',
+                    'username': data.username,
                     'password': data.password,
                     'newPassword': data.newPassword,
                     'reNewPassword': data.reNewPassword

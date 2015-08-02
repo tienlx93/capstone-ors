@@ -58,6 +58,7 @@
                                 <th>Ngày kết thúc</th>
                                 <th>Giá</th>
                                 <th>Thời hạn thanh toán</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody id="table-body">
@@ -70,6 +71,14 @@
                                         <td>${item.endDate}</td>
                                         <td>${item.paymentFee}</td>
                                         <td>${item.paymentTermByPaymentTerm.description}</td>
+                                        <c:if test="${user.roleId == 2}">
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/admin/contract?action=editing&id=${item.id}"
+                                                   title="Chi tiết"
+                                                   class="btn btn-icon btn-default"><i
+                                                        class="fa fa-info color5"></i></a>
+                                            </td>
+                                        </c:if>
                                     </tr>
                                 </c:if>
                             </c:forEach>
@@ -85,7 +94,9 @@
                                     </a>
                                 </li>
                                 <c:forEach var="i" begin="1" end="${pageCount}">
-                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#"
+                                                                                                           onclick="goto(${i})">${i}</a>
+                                    </li>
 
                                 </c:forEach>
                                 <li id="next">
@@ -109,24 +120,24 @@
     var pageCount = ${pageCount};
     var prev = function () {
         if (pageNumber > 1) {
-            pageNumber --;
+            pageNumber--;
             getPage(pageNumber);
         }
     };
     var next = function () {
         if (pageNumber < pageCount) {
-            pageNumber ++;
+            pageNumber++;
             getPage(pageNumber);
         }
     };
-    var goto = function(i) {
+    var goto = function (i) {
         pageNumber = i;
         getPage(pageNumber);
     };
-    var getPage = function(page) {
+    var getPage = function (page) {
         var selector = $(".items");
         selector.removeClass("active");
-        $(selector[page-1]).addClass("active");
+        $(selector[page - 1]).addClass("active");
         $("#next").removeClass("disabled");
         $("#prev").removeClass("disabled");
         if (page == pageCount) {

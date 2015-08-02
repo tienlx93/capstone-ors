@@ -49,7 +49,7 @@ public class LoginController extends HttpServlet {
             rd.forward(request, response);
         } else if (action.equals("logout")) {
             HttpSession session = request.getSession();
-            session.removeAttribute("account");
+            session.removeAttribute("user");
             response.sendRedirect("/admin");
         }
 

@@ -12,7 +12,7 @@
         -->
         <property name="connection.url">jdbc:sqlserver://localhost:1433;databaseName=ors</property>
         <property name="hibernate.connection.username">sa</property>
-        <property name="hibernate.connection.password">123456</property>
+        <property name="hibernate.connection.password">213thanh</property>
         <property name="connection.driver_class">com.microsoft.sqlserver.jdbc.SQLServerDriver</property>
         <property name="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</property>
         <mapping class="entity.Account"/>

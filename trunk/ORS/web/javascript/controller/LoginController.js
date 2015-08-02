@@ -3,8 +3,8 @@
  */
 
 
-controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr', '$modalInstance',
-    function ($scope, $location, Api, toastr, $modalInstance) {
+controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr', '$modalInstance', '$route',
+    function ($scope, $location, Api, toastr, $modalInstance, $route) {
         $scope.login = function (form) {
             if (form.$valid) {
                 var username = $scope.username;
@@ -23,6 +23,7 @@ controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr'
                         toastr.success("Đăng nhập thành công");
                         $modalInstance.close();
                         //$location.path("#/home").replace();
+                        $route.reload();
                     }
 
 

@@ -163,27 +163,26 @@
                               <tbody class="list">
                               <c:forEach items="${data}" var="item" varStatus="index">
                                 <c:if test="${item.statusId == 1}">
-                                  <form action="/admin/appointment?action=editing"
-                                        method="post" name="appointment">
-                                    <tr>
+                                  <tr>
+                                    <form action="appointment?action=editing" method="post">
                                       <td>${item.accountByCustomerUsername.username}</td>
                                       <td>${item.officeByOfficeId.name}</td>
-                                      <td><fmt:formatDate value="${item.time}"
-                                                          pattern="yyyy-MM-dd hh:mm"/></td>
+                                      <td>
+                                        <fmt:formatDate value="${item.time}" pattern="yyyy-MM-dd hh:mm"/>
+                                      </td>
                                       <td>
                                         <input type="hidden" name="id"
                                                value="${item.id}">
-                                        <select name="assignedStaff"
-                                                id="assignedStaff"
-                                                class="form-control">
+                                        <select name="assignedStaff" id="assignedStaff" class="form-control">
                                           <option value="">(Không có đề xuất)
                                           </option>
                                           <c:forEach var="itemAcc"
                                                      items="<%= listAcc %>">
                                             <option value="${itemAcc.username}"
                                                     <c:if
-                                                        test="${suggestMap[item.id] == itemAcc.username}">selected</c:if> >
-                                                ${itemAcc.username}</option>
+                                                        test="${suggestMap[item.id] == itemAcc.username}">selected</c:if>>
+                                                ${itemAcc.username}
+                                            </option>
                                           </c:forEach>
                                         </select>
                                       </td>
@@ -199,8 +198,8 @@
                                              class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                         </div>
                                       </td>
-                                    </tr>
-                                  </form>
+                                    </form>
+                                  </tr>
                                 </c:if>
                               </c:forEach>
                               </tbody>

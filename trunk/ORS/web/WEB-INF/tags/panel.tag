@@ -6,7 +6,7 @@
 <%@ attribute name="icon" required="true" %>
 <div class="col-lg-3 col-md-6">
     <a href="${url}">
-        <div class="panel ${css}" style="min-height: 130px;">
+        <div class="panel ${css}" style="min-height: 135px;">
             <div class="panel-heading" style="padding-bottom: 0">
                 <div class="row">
                     <div class="col-xs-5">

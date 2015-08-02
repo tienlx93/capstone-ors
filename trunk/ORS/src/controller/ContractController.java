@@ -203,6 +203,18 @@ public class ContractController extends HttpServlet {
                         rd = request.getRequestDispatcher("/WEB-INF/admin/contract/newContract.jsp");
                         rd.forward(request, response);
                         break;
+                    case "editing":
+                        String id = request.getParameter("id");
+                        ContractDAO contractDAO = new ContractDAO();
+                        Contract contract = contractDAO.get(Integer.parseInt(id));
+
+                        request.setAttribute("contract", contract);
+                        request.setAttribute("paymentTermList", paymentTermList);
+
+
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/contractDetail.jsp");
+                        rd.forward(request, response);
+                        break;
                     case "return":
 
                         request.setAttribute("titleName", "huy");

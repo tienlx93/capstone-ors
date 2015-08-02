@@ -21,7 +21,7 @@
                 <td>{{item.name}}</td>
                 <td>{{item.description}}</td>
                 <td>{{item.unitPrice}} VNĐ</td>
-                <td><input class="form-control input-lg" type="number" ng-model="item.quantity" value="{{item.quantity}}"></td>
+                <td><input class="form-control input-lg" type="number" ng-model="item.quantity" min="0" value="{{item.quantity}}"></td>
                 <td>{{item.unitPrice * item.quantity}} VNĐ</td>
                 <td><i ng-click="removeFromCart(item)" style="color: red;cursor: pointer;" class="fa fa-times fa-3x"></i></td>
             </tr>
@@ -30,7 +30,7 @@
         </table>
 
         <div class="row">
-            <div class="col-md-2">Mô tả</div>
+            <div class="col-md-2">Yêu cầu của khách hàng</div>
             <div class="col-md-10">
                 <textarea ng-model="description" rows="5" style="width: 100%"></textarea>
             </div>

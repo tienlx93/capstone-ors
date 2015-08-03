@@ -7,7 +7,7 @@ import java.util.Collection;
  * Created by ASUS on 6/23/2015.
  */
 @Entity
-public class AmenityGroup {
+public class    AmenityGroup {
     private int id;
     private String name;
     private String description;

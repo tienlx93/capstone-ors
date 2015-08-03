@@ -117,8 +117,12 @@ public class UserController extends HttpServlet {
                 request.setAttribute("data", list1);
                 rd = request.getRequestDispatcher("/WEB-INF/partial/accountListItem.jsp");
                 rd.forward(request, response);
+            } else if(action.equals("editing")) {
+                request.setAttribute("info", dao.get(request.getParameter("username")));
+                request.getRequestDispatcher("/WEB-INF/admin/user/viewUserProfile.jsp").forward(request, response);
+
             }
-        } else {
+        } else  {
             response.sendRedirect("/admin");
         }
     }

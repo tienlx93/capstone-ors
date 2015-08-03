@@ -57,12 +57,13 @@
                                 <td>Chức vụ</td>
                                 <td>Tình trạng</td>
                                 <td>Tác vụ</td>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody id="table-body">
 
                             <c:forEach var="item" items="${data}">
-                                <tr>
+
                                     <td>${item.username}</td>
                                     <td>${item.email}</td>
                                     <td>${item.roleByRoleId.roleName}</td>
@@ -75,6 +76,12 @@
                                         <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}">
                                             Sửa</a>
                                     </td>
+                                    <c:if test="${item.roleId == 4}">
+                                    <td><a class="btn"
+                                           href="user?action=editing&username=${item.username}">
+                                        Xem chi tiết
+                                    </a></td>
+                                   </c:if>
                                 </tr>
                             </c:forEach>
                             </tbody>

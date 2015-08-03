@@ -138,4 +138,29 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
         }
 
     }
+    public boolean removeAmenity(int id) {
+        try {
+            session.getTransaction().begin();
+            String sql = "delete from RequestAmenity where amenityId = :amenityId";
+            Query query = session.createQuery(sql);
+            query.setInteger("amenityId", id);
+
+            String sql1 = "delete from RepairDetail where amenityId = :amenityId";
+            Query query1 = session.createQuery(sql1);
+            query.setInteger("amenityId", id);
+
+            String sql2 = "delete from RepairDetail where amenityId = :amenityId";
+            Query query2 = session.createQuery(sql2);
+            query.setInteger("amenityId", id);
+
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

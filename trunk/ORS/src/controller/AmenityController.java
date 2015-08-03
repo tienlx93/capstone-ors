@@ -42,7 +42,10 @@ public class AmenityController extends HttpServlet {
             ame.setAmenityGroupId(Integer.parseInt(request.getParameter("group")));
             dao.save(ame);
         } else if (action.equals("delete")) {
-            String name = request.getParameter("name");
+            AmenityDAO accDAO = new AmenityDAO();
+
+            int id = Integer.parseInt(request.getParameter("id"));
+
         } else if (action.equals("update")) {
             AmenityDAO accDAO = new AmenityDAO();
 

@@ -28,8 +28,8 @@ public class ScheduleCheckRequestOffice implements Job {
 
             Collection<RequestAmenity> amenities = request.getRequestAmenitiesById();
 
-//            List<Office> officeAmenities = checkAmenity(offices, amenities);
-            List<Office> officeCategories = checkCategory(offices, request);
+            List<Office> officeAmenities = checkAmenity(offices, amenities);
+            List<Office> officeCategories = checkCategory(officeAmenities, request);
             List<Office> officePrices = checkPrice(officeCategories, request);
             List<Office> officeAreas = checkArea(officePrices, request);
             List<Office> officeSuggest = checkDistrict(officeAreas, request);
@@ -62,6 +62,9 @@ public class ScheduleCheckRequestOffice implements Job {
     private List<Office> checkAmenity(List<Office> offices, Collection<RequestAmenity> amenities) {
         List<Office> officeAmenities = new ArrayList<>();
 
+        if(amenities.size() == 0) {
+            return offices;
+        }
         for (Office office : offices) {
             int count = 0;
             Collection<OfficeAmenity> amenityCollection = office.getOfficeAmenitiesById();
@@ -80,7 +83,7 @@ public class ScheduleCheckRequestOffice implements Job {
                 }
             }
         }
-        return offices;
+        return officeAmenities;
     }
 
     private List<Office> checkCategory(List<Office> offices, RequestOffice request) {

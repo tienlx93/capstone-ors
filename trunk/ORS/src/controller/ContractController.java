@@ -158,6 +158,25 @@ public class ContractController extends HttpServlet {
                 response.sendRedirect("/admin/contract");
                 break;
             }
+            case "update":
+                String id = request.getParameter("contractId");
+                String startDate = request.getParameter("startDate");
+                String endDate = request.getParameter("endDate");
+                String paymentTerm = request.getParameter("paymentTerm");
+                String paymentFee = request.getParameter("paymentFee");
+
+                ContractDAO contractDAO = new ContractDAO();
+                Contract contract = contractDAO.get(Integer.parseInt(id));
+
+                contract.setStartDate(Date.valueOf(startDate));
+                contract.setEndDate(Date.valueOf(endDate));
+                contract.setPaymentTerm(Integer.parseInt(paymentTerm));
+                contract.setPaymentFee(Integer.parseInt(paymentFee));
+
+                contractDAO.update(contract.getId(), contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(),contract.getEndDate(),
+                        contract.getPaymentFee(), contract.getPaymentTerm(),contract.getStatusId());
+                response.sendRedirect("/admin/contract");
+                break;
         }
     }
 
@@ -203,14 +222,24 @@ public class ContractController extends HttpServlet {
                         rd = request.getRequestDispatcher("/WEB-INF/admin/contract/newContract.jsp");
                         rd.forward(request, response);
                         break;
-                    case "editing":
+                    case "edit":
                         String id = request.getParameter("id");
-                        ContractDAO contractDAO = new ContractDAO();
-                        Contract contract = contractDAO.get(Integer.parseInt(id));
 
+                        Contract contract = dao.get(Integer.parseInt(id));
                         request.setAttribute("contract", contract);
+
                         request.setAttribute("paymentTermList", paymentTermList);
 
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/editContract.jsp");
+                        rd.forward(request, response);
+                        break;
+                    case "editing":
+                        String ids = request.getParameter("id");
+
+                        Contract contract1 = dao.get(Integer.parseInt(ids));
+                        request.setAttribute("contract", contract1);
+
+                        request.setAttribute("paymentTermList", paymentTermList);
 
                         rd = request.getRequestDispatcher("/WEB-INF/admin/contract/contractDetail.jsp");
                         rd.forward(request, response);

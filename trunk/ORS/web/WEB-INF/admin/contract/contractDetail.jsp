@@ -46,8 +46,13 @@
             Thông tin hợp đồng
           </div>
           <div>
-            <form action="contract" method="post" name="contractDetail" onsubmit="return validateArea()">
-
+            <form action="contract" method="get" name="contractDetail" onsubmit="return validateArea()">
+              <div class="form-group clearfix hidden">
+                <div class="col-sm-10">
+                  <input type="hidden" id="contractId" name="contractId"
+                         value="${contract.id}">
+                </div>
+              </div>
               <div class="form-group clearfix">
                 <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
 
@@ -116,7 +121,7 @@
               </div>
 
               <div class="button-post">
-                <button type="submit" value="edit" name="action">Sửa chữa</button>
+                <a class="btn btn-primary" href="contract?action=edit&id=${contract.id}">Chỉnh sửa</a>
                 <a href="/admin/contract" class="btn btn-default">Quay về</a>
               </div>
 

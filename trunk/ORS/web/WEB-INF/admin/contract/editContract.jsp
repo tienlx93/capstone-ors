@@ -13,7 +13,8 @@
         type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
         type="text/css">
-
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+        type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
   <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
@@ -23,8 +24,8 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
-  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+  <script type="text/javascript"
+          src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body onload="initialize()">
@@ -45,7 +46,13 @@
             Sửa thông tin văn phòng
           </div>
           <div>
-            <form action="office" method="post" id="form">
+            <form action="contract" method="post" id="form">
+              <div class="form-group clearfix hidden">
+                <div class="col-sm-10">
+                  <input type="hidden" id="contractId" name="contractId"
+                         value="${contract.id}">
+                </div>
+              </div>
               <div class="form-group clearfix">
                 <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
 
@@ -98,7 +105,8 @@
                 <div class="col-sm-10">
                   <select name="paymentTerm" class="form-control" id="paymentTerm">
                     <c:forEach var="item" items="${paymentTermList}">
-                      <option value="${item.id}">
+                      <option value="${item.id}"
+                              <c:if test="${contract.paymentTerm ==item.id}">selected</c:if> >
                           ${item.description}</option>
                     </c:forEach>
                   </select>
@@ -130,7 +138,47 @@
   <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
+    var start = $('#startDate').datepicker({
+      format: 'yyyy-mm-dd',
+      onRender: function (date) {
+        return date.valueOf() < now.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function (ev) {
+      if (ev.date.valueOf() > end.date.valueOf()) {
+        var newDate = new Date(ev.date);
+        newDate.setDate(newDate.getDate() + 1);
+        end.setValue(newDate);
+      }
+      start.hide();
+      $('#endDate')[0].focus();
+    }).data('datepicker');
+
+    var end = $('#endDate').datepicker({
+      format: 'yyyy-mm-dd',
+      onRender: function (date) {
+        return date.valueOf() <= start.date.valueOf() ? 'disabled' : '';
+      }
+    }).on('changeDate', function (ev) {
+      end.hide();
+    }).data('datepicker');
+  });
+
+  function validateArea() {
+    var parentArea = document.createContract.parentArea.value;
+    var area = document.createContract.officeArea.value;
+
+    if(parseFloat(area) > parseFloat(parentArea)) {
+      alert('Diện tích văn phòng con không được lớn hơn diện tích văn phòng cha!');
+      return false;
+    }
+    return true;
+  };
+</script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/street.js"></script>

@@ -51,11 +51,11 @@ public class OfficeController extends HttpServlet {
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
             office.setCreateDate(new Timestamp((new Date()).getTime()));
-            if (!price.equals("")) {
+            if (price != null && !price.equals("")) {
                 office.setPrice(Long.valueOf(price));
             }
             office.setPriceTerm(Integer.parseInt(priceTerm));
-            if (!floor.equals("")) {
+            if (floor != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
             office.setArea(Double.parseDouble(area));
@@ -95,11 +95,11 @@ public class OfficeController extends HttpServlet {
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
             office.setCreateDate(new Timestamp((new Date()).getTime()));
-            if (!price.equals("")) {
+            if (price != null && !price.equals("")) {
                 office.setPrice(Long.valueOf(price));
             }
             office.setPriceTerm(Integer.parseInt(priceTerm));
-            if (!floor.equals("")) {
+            if (price != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
             office.setArea(Double.parseDouble(area));
@@ -109,7 +109,7 @@ public class OfficeController extends HttpServlet {
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
 
-            if(dao.update(Integer.parseInt(id), office)) {
+            if (dao.update(Integer.parseInt(id), office)) {
                 List<String> amenityList = saveAmenities(amenities);
                 AmenityDAO amenityDAO = new AmenityDAO();
                 List<Integer> amenityListInt = new ArrayList<>();
@@ -215,10 +215,10 @@ public class OfficeController extends HttpServlet {
                 }
                 int i;
                 int count = 0;
-                for ( i = 0; i < status.size(); i++) {
+                for (i = 0; i < status.size(); i++) {
                     int y = status.get(i);
                     if (y != 4) {
-                        count = count+1;
+                        count = count + 1;
                     }
                 }
                 request.setAttribute("count", count);

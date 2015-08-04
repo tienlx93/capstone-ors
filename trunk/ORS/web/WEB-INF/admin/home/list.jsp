@@ -42,33 +42,33 @@
     </div>
     <div class="clearfix">
         <c:if test="${user.roleId == 1}">
-            <h:panel badge="00" name="Tổng người dùng" url="${pageContext.request.contextPath}/admin/user"
+            <h:panel badge="${numUser}" name="Tổng người dùng" url="${pageContext.request.contextPath}/admin/user"
                      icon="fa-user" css="panel-primary"/>
         </c:if>
 
         <c:if test="${user.roleId != 1}">
 
-            <h:panel badge="00" name="Tổng văn phòng" url="${pageContext.request.contextPath}/admin/office"
+            <h:panel badge="${numOffice}" name="Tổng văn phòng" url="${pageContext.request.contextPath}/admin/office"
                      icon="fa-building-o" css="panel-primary"/>
-            <h:panel badge="00" name="Lịch hẹn mới" url="${pageContext.request.contextPath}/admin/appointment"
+            <h:panel badge="${numAppointment}" name="Lịch hẹn mới" url="${pageContext.request.contextPath}/admin/appointment"
                      icon="fa-calendar" css="panel-primary"/>
 
 
             <c:if test="${user.roleId != 3}">
-                <h:panel badge="00" name="Tổng hợp đồng" url="${pageContext.request.contextPath}/admin/contract"
+                <h:panel badge="${numContract}" name="Tổng hợp đồng" url="${pageContext.request.contextPath}/admin/contract"
                          icon="fa-file-text-o" css="panel-primary"/>
-                <h:panel badge="00" name="Hủy trước hạn"
+                <h:panel badge="${numReturn}" name="Hủy trước hạn"
                          url="${pageContext.request.contextPath}/admin/contract?action=return"
                          icon="fa-file-text-o" css="panel-primary"/>
-                <h:panel badge="00" name="Gia hạn"
+                <h:panel badge="${numExtend}" name="Gia hạn"
                          url="${pageContext.request.contextPath}/admin/contract?action=extend"
                          icon="fa-file-text-o" css="panel-primary"/>
             </c:if>
-            <h:panel badge="00" name="Sửa chữa mới" url="${pageContext.request.contextPath}/admin/repair"
+            <h:panel badge="${numRepair}" name="Sửa chữa mới" url="${pageContext.request.contextPath}/admin/repair"
                      icon="fa-wrench" css="panel-primary"/>
-            <h:panel badge="00" name="Thuê vật dụng mới" url="${pageContext.request.contextPath}/admin/rental"
+            <h:panel badge="${numRental}" name="Thuê vật dụng mới" url="${pageContext.request.contextPath}/admin/rental"
                      icon="fa-fax" css="panel-primary"/>
-            <h:panel badge="00" name="Thiết bị cho thuê" url="${pageContext.request.contextPath}/admin/rentalItem"
+            <h:panel badge="${numRentalItem}" name="Thiết bị cho thuê" url="${pageContext.request.contextPath}/admin/rentalItem"
                      icon="fa-cubes" css="panel-primary"/>
         </c:if>
     </div>

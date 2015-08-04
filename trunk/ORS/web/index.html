@@ -74,7 +74,10 @@
             </a>
         </div>
         <div class="request-office right">
-            <a href="">Đặt văn phòng</a>
+            <a href="#/" ng-if="!isLogin">Tìm văn phòng</a>
+            <a href="#/contractList" ng-if="isLogin && !hasRequestResult && hasContract">Hợp đồng của bạn</a>
+            <a href="#/resultRequestOffice" ng-if="isLogin && hasRequestResult && !hasContract">Yêu cầu của bạn</a>
+            <a href="#/requestOffice" ng-if="isLogin && !hasRequestResult && !hasContract">Đặt văn phòng</a>
         </div>
         <div class="middle-header">
             <i class="fa fa-phone"></i>

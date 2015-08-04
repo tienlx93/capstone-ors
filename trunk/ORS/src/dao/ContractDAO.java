@@ -49,7 +49,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         try {
 
             Criteria criteria = session.createCriteria(Contract.class);
-            //criteria.add(Restrictions.ne("statusId", 3));
+            criteria.add(Restrictions.eq("statusId", 1));
             criteria.setFirstResult(firstResult);
             criteria.setMaxResults(pageSize);
             return criteria.list();
@@ -126,5 +126,17 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public  long countContractByStatus(int status) {
+        try {
+            String sql = "select count(id) from Contract where statusId = :status";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+            return (long) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

@@ -13,11 +13,12 @@ public class ContractJSON {
     private Date endDay;
     private double price;
     private String paymentTerm;
+    private int status;
 
     public ContractJSON() {
     }
 
-    public ContractJSON(int contractId, int officeId, String officeName, Date startDay, Date endDay, double price, String paymentTerm) {
+    public ContractJSON(int contractId, int officeId, String officeName, Date startDay, Date endDay, double price, String paymentTerm, int status) {
         this.contractId = contractId;
         this.officeId = officeId;
         this.officeName = officeName;
@@ -25,6 +26,7 @@ public class ContractJSON {
         this.endDay = endDay;
         this.price = price;
         this.paymentTerm = paymentTerm;
+        this.status = status;
     }
 
     public int getContractId() {
@@ -81,5 +83,13 @@ public class ContractJSON {
 
     public void setPaymentTerm(String priceTerm) {
         this.paymentTerm = paymentTerm;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

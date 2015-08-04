@@ -115,12 +115,11 @@ public class UserController extends HttpServlet {
                 int startItem = (page - 1) * ConstantService.PAGE_SIZE;
                 List<Account> list1 = dao.getAccountByPage(startItem, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list1);
-                rd = request.getRequestDispatcher("/WEB-INF/partial/accountListItem.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/partial/userListItem.jsp");
                 rd.forward(request, response);
             } else if(action.equals("editing")) {
                 request.setAttribute("info", dao.get(request.getParameter("username")));
                 request.getRequestDispatcher("/WEB-INF/admin/user/viewUserProfile.jsp").forward(request, response);
-
             }
         } else  {
             response.sendRedirect("/admin");

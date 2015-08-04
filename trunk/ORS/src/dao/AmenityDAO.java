@@ -144,14 +144,22 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
             String sql = "delete from RequestAmenity where amenityId = :amenityId";
             Query query = session.createQuery(sql);
             query.setInteger("amenityId", id);
+            query.executeUpdate();
 
             String sql1 = "delete from RepairDetail where amenityId = :amenityId";
             Query query1 = session.createQuery(sql1);
-            query.setInteger("amenityId", id);
+            query1.setInteger("amenityId", id);
+            query1.executeUpdate();
 
-            String sql2 = "delete from RepairDetail where amenityId = :amenityId";
+            String sql2 = "delete from OfficeAmenity where amenityId = :amenityId";
             Query query2 = session.createQuery(sql2);
-            query.setInteger("amenityId", id);
+            query2.setInteger("amenityId", id);
+            query2.executeUpdate();
+
+            String sql3 = "delete from Amenity where id = :amenityId";
+            Query query3 = session.createQuery(sql3);
+            query3.setInteger("amenityId", id);
+            query3.executeUpdate();
 
             session.getTransaction().commit();
             return true;

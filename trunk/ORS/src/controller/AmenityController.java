@@ -43,9 +43,8 @@ public class AmenityController extends HttpServlet {
             dao.save(ame);
         } else if (action.equals("delete")) {
             AmenityDAO accDAO = new AmenityDAO();
-
             int id = Integer.parseInt(request.getParameter("id"));
-
+            accDAO.removeAmenity(id);
         } else if (action.equals("update")) {
             AmenityDAO accDAO = new AmenityDAO();
 
@@ -88,9 +87,6 @@ public class AmenityController extends HttpServlet {
                 rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/addAmenity.jsp");
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
-                //String name = request.getParameter("name");
-                //Amenity amenity = dao.get(Integer.valueOf(name));
-                //request.setAttribute("amenity", amenity);
                 int id = Integer.parseInt(request.getParameter("id"));
                 Amenity amenity = dao.get(id);
                 request.setAttribute("amenity", amenity);

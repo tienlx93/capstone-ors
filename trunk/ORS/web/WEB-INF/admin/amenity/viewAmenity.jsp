@@ -66,7 +66,10 @@
                   <td>${item.weight}</td>
                   <td>${item.priority}</td>
                   <td><a href="amenity?action=edit&id=${item.id}">Cập nhật</a> </br>
-                      <a href="amenity?action=delete&id=${item.id}">Xoá</a>
+                    <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
+                      <input type="hidden" value="${item.id}" name="id">
+                      <button type="submit" name="action" value="delete">Xóa</button>
+                    </form>
                   </td>
                 </tr>
               </c:forEach>

@@ -57,13 +57,12 @@
                                 <td>Chức vụ</td>
                                 <td>Tình trạng</td>
                                 <td>Tác vụ</td>
-                                <th></th>
+                                <td></td>
                             </tr>
                             </thead>
                             <tbody id="table-body">
-
                             <c:forEach var="item" items="${data}">
-
+                                <tr>
                                     <td>${item.username}</td>
                                     <td>${item.email}</td>
                                     <td>${item.roleByRoleId.roleName}</td>

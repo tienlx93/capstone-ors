@@ -50,53 +50,45 @@
                 <label for="id" class="col-sm-2 control-label">Id</label>
                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
               </div>--%>
-
-              <div class="form-group clearfix">
-                <div class="col-sm-10">
-                  <b>Họ và tên: </b>${info.profileByUsername.fullName}
-                </div>
-              </div>
-
-
-                <div class="form-group clearfix">
-                  <div class="col-sm-10">
-                    <b>Xưng hô: </b>${info.profileByUsername.title}
-                  </div>
+                <div class="form-group">
+                  <label for="">Họ và tên</label>
+                  <span>${info.profileByUsername.fullName}</span>
                 </div>
 
-                <div class="form-group clearfix">
-                  <div class="col-sm-10">
-                    <b>Tên đăng nhập: </b>${info.username}
-                  </div>
+                <div class="form-group">
+                  <label for="">Danh xưng:</label>
+                  <span>${info.profileByUsername.title}</span>
                 </div>
-                <div class="form-group clearfix">
-                  <div class="col-sm-10">
-                    <b>Email: </b>${info.email}
-                  </div>
-                </div>
-                <div class="form-group clearfix">
-                  <div class="col-sm-10">
-                    <b>Tình trạng: </b>${info.accountStatusByStatusId.name}
-                  </div>
-                </div>
-              <div class="form-group clearfix">
-                <div class="col-sm-10" id="address">
-                  <b>Công ty: </b>${info.profileByUsername.company}
-                </div>
-              </div>
 
-              <div class="form-group clearfix">
-                <div class="col-sm-10">
-                  <b>Địa chỉ: </b>${info.profileByUsername.address}
-
-
+                <div class="form-group">
+                  <label for="">Tên đăng nhập: </label>
+                  <span>${info.username}</span>
                 </div>
-              </div>
-                <div class="form-group clearfix">
-                  <div class="col-sm-10" id="address">
-                    <b>Ngày sinh: </b>${info.profileByUsername.birthday}
-                  </div>
+
+                <div class="form-group">
+                  <label for="">Email: </label>
+                  <span>${info.email}</span>
                 </div>
+
+                <div class="form-group">
+                  <label for="">Tình trạng: </label>
+                  <span>${info.accountStatusByStatusId.name}</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="">Công ty: </label>
+                  <span>${info.profileByUsername.company}</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="">Địa chỉ: </label>
+                  <span>${info.profileByUsername.address}</span>
+                </div>
+                <div class="form-group">
+                  <label for="">Ngày sinh: </label>
+                  <span>${info.profileByUsername.birthday}</span>
+                </div>
+
                 <div class="button-post">
 
                   <a onclick="window.history.back()" class="btn btn-default">Quay lại</a>

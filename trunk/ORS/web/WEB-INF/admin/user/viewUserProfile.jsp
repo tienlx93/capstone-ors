@@ -1,9 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
-  User: ASUS
-  Date: 02/06/2015
-  Time: 9:50 CH
+  User: Thành
+  Date: 21/07/2015
+  Time: 9:55 CH
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -13,8 +14,10 @@
         type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
         type="text/css">
-
+  <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+        type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
+  <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
   <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 
   <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
@@ -23,6 +26,8 @@
 
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript"
+          src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body>
@@ -32,68 +37,63 @@
 
 <div class="content">
   <div class="page-header">
-    <h1 class="title">Quản lí tài khoản</h1>
+    <h1 class="title">Thông tin người dùng</h1>
   </div>
 
   <div class="container-padding">
     <div class="row">
       <div class="col-md-12">
         <div class="panel panel-default">
-          <div class="panel-title">
-            Danh sách tài khoản
-          </div>
           <div>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/user?action=new">
-              <span class="icon color5"><i class="fa fa-plus"></i></span>
-              Thêm mới tài khoản
-            </a>
-          </div>
-          <div>
-            <table class="table">
-              <thead>
-              <tr>
-                <td>Họ và Tên</td>
-                <td>Xưng Hô</td>
-                <td>Công Ty</td>
-                <td>Số điện thoại</td>
-                <td>Địa chỉ</td>
-                <td>Ngày sinh</td>
-              </tr>
-              </thead>
-              <tbody id="table-body">
+            <form action="user?action=editing" method="post">
+              <%--<div class="form-group clearfix" hidden>
+                <label for="id" class="col-sm-2 control-label">Id</label>
+                ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
+              </div>--%>
 
-              <c:forEach var="item" items="${data}">
-                <tr>
-                  <td>${item.fullName}</td>
-                  <td>${item.title}</td>
-                  <td>${item.company}</td>
-                  <td>${item.phone}</td>
-                  <td>${item.address}</td>
-                  <td>${item.birthday}</td>
-                </tr>
-              </c:forEach>
-              </tbody>
-            </table>
-          </div>
-          <div>
-            <nav>
-              <ul class="pagination">
-                <li id="prev" class="disabled">
-                  <a href="#" onclick="prev()" aria-label="Previous">
-                    <span aria-hidden="true">«</span>
-                  </a>
-                </li>
-                <c:forEach var="i" begin="1" end="${pageCount}">
-                  <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+              <div class="form-group clearfix">
+                <div class="col-sm-10">
+                  <b>Họ và tên: </b>${info.profileByUsername.fullName}
+                </div>
+              </div>
 
-                </c:forEach>
-                <li id="next">
-                  <a href="#" onclick="next()" aria-label="Next">
-                    <span aria-hidden="true">»</span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
+
+                <div class="form-group clearfix">
+                  <div class="col-sm-10">
+                    <b>Xưng hô: </b>${info.profileByUsername.title}
+                  </div>
+                </div>
+
+                <div class="form-group clearfix">
+                  <div class="col-sm-10">
+                    <b>Tên đăng nhập </b>${info.username}
+                  </div>
+                </div>
+
+
+              <div class="form-group clearfix">
+                <div class="col-sm-10" id="address">
+                  <b>Công ty: </b>${info.profileByUsername.company}
+                </div>
+              </div>
+
+              <div class="form-group clearfix">
+                <div class="col-sm-10">
+                  <b>Địa chỉ: </b>${info.profileByUsername.address}
+
+
+                </div>
+              </div>
+                <div class="form-group clearfix">
+                  <div class="col-sm-10" id="address">
+                    <b>Ngày sinh: </b>${info.profileByUsername.birthday}
+                  </div>
+                </div>
+                <div class="button-post">
+
+                  <a onclick="window.history.back()" class="btn btn-default">Quay lại</a>
+                </div>
+            </form>
           </div>
         </div>
       </div>
@@ -101,49 +101,10 @@
   </div>
 
   <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
+
 </div>
+
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
+
 </body>
-<script>
-  var pageNumber = 1;
-  var pageCount = ${pageCount};
-  var prev = function () {
-    if (pageNumber > 1) {
-      pageNumber --;
-      getPage(pageNumber);
-    }
-  };
-  var next = function () {
-    if (pageNumber < pageCount) {
-      pageNumber ++;
-      getPage(pageNumber);
-    }
-  };
-  var goto = function(i) {
-    pageNumber = i;
-    getPage(pageNumber);
-  };
-  var getPage = function(page) {
-    var selector = $(".items");
-    selector.removeClass("active");
-    $(selector[page-1]).addClass("active");
-    $("#next").removeClass("disabled");
-    $("#prev").removeClass("disabled");
-    if (page == pageCount) {
-      $("#next").addClass("disabled");
-    }
-    if (page == 1) {
-      $("#prev").addClass("disabled");
-    }
-    $.ajax({
-      method: "GET",
-      url: "user",
-      data: {
-        action: "page",
-        startPage: page
-      }
-    }).done(function (data) {
-      $("#table-body").html(data);
-    });
-  };
-</script>
 </html>

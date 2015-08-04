@@ -65,7 +65,8 @@
                   <td>${item.description}</td>
                   <td>${item.weight}</td>
                   <td>${item.priority}</td>
-                  <td><a href="amenity?action=edit&id=${item.id}">Cập nhật</a>
+                  <td><a href="amenity?action=edit&id=${item.id}">Cập nhật</a> </br>
+                      <a href="amenity?action=delete&id=${item.id}">Xoá</a>
                   </td>
                 </tr>
               </c:forEach>

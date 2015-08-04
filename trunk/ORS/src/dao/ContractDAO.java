@@ -127,4 +127,16 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         }
         return null;
     }
+
+    public  long countContractByStatus(int status) {
+        try {
+            String sql = "select count(id) from Contract where statusId = :status";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+            return (long) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

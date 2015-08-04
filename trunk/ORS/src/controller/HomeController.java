@@ -1,6 +1,8 @@
 package controller;
 
+import dao.*;
 import entity.Account;
+import entity.RentalItem;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -23,9 +25,46 @@ public class HomeController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
-        request.setAttribute("user", account);
+        if (account == null) {
+            response.sendRedirect("/admin");
+        } else {
+            String staff = account.getUsername();
+            request.setAttribute("user", account);
+            if (account.getRoleId() == 1) {
+                AccountDAO accountDAO = new AccountDAO();
+                int count = accountDAO.getPageCount(1);
+                request.setAttribute("numUser", count);
+            } else {
+                OfficeDAO officeDAO = new OfficeDAO();
+                request.setAttribute("numOffice", officeDAO.getPageCount(1));
+                AppointmentDAO appointmentDAO = new AppointmentDAO();
+                ContractDAO contractDAO = new ContractDAO();
+                RentalItemDAO rentalItemDAO = new RentalItemDAO();
+                long numAppointment, numContract = 0, numReturn = 0, numExtend = 0, numRepair, numRental, numRentalItem = 0;
+                if (account.getRoleId() == 2) {
+                    numAppointment = appointmentDAO.countAppointment(1, null);
+                    numContract = contractDAO.countContractByStatus(1);
+                    numReturn = contractDAO.countContractByStatus(3);
+                    numExtend = contractDAO.countContractByStatus(2);
+                    numRepair = appointmentDAO.countRepair(1, null);
+                    numRental = appointmentDAO.countRental(1, null);
+                    numRentalItem = rentalItemDAO.getPageCount(1);
+                } else {
+                    numAppointment = appointmentDAO.countAppointment(2, staff);
+                    numRepair = appointmentDAO.countRepair(2, staff);
+                    numRental = appointmentDAO.countRental(2, staff);
+                }
+                request.setAttribute("numAppointment", numAppointment);
+                request.setAttribute("numContract", numContract);
+                request.setAttribute("numReturn", numReturn);
+                request.setAttribute("numExtend", numExtend);
+                request.setAttribute("numRepair", numRepair);
+                request.setAttribute("numRental", numRental);
+                request.setAttribute("numRentalItem", numRentalItem);
+            }
 
-        RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/home/list.jsp");
-        rd.forward(request, response);
+            RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/home/list.jsp");
+            rd.forward(request, response);
+        }
     }
 }

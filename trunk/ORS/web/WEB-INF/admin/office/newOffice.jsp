@@ -97,7 +97,7 @@
                                 <label for="description" class="col-sm-2 control-label">Mô tả văn phòng</label>
 
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control" id="description"
+                                    <textarea name="description" class="form-control" id="description" rows="5"
                                               required>${office.description}</textarea>
                                 </div>
                             </div>

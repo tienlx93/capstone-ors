@@ -58,24 +58,21 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
         };
 
         $scope.request = function (form) {
-            if (form.$valid) {
-                var txtTime = $('#date').val();
-                var time = new Date(txtTime);
-                if (isNaN(time.getTime())) {
-                    toastr.error('Thời gian hẹn không hợp lệ');
+            var txtTime = $('#date').val();
+            var time = new Date(txtTime);
+            if (isNaN(time.getTime())) {
+                toastr.error('Thời gian hẹn không hợp lệ');
 
-                } else {
-                    time = time.getTime();
-                    Api.requestAppointment(time, id, function (data) {
-                        if (data == "Success") {
-                            toastr.success('Đặt lịch hẹn thành công');
-                            //           alert("Đặt lịch hẹn thành công");
-                            $location.path("/detail");
-                        } else {
-                            toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
-                        }
-                    });
-                }
+            } else {
+                time = time.getTime();
+                Api.requestAppointment(time, id, function (data) {
+                    if (data == "Success") {
+                        toastr.success('Đặt lịch hẹn thành công');
+                        $location.path("/detail");
+                    } else {
+                        toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+                    }
+                });
             }
         }
     }]);

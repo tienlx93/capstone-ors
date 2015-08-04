@@ -280,6 +280,28 @@ body {
     font-weight: 600;
 }
 
+.btn-green:hover,.btn-green:focus {
+    background: #93ac2a;
+}
+
+.btn-color9 {
+    background: #f39c12;
+    color: #333;
+    font-weight: 600;
+}
+.btn-color9:hover,.btn-color9:focus {
+    background: #c98010;
+}
+
+.btn-color7 {
+    background: #26a65b;
+    color: #333;
+    font-weight: 600;
+}
+.btn-color7:hover,.btn-color7:focus {
+    background: #228a49;
+}
+
 /* Color Class */
 .color1 {
     color: #37363e;

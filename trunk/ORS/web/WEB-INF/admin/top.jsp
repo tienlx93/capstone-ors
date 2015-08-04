@@ -11,7 +11,7 @@
 
     <!-- Start App Logo -->
     <div class="applogo">
-        <a href="" class="logo">ors</a>
+        <a href="${pageContext.request.contextPath}/admin/home" class="logo">ors</a>
     </div>
     <!-- End App Logo -->
 

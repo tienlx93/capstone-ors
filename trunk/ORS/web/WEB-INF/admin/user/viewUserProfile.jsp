@@ -66,11 +66,19 @@
 
                 <div class="form-group clearfix">
                   <div class="col-sm-10">
-                    <b>Tên đăng nhập </b>${info.username}
+                    <b>Tên đăng nhập: </b>${info.username}
                   </div>
                 </div>
-
-
+                <div class="form-group clearfix">
+                  <div class="col-sm-10">
+                    <b>Email: </b>${info.email}
+                  </div>
+                </div>
+                <div class="form-group clearfix">
+                  <div class="col-sm-10">
+                    <b>Tình trạng: </b>${info.accountStatusByStatusId.name}
+                  </div>
+                </div>
               <div class="form-group clearfix">
                 <div class="col-sm-10" id="address">
                   <b>Công ty: </b>${info.profileByUsername.company}

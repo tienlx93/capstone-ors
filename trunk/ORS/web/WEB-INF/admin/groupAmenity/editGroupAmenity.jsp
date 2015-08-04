@@ -60,9 +60,9 @@
                 </form>
               </div>
               <div class="button-post">
-
-                <button type="button" value="cancel" name="action">Hủy</button>
-                <button type="submit" value="update" name="action">Cập nhật</button>
+                <button class="btn btn-primary" type="submit" value="update" name="action">Cập nhật
+                </button>
+                <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
               </div>
             </form>
           </div>

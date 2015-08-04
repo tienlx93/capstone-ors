@@ -145,7 +145,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
         try {
 
             Criteria criteria = session.createCriteria(Account.class);
-            //criteria.add(Restrictions.ne("statusId", 3));
+            criteria.add(Restrictions.ne("statusId", 3));
             criteria.setFirstResult(firstResult);
             criteria.setMaxResults(pageSize);
             return criteria.list();

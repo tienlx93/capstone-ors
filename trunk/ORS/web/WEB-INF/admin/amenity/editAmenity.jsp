@@ -71,8 +71,6 @@
                                 <input type="hidden" name="id" class="" value="${amenity.id}">
                                 <input type="hidden" name="group" class="" value="${amenity.amenityGroupId}">
                             </div>
-
-
                             <div class="button-post">
                                 <button class="btn btn-primary" type="submit" value="update" name="action">Cập nhật
                                 </button>

@@ -212,7 +212,7 @@
                           <tr>
                             <th>Tên văn phòng</th>
                             <th>Khách hàng</th>
-                            <th>Ngày sửa chữa</th>
+                            <th>Ngày giao thiết bị</th>
                             <c:if test="${user.roleId == 2}">
                               <th>Nhân viên được giao</th>
                             </c:if>
@@ -251,7 +251,7 @@
                           <tr>
                             <th>Tên văn phòng</th>
                             <th>Khách hàng</th>
-                            <th>Ngày sửa chữa</th>
+                            <th>Ngày giao thiết bị</th>
                             <c:if test="${user.roleId == 2}">
                               <th>Nhân viên được giao</th>
                             </c:if>

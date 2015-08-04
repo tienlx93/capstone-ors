@@ -2,8 +2,8 @@
  * Created by Thành on 17/07/2015.
  */
 
-controllers.controller('ContractReturnController', ['$scope', '$location', 'Api','toastr', '$modalInstance', '$routeParams',
-    function ($scope, $location, Api, toastr, $modalInstance, $routeParams) {
+controllers.controller('ContractReturnController', ['$scope', '$route', 'Api','toastr', '$modalInstance', '$routeParams',
+    function ($scope, $route, Api, toastr, $modalInstance, $routeParams) {
         var id = $routeParams.id;
         $scope.contractReturn = function (form) {
             if (form.$valid) {
@@ -14,6 +14,7 @@ controllers.controller('ContractReturnController', ['$scope', '$location', 'Api'
                     } else if (data) {
                         toastr.success("Đã gửi yêu cầu hủy hợp đồng trước hạn");
                         $modalInstance.close();
+                        $route.reload();
                     }
                 });
             }

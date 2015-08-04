@@ -5,3 +5,18 @@ a {
 .sum {
     text-align: right;
 }
+
+.contract-status {
+    border-radius: 4px;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    line-height: 1.42857143;
+    color: #333;
+    padding: 3px 10px;
+    margin: 10px 0;
+    background: #f39c12;
+}
+.extend {
+    background: #26a65b;
+}

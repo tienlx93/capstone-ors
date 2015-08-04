@@ -32,13 +32,23 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
 
         //Change status
         $scope.change = function (status) {
+
             var comment = "";
+            var changeStatus = function() {
+                Api.changeStatus(type, id, status, function() {
+                    $route.reload();
+                }, comment);
+            };
             if (status == 5 && type == "appointment") {
                 comment = window.prompt("Nhập lí do hủy");
+                if (comment) {
+                    changeStatus();
+                }
+            } else {
+                changeStatus();
             }
-            Api.changeStatus(type, id, status, function() {
-                $route.reload();
-            }, comment);
+
+
         }
 
     }]);

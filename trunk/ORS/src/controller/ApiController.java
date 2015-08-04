@@ -18,7 +18,6 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -39,7 +38,7 @@ public class ApiController extends HttpServlet {
         String action = request.getParameter("action");
         switch (action) {
             case "changeStatus":
-                changeStatus(request, out);
+                    changeStatus(request, out);
                 break;
             case "contractReturn":
                 contractReturn(request, out);
@@ -885,7 +884,8 @@ public class ApiController extends HttpServlet {
                 Office office = contract.getOfficeByOfficeId();
                 PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
                 list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
-                        contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription()));
+                        contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
+                        paymentTerm.getDescription(), contract.getStatusId()));
             }
             if (list.size() > 0) {
                 out.print(gson.toJson(list));
@@ -1050,7 +1050,8 @@ public class ApiController extends HttpServlet {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
                 if (contract.getStatusId() != 4) {
                     ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-                            contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), paymentTerm.getDescription());
+                            contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
+                            paymentTerm.getDescription(), contract.getStatusId());
                     out.print(gson.toJson(json));
                 } else {
                     out.print(gson.toJson("Expire"));

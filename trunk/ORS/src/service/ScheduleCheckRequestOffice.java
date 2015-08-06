@@ -20,7 +20,7 @@ public class ScheduleCheckRequestOffice implements Job {
         List<RequestOffice> requests = dao.findAll();
 
         OfficeDAO officeDAO = new OfficeDAO();
-        List<Office> offices = officeDAO.findAll();
+        List<Office> offices = officeDAO.getAllOfficeAvailable();
 
         EmailQueueDAO emailDao = new EmailQueueDAO();
 

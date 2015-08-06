@@ -43,7 +43,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            Sửa thông tin văn phòng
+            Sửa thông tin hợp đồng
           </div>
           <div>
             <form action="contract" method="post" id="form">

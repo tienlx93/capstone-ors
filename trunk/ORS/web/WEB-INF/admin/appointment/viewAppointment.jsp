@@ -31,6 +31,7 @@
           src="${pageContext.request.contextPath}/lib/listjs/list.pagination.min.js"></script>
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body>
@@ -164,7 +165,7 @@
                               <c:forEach items="${data}" var="item" varStatus="index">
                                 <c:if test="${item.statusId == 1}">
                                   <tr>
-                                    <form action="appointment?action=editing" method="post">
+                                    <form action="appointment?action=editing" method="post" onsubmit="return assign()">
                                       <td>${item.accountByCustomerUsername.username}</td>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td>
@@ -341,10 +342,8 @@
                             <thead>
                             <tr>
                               <th>Khách hàng</th>
-                              <c:if test="${user.roleId == 2}">
-                                <th>Nhân viên</th>
-                              </c:if>
                               <th>Văn phòng</th>
+                              <th>Ý kiến khách hàng</th>
                               <th>Thời gian gặp</th>
 
                             </tr>
@@ -354,10 +353,8 @@
                               <c:if test="${item.appointmentStatusByStatusId.id == 4}">
                                 <tr>
                                   <td>${item.accountByCustomerUsername.username}</td>
-                                  <c:if test="${user.roleId == 2}">
-                                    <td>${item.accountByAssignedStaff.username}</td>
-                                  </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
+                                  <td>${item.comment}</td>
                                   <td><fmt:formatDate value="${item.time}"
                                                       pattern="yyyy-MM-dd hh:mm"/></td>
 
@@ -381,10 +378,8 @@
                             <thead>
                             <tr>
                               <th>Khách hàng</th>
-                              <c:if test="${user.roleId == 2}">
-                                <th>Nhân viên</th>
-                              </c:if>
                               <th>Văn phòng</th>
+                              <th>Ý kiến khách hàng</th>
                               <th>Thời gian gặp</th>
 
                             </tr>
@@ -394,10 +389,8 @@
                               <c:if test="${item.appointmentStatusByStatusId.id == 5}">
                                 <tr>
                                   <td>${item.accountByCustomerUsername.username}</td>
-                                  <c:if test="${user.roleId == 2}">
-                                    <td>${item.accountByAssignedStaff.username}</td>
-                                  </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
+                                  <td>${item.comment}</td>
                                   <td><fmt:formatDate value="${item.time}"
                                                       pattern="yyyy-MM-dd hh:mm"/></td>
 
@@ -471,7 +464,33 @@
   var done = new List('done', options('done'));
   var cancel = new List('cancel', options('cancel'));
 
-
+  function assign() {
+    event;
+    return confirm("Bạn đồng ý giao việc cho nhân viên ");
+   /* bootbox.dialog({
+      message: "Xác nhận giao việc",
+      title: "Bạn đồng ý giao việc cho nhân viên ",
+      buttons: {
+        success: {
+          label: "Đồng ý",
+          className: "btn-primary",
+          callback: function() {
+            return false;
+          }
+        },
+        cancel: {
+          label: "Hủy",
+          className: "btn-default",
+          callback: function() {
+            return false;
+          }
+        }
+      }
+    });*/
+  }
+  $("form").submit(function(){
+    return assign();
+  });
 </script>
 
 </body>

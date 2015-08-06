@@ -13,14 +13,24 @@ public class RepairListJSON {
     private String assignStaff;
     private Date assignedTime;
     private String status;
+    private String officeName;
 
-    public RepairListJSON(int repairId, String description, Date createTime, String assignStaff, Date assignedTime, String status) {
+    public RepairListJSON(int repairId, String description, Date createTime, String assignStaff, Date assignedTime, String status, String officeName) {
         this.repairId = repairId;
         this.description = description;
         this.createTime = createTime;
         this.assignStaff = assignStaff;
         this.assignedTime = assignedTime;
         this.status = status;
+        this.officeName = officeName;
+    }
+
+    public String getOfficeName() {
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
     }
 
     public int getRepairId() {

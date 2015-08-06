@@ -90,7 +90,10 @@
                                             <td>${item.paymentFee}</td>
                                             <td>${item.paymentTermByPaymentTerm.description}</td>
 
-                                            <td><a href="contract?action=viewExtend&id=${item.id}">Xem chi tiết</a>
+                                            <td>
+                                                <a href="${pageContext.request.contextPath}/admin/contract?action=viewExtend&id=${item.id}"
+                                                   title="Chi tiết" class="btn btn-icon btn-default">
+                                                    <i class="fa fa-info color5"></i></a>
                                             </td>
                                         </c:if>
 

@@ -151,7 +151,7 @@
                             </div>
 
                             <div class="button-post">
-                                <button type="submit" value="save" name="action">Tạo mới</button>
+                                <button type="submit" value="save" name="action" class="btn btn-primary">Tạo mới</button>
                             </div>
 
                         </form>

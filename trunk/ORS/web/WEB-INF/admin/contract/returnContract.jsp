@@ -80,8 +80,8 @@
                             </div>
 
                             <div class="button-post">
-                                <button type="submit" value="confirm" name="button" class="btn">Xác nhận</button>
-                                <button type="submit" value="cancel" name="button" class="btn">Hủy yêu cầu</button>
+                                <button type="submit" value="confirm" name="button" class="btn btn-danger">Xác nhận</button>
+                                <button type="submit" value="cancel" name="button" class="btn btn-success">Hủy yêu cầu</button>
                                 <a href="${pageContext.request.contextPath}/admin/contract?action=return"
                                    class="btn btn-default">Quay về</a>
                             </div>

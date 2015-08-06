@@ -74,9 +74,8 @@
                                         <c:if test="${user.roleId == 2}">
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/admin/contract?action=editing&id=${item.id}"
-                                                   title="Chi tiết"
-                                                   class="btn btn-icon btn-default"><i
-                                                        class="fa fa-info color5"></i></a>
+                                                   title="Chi tiết" class="btn btn-icon btn-default">
+                                                    <i class="fa fa-info color5"></i></a>
                                             </td>
                                         </c:if>
                                     </tr>

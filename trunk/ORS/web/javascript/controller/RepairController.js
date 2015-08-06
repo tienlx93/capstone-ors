@@ -12,14 +12,22 @@ controllers.controller('RepairController', ['$scope', '$location', '$routeParams
                 $scope.WrongCus = true;
                 $scope.RightCus = false;
                 $scope.isLogin = true;
+                $scope.Repair = true;
             } else if (data == "Wrong") {
                 $scope.RightCus = false;
                 $scope.WrongCus = false;
                 $scope.isLogin = false;
+                $scope.Repair = true;
+            } else if (data.length == [0]) {
+                $scope.Repair = false;
+                $scope.isLogin = true;
+                $scope.RightCus = false;
+                $scope.WrongCus = false;
             } else {
                 $scope.data = data;
                 $scope.id = id;
                 $scope.isLogin = true;
+                $scope.Repair = true;
                 $scope.RightCus = true;
                 $scope.WrongCus = false;
             }

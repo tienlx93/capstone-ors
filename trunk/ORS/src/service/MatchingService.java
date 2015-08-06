@@ -60,7 +60,7 @@ public class MatchingService {
         int group = weighted.get(0).getGroup();
         List<NormalizePoint> foundList = new ArrayList<>();
         for (NormalizePoint normalizePoint : normalizedData) {
-            if (normalizePoint.getOffice().getOfficeGroupById().getOfficeGroup() == group) {
+            if (normalizePoint.getOffice().getOfficeGroupById()!= null && normalizePoint.getOffice().getOfficeGroupById().getOfficeGroup() == group) {
                 foundList.add(normalizePoint);
             }
         }

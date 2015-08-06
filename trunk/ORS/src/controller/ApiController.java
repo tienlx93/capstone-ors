@@ -1099,7 +1099,9 @@ public class ApiController extends HttpServlet {
             MatchingService service = new MatchingService();
             List<Office> matching = service.matching(latitude, longitude, priceRange);
             for (Office office : matching) {
-                officeList.add(new OfficeListDetail(office));
+                if (office.getStatusId() == 1) {
+                    officeList.add(new OfficeListDetail(office));
+                }
             }
             out.print(gson.toJson(officeList));
         } catch (Exception e) {
@@ -1119,7 +1121,7 @@ public class ApiController extends HttpServlet {
         List<OfficeListDetail> officeList = new ArrayList<>();
         for (OfficeGroup officeGroup : groupDAO.getOfficeList(group)) {
             Office o = officeGroup.getOfficeByOfficeId();
-            if (o.getId() != id) {
+            if (o.getId() != id && o.getStatusId() == 1) {
                 officeList.add(new OfficeListDetail(o));
             }
         }

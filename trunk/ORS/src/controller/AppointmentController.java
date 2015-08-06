@@ -35,6 +35,7 @@ public class AppointmentController extends HttpServlet {
         SMSService sms = new SMSService();
         String phone = appointment.getAccountByCustomerUsername().getProfileByUsername().getPhone();
         sms.setPhone(phone);
+        String comment = null;
         if (action.equals("editing")) {
             switch (button) {
                 case "assign":
@@ -43,14 +44,30 @@ public class AppointmentController extends HttpServlet {
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy - hh:mm");
                     sms.setMessage("Lich hen cua ban da duoc chap nhan. Hen ban vao thoi gian: "
                             + df.format(appointment.getTime()));
-                    sms.send();
+                    try {
+                        sms.send();
+                    } catch (IOException e) {
+                        System.out.println("Fail to send sms");
+                    }
                     break;
                 case "reject":
-                    String comment = request.getParameter("comment");
-                    dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
-                    String nonUTF8Comment = AccentRemover.removeAccent(comment);
-                    sms.setMessage("Lich hen cua ban khong duoc chap nhan. Ly do: " + nonUTF8Comment);
-                    sms.send();
+                    comment = request.getParameter("comment");
+                    if (comment!= null) {
+                        dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
+                        String nonUTF8Comment = AccentRemover.removeAccent(comment);
+                        sms.setMessage("Lich hen cua ban khong duoc chap nhan. Ly do: " + nonUTF8Comment);
+                        try {
+                            sms.send();
+                        } catch (IOException e) {
+                            System.out.println("Fail to send sms");
+                        }
+                    } 
+                    break;
+                case "reject2":
+                    comment = request.getParameter("comment");
+                    if (comment!= null) {
+                        dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
+                    }
                     break;
                 case "update3":
                     dao.updateStatus(Integer.parseInt(request.getParameter("id")), 3);

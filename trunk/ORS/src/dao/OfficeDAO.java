@@ -98,7 +98,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
 
     public List<Office> getNewOffice() {
         try {
-            String sql = "from Office order by viewCount desc";
+            String sql = "from Office where statusId = 1 order by viewCount desc";
             Query query = session.createQuery(sql);
             return query.setMaxResults(5).list();
 
@@ -112,7 +112,21 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
     public List<Office> getAllOffice() {
 
         try {
-            String sql = "from Office where statusId != 3";
+            String sql = "from Office where statusId = 1  and parentOfficeId = NULL";
+            Query query = session.createQuery(sql);
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    public List<Office> getAllOfficeAvailable() {
+
+        try {
+            String sql = "from Office where statusId = 1";
             Query query = session.createQuery(sql);
             return query.list();
 
@@ -129,6 +143,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
 
             Criteria criteria = session.createCriteria(Office.class);
             criteria.add(Restrictions.ne("statusId", 3));
+            criteria.add(Restrictions.isNull("parentOfficeId"));
             criteria.setFirstResult(firstResult);
             criteria.setMaxResults(pageSize);
             return criteria.list();
@@ -144,6 +159,8 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         try {
 
             Criteria criteriaCount = session.createCriteria(Office.class);
+            criteriaCount.add(Restrictions.ne("statusId", 3));
+            criteriaCount.add(Restrictions.isNull("parentOfficeId"));
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();
             return (int) Math.ceil((double)count / pageSize);

@@ -31,9 +31,13 @@
             </div>
         </div>
         <div ng-show="type!='lịch hẹn'" class="repair">
-            <div ng-show="data.status==2">
+            <div ng-show="data.status==2 && type=='sửa chữa'">
                 <button class="WaitingConfirm" ng-click="change(5)">Đồng ý sửa chữa</button><br>
                 <button class="Requested" ng-click="change(1)">Không đồng ý sửa chữa</button>
+            </div>
+            <div ng-show="data.status==2 && type!='sửa chữa'">
+                <button class="WaitingConfirm" ng-click="change(5)">Đồng ý giao hàng</button><br>
+                <button class="Requested" ng-click="change(1)">Không đồng ý</button>
             </div>
             <div ng-show="data.status==5">
                 <button class="Done" ng-click="change(3)">Khách hàng hài lòng</button><br>

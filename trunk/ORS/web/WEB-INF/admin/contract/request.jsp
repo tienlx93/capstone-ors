@@ -58,8 +58,8 @@
                                 <th>Văn phòng</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
-                                <th>Giá</th>
-                                <th>Thời hạn thanh toán</th>
+                                <th>Giá thuê</th>
+                                <th>Kỳ hạn thanh toán</th>
                                 <th></th>
                             </tr>
                             </thead>

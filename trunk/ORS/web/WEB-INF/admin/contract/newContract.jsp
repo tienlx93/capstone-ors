@@ -129,7 +129,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="paymentTerm" class="col-sm-2 control-label">Thời hạn thanh toán</label>
+                                <label for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</label>
 
                                 <div class="col-sm-10">
                                     <select name="paymentTerm" class="form-control" id="paymentTerm">
@@ -142,7 +142,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="paymentFee" class="col-sm-2 control-label">Giá tiền</label>
+                                <label for="paymentFee" class="col-sm-2 control-label">Giá thuê</label>
 
                                 <div class="col-sm-10">
                                     <input style="display: inline-block" type='number' class="form-control" name="paymentFee"

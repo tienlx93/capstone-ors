@@ -692,11 +692,10 @@ public class ApiController extends HttpServlet {
 
             if (result) {
 
-                List<String> amenityList = saveAmenity(amenityItem);
                 AmenityDAO amenityDAO = new AmenityDAO();
                 List<Integer> amenityListInt = new ArrayList<>();
                 Amenity amenity;
-                for (String s : amenityList) {
+                for (String s : amenityItem) {
                     amenity = amenityDAO.searchAmenity(s);
                     amenityListInt.add(amenity.getId());
                 }
@@ -802,16 +801,6 @@ public class ApiController extends HttpServlet {
         while (tokenizer.hasMoreTokens()) {
             amenityList.add(tokenizer.nextToken());
         }
-        AmenityDAO amenityDAO = new AmenityDAO();
-        RequestAmenityDAO dao = new RequestAmenityDAO();
-        if (amenityDAO.addAmenities(amenityList)) {
-            dao.findAll();
-        }
-        return amenityList;
-    }
-
-    private List<String> saveAmenity(List<String> amenityList) {
-
         AmenityDAO amenityDAO = new AmenityDAO();
         RequestAmenityDAO dao = new RequestAmenityDAO();
         if (amenityDAO.addAmenities(amenityList)) {

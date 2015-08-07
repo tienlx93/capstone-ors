@@ -116,7 +116,7 @@ public class CalendarController extends HttpServlet {
                         item.setStart(format.format(appointment.getTime()));
                         item.setTitle("Xem văn phòng");
                         item.setType(1);
-                        item.setUrl("/admin/appointment?action=edit&id=" + appointment.getId());
+                        item.setUrl("/admin/appointment?linkBack=calendar&action=edit&id=" + appointment.getId());
 
                         itemList.add(item);
                     }
@@ -131,7 +131,7 @@ public class CalendarController extends HttpServlet {
                             item.setStart(format.format(rental.getAssignedTime()));
                             item.setTitle("Thuê thiết bị");
                             item.setType(3);
-                            item.setUrl("/admin/rental?action=edit&id=" + rental.getId());
+                            item.setUrl("/admin/rental?linkBack=calendar&action=edit&id=" + rental.getId());
                             itemList.add(item);
                         }
                     }
@@ -146,7 +146,7 @@ public class CalendarController extends HttpServlet {
                             item.setStart(format.format(repair.getAssignedTime()));
                             item.setTitle("Sửa chữa");
                             item.setType(2);
-                            item.setUrl("/admin/repair?action=edit&id=" + repair.getId());
+                            item.setUrl("/admin/repair?linkBack=calendar&action=edit&id=" + repair.getId());
 
                             itemList.add(item);
                         }

@@ -41,7 +41,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            Thêm tài khoản mới
+            Cập nhật tài khoản
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/user" method="post">

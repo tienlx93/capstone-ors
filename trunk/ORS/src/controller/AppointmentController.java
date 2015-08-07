@@ -53,7 +53,7 @@ public class AppointmentController extends HttpServlet {
                 case "reject":
                     comment = request.getParameter("comment");
                     if (comment!= null) {
-                        dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
+                        dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, "");
                         String nonUTF8Comment = AccentRemover.removeAccent(comment);
                         sms.setMessage("Lich hen cua ban khong duoc chap nhan. Ly do: " + nonUTF8Comment);
                         try {
@@ -98,7 +98,32 @@ public class AppointmentController extends HttpServlet {
                 rd = request.getRequestDispatcher("/WEB-INF/admin/appointment/viewAppointment.jsp");
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
-                request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                Appointment appointment = dao.get(Integer.parseInt(request.getParameter("id")));
+                String linkBack = request.getParameter("linkBack");
+                String urlBack = "";
+                if (linkBack != null) {
+                    urlBack = "/admin/" + linkBack;
+                } else {
+                    switch (appointment.getStatusId()) {
+                        case 1:
+                            urlBack = "/admin/appointment";
+                            break;
+                        case 2:
+                            urlBack = "/admin/appointment#assigned";
+                            break;
+                        case 3:
+                            urlBack = "/admin/appointment#accepted";
+                            break;
+                        case 4:
+                            urlBack = "/admin/appointment#done";
+                            break;
+                        case 5:
+                            urlBack = "/admin/appointment#cancel";
+                            break;
+                    }
+                }
+                request.setAttribute("urlBack", urlBack);
+                request.setAttribute("info", appointment);
                 request.getRequestDispatcher("/WEB-INF/admin/appointment/appointmentDetail.jsp").forward(request, response);
             } else if (action.equals("filter")) {
                 String office = new String(request.getParameter("office").getBytes(

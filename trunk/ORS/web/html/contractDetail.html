@@ -7,7 +7,7 @@
     <div class="form-group">
         <label>Tên văn phòng</label>
         {{data.officeName}}
-        <a href="#/requestRepair/{{data.contractId}}" class="btn btn-green" style="padding: 3px 10px;">
+        <a ng-if="data.status == 1 || data.status == 2" href="#/requestRepair/{{data.contractId}}" class="btn btn-green" style="padding: 3px 10px;">
             Yêu cầu sửa chữa</a>
     </div>
     <div class="form-group">
@@ -61,7 +61,7 @@
         </table>
     </div>
     <div class="button-post">
-        <a href="#/rental/{{data.contractId}}" class="btn btn-green">Yêu cầu thuê thiết bị</a> <br>
+        <a ng-if="data.status == 1 || data.status == 2" href="#/rental/{{data.contractId}}" class="btn btn-green">Yêu cầu thuê thiết bị</a> <br>
     </div>
 </div>
 <div class="container" ng-show="WrongCus">

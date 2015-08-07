@@ -71,6 +71,11 @@ angular.module('filters', []).filter('encode', function () {
         var date = new Date(input);
         return date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
     };
+}).filter('toLocaleDateTime', function () {
+    return function (input) {
+        var date = new Date(input);
+        return date.getHours() + ":" + date.getMinutes() + " - " + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+    };
 });
 
 var BACK_END_URL = "";

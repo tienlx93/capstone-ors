@@ -47,7 +47,7 @@
             <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
               <div class="form-group">
                 <label for="name">Tên tiện nghi</label>
-                <input type="text" name="name" class="" id="name">
+                <input type="text" name="name" class="" id="name" required>
               </div>
 
               <div class="form-group">
@@ -57,12 +57,12 @@
 
               <div class="form-group">
                 <label for="weight">Trọng số</label>
-                <input type="text" name="weight" class="" id="weight">
+                <input type="text" name="weight" class="" id="weight" required>
               </div>
 
               <div class="form-group">
                 <label for="priority">Độ ưu tiên</label>
-                <input type="text" name="priority" class="" id="priority">
+                <input type="text" name="priority" class="" id="priority" required>
               </div>
 
               <div class="form-group">

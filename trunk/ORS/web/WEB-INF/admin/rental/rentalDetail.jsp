@@ -17,6 +17,8 @@
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
           type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+          type="text/css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
@@ -28,6 +30,8 @@
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -103,7 +107,7 @@
                             <div class="form-group clearfix">
                                 <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
                                 <c:choose>
-                                    <c:when test="${user.roleId==2 && (info.repairStatusId == 1 || info.repairStatusId == 2)}">
+                                    <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
                                         <div class="col-sm-10">
                                             <input type='text' class="form-control"
                                                    name="assignedTime"
@@ -132,11 +136,11 @@
 
 
                             <div class="form-group clearfix">
-                                <label for="repairStatusId" class="col-sm-2 control-label">Tình trạng</label>
+                                <label for="statusId" class="col-sm-2 control-label">Tình trạng</label>
 
                                 <div class="col-sm-10">
                                     ${info.rentalStatusByStatusId.description}
-                                    <input type="hidden" name="repairStatusId" id="repairStatusId"
+                                    <input type="hidden" name="statusId" id="statusIdF"
                                            value="${info.statusId}">
                                 </div>
                             </div>
@@ -149,18 +153,18 @@
                                         <thead>
                                         <tr>
                                             <th>Thiết bị</th>
-                                            <th>Giá</th>
-                                            <th>Số lượng</th>
-                                            <th>Thành tiền</th>
+                                            <th>Giá (VNĐ)</th>
+                                            <th>Số lượng (cái)</th>
+                                            <th>Thành tiền (VNĐ)</th>
                                         </tr>
                                         </thead>
                                         <tbody>
                                         <c:forEach var="item" items="${detailList}">
                                             <tr>
                                                 <td>${item.rentalItemByRentalItemId.name}</td>
-                                                <td>${item.unitPrice} VNĐ</td>
-                                                <td>${item.quantity} (cái)</td>
-                                                <td>${item.unitPrice * item.quantity} VNĐ</td>
+                                                <td>${item.unitPrice} </td>
+                                                <td>${item.quantity} </td>
+                                                <td>${item.unitPrice * item.quantity} </td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>

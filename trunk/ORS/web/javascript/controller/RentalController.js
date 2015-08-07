@@ -13,12 +13,20 @@ controllers.controller('RentalController', ['$scope', '$location', '$routeParams
                 $scope.WrongCus = true;
                 $scope.RightCus = false;
                 $scope.isLogin = true;
+                $scope.Rental = true;
             } else if (data == "Wrong") {
                 $scope.RightCus = false;
                 $scope.WrongCus = false;
                 $scope.isLogin = false;
+                $scope.Rental = true;
+            } else if (data.length == [0]) {
+                $scope.Rental = false;
+                $scope.isLogin = true;
+                $scope.RightCus = false;
+                $scope.WrongCus = false;
             } else {
                 $scope.data = data;
+                $scope.Rental = true;
                 $scope.isLogin = true;
                 $scope.RightCus = true;
                 $scope.WrongCus = false;

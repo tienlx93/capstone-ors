@@ -61,6 +61,12 @@ public class ContractController extends HttpServlet {
                     officeDao.save(officeChildren);
 
                     officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
+                } else if(Integer.parseInt(request.getParameter("categoryId")) == 1){
+                    OfficeDAO officeDao = new OfficeDAO();
+                    Office office = officeDao.get(Integer.parseInt(request.getParameter("officeID")));
+
+                    office.setStatusId(2);
+                    officeDao.update(office.getId(), office);
                 }
 
                 ContractDAO dao = new ContractDAO();
@@ -133,6 +139,9 @@ public class ContractController extends HttpServlet {
                         if(office.getParentOfficeId() != null) {
                             Office officeParent = officeDAO.get(office.getParentOfficeId());
                             officeDAO.updateArea(officeParent.getId(), officeParent.getArea() + office.getArea());
+                        } else {
+                            office.setStatusId(1);
+                            officeDAO.update(office.getId(),office);
                         }
 
                         // Update rental item when contract has been confirmed to expire

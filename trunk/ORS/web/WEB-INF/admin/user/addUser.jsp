@@ -47,22 +47,22 @@
                         <form action="${pageContext.request.contextPath}/admin/user" method="post">
                             <div class="form-group">
                                 <label for="username">Tên tài khoản</label>
-                                <input type="text" name="username" class="" id="username">
+                                <input type="text" name="username" class="" id="username" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="password">Mật khẩu</label>
-                                <input type="password" name="password" class="" id="password">
+                                <input type="password" name="password" class="" id="password" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="email">Email</label>
-                                <input type="email" name="email" class="" id="email">
+                                <input type="email" name="email" class="" id="email" required>
                             </div>
 
                             <div class="form-group">
                                 <label for="role">Chức vụ</label>
-                                <select name="role" class="" id="role">
+                                <select name="role" class="" id="role" required>
                                     <c:forEach var="item" items="${roleList}">
                                         <option value="${item.id}">${item.roleName}</option>
                                     </c:forEach>

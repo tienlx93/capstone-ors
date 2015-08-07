@@ -16,11 +16,12 @@ public class RentalListJSON {
     private double price;
     private Date assignedTime;
     private Date createTime;
+    private String officeName;
 
     public RentalListJSON() {
     }
 
-    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl, String status, double price, Date assignedTime, Date createTime) {
+    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl, String status, double price, Date assignedTime, Date createTime, String officeName) {
         this.rentalId = rentalId;
         this.name = name;
         this.description = description;
@@ -31,6 +32,15 @@ public class RentalListJSON {
         this.price = price;
         this.assignedTime = assignedTime;
         this.createTime = createTime;
+        this.officeName = officeName;
+    }
+
+    public String getOfficeName() {
+        return officeName;
+    }
+
+    public void setOfficeName(String officeName) {
+        this.officeName = officeName;
     }
 
     public Date getCreateTime() {

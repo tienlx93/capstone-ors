@@ -47,7 +47,7 @@
             <form action="${pageContext.request.contextPath}/admin/groupAmenity" method="post">
               <div class="form-group">
                 <label for="name">Tên nhóm tiện nghi</label>
-                <input type="text" name="name" class="" id="name">
+                <input type="text" name="name" class="" id="name" required>
               </div>
 
               <div class="form-group">

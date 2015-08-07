@@ -95,7 +95,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="paymentTerm" class="col-sm-2 control-label">Thời hạn thanh toán</label>
+                                <label for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</label>
 
                                 <div class="col-sm-10">
                                     <select name="paymentTerm" class="form-control" id="paymentTerm">
@@ -109,7 +109,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="paymentFee" class="col-sm-2 control-label">Giá</label>
+                                <label for="paymentFee" class="col-sm-2 control-label">Giá thuê</label>
 
                                 <div class="col-sm-10">
                                     <input type='text' class="form-control" name="paymentFee" id="paymentFee"
@@ -118,8 +118,8 @@
                             </div>
 
                             <div class="button-post">
-                                <button type="submit" value="confirm" name="button" class="btn">Xác nhận</button>
-                                <button type="submit" value="cancel" name="button" class="btn">Hủy yêu cầu</button>
+                                <button type="submit" value="confirm" name="button" class="btn btn-primary">Xác nhận</button>
+                                <button type="submit" value="cancel" name="button" class="btn btn-success">Hủy yêu cầu</button>
                                 <a href="${pageContext.request.contextPath}/admin/contract?action=return"
                                    class="btn btn-default">Quay về</a>
                             </div>

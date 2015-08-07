@@ -3130,7 +3130,7 @@ div[data-role="editor-toolbar"] {
 }
 /* Modals */
 .modal {
-    z-index: 999;
+    z-index: 1052;
 }
 .modal-sm {
     max-width: 400px;
@@ -3154,9 +3154,6 @@ div[data-role="editor-toolbar"] {
 .modal-title {
     font-family: 'Montserrat', sans-serif;
     font-size: 16px;
-}
-.modal-content {
-    box-shadow: 2px 2px 2px red;
 }
 .modalicon {
     background: #fff;

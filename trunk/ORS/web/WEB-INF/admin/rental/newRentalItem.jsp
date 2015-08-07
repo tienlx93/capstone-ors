@@ -25,6 +25,30 @@
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
+
+    <script>
+        function validateform() {
+            var price = document.myform.price.value;
+            var quantity = document.myform.quantity.value;
+
+            if (isNaN(price)) {
+                document.getElementById("priceValidate").innerHTML = "Vui lòng nhập số";
+                return false;
+            } else if (isNaN(quantity)) {
+                document.getElementById("quantityValidate").innerHTML = "Vui lòng nhập số";
+                return false;
+            } else if (price < 0) {
+                document.getElementById("priceValidate").innerHTML = "Vui lòng nhập số lớn hơn không";
+                return false;
+            } else if (quantity < 0) {
+                document.getElementById("quantityValidate").innerHTML = "Vui lòng nhập số lớn hơn không";
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
+
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -45,7 +69,7 @@
                         Thêm mới thiết bị
                     </div>
                     <div>
-                        <form action="rentalItem" method="post">
+                        <form action="rentalItem" method="post" name="myform" onsubmit="return validateform()">
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2 control-label">Tên thiết bị</label>
 
@@ -70,7 +94,9 @@
 
                                 <div class="images clearfix" id="images">
                                     <div class="upload-img">
-                                        <div class="img"><img src="${rentalItem.imageUrl!=null?rentalItem.imageUrl:'/upload/placeholder.jpg'}"></div>
+                                        <div class="img"><img
+                                                src="${rentalItem.imageUrl!=null?rentalItem.imageUrl:'/upload/placeholder.jpg'}">
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="clear-float"></div>
@@ -82,7 +108,8 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" name="price" class="form-control" id="price"
-                                           value="${rentalItem.price}">
+                                           value="${rentalItem.price}" required>
+                                    <span style="color: red" id="priceValidate"></span>
                                 </div>
                             </div>
 
@@ -91,7 +118,8 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" name="quantity" class="form-control" id="quantity"
-                                           value="${rentalItem.quantity}">
+                                           value="${rentalItem.quantity}" required>
+                                    <span style="color: red" id="quantityValidate"></span>
                                 </div>
                             </div>
 
@@ -113,6 +141,7 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/uploadRental.js"></script>
+
 
 </body>
 </html>

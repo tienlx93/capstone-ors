@@ -7,7 +7,7 @@
     <div class="form-group">
         <label>Tên văn phòng</label>
         {{data.officeName}}
-        <a href="#/requestRepair/{{data.contractId}}" class="btn btn-green" style="padding: 3px 10px;">
+        <a ng-if="data.status == 1 || data.status == 2" href="#/requestRepair/{{data.contractId}}" class="btn btn-green" style="padding: 3px 10px;">
             Yêu cầu sửa chữa</a>
     </div>
     <div class="form-group">
@@ -21,8 +21,8 @@
             <a ng-click="contractReturn()" class="btn btn-color9" style="padding: 3px 10px;">Hủy hợp đồng trước hạn</a>
             <a ng-click="contractExtend()" class="btn btn-color7" style="padding: 3px 10px;">Gia hạn hợp đồng</a>
         </span>
-        <span ng-if="data.status == 2" class="contract-status color9-bg">Đang yêu cầu hủy hợp đồng trước hạn</span>
-        <span ng-if="data.status == 3" class="contract-status color7-bg">Đang yêu cầu gia hạn hợp đồng</span>
+        <span ng-if="data.status == 3" class="contract-status color9-bg">Đang yêu cầu hủy hợp đồng trước hạn</span>
+        <span ng-if="data.status == 2" class="contract-status color7-bg">Đang yêu cầu gia hạn hợp đồng</span>
     </div>
     <div class="form-group">
         <label>Điều khoản giá</label>
@@ -61,7 +61,7 @@
         </table>
     </div>
     <div class="button-post">
-        <a href="#/rental/{{data.contractId}}" class="btn btn-green">Yêu cầu thuê thiết bị</a> <br>
+        <a ng-if="data.status == 1 || data.status == 2" href="#/rental/{{data.contractId}}" class="btn btn-green">Yêu cầu thuê thiết bị</a> <br>
     </div>
 </div>
 <div class="container" ng-show="WrongCus">

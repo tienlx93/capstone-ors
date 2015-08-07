@@ -47,6 +47,9 @@ public class ScheduleCheckContract implements Job {
                     if(office.getParentOfficeId() != null) {
                         Office officeParent = officeDAO.get(office.getParentOfficeId());
                         officeDAO.updateArea(officeParent.getId(), officeParent.getArea() + office.getArea());
+                    } else {
+                        office.setStatusId(1);
+                        officeDAO.update(office.getId(),office);
                     }
 
                     // Update rental item when contract expired

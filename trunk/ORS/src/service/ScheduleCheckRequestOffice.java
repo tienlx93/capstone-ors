@@ -20,7 +20,7 @@ public class ScheduleCheckRequestOffice implements Job {
         List<RequestOffice> requests = dao.findAll();
 
         OfficeDAO officeDAO = new OfficeDAO();
-        List<Office> offices = officeDAO.findAll();
+        List<Office> offices = officeDAO.getAllOfficeAvailable();
 
         EmailQueueDAO emailDao = new EmailQueueDAO();
 
@@ -69,8 +69,10 @@ public class ScheduleCheckRequestOffice implements Job {
             int count = 0;
             Collection<OfficeAmenity> amenityCollection = office.getOfficeAmenitiesById();
             for (RequestAmenity amenity : amenities) {
-                if (amenityCollection.contains(amenity)) {
-                    count++;
+                for (OfficeAmenity officeAmenity : amenityCollection) {
+                    if(amenity.getAmenityId() == officeAmenity.getAmenityId()) {
+                        count++;
+                    }
                 }
             }
             if(amenities.size() == 1) {

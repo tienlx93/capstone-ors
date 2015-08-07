@@ -158,6 +158,9 @@ public class ApiController extends HttpServlet {
             case "amenity":
                 getAmenityList(request, out);
                 break;
+            case "amenityWeight":
+                getAmenityListWeight(request, out);
+                break;
             case "officeName":
                 getOfficeName(request, out);
                 break;
@@ -1061,8 +1064,6 @@ public class ApiController extends HttpServlet {
     }
 
     private void getAmenityList(HttpServletRequest request, PrintWriter out) {
-        Gson gson = new Gson();
-
         AmenityDAO dao = new AmenityDAO();
 
         List<String> list = new ArrayList<>();
@@ -1071,6 +1072,20 @@ public class ApiController extends HttpServlet {
         }
 
         out.print(gson.toJson(list));
+        out.flush();
+    }
+
+
+    private void getAmenityListWeight(HttpServletRequest request, PrintWriter out) {
+        AmenityGroupDAO dao = new AmenityGroupDAO();
+        List<AmenityJSON> json = new ArrayList<>();
+        for (AmenityGroup amenityGroup : dao.findAll()) {
+            for (Amenity amenity : amenityGroup.getAmenitiesById()) {
+                json.add(new AmenityJSON(amenity.getName(), amenity.getWeight(), amenityGroup.getId()));
+            }
+        }
+
+        out.print(gson.toJson(json));
         out.flush();
     }
 

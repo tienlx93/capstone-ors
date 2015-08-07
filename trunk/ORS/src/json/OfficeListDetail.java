@@ -14,6 +14,7 @@ public class OfficeListDetail {
     private int id;
     private String name;
     private String description;
+    private List<AmenityJSON> amenityJSON;
     private List<String> amenityList;
     private Long price;
     private String priceTerm;
@@ -33,24 +34,18 @@ public class OfficeListDetail {
     public OfficeListDetail() {
     }
 
-    public OfficeListDetail(int id, String name, String description, List<String> amenityList, Long price, String priceTerm,String address ,List<String> images) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.amenityList = amenityList;
-        this.price = price;
-        this.priceTerm = priceTerm;
-        this.address = address;
-        this.images = images;
-    }
-
     public OfficeListDetail(Office office) {
         this.id = office.getId();
         this.name = office.getName();
         this.description = office.getDescription();
-        this.amenityList = new ArrayList<>();
+        amenityJSON = new ArrayList<>();
+        amenityList = new ArrayList<>();
         for (OfficeAmenity amenity : office.getOfficeAmenitiesById()) {
-            amenityList.add(amenity.getAmenityByAmenityId().getName());
+            String name = amenity.getAmenityByAmenityId().getName();
+            Integer weight = amenity.getAmenityByAmenityId().getWeight();
+            Integer group = amenity.getAmenityByAmenityId().getAmenityGroupId();
+            amenityJSON.add(new AmenityJSON(name, weight!= null ? weight : -10, group!= null ? group : -10));
+            amenityList.add(name);
         }
 
         this.price = office.getPrice();
@@ -91,14 +86,6 @@ public class OfficeListDetail {
         this.description = description;
     }
 
-    public List<String> getAmenityList() {
-        return amenityList;
-    }
-
-    public void setAmenityList(List<String> amenityList) {
-        this.amenityList = amenityList;
-    }
-
     public Long getPrice() {
         return price;
     }
@@ -129,5 +116,21 @@ public class OfficeListDetail {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public List<AmenityJSON> getAmenityJSON() {
+        return amenityJSON;
+    }
+
+    public void setAmenityJSON(List<AmenityJSON> amenityJSON) {
+        this.amenityJSON = amenityJSON;
+    }
+
+    public List<String> getAmenityList() {
+        return amenityList;
+    }
+
+    public void setAmenityList(List<String> amenityList) {
+        this.amenityList = amenityList;
     }
 }

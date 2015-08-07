@@ -69,8 +69,10 @@ public class ScheduleCheckRequestOffice implements Job {
             int count = 0;
             Collection<OfficeAmenity> amenityCollection = office.getOfficeAmenitiesById();
             for (RequestAmenity amenity : amenities) {
-                if (amenityCollection.contains(amenity)) {
-                    count++;
+                for (OfficeAmenity officeAmenity : amenityCollection) {
+                    if(amenity.getAmenityId() == officeAmenity.getAmenityId()) {
+                        count++;
+                    }
                 }
             }
             if(amenities.size() == 1) {

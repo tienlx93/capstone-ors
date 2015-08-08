@@ -31,7 +31,6 @@
           src="${pageContext.request.contextPath}/lib/listjs/list.pagination.min.js"></script>
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body>
@@ -165,20 +164,16 @@
                               <c:forEach items="${data}" var="item" varStatus="index">
                                 <c:if test="${item.statusId == 1}">
                                   <tr>
-                                    <form action="appointment?action=editing"
-                                          method="post" onsubmit="return assign()">
+                                    <form action="appointment?action=editing" method="post">
                                       <td>${item.accountByCustomerUsername.username}</td>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td>
-                                        <fmt:formatDate value="${item.time}"
-                                                        pattern="yyyy-MM-dd hh:mm"/>
+                                        <fmt:formatDate value="${item.time}" pattern="dd-MM-yyyy hh:mm"/>
                                       </td>
                                       <td>
                                         <input type="hidden" name="id"
                                                value="${item.id}">
-                                        <select name="assignedStaff"
-                                                id="assignedStaff"
-                                                class="form-control">
+                                        <select name="assignedStaff" id="assignedStaff" class="form-control">
                                           <option value="">(Không có đề xuất)
                                           </option>
                                           <c:forEach var="itemAcc"
@@ -195,16 +190,12 @@
                                       <td>
                                         <div class="btn-group" role="group">
                                           <button class="btn btn-icon btn-default"
-                                                  id="assign"
-                                                  title="Giao việc"
+                                                  id="assign" title="Giao việc"
                                                   type="submit" name="button"
-                                                  value="assign"><i
-                                              class="fa fa-share color7"></i>
-                                          </button>
+                                                  value="assign"><i class="fa fa-share color7"></i></button>
                                           <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
                                              title="Chi tiết"
-                                             class="btn btn-icon btn-default"><i
-                                              class="fa fa-info color5"></i></a>
+                                             class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                         </div>
                                       </td>
                                     </form>
@@ -244,13 +235,12 @@
                                       </c:if>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td><fmt:formatDate value="${item.time}"
-                                                          pattern="yyyy-MM-dd hh:mm"/></td>
+                                                          pattern="dd-MM-YYYY hh:mm"/></td>
 
                                       <td>
                                         <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
                                            title="Chi tiết"
-                                           class="btn btn-icon btn-default"><i
-                                            class="fa fa-info color5"></i></a>
+                                           class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                       </td>
                                     </tr>
                                   </c:if>
@@ -292,8 +282,7 @@
                                       <td>
                                         <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
                                            title="Chi tiết"
-                                           class="btn btn-icon btn-default"><i
-                                            class="fa fa-info color5"></i></a>
+                                           class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                       </td>
                                     </tr>
                                   </c:if>
@@ -312,9 +301,11 @@
                             <thead>
                             <tr>
                               <th>Khách hàng</th>
+                              <c:if test="${user.roleId == 2}">
+                                <th>Nhân viên</th>
+                              </c:if>
                               <th>Văn phòng</th>
                               <th>Thời gian gặp</th>
-                              <th>Ý kiến khách hàng</th>
 
                             </tr>
                             </thead>
@@ -323,15 +314,17 @@
                               <c:if test="${item.statusId == 3}">
                                 <tr>
                                   <td>${item.accountByCustomerUsername.username}</td>
+                                  <c:if test="${user.roleId == 2}">
+                                    <td>${item.accountByAssignedStaff.username}</td>
+                                  </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
                                   <td><fmt:formatDate value="${item.time}"
                                                       pattern="yyyy-MM-dd hh:mm"/></td>
-                                  <td>${item.comment}</td>
+
                                   <td>
                                     <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
                                        title="Đến kí / hủy hợp đồng"
-                                       class="btn btn-icon btn-default"><i
-                                        class="fa fa-pencil-square-o color5"></i></a>
+                                       class="btn btn-icon btn-default"><i class="fa fa-pencil-square-o color5"></i></a>
                                   </td>
                                 </tr>
                               </c:if>
@@ -348,8 +341,10 @@
                             <thead>
                             <tr>
                               <th>Khách hàng</th>
+                              <c:if test="${user.roleId == 2}">
+                                <th>Nhân viên</th>
+                              </c:if>
                               <th>Văn phòng</th>
-                              <th>Ý kiến khách hàng</th>
                               <th>Thời gian gặp</th>
 
                             </tr>
@@ -359,16 +354,17 @@
                               <c:if test="${item.appointmentStatusByStatusId.id == 4}">
                                 <tr>
                                   <td>${item.accountByCustomerUsername.username}</td>
+                                  <c:if test="${user.roleId == 2}">
+                                    <td>${item.accountByAssignedStaff.username}</td>
+                                  </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
-                                  <td>${item.comment}</td>
                                   <td><fmt:formatDate value="${item.time}"
                                                       pattern="yyyy-MM-dd hh:mm"/></td>
 
                                   <td>
                                     <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
                                        title="Chi tiết"
-                                       class="btn btn-icon btn-default"><i
-                                        class="fa fa-info color5"></i></a>
+                                       class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                   </td>
                                 </tr>
                               </c:if>
@@ -385,8 +381,10 @@
                             <thead>
                             <tr>
                               <th>Khách hàng</th>
+                              <c:if test="${user.roleId == 2}">
+                                <th>Nhân viên</th>
+                              </c:if>
                               <th>Văn phòng</th>
-                              <th>Ý kiến khách hàng</th>
                               <th>Thời gian gặp</th>
 
                             </tr>
@@ -396,16 +394,17 @@
                               <c:if test="${item.appointmentStatusByStatusId.id == 5}">
                                 <tr>
                                   <td>${item.accountByCustomerUsername.username}</td>
+                                  <c:if test="${user.roleId == 2}">
+                                    <td>${item.accountByAssignedStaff.username}</td>
+                                  </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
-                                  <td>${item.comment}</td>
                                   <td><fmt:formatDate value="${item.time}"
                                                       pattern="yyyy-MM-dd hh:mm"/></td>
 
                                   <td>
                                     <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
                                        title="Chi tiết"
-                                       class="btn btn-icon btn-default"><i
-                                        class="fa fa-info color5"></i></a>
+                                       class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                   </td>
                                 </tr>
                               </c:if>
@@ -472,42 +471,7 @@
   var done = new List('done', options('done'));
   var cancel = new List('cancel', options('cancel'));
 
-  function assign() {
-    event;
-    return confirm("Bạn đồng ý giao việc cho nhân viên ");
-    /* bootbox.dialog({
-     message: "Xác nhận giao việc",
-     title: "Bạn đồng ý giao việc cho nhân viên ",
-     buttons: {
-     success: {
-     label: "Đồng ý",
-     className: "btn-primary",
-     callback: function() {
-     return false;
-     }
-     },
-     cancel: {
-     label: "Hủy",
-     className: "btn-default",
-     callback: function() {
-     return false;
-     }
-     }
-     }
-     });*/
-  }
-  $("form").submit(function () {
-    return assign();
-  });
 
-  $(document).ready(function(){
-    var url = location.hash;
-    activeTab(url.substring(1));
-  });
-
-  function activeTab(tab){
-    $('.panel-body a[href="#' + tab + '"]').tab('show');
-  }
 </script>
 
 </body>

@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AccountDAO;
 import dao.ContractDAO;
 import dao.OfficeDAO;
 import dao.RepairDAO;
@@ -125,6 +126,10 @@ public class RepairController extends HttpServlet {
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
+            } else if (action.equals("viewProfile")) {
+                AccountDAO daoAcc = new AccountDAO();
+                request.setAttribute("info", daoAcc.get(request.getParameter("username")));
+                request.getRequestDispatcher("/WEB-INF/admin/contract/userProfileByContract.jsp").forward(request, response);
             }
         } else {
             response.sendRedirect("/admin");

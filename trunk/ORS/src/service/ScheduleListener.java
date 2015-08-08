@@ -1,5 +1,6 @@
 package service;
 
+import org.joda.time.DateTime;
 import org.joda.time.Duration;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -67,10 +68,18 @@ public class ScheduleListener implements ServletContextListener {
             simpleTrigger3.setName("ThirdTrigger");
 
             //Start scheduler
+
             scheduler.start();
             scheduler.scheduleJob(jobDetail1, simpleTrigger1);
             scheduler.scheduleJob(jobDetail2, simpleTrigger2);
             scheduler.scheduleJob(jobDetail3, simpleTrigger3);
+            DateTime now = new DateTime();
+            DateTime startSchedule;
+            if (now.hourOfDay().get() > 17) {
+                startSchedule = now.withDayOfYear(now.getDayOfYear()+1).withHourOfDay(8).withMinuteOfHour(0);
+            } else {
+                startSchedule = now.withHourOfDay(now.getHourOfDay() + 1).withMinuteOfHour(0);
+            }
         } catch (SchedulerException e) {
             e.printStackTrace();
         }

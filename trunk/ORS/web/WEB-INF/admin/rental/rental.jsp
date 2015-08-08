@@ -152,9 +152,10 @@
                             <tr>
                               <form action="rental" method="post">
                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                <td>${item.contractByContractId.customerUsername}</td>
+                                <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                    ${item.contractByContractId.customerUsername}</a></td>
                                 <td><fmt:formatDate value="${item.createTime}"
-                                                    pattern="yyyy-MM-dd hh:mm"/></td>
+                                                    pattern="dd-MM-yyyy"/></td>
                                 <td>${item.description}</td>
                                 <td>
                                   <input type="hidden" name="id"
@@ -225,8 +226,9 @@
                             <c:if test="${item.statusId == 2}">
                               <tr>
                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                <td>${item.contractByContractId.customerUsername}</td>
-                                <td>${item.assignedTime}</td>
+                                <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                    ${item.contractByContractId.customerUsername}</a></td>
+                                <td><fmt:formatDate value="${item.assignedTime}" pattern="dd-MM-yyyy"/></td>
                                 <c:if test="${user.roleId == 2}">
                                   <td>${item.assignStaff}</td>
                                 </c:if>
@@ -265,8 +267,9 @@
                             <c:if test="${item.statusId == 2}">
                               <tr>
                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                <td>${item.contractByContractId.customerUsername}</td>
-                                <td>${item.assignedTime}</td>
+                                <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                    ${item.contractByContractId.customerUsername}</a></td>>
+                                <td><fmt:formatDate value="${item.assignedTime}" pattern="dd-MM-yyyy"/></td>
                                 <c:if test="${user.roleId == 2}">
                                   <td>${item.assignStaff}</td>
                                 </c:if>
@@ -305,7 +308,8 @@
                         <c:if test="${item.statusId == 5}">
                           <tr>
                             <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                            <td>${item.contractByContractId.customerUsername}</td>
+                            <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                ${item.contractByContractId.customerUsername}</a></td>
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignStaff}</td>
                             </c:if>
@@ -342,7 +346,8 @@
                         <c:if test="${item.statusId == 3}">
                           <tr>
                             <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                            <td>${item.contractByContractId.customerUsername}</td>
+                            <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                ${item.contractByContractId.customerUsername}</a></td>
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignStaff}</td>
                             </c:if>
@@ -378,7 +383,8 @@
                         <c:if test="${item.statusId == 4}">
                           <tr>
                             <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                            <td>${item.contractByContractId.customerUsername}</td>
+                            <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                ${item.contractByContractId.customerUsername}</a></td>
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignStaff}</td>
                             </c:if>

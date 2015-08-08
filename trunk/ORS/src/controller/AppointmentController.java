@@ -1,5 +1,6 @@
 package controller;
 
+import dao.AccountDAO;
 import dao.AppointmentDAO;
 import entity.Account;
 import entity.Appointment;
@@ -143,6 +144,10 @@ public class AppointmentController extends HttpServlet {
                 request.setAttribute("data", list);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/appointment/viewAppointment.jsp");
                 rd.forward(request, response);
+            } else if (action.equals("viewProfile")) {
+                AccountDAO daoAcc = new AccountDAO();
+                request.setAttribute("info", daoAcc.get(request.getParameter("username")));
+                request.getRequestDispatcher("/WEB-INF/admin/contract/userProfileByContract.jsp").forward(request, response);
             }
         } else {
             response.sendRedirect("/admin");

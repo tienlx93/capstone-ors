@@ -158,6 +158,9 @@ public class ApiController extends HttpServlet {
             case "amenity":
                 getAmenityList(request, out);
                 break;
+            case "amenityWeight":
+                getAmenityListWeight(request, out);
+                break;
             case "officeName":
                 getOfficeName(request, out);
                 break;
@@ -692,11 +695,10 @@ public class ApiController extends HttpServlet {
 
             if (result) {
 
-                List<String> amenityList = saveAmenity(amenityItem);
                 AmenityDAO amenityDAO = new AmenityDAO();
                 List<Integer> amenityListInt = new ArrayList<>();
                 Amenity amenity;
-                for (String s : amenityList) {
+                for (String s : amenityItem) {
                     amenity = amenityDAO.searchAmenity(s);
                     amenityListInt.add(amenity.getId());
                 }
@@ -802,16 +804,6 @@ public class ApiController extends HttpServlet {
         while (tokenizer.hasMoreTokens()) {
             amenityList.add(tokenizer.nextToken());
         }
-        AmenityDAO amenityDAO = new AmenityDAO();
-        RequestAmenityDAO dao = new RequestAmenityDAO();
-        if (amenityDAO.addAmenities(amenityList)) {
-            dao.findAll();
-        }
-        return amenityList;
-    }
-
-    private List<String> saveAmenity(List<String> amenityList) {
-
         AmenityDAO amenityDAO = new AmenityDAO();
         RequestAmenityDAO dao = new RequestAmenityDAO();
         if (amenityDAO.addAmenities(amenityList)) {
@@ -1072,8 +1064,6 @@ public class ApiController extends HttpServlet {
     }
 
     private void getAmenityList(HttpServletRequest request, PrintWriter out) {
-        Gson gson = new Gson();
-
         AmenityDAO dao = new AmenityDAO();
 
         List<String> list = new ArrayList<>();
@@ -1082,6 +1072,20 @@ public class ApiController extends HttpServlet {
         }
 
         out.print(gson.toJson(list));
+        out.flush();
+    }
+
+
+    private void getAmenityListWeight(HttpServletRequest request, PrintWriter out) {
+        AmenityGroupDAO dao = new AmenityGroupDAO();
+        List<AmenityJSON> json = new ArrayList<>();
+        for (AmenityGroup amenityGroup : dao.findAll()) {
+            for (Amenity amenity : amenityGroup.getAmenitiesById()) {
+                json.add(new AmenityJSON(amenity.getName(), amenity.getWeight(), amenityGroup.getId()));
+            }
+        }
+
+        out.print(gson.toJson(json));
         out.flush();
     }
 

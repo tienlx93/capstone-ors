@@ -68,6 +68,7 @@ public class ScheduleListener implements ServletContextListener {
             simpleTrigger3.setName("ThirdTrigger");
 
             //Start scheduler
+
             scheduler.start();
             scheduler.scheduleJob(jobDetail1, simpleTrigger1);
             scheduler.scheduleJob(jobDetail2, simpleTrigger2);

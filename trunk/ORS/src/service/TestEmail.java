@@ -8,7 +8,7 @@ import java.io.IOException;
 public class TestEmail {
     public static void main(String[] args) throws IOException {
         EmailService service = new EmailService();
-        service.setReceiver("tienle_dl@yahoo.com");
+        service.setReceiver("bestoneguy@gmail.com");
         service.setSubject("Test Email #1");
         service.setContent("Content of test email<br>Blah");
         service.sendEmail();

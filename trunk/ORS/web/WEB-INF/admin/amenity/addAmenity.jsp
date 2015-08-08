@@ -41,7 +41,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            Thêm tài khoản mới
+            Thêm tiện nghi mới
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
@@ -75,7 +75,7 @@
               </div>
 
               <div class="button-post">
-                <button type="button" value="cancel" name="action">Hủy</button>
+                <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
                 <button type="submit" value="save" name="action">Tạo mới</button>
               </div>
             </form>

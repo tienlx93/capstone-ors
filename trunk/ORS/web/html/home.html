@@ -17,13 +17,11 @@
                 <div class="search-line row">
                     <div class="col-md-12" style="padding: 0">
                         <span class="search-label">Địa chỉ</span>
-
-
                         <div class="search-input">
                             <input type="text" ng-model="searchKey" style="width: 100%"
                                    placeholder="quận, huyện, địa chỉ,..." googleplace/>
-                            <input type="hidden" ng-model="place.latitude" id="latitude">
-                            <input type="hidden" ng-model="place.longitude" id="longitude">
+                            <input type="hidden" ng-model="searchTerm.latitude" id="latitude">
+                            <input type="hidden" ng-model="searchTerm.longitude" id="longitude">
                         </div>
                     </div>
                 </div>

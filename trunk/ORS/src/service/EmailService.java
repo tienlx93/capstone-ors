@@ -2,6 +2,7 @@ package service;
 
 import com.amazonaws.AmazonClientException;
 import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.profile.ProfileCredentialsProvider;
 import com.amazonaws.regions.*;
 import com.amazonaws.services.simpleemail.AmazonSimpleEmailServiceClient;
@@ -15,6 +16,8 @@ import java.io.IOException;
 public class EmailService {
     public static final String CHARSET = "UTF-8";
     private static final String FROM = "no-reply@tienlx.me";
+    private static final String access_key_id = "AKIAIGMXF2HQO6AULHYA",
+            secret_access_key = "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";
 
     private String receiver;
     private String subject;
@@ -47,14 +50,38 @@ public class EmailService {
             try {
                 credentials = new ProfileCredentialsProvider().getCredentials();
             } catch (Exception e) {
-                throw new AmazonClientException(
+                try {
+                    credentials = new BasicAWSCredentials(access_key_id, secret_access_key);
+                } catch (Exception e1) {
+                    throw new AmazonClientException(
+                            "Cannot load the credentials from the credential profiles file. " +
+                                    "Please make sure that your credentials file is at the correct " +
+                                    "location (~/.aws/credentials), and is in valid format.",
+                            e);
+                }
+                /*throw new AmazonClientException(
                         "Cannot load the credentials from the credential profiles file. " +
                                 "Please make sure that your credentials file is at the correct " +
                                 "location (~/.aws/credentials), and is in valid format.",
-                        e);
+                        e);*/
             }
 
             AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(credentials);
+            ListIdentitiesResult listIdentities = client.listIdentities();
+            boolean match = false;
+            for (String s : listIdentities.getIdentities()) {
+                if (this.receiver.equals(s)) {
+                    match = true;
+                    break;
+                }
+            }
+            if (!match) {
+                VerifyEmailIdentityRequest verifyEmail = new VerifyEmailIdentityRequest();
+                verifyEmail.setEmailAddress(this.receiver);
+                client.verifyEmailIdentity(verifyEmail);
+                return false;
+            }
+
 
             Region REGION = Region.getRegion(Regions.US_EAST_1);
             client.setRegion(REGION);

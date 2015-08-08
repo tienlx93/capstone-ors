@@ -528,5 +528,22 @@ app.factory("Api", ['$http',
                     callback('Error');
                 })
         };
+
+        services.amenityWeight = function(callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'amenityWeight'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
         return services;
     }]);

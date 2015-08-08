@@ -116,8 +116,8 @@ app.directive('googleplace', function() {
                 scope.$apply(function() {
                     model.$setViewValue(element.val());
                     var place = scope.gPlace.getPlace();
-                    scope.place.latitude = place.geometry.location.lat();
-                    scope.place.longitude = place.geometry.location.lng();
+                    scope.searchTerm.latitude = place.geometry.location.lat();
+                    scope.searchTerm.longitude = place.geometry.location.lng();
                 });
             });
         }

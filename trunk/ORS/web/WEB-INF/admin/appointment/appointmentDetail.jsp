@@ -158,8 +158,7 @@
                                 <c:choose>
                                     <c:when test="${info.statusId == 1 && user.roleId == 2}">
 
-                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao
-                                            việc
+                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao việc
                                         </button>
                                         <button class="btn btn-danger" type="button" onclick="inputComment(true)">
                                             Hủy lịch hẹn
@@ -188,7 +187,7 @@
 
                                 </c:choose>
 
-                                <a onclick="window.history.back()"
+                                <a href="${urlBack}"
                                    class="btn btn-default">Quay về</a>
 
                             </div>
@@ -205,8 +204,7 @@
                                             <input class="form-control" name="comment" autocomplete="off" type="text">
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-default" data-dismiss="modal">Quay
-                                                lại
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Quay lại
                                             </button>
                                             <button type="submit" class="btn btn-danger" name="button" value="reject2"
                                                     id="submit">Xác nhận hủy
@@ -237,12 +235,6 @@
             $("#submit").val("reject");
         }
         $('#myModal').modal('show');
-        /*var comment = prompt("Lí do hủy: ", "");
-         if (comment) {
-         document.appointment.comment.value = comment;
-         } else {
-         event.preventDefault();
-         }*/
     }
 </script>
 <script type="text/javascript">
@@ -250,7 +242,7 @@
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-        $('#assignedTime').datepicker({
+        $('#time').datepicker({
             format: 'yyyy-mm-dd',
             onRender: function (date) {
                 return date.valueOf() < now.valueOf() ? 'disabled' : '';

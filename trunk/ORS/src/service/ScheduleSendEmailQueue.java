@@ -43,15 +43,11 @@ public class ScheduleSendEmailQueue implements Job {
                         URLEncoder.encode(param1, charset),
                         URLEncoder.encode(param2, charset));
 
-                gwtServlet = new URL("http://localhost:8080/sendMail" + "?" + query);
+                gwtServlet = new URL("http://tienlx.me/sendMail" + "?" + query);
                 HttpURLConnection servletConnection = null;
-                try {
-                    servletConnection = (HttpURLConnection) gwtServlet.openConnection();
-                } catch (IOException e) {
-                    gwtServlet = new URL("http://tienlx.me/sendMail" + "?" + query);
-                    servletConnection = (HttpURLConnection) gwtServlet.openConnection();
-                    e.printStackTrace();
-                }
+
+                servletConnection = (HttpURLConnection) gwtServlet.openConnection();
+
                 servletConnection.setRequestMethod("GET");
                 servletConnection.setDoOutput(true);
                 InputStream response = gwtServlet.openStream();

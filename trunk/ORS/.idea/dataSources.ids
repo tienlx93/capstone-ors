@@ -93,6 +93,9 @@
       <column name="PaymentTerm" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="StatusId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Comment" sqlType="nvarchar" precision="250" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="Deposit" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="CancelDate" sqlType="date" precision="10" scale="0" nullable="true" jdbcType="91"/>
+      <column name="ImageUrl" sqlType="nvarchar" precision="150" scale="0" nullable="true" jdbcType="-9"/>
       <primary-key name="PK_Contract" columns="Id"/>
       <foreign-key name="FK_Contract_Account" columns="CustomerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_ContractStatus" columns="StatusId" ref-table="ContractStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
@@ -122,12 +125,13 @@
       <column name="CategoryId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="StatusId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Description" sqlType="ntext" precision="1073741823" scale="0" nullable="false" jdbcType="-16"/>
+      <column name="BasePrice" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="Price" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="PriceTerm" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="FloorNumber" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Area" sqlType="float" precision="53" scale="0" nullable="false" jdbcType="8"/>
+      <column name="MinArea" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
       <column name="ImageUrls" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
-      <column name="OtherDetail" sqlType="ntext" precision="1073741823" scale="0" nullable="true" jdbcType="-16"/>
       <column name="Address" sqlType="nvarchar" precision="150" scale="0" nullable="false" jdbcType="-9"/>
       <column name="Latitude" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
       <column name="Longitude" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
@@ -136,6 +140,7 @@
       <column name="ParentOfficeId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="CreateDate" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
       <column name="ViewCount" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="MinTime" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PK_Office" columns="Id"/>
       <foreign-key name="FK_Office_Category" columns="CategoryId" ref-table="Category" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_Office" columns="ParentOfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
@@ -306,7 +311,36 @@
       <primary-key name="PK__sysdiagr__C2B05B611CF15040" columns="diagram_id"/>
       <index name="UK_principal_name" unique="true" columns="principal_id,name"/>
     </table>
+    <procedure name="AppointmentCount" schema="dbo" catalog="ors" type="2">
+      <prototype>
+        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
+        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
+        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
+      </prototype>
+    </procedure>
+    <procedure name="CalculateIncome" schema="dbo" catalog="ors" type="2">
+      <prototype>
+        <parameter name="@startDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
+        <parameter name="@endDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
+        <parameter name="@district" sqlType="nvarchar" precision="100" scale="0" nullable="true" jdbcType="-9" type="1" index="3"/>
+        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
+      </prototype>
+    </procedure>
     <procedure name="GetJobCount" schema="dbo" catalog="ors" type="2">
+      <prototype>
+        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
+        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
+        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
+      </prototype>
+    </procedure>
+    <procedure name="RentalCount" schema="dbo" catalog="ors" type="2">
+      <prototype>
+        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
+        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
+        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
+      </prototype>
+    </procedure>
+    <procedure name="RepairCount" schema="dbo" catalog="ors" type="2">
       <prototype>
         <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
         <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>

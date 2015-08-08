@@ -53,6 +53,11 @@ controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$
                     }
                     $scope.filter = $scope.officeList;
                     $scope.totalItems = $scope.filter.length;
+                    updatePage();
+                    $scope.q = [];
+                    for (var j = 0; j < $scope.amenityWeight.length; j ++) {
+                        $scope.q.push(false);
+                    }
                 }
             });
         };
@@ -74,32 +79,34 @@ controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$
             if (matching == 0) {
                 $scope.filter = $scope.officeList;
             } else {
-                for (var i = 0; i < $scope.officeList.length; i++) {
-                    matchingPoint = 0;
-                    var officeAmenity = $scope.officeList[i].amenityJSON;
-                    for (var k = 0; k < $scope.q.length; k++) {
-                        if ($scope.q[k] == true) {
-                            var nearest = closest($scope.amenityWeight[k], officeAmenity);
-                            if (nearest >= 0) {
-                                var distance = Math.abs(nearest - $scope.amenityWeight[k].weight);
-                                var point = 0;
-                                if (distance > 2) {
-                                    point = 0;
-                                } else if (distance == 2) {
-                                    point = 50;
-                                } else if (distance == 1) {
-                                    point = 80;
+                if ($scope.officeList) {
+                    for (var i = 0; i < $scope.officeList.length; i++) {
+                        matchingPoint = 0;
+                        var officeAmenity = $scope.officeList[i].amenityJSON;
+                        for (var k = 0; k < $scope.q.length; k++) {
+                            if ($scope.q[k] == true) {
+                                var nearest = closest($scope.amenityWeight[k], officeAmenity);
+                                if (nearest >= 0) {
+                                    var distance = Math.abs(nearest - $scope.amenityWeight[k].weight);
+                                    var point = 0;
+                                    if (distance > 2) {
+                                        point = 0;
+                                    } else if (distance == 2) {
+                                        point = 50;
+                                    } else if (distance == 1) {
+                                        point = 80;
+                                    } else {
+                                        point = 100;
+                                    }
                                 } else {
-                                    point = 100;
+                                    point = 0;
                                 }
-                            } else {
-                                point = 0;
+                                matchingPoint += point;
                             }
-                            matchingPoint += point;
                         }
-                    }
-                    if (matchingPoint / matching > 0.7) {
-                        $scope.filter.push($scope.officeList[i]);
+                        if (matchingPoint / matching > 0.7) {
+                            $scope.filter.push($scope.officeList[i]);
+                        }
                     }
                 }
             }
@@ -119,10 +126,13 @@ controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$
                 return $scope.currentPage + $scope.numPerPage + $scope.filter.length;
             }
         }, function () {
+            updatePage();
+        });
+        function updatePage() {
             var begin = (($scope.currentPage - 1) * $scope.numPerPage);
             var end = begin + $scope.numPerPage;
             $scope.filteredOffices = $scope.filter.slice(begin, end);
-        });
+        }
 
         $scope.searchOffice();
     }]);

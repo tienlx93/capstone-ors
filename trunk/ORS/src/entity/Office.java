@@ -19,7 +19,6 @@ public class Office {
     private int floorNumber;
     private double area;
     private String imageUrls;
-    private String otherDetail;
     private String address;
     private Double latitude;
     private Double longitude;
@@ -37,6 +36,9 @@ public class Office {
     private Timestamp createDate;
     private Integer viewCount;
     private OfficeGroup officeGroupById;
+    private Long basePrice;
+    private Double minArea;
+    private Integer minTime;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -140,16 +142,6 @@ public class Office {
     }
 
     @Basic
-    @Column(name = "OtherDetail", nullable = true, insertable = true, updatable = true)
-    public String getOtherDetail() {
-        return otherDetail;
-    }
-
-    public void setOtherDetail(String otherDetail) {
-        this.otherDetail = otherDetail;
-    }
-
-    @Basic
     @Column(name = "Address", nullable = false, insertable = true, updatable = true)
     public String getAddress() {
         return address;
@@ -226,7 +218,6 @@ public class Office {
         if (description != null ? !description.equals(office.description) : office.description != null) return false;
         if (price != null ? !price.equals(office.price) : office.price != null) return false;
         if (imageUrls != null ? !imageUrls.equals(office.imageUrls) : office.imageUrls != null) return false;
-        if (otherDetail != null ? !otherDetail.equals(office.otherDetail) : office.otherDetail != null) return false;
         if (address != null ? !address.equals(office.address) : office.address != null) return false;
         if (latitude != null ? !latitude.equals(office.latitude) : office.latitude != null) return false;
         if (longitude != null ? !longitude.equals(office.longitude) : office.longitude != null) return false;
@@ -253,7 +244,6 @@ public class Office {
         temp = Double.doubleToLongBits(area);
         result = 31 * result + (int) (temp ^ (temp >>> 32));
         result = 31 * result + (imageUrls != null ? imageUrls.hashCode() : 0);
-        result = 31 * result + (otherDetail != null ? otherDetail.hashCode() : 0);
         result = 31 * result + (address != null ? address.hashCode() : 0);
         result = 31 * result + (latitude != null ? latitude.hashCode() : 0);
         result = 31 * result + (longitude != null ? longitude.hashCode() : 0);
@@ -366,5 +356,35 @@ public class Office {
 
     public void setOfficeGroupById(OfficeGroup officeGroupById) {
         this.officeGroupById = officeGroupById;
+    }
+
+    @Basic
+    @Column(name = "BasePrice", nullable = true, insertable = true, updatable = true)
+    public Long getBasePrice() {
+        return basePrice;
+    }
+
+    public void setBasePrice(Long basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    @Basic
+    @Column(name = "MinArea", nullable = true, insertable = true, updatable = true, precision = 0)
+    public Double getMinArea() {
+        return minArea;
+    }
+
+    public void setMinArea(Double minArea) {
+        this.minArea = minArea;
+    }
+
+    @Basic
+    @Column(name = "MinTime", nullable = true, insertable = true, updatable = true)
+    public Integer getMinTime() {
+        return minTime;
+    }
+
+    public void setMinTime(Integer minTime) {
+        this.minTime = minTime;
     }
 }

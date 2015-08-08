@@ -24,6 +24,9 @@ public class Contract {
     private Office officeByOfficeId;
     private Collection<Rental> rentalsById;
     private String comment;
+    private Long deposit;
+    private Date cancelDate;
+    private String imageUrl;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -205,5 +208,35 @@ public class Contract {
 
     public void setComment(String comment) {
         this.comment = comment;
+    }
+
+    @Basic
+    @Column(name = "Deposit", nullable = true, insertable = true, updatable = true)
+    public Long getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Long deposit) {
+        this.deposit = deposit;
+    }
+
+    @Basic
+    @Column(name = "CancelDate", nullable = true, insertable = true, updatable = true)
+    public Date getCancelDate() {
+        return cancelDate;
+    }
+
+    public void setCancelDate(Date cancelDate) {
+        this.cancelDate = cancelDate;
+    }
+
+    @Basic
+    @Column(name = "ImageUrl", nullable = true, insertable = true, updatable = true)
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

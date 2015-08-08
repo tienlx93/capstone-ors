@@ -37,4 +37,6 @@ public class MyWebViewClient extends WebViewClient {
         //show webview
         ((Activity)context).findViewById(R.id.webView).setVisibility(View.VISIBLE);
     }
+
+
 }

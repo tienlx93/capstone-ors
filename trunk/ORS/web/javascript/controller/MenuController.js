@@ -29,7 +29,7 @@ controllers.controller('MenuController', ['$scope', '$rootScope', '$location', '
                 $rootScope.isLogin = true;
                 $scope.fullName = Api.account.fullName;
                 Api.getContractList(function (data) {
-                    if (data.length && data.length > 0) {
+                    if (data!= "Error" && data!= "Wrong") {
                         $scope.hasContract = true;
                     } else {
                         Api.getRequestOffice(function (data) {

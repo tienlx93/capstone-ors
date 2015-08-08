@@ -40,7 +40,6 @@ public class OfficeJSON {
         this.priceTerm = office.getPriceTermByPriceTerm().getDescription();
         this.floorNumber = office.getFloorNumber();
         this.area = office.getArea();
-        this.otherDetail = office.getOtherDetail();
         this.address = office.getAddress();
         this.latitude = office.getLatitude();
         this.longitude = office.getLongitude();

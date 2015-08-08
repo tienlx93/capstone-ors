@@ -36,10 +36,10 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             var comment = "";
             var changeStatus = function() {
                 Api.changeStatus(type, id, status, function() {
-                    $route.reload();
+                    $location.path("/home/" + type);
                 }, comment);
             };
-            if (status == 5 || status == 3 && type == "appointment") {
+            if ((status == 5 || status == 3) && type == "appointment") {
                 if (status == 5) {
                     comment = window.prompt("Nhập lí do hủy");
                 } else {

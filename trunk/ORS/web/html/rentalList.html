@@ -1,9 +1,12 @@
 <div class="container" ng-show="RightCus">
+    <h1>Văn phòng: {{data[0].officeName}} </h1>
+    <br>
     <h2>Danh sách thuê thiết bị </h2>
+    <br>
     <table class="table">
         <thead>
         <tr>
-            <th>Tên thiết bị </th>
+
             <th>Mô tả</th>
             <th>Ngày tạo</th>
             <th>Trạng thái</th>
@@ -13,7 +16,7 @@
         <tbody>
 
         <tr ng-repeat="item in data">
-            <td>{{item.name}}</td>
+
             <td>{{item.description}}</td>
             <td>{{item.createTime | toLocaleDate}}</td>
             <td>{{item.status}}</td>
@@ -35,6 +38,15 @@
 
 <div class="container" ng-show="!isLogin">
     <h2>Vui lòng đăng nhập để xem thông tin</h2>
+    <br>
+    <br>
+    <div class="button-post">
+        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
+    </div>
+</div>
+
+<div class="container" ng-show="!Rental">
+    <h2>Bạn chưa có yêu cầu thuê thiết bị nào</h2>
     <br>
     <br>
     <div class="button-post">

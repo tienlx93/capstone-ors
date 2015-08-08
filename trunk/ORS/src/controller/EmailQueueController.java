@@ -1,5 +1,6 @@
 package controller;
 
+import com.amazonaws.AmazonClientException;
 import dao.AccountDAO;
 import dao.EmailQueueDAO;
 import dao.OfficeDAO;
@@ -58,9 +59,10 @@ public class EmailQueueController extends HttpServlet {
         service.setReceiver(email);
         service.setSubject("Thông báo văn phòng phù hợp");
         service.setContent(res2.getOutput());
-        service.sendEmail();
-
-        emailQueueDAO.remove(emailQueue);
-
+        boolean canSend = service.sendEmail();
+        if (canSend) {
+            emailQueueDAO.remove(emailQueue);
+            System.out.println("Remove queue");
+        }
     }
 }

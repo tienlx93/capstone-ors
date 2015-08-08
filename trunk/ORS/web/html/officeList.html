@@ -1,50 +1,106 @@
-<!--<%&#45;&#45;-->
-<!--Created by IntelliJ IDEA.-->
-<!--User: Tuan-->
-<!--Date: 6/7/2015-->
-<!--Time: 11:44 AM-->
-<!--To change this template use File | Settings | File Templates.-->
-<!--&#45;&#45;%>-->
-<!--<%@ page contentType="text/html;charset=UTF-8" language="java" %>-->
-    <!--<link rel="stylesheet" href="../lib/jquery.bxslider/jquery.bxslider.css"-->
-          <!--type="text/css">-->
-    <!--<link rel="stylesheet" href="../lib/jquery.bxslider/jquery.bxslider.js"-->
-          <!--type="text/css">-->
-    <link rel="stylesheet" href="../css/viewlistdetailoffice.css"
-          type="text/css">
+<link rel="stylesheet" href="../css/viewlistdetailoffice.css"
+      type="text/css">
 <body>
 <div class="container">
     <div class="main-wrapper">
-        <div id="quat" style="width: 850px">
-            <div ng-repeat="item in listSearchedOffice" class="left-wrapper">
+        <div class="">
+            <div class="clearfix">
+                <div class="col-sm-6 col-md-6" style="padding: 5px">
+                    <span class="col-md-2">Địa chỉ</span>
+
+                    <div class="col-md-10">
+                        <input type="text" ng-model="searchKey" style="width: 80%"
+                               placeholder="quận, huyện, địa chỉ,..." googleplace/>
+                        <input type="hidden" ng-model="searchTerm.latitude" id="latitude">
+                        <input type="hidden" ng-model="searchTerm.longitude" id="longitude">
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4" style="padding: 0">
+                    <span class="col-md-4">Khoảng giá</span>
+                    <div class="col-md-8">
+                        <select ng-model="searchTerm.priceRange" style="width: 100%;padding: 4px;">
+                            <option value="0">Thỏa thuận</option>
+                            <option value="1">100.000 - 200.000</option>
+                            <option value="2">200.000 - 300.000</option>
+                            <option value="3">300.000 - 400.000</option>
+                            <option value="4">400.000 - 500.000</option>
+                            <option value="5">&gt; 500.000</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-2">
+                    <button class="btn btn-green" style="width: 100%" ng-click="searchOffice()">
+                        Tìm kiếm
+                    </button>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading" role="tab" id="headingOne">
+                    <h4 class="panel-title">
+                        <a href data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed"
+                           aria-expanded="true" aria-controls="collapseOne">
+                            Lọc theo danh sách tiện nghi
+                        </a>
+                    </h4>
+                </div>
+                <div id="collapseOne" class="panel-collapse in" role="tabpanel" aria-labelledby="headingOne"
+                     collapse="isCollapsed" style="height: auto;">
+                    <div class="panel-body">
+                        <ul>
+                            <li ng-repeat="amenity in amenityWeight track by $index" class="col-sm-3">
+                                <label>
+                                    <input type="checkbox" ng-model="q[$index]" value="{{$index}}"> {{amenity.amenity}}
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div id="quat" style="width: 850px; margin:auto;" class="">
+            <div ng-show="filteredOffices.length==0">
+                <h2>Không có văn phòng phù hợp</h2>
+                <a href="#requestOffice">Đặt văn phòng?</a>
+            </div>
+            <div ng-repeat="item in filteredOffices" class="left-wrapper">
+
                 <div class="left-detail">
                     <img src="../img/office.jpg" ng-src="{{item.images[0]}}">
-                </div><!--lend left-detail-->
+                </div>
+                <!--lend left-detail-->
                 <div class="center-detail">
                     <a href="#/detail/{{item.id}}">{{item.name}}</a>
+
                     <div class="address">{{item.address}}</div>
                     <p>{{item.description}}</p>
+
                     <div class="menu">
                         <ul class="left">
                             <li ng-repeat="amenity in item.amenityList">{{amenity}}</li>
                         </ul>
-                    </div><!--lend menu-->
+                    </div>
+                    <!--lend menu-->
                 </div>
                 <div class="right-detail">
                     <h4>{{item.category}}</h4>
 
-                    <div class="price" ng-if="item.priceTerm=='Nguyên căn'">{{item.price  | currency:'VND':0}}
+                    <div class="price" ng-if="item.priceTerm=='Nguyên căn'">{{item.price | currency:'VND':0}}
                         <div class="price-detail">Trên tháng</div>
                     </div>
                     <div class="price" ng-if="item.priceTerm!='Nguyên căn'">
                         <span ng-if="item.price">{{item.price | currency:'VND':0}}</span>
                         <span ng-if="!item.price">Liên hệ</span>
-                        <div class="price-detail" ng-if="item.price" ng-bind-html="item.priceTerm+' / Tháng' | m2"></div>
+
+                        <div class="price-detail" ng-if="item.price"
+                             ng-bind-html="item.priceTerm+' / Tháng' | m2"></div>
                     </div>
                     <div class="VD"><a href="#/detail/{{item.id}}">Chi tiết</a></div>
                 </div>
             </div>
             <!--end left-wrapper-->
+            <pagination total-items="totalItems" ng-model="currentPage" items-per-page="numPerPage"
+                        previous-text="&laquo;" next-text="&raquo;"></pagination>
         </div>
 
         <div id="right-wrapper" class="hidden">
@@ -73,13 +129,16 @@
                 <label>
                     <input type="checkbox" id="inlineCheckbox5" value="option1"> Furnished offices (3)
                 </label>
+
                 <div id="more"><a href="#">Thêm tiện nghi</a></div>
                 <div id="up"><a href="#">Tìm kiếm</a></div>
             </div>
             <div id="three"></div>
             <div id="four"></div>
-        </div><!--end right-wrapper-->
-    </div><!--end main-wrapper-->
+        </div>
+        <!--end right-wrapper-->
+    </div>
+    <!--end main-wrapper-->
 </div>
 
 

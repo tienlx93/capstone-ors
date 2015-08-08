@@ -10,6 +10,7 @@
 <html>
 <head>
     <meta charset='utf-8'/>
+    <title>Office Rental Service</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css"
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
@@ -72,8 +73,6 @@
 
     </script>
     <style>
-
-
         #calendar {
             max-width: 900px;
             margin: 0 auto;

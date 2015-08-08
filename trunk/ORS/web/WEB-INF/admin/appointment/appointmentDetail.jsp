@@ -98,7 +98,8 @@
                                                             <option value=""></option>
                                                             <c:forEach var="itemAcc" items="<%= listAcc %>">
                                                                 <option value="${itemAcc.username}"
-                                                                        <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
+                                                                        <c:if
+                                                                                test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
                                                             </c:forEach>
                                                         </c:otherwise>
                                                     </c:choose>
@@ -113,7 +114,7 @@
                             <div class="form-group clearfix">
                                 <label for="time" class="col-sm-2 control-label">Thời gian gặp</label>
                                 <c:choose>
-                                    <c:when test="${user.roleId==2}">
+                                    <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
                                         <div class="col-sm-10">
                                             <input type='text' class="form-control"
                                                    name="time"
@@ -130,7 +131,18 @@
                                 <%--${info.time}--%>
                                 <%--</div>--%>
                             </div>
+                            <c:if test="${info.statusId != 1 && info.statusId != 2}">
+                                <div class="form-group clearfix">
+                                    <label for="appointmentStatusId" class="col-sm-2 control-label">Ý kiến khách
+                                        hàng</label>
 
+                                    <div class="col-sm-10">
+                                            ${info.comment}
+                                        <input type="hidden" name="appointmentStatusId" id="appointmentStatusId"
+                                               value="${info.comment}">
+                                    </div>
+                                </div>
+                            </c:if>
                             <div class="form-group clearfix">
                                 <label for="appointmentStatusId" class="col-sm-2 control-label">Tình trạng</label>
 
@@ -141,53 +153,69 @@
                                 </div>
                             </div>
 
-                            <input type="hidden" value="" name="comment"/>
-
-                            <c:if test="info.statusId == 2 && user.roleId == 3">
-                                <div class="form-group clearfix">
-                                    <label for="comment" class="col-sm-2 control-label">Ý kiến khách hàng</label>
-
-                                    <div class="col-sm-10">
-                                        <input type="text" id="comment" class="form-control" value="">
-                                    </div>
-                                </div>
-                            </c:if>
                             <div class="button-post clearfix">
 
                                 <c:choose>
                                     <c:when test="${info.statusId == 1 && user.roleId == 2}">
 
-                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao việc</button>
-                                        <button class="btn btn-danger" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
-                                            lịch hẹn
+                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao việc
+                                        </button>
+                                        <button class="btn btn-danger" type="button" onclick="inputComment(true)">
+                                            Hủy lịch hẹn
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 2}">
-                                        <button class="btn btn-primary" type="submit" name="button" value="assign">Giao việc lại</button>
+                                        <button class="btn btn-primary" type="submit" name="button" value="assign">Giao
+                                            việc lại
+                                        </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 3 && user.roleId == 2}">
                                         <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
                                            class="btn btn-primary">Tạo hợp đồng</a>
-                                        <button class="btn btn-danger" type="submit" name="button" value="reject" onclick="inputComment()">Hủy
-                                            lịch hẹn
+                                        <button class="btn btn-danger" type="button" onclick="inputComment()">
+                                            Hủy kí hợp đồng
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
                                         <button class="btn btn-primary" type="submit" name="button" value="update3">
                                             Khách hàng đồng ý kí hợp đồng
                                         </button>
-                                        <button class="btn btn-danger" type="submit" name="button" value="reject">
+                                        <button class="btn btn-danger" type="button" onclick="inputComment()">
                                             Khách hàng không đồng ý kí hợp đồng
                                         </button>
                                     </c:when>
 
                                 </c:choose>
 
-                                <a onclick="window.history.back()"
+                                <a href="${urlBack}"
                                    class="btn btn-default">Quay về</a>
 
                             </div>
 
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Nhập lí do hủy</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="comment" autocomplete="off" type="text">
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Quay lại
+                                            </button>
+                                            <button type="submit" class="btn btn-danger" name="button" value="reject2"
+                                                    id="submit">Xác nhận hủy
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <!-- /.modal-content -->
+                                </div>
+                                <!-- /.modal-dialog -->
+                            </div>
+                            <!-- /.modal -->
                         </form>
 
                     </div>
@@ -200,13 +228,13 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+
 <script>
-    function inputComment() {
-        var comment = prompt("Ý kiến khách hàng: ", "");
-        if (comment) {
-            document.appointment.comment.value = comment;
-            document.appointment.button.value = 'reject';
+    function inputComment(sendSMS) {
+        if (sendSMS) {
+            $("#submit").val("reject");
         }
+        $('#myModal').modal('show');
     }
 </script>
 <script type="text/javascript">
@@ -214,7 +242,7 @@
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-        $('#assignedTime').datepicker({
+        $('#time').datepicker({
             format: 'yyyy-mm-dd',
             onRender: function (date) {
                 return date.valueOf() < now.valueOf() ? 'disabled' : '';

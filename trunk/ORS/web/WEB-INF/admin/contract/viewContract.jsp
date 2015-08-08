@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%--
   Created by IntelliJ IDEA.
   User: XPS
@@ -59,16 +60,20 @@
                                 <th>Giá</th>
                                 <th>Thời hạn thanh toán</th>
                                 <th></th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody id="table-body">
                             <c:forEach items="${data}" var="item">
                                 <c:if test="${item.statusId != 4}">
                                     <tr>
-                                        <td>${item.accountByCustomerUsername.username}</td>
+                                        <td><a class="btn"
+                                               href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.username}</a>
+                                        </td>
                                         <td>${item.officeByOfficeId.name}</td>
-                                        <td>${item.startDate}</td>
-                                        <td>${item.endDate}</td>
+                                        <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.startDate}"/>
+                                        </td>
+                                        <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.endDate}"/></td>
                                         <td>${item.paymentFee}</td>
                                         <td>${item.paymentTermByPaymentTerm.description}</td>
                                         <c:if test="${user.roleId == 2}">

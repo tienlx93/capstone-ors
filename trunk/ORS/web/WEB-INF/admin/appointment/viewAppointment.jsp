@@ -168,7 +168,7 @@
                                       <td>${item.accountByCustomerUsername.username}</td>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td>
-                                        <fmt:formatDate value="${item.time}" pattern="yyyy-MM-dd hh:mm"/>
+                                        <fmt:formatDate value="${item.time}" pattern="dd-MM-yyyy hh:mm"/>
                                       </td>
                                       <td>
                                         <input type="hidden" name="id"
@@ -235,7 +235,7 @@
                                       </c:if>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td><fmt:formatDate value="${item.time}"
-                                                          pattern="yyyy-MM-dd hh:mm"/></td>
+                                                          pattern="dd-MM-YYYY hh:mm"/></td>
 
                                       <td>
                                         <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"

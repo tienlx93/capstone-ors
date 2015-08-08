@@ -267,6 +267,10 @@ public class ContractController extends HttpServlet {
                         request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                         rd = request.getRequestDispatcher("/WEB-INF/admin/contract/extendContract.jsp");
                         rd.forward(request, response);
+                    case "viewProfile":
+                        AccountDAO daoAcc = new AccountDAO();
+                        request.setAttribute("info", daoAcc.get(request.getParameter("username")));
+                        request.getRequestDispatcher("/WEB-INF/admin/contract/userProfileByContract.jsp").forward(request, response);
                         break;
                 }
             }

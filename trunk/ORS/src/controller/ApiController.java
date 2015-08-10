@@ -878,7 +878,8 @@ public class ApiController extends HttpServlet {
                 if (contract.getStatusId() != 4) {
                     list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
                             contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
-                            paymentTerm.getDescription(), contract.getStatusId()));
+                            paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+                            office.getArea(), contract.getDeposit()));
                 }
             }
             if (list.size() > 0) {
@@ -1043,14 +1044,29 @@ public class ApiController extends HttpServlet {
         ContractDAO dao = new ContractDAO();
         Contract contract = dao.get(id);
         Office office = contract.getOfficeByOfficeId();
+        OfficeDAO officeDAO = new OfficeDAO();
+        /*Office office1 = (Office) officeDAO.getAllChildOffice();
+        if (office1.getParentOfficeId() == office.getId()) {
+            out.print(gson.toJson("A"));
+        }*/
         PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
         if (account != null) {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
                 if (contract.getStatusId() != 4) {
-                    ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-                            contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
-                            paymentTerm.getDescription(), contract.getStatusId());
-                    out.print(gson.toJson(json));
+                    Office office1 = (Office) officeDAO.getChildOffice(office.getId());
+                    if (office.getStatusId() == 2) {
+                        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
+                                paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+                                office1.getArea(), contract.getDeposit());
+                        out.print(gson.toJson(json));
+                    } else {
+                        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
+                                paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+                                office.getArea(), contract.getDeposit());
+                        out.print(gson.toJson(json));
+                    }
                 } else {
                     out.print(gson.toJson("Expire"));
                 }

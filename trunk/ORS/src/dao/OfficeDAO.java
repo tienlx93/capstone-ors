@@ -123,6 +123,21 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         return null;
     }
 
+    public Object getChildOffice(int id) {
+
+        try {
+            String sql = "from Office where parentOfficeId = ?";
+            Query query = session.createQuery(sql);
+            query.setInteger(0, id);
+
+            return query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public List<Office> getAllOfficeAvailable() {
 
         try {

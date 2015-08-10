@@ -16,3 +16,36 @@ a {
     padding: 3px 10px;
     margin: 10px 0;
 }
+
+.spanleft {
+    padding-left: 10px;
+}
+
+.textright {
+    text-align: right;
+}
+
+.left-img {
+    padding: 10px;
+    width: 40%;
+    float: left;
+
+}
+.right-info {
+    padding: 10px;
+    float: right;
+    width: 60%;
+    border-left: 1px solid #b5b5b5;
+
+}
+
+.box {
+    width:auto;
+    height:auto;
+    background-color:#d9d9d9;
+
+    margin-left: 50%; /* half of width */
+
+    top:50%;
+    left:50%;
+}

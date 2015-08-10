@@ -24,6 +24,11 @@ controllers.controller('ProfileController', ['$scope', '$location', '$routeParam
                     $scope.data.address = "Không có";
                 }
                 $scope.data.birthday2 = Date.parse($scope.data.birthday);
+                if (data.title == "Ông ") {
+                    $scope.data.title = "Nam";
+                } else {
+                    $scope.data.title = "Nữ";
+                }
             }
         })
     }]);

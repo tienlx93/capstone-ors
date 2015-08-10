@@ -14,11 +14,14 @@ public class ContractJSON {
     private double price;
     private String paymentTerm;
     private int status;
+    private String address;
+    private double area;
+    private Long deposit;
 
     public ContractJSON() {
     }
 
-    public ContractJSON(int contractId, int officeId, String officeName, Date startDay, Date endDay, double price, String paymentTerm, int status) {
+    public ContractJSON(int contractId, int officeId, String officeName, Date startDay, Date endDay, double price, String paymentTerm, int status, String address, double area, Long deposit) {
         this.contractId = contractId;
         this.officeId = officeId;
         this.officeName = officeName;
@@ -27,6 +30,33 @@ public class ContractJSON {
         this.price = price;
         this.paymentTerm = paymentTerm;
         this.status = status;
+        this.address = address;
+        this.area = area;
+        this.deposit = deposit;
+    }
+
+    public Long getDeposit() {
+        return deposit;
+    }
+
+    public void setDeposit(Long deposit) {
+        this.deposit = deposit;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getContractId() {

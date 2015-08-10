@@ -6,6 +6,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
         var id = $routeParams.id;
         $scope.data = {};
         $scope.show = {};
+        $scope.profile = {};
 
         //get data
         Api.getContractById(id, function (data) {
@@ -31,6 +32,20 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 $scope.WrongCus = false;
                 $scope.Expire = false;
                 $scope.isLogin = true;
+
+                if (data.paymentTerm == "3 tháng") {
+                    $scope.Term = 3;
+                } else if (data.paymentTerm == "6 tháng") {
+                    $scope.Term = 6;
+                } else $scope.Term = 1;
+            }
+        });
+
+        Api.getProfile(function (profile) {
+            if (profile == "Error") {
+
+            } else {
+                $scope.profile = profile;
             }
         });
 
@@ -49,7 +64,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 }
                 if (sum == 0) {
                     $scope.Rentaled = true;
-
+                    $scope.display = "Không có";
                 } else {
                     $scope.total = sum;
                 }
@@ -69,4 +84,6 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 controller: 'ContractExtendController'
             });
         };
+
+
     }]);

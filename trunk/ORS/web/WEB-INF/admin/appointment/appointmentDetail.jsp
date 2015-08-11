@@ -56,7 +56,7 @@
                                 <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
 
                                 <div class="col-sm-10">
-                                    ${info.accountByCustomerUsername.username}
+                                    ${info.accountByCustomerUsername.profileByUsername.fullName}
                                     <input type="hidden" id="customerName"
                                            value="${info.accountByCustomerUsername.username}">
                                 </div>

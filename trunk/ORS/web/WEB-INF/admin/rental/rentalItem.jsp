@@ -2,6 +2,7 @@
 <%@ page import="entity.RentalItem" %>
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Thành
@@ -68,9 +69,14 @@
                                 <tr>
                                     <td>${item.name}</td>
                                     <td>${item.description}</td>
-                                    <td>${item.price}</td>
+                                    <td><fmt:formatNumber type="number"
+                                                           value="${item.price}" />
+                                    </td>
                                     <td>${item.quantity}</td>
-                                    <td><a href="rentalItem?action=edit&id=${item.id}">Chỉnh sửa</a></td>
+                                    <td><a href="rentalItem?action=edit&id=${item.id}"
+                                           title="Sửa"
+                                           class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+                                      </td>
                                 </tr>
                             </c:forEach>
                             </tbody>

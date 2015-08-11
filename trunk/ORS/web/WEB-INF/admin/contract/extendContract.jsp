@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -56,7 +57,7 @@
                                 <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
 
                                 <div class="col-sm-10">
-                                    ${info.accountByCustomerUsername.username}
+                                    ${info.accountByCustomerUsername.profileByUsername.fullName}
                                     <input type="hidden" id="customerName" name="customerUsername"
                                            value="${info.accountByCustomerUsername.username}">
                                 </div>
@@ -88,9 +89,11 @@
                                 <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
 
                                 <div class="col-sm-10">
+
                                     <input style="display: inline-block" type='text' class="form-control" name="endDate"
                                            id="endDate"
                                            value="${info.endDate}"/>
+
                                 </div>
                             </div>
 

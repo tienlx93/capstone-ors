@@ -151,6 +151,24 @@
                                            value="${office.price}">
                                 </div>
                             </div>
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2 control-label">Diện tích thuê tối thiểu</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="minArea" class="form-control" id="minArea"
+                                           value="${office.minArea}">
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2 control-label">Thời gian thuê tối thiểu</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="minTime" class="form-control" id="minTime"
+                                           value="${office.minTime}">
+                                </div>
+                            </div>
+
 
                             <div class="form-group clearfix">
                                 <label for="priceTerm" class="col-sm-2 control-label">Đơn vị giá</label>

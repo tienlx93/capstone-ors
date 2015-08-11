@@ -38,7 +38,7 @@ public class Office {
     private OfficeGroup officeGroupById;
     private Long basePrice;
     private Double minArea;
-    private Integer minTime;
+    private int minTime;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)

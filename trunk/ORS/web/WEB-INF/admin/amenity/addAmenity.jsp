@@ -41,9 +41,11 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            Thêm tiện nghi mới
+            <h1 class="page-header">Thêm tiện nghi mới</h1>
           </div>
-          <div>
+          <p class="text-left"><b>Các ô có dấu * là bắt buộc</b></p>
+          <br/>
+          <div class="text-center">
             <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
               <div class="form-group">
                 <label for="name">Tên tiện nghi</label>
@@ -75,8 +77,9 @@
               </div>
 
               <div class="button-post">
+                <button type="submit" value="save" class="btn btn-success" name="action"><i class="fa fa-arrow-right"></i>Tạo mới</button>
                 <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
-                <button type="submit" value="save" name="action">Tạo mới</button>
+
               </div>
             </form>
           </div>

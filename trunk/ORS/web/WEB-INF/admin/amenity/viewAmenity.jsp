@@ -31,7 +31,7 @@
 <jsp:include page="/WEB-INF/admin/left.jsp"/>
 <div class="content">
   <div class="page-header">
-    <h1 class="title">Quản lí tiện nghi</h1>
+    <h1 class="page-header">Quản lí tiện nghi</h1>
   </div>
 
   <div class="container-padding">
@@ -68,7 +68,7 @@
                   <td><a href="amenity?action=edit&id=${item.id}">Cập nhật</a> </br>
                     <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
                       <input type="hidden" value="${item.id}" name="id">
-                      <button type="submit" name="action" value="delete">Xóa</button>
+                      <button type="submit" class="btn btn-danger" name="action" value="delete">Xóa</button>
                     </form>
                   </td>
                 </tr>

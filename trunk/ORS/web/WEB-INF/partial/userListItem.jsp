@@ -10,7 +10,8 @@
     <td>
       <form action="${pageContext.request.contextPath}/admin/user" method="post">
         <input type="hidden" value="${item.username}" name="username">
-        <button type="submit" name="action" value="delete">Xóa</button>
+
+        <button type="submit" class="btn btn-danger" name="action" value="delete">Xóa</button>
       </form>
       <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}">
         Sửa</a>

@@ -14,8 +14,8 @@ public class RentalListJSON {
     private String imageUrl;
     private String status;
     private double price;
-    private Date assignedTime;
-    private Date createTime;
+    private Long assignedTime;
+    private Long createTime;
     private String officeName;
 
     public RentalListJSON() {
@@ -30,8 +30,8 @@ public class RentalListJSON {
         this.imageUrl = imageUrl;
         this.status = status;
         this.price = price;
-        this.assignedTime = assignedTime;
-        this.createTime = createTime;
+        this.assignedTime = assignedTime != null ? assignedTime.getTime() : 0;
+        this.createTime = createTime != null ? createTime.getTime() : 0;
         this.officeName = officeName;
     }
 
@@ -43,19 +43,19 @@ public class RentalListJSON {
         this.officeName = officeName;
     }
 
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
-    public Date getAssignedTime() {
+    public Long getAssignedTime() {
         return assignedTime;
     }
 
-    public void setAssignedTime(Date assignedTime) {
+    public void setAssignedTime(Long assignedTime) {
         this.assignedTime = assignedTime;
     }
 

@@ -7,6 +7,7 @@
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <html>
 <head>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/css/bootstrap.min.css"
@@ -53,7 +54,7 @@
                                 <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
 
                                 <div class="col-sm-10">
-                                    ${info.accountByCustomerUsername.username}
+                                    ${info.accountByCustomerUsername.profileByUsername.fullName}
                                     <input type="hidden" id="customerName"
                                            value="${info.accountByCustomerUsername.username}">
                                 </div>
@@ -73,9 +74,11 @@
                                 <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
 
                                 <div class="col-sm-10">
-                                    ${info.endDate}
-                                    <input type="hidden" id="endDate"
-                                           value="${info.endDate}">
+                                    <fmt:formatDate pattern="dd-MM-yyyy" value="${info.endDate}"/>
+
+                                    <input type="hidden" id="endDate">
+
+
                                 </div>
                             </div>
 

@@ -128,15 +128,19 @@ public class ContractController extends HttpServlet {
             case "editExtend": {
                 int id = Integer.parseInt(request.getParameter("id"));
                 ContractDAO dao = new ContractDAO();
-                String customerUsername = request.getParameter("customerUsername");
-                int officeId = Integer.parseInt(request.getParameter("officeId"));
-                Date startDate = Date.valueOf(request.getParameter("startDate"));
-                Date endDate = Date.valueOf(request.getParameter("endDate"));
-                int paymentFee = Integer.parseInt(request.getParameter("paymentFee"));
-                int paymentTerm = Integer.parseInt(request.getParameter("paymentTerm"));
+                Contract contract = dao.get(id);
+                String endDate = request.getParameter("extendDate");
+                SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+                try {
+                    String reformattedEnd = myFormat.format(fromUser.parse(endDate));
+                    contract.setEndDate(Date.valueOf(reformattedEnd));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 switch (button) {
                     case "confirm":
-                        dao.update(id, customerUsername, officeId, startDate, endDate, paymentFee, paymentTerm, 1);
+                        dao.update(id, contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), contract.getPaymentTerm(), 1);
                         break;
                     case "cancel":
                         dao.changeStatus(id, 1);

@@ -42,11 +42,11 @@
                     <div class="panel-title">
                         Danh sách tài khoản
                     </div>
-                    <div>
+                    <div><button class="btn-default">
                         <a class="btn" href="${pageContext.request.contextPath}/admin/user?action=new">
                             <span class="icon color5"><i class="fa fa-plus"></i></span>
                             Thêm mới tài khoản
-                        </a>
+                        </a></button>
                     </div>
                     <div>
                         <table class="table">
@@ -56,7 +56,7 @@
                                 <td>Email</td>
                                 <td>Chức vụ</td>
                                 <td>Tình trạng</td>
-                                <td>Tác vụ</td>
+                                <td></td>
                                 <td></td>
                             </tr>
                             </thead>
@@ -71,16 +71,24 @@
                                         <form action="${pageContext.request.contextPath}/admin/user" method="post">
                                             <input type="hidden" value="${item.username}" name="username">
 
-                                            <button type="submit" class="btn btn-danger" name="action" value="delete">Xóa</button>
+                                            <button  type="submit" class="btn btn" name="action" value="delete" class="btn btn-icon btn-default"><i class="fa fa-trash-o color5"></i></button>
                                         </form>
-                                        <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}">
-                                            Sửa</a>
+
+
+                                    </td>
                                     </td>
                                     <c:if test="${item.roleId == 4}">
-                                    <td><a class="btn"
-                                           href="user?action=editing&username=${item.username}">
-                                        Xem chi tiết
-                                    </a></td>
+                                    <td>
+                                        <a href="user?action=editing&username=${item.username}"
+                                           title="Chi tiết"
+                                           class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
+                                        <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}"
+                                           title="Sửa"
+                                           class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+                                    </td>
+                                        <td>
+
+                                        </td>
                                    </c:if>
                                 </tr>
                             </c:forEach>

@@ -76,16 +76,18 @@
                             <div class="form-group clearfix">
                                 <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
                                 <div class="col-sm-10">
-                                    ${info.contractByContractId.customerUsername}
+                                    ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
                                     <input type="hidden" id="customerName"
-                                           value="${info.contractByContractId.customerUsername}">
+                                           value="${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}">
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
                                 <label for="nameOfiice" class="col-sm-2 control-label">Ngày tạo yêu cầu</label>
                                 <div class="col-sm-10">
-                                    ${info.createTime}
+                                    <td><fmt:formatDate value="${info.createTime}"
+                                                        pattern="dd-MM-yyyy hh:mm"/></td>
+
                                 </div>
                             </div>
 

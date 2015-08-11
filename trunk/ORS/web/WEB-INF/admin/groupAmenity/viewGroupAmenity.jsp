@@ -61,7 +61,9 @@
                 <tr>
                   <td>${item.name}</td>
                   <td>${item.description}</td>
-                  <td><a href="groupAmenity?action=edit&id=${item.id}">Cập nhật</a>
+                  <td><a href="groupAmenity?action=edit&id=${item.id}"
+                         title="Cập nhật"
+                         class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
                   </td>
                 </tr>
               </c:forEach>

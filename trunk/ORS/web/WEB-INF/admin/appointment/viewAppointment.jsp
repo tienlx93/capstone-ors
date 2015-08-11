@@ -165,7 +165,9 @@
                                 <c:if test="${item.statusId == 1}">
                                   <tr>
                                     <form action="appointment?action=editing" method="post">
-                                      <td>${item.accountByCustomerUsername.username}</td>
+                                      <td><a class="btn"
+                                             href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                      </td>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td>
                                         <fmt:formatDate value="${item.time}" pattern="dd-MM-yyyy hh:mm"/>
@@ -229,7 +231,9 @@
                                 <c:forEach items="${data}" var="item">
                                   <c:if test="${item.statusId == 2}">
                                     <tr>
-                                      <td>${item.accountByCustomerUsername.username}</td>
+                                      <td><a class="btn"
+                                             href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                      </td>
                                       <c:if test="${user.roleId == 2}">
                                         <td>${item.accountByAssignedStaff.username}</td>
                                       </c:if>
@@ -271,7 +275,9 @@
                                 <c:forEach items="${data}" var="item">
                                   <c:if test="${item.statusId == 2}">
                                     <tr>
-                                      <td>${item.accountByCustomerUsername.username}</td>
+                                      <td><a class="btn"
+                                             href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                      </td>
                                       <c:if test="${user.roleId == 2}">
                                         <td>${item.accountByAssignedStaff.username}</td>
                                       </c:if>
@@ -313,7 +319,9 @@
                             <c:forEach items="${data}" var="item">
                               <c:if test="${item.statusId == 3}">
                                 <tr>
-                                  <td>${item.accountByCustomerUsername.username}</td>
+                                  <td><a class="btn"
+                                         href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                  </td>
                                   <c:if test="${user.roleId == 2}">
                                     <td>${item.accountByAssignedStaff.username}</td>
                                   </c:if>
@@ -353,7 +361,9 @@
                             <c:forEach items="${data}" var="item">
                               <c:if test="${item.appointmentStatusByStatusId.id == 4}">
                                 <tr>
-                                  <td>${item.accountByCustomerUsername.username}</td>
+                                  <td><a class="btn"
+                                         href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                  </td>
                                   <c:if test="${user.roleId == 2}">
                                     <td>${item.accountByAssignedStaff.username}</td>
                                   </c:if>
@@ -393,7 +403,9 @@
                             <c:forEach items="${data}" var="item">
                               <c:if test="${item.appointmentStatusByStatusId.id == 5}">
                                 <tr>
-                                  <td>${item.accountByCustomerUsername.username}</td>
+                                  <td><a class="btn"
+                                         href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                  </td>
                                   <c:if test="${user.roleId == 2}">
                                     <td>${item.accountByAssignedStaff.username}</td>
                                   </c:if>

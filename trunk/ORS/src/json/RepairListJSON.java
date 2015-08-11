@@ -9,18 +9,18 @@ import java.util.Date;
 public class RepairListJSON {
     private int repairId;
     private String description;
-    private Date createTime;
+    private Long createTime;
     private String assignStaff;
-    private Date assignedTime;
+    private Long assignedTime;
     private String status;
     private String officeName;
 
     public RepairListJSON(int repairId, String description, Date createTime, String assignStaff, Date assignedTime, String status, String officeName) {
         this.repairId = repairId;
         this.description = description;
-        this.createTime = createTime;
+        this.createTime = createTime != null ? createTime.getTime() : 0;
         this.assignStaff = assignStaff;
-        this.assignedTime = assignedTime;
+        this.assignedTime = assignedTime != null ? assignedTime.getTime() : 0;
         this.status = status;
         this.officeName = officeName;
     }
@@ -49,11 +49,11 @@ public class RepairListJSON {
         this.description = description;
     }
 
-    public Date getCreateTime() {
+    public Long getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(Long createTime) {
         this.createTime = createTime;
     }
 
@@ -65,11 +65,11 @@ public class RepairListJSON {
         this.assignStaff = assignStaff;
     }
 
-    public Date getAssignedTime() {
+    public Long getAssignedTime() {
         return assignedTime;
     }
 
-    public void setAssignedTime(Date assignedTime) {
+    public void setAssignedTime(Long assignedTime) {
         this.assignedTime = assignedTime;
     }
 

@@ -877,9 +877,9 @@ public class ApiController extends HttpServlet {
                 PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
                 if (contract.getStatusId() != 4) {
                     list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
-                            contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
+                            contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                             paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-                            office.getArea(), contract.getDeposit()));
+                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription()));
                 }
             }
             if (list.size() > 0) {
@@ -1053,20 +1053,20 @@ public class ApiController extends HttpServlet {
         if (account != null) {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
                 if (contract.getStatusId() != 4) {
-                    Office office1 = (Office) officeDAO.getChildOffice(office.getId());
-                    if (office.getStatusId() == 2) {
+//                    Office office1 = (Office) officeDAO.getChildOffice(office.getId());
+//                    if (office.getParentOfficeId() != null) {
+//                        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+//                                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
+//                                paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+//                                office1.getArea(), contract.getDeposit());
+//                        out.print(gson.toJson(json));
+//                    } else {
                         ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-                                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
+                                contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                                 paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-                                office1.getArea(), contract.getDeposit());
+                                office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription());
                         out.print(gson.toJson(json));
-                    } else {
-                        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-                                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
-                                paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-                                office.getArea(), contract.getDeposit());
-                        out.print(gson.toJson(json));
-                    }
+//                    }
                 } else {
                     out.print(gson.toJson("Expire"));
                 }

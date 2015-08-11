@@ -20,9 +20,9 @@
             <tr ng-repeat="item in data">
 
                 <td>{{item.officeName}}</td>
-                <td>{{item.startDay | toLocaleDate}}</td>
-                <td>{{item.endDay | toLocaleDate}}</td>
-                <td>{{item.price}}</td>
+                <td>{{item.startDay | date:'dd-MM-yyyy'}}</td>
+                <td>{{item.endDay | date:'dd-MM-yyyy'}}</td>
+                <td>{{item.price | currency:'':0}}</td>
                 <td>{{item.paymentTerm}}</td>
                 <td><a class="btn btn-green" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
                 <td><a class="btn btn-green" href="#/repairList/{{item.contractId}}">Danh sách sửa chữa</a></td>

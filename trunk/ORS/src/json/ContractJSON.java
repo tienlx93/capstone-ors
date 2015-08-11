@@ -9,19 +9,20 @@ public class ContractJSON {
     private int contractId;
     private int officeId;
     private String officeName;
-    private Date startDay;
-    private Date endDay;
+    private Long startDay;
+    private Long endDay;
     private double price;
     private String paymentTerm;
     private int status;
     private String address;
     private double area;
     private Long deposit;
+    private String category;
 
     public ContractJSON() {
     }
 
-    public ContractJSON(int contractId, int officeId, String officeName, Date startDay, Date endDay, double price, String paymentTerm, int status, String address, double area, Long deposit) {
+    public ContractJSON(int contractId, int officeId, String officeName, Long startDay, Long endDay, double price, String paymentTerm, int status, String address, double area, Long deposit, String category) {
         this.contractId = contractId;
         this.officeId = officeId;
         this.officeName = officeName;
@@ -33,6 +34,15 @@ public class ContractJSON {
         this.address = address;
         this.area = area;
         this.deposit = deposit;
+        this.category = category;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     public Long getDeposit() {
@@ -83,19 +93,19 @@ public class ContractJSON {
         this.officeName = officeName;
     }
 
-    public Date getStartDay() {
+    public Long getStartDay() {
         return startDay;
     }
 
-    public void setStartDay(Date startDay) {
+    public void setStartDay(Long startDay) {
         this.startDay = startDay;
     }
 
-    public Date getEndDay() {
+    public Long getEndDay() {
         return endDay;
     }
 
-    public void setEndDay(Date endDay) {
+    public void setEndDay(Long endDay) {
         this.endDay = endDay;
     }
 

@@ -18,9 +18,9 @@
         <tr ng-repeat="item in data">
 
             <td>{{item.description}}</td>
-            <td>{{item.createTime | toLocaleDate}}</td>
+            <td>{{item.createTime | date:'dd-MM-yyyy'}}</td>
             <td>{{item.status}}</td>
-            <td><span ng-show="item.assignedTime">{{item.assignedTime | toLocaleDate}}</span></td>
+            <td><span ng-show="item.assignedTime">{{item.assignedTime | date:'dd-MM-yyyy'}}</span></td>
         </tr>
 
         </tbody>

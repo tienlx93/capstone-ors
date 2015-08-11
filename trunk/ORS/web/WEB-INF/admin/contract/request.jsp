@@ -6,6 +6,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -69,31 +70,44 @@
                                 <c:choose>
                                     <c:when test="${item.statusId == 3 && titleName == 'huy'}">
                                         <tr>
-                                            <td>${item.accountByCustomerUsername.username}</td>
+                                            <td><a class="btn"
+                                                   href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                            </td>
                                             <td>${item.officeByOfficeId.name}</td>
-                                            <td>${item.startDate}</td>
-                                            <td>${item.endDate}</td>
+                                            <td><fmt:formatDate value="${item.startDate}"
+                                                                pattern="dd-MM-yyyy"/></td>
+                                            <td><fmt:formatDate value="${item.endDate}"
+                                                                pattern="dd-MM-yyyy"/></td>
                                             <td>${item.paymentFee}</td>
                                             <td>${item.paymentTermByPaymentTerm.description}</td>
 
-                                            <td><a href="contract?action=viewReturn&id=${item.id}">Xem chi tiết</a>
+                                            <td>
+                                                <a href="contract?action=viewReturn&id=${item.id}"
+                                                   title="Chi tiết"
+                                                   class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                             </td>
                                         </tr>
                                     </c:when>
                                     <c:otherwise>
                                         <c:if test="${item.statusId == 2 && titleName == 'giahan'}">
                                         <tr>
-                                            <td>${item.accountByCustomerUsername.username}</td>
+                                            <td><a class="btn"
+                                                   href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                            </td>
                                             <td>${item.officeByOfficeId.name}</td>
-                                            <td>${item.startDate}</td>
-                                            <td>${item.endDate}</td>
+                                            <td><fmt:formatDate value="${item.startDate}"
+                                                                pattern="dd-MM-yyyy"/></td>
+                                            <td><fmt:formatDate value="${item.endDate}"
+                                                                pattern="dd-MM-yyyy"/></td>
+
                                             <td>${item.paymentFee}</td>
                                             <td>${item.paymentTermByPaymentTerm.description}</td>
 
                                             <td>
+
                                                 <a href="${pageContext.request.contextPath}/admin/contract?action=viewExtend&id=${item.id}"
-                                                   title="Chi tiết" class="btn btn-icon btn-default">
-                                                    <i class="fa fa-info color5"></i></a>
+                                                   title="Chi tiết"
+                                                   class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
                                             </td>
                                         </c:if>
 

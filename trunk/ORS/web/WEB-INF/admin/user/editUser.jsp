@@ -46,7 +46,7 @@
           <div>
             <form action="${pageContext.request.contextPath}/admin/user" method="post">
               <div class="form-group">
-                <label>Tên tài khoản</label>
+                <label>Tên đăng nhập</label>
                 <span>${account.username}</span>
                 <input type="hidden" name="username" class="" value="${account.username}">
               </div>
@@ -87,7 +87,7 @@
               </div>--%>
               <div class="button-post">
 
-                <a href="${pageContext.request.contextPath}/admin/user" class="btn btn-default">Hủy</a>
+
                 <button type="submit" class="btn btn-primary" value="update" name="action">Cập nhật</button>
                 <c:choose>
                   <c:when test="${account.username == 'admin'}">
@@ -102,6 +102,7 @@
                     </c:if>
                   </c:otherwise>
                 </c:choose>
+                <a href="${pageContext.request.contextPath}/admin/user" class="btn btn-default">Hủy</a>
               </div>
             </form>
           </div>
@@ -112,7 +113,5 @@
   <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
-
-
 </body>
 </html>

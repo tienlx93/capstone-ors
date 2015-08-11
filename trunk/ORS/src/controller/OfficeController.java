@@ -34,6 +34,8 @@ public class OfficeController extends HttpServlet {
         String description = request.getParameter("description");
         String price = request.getParameter("price");
         String priceTerm = request.getParameter("priceTerm");
+        String minArea = request.getParameter("minArea");
+        String minTime = request.getParameter("minTime");
         String floor = request.getParameter("floor");
         String area = request.getParameter("area");
         String imageUrls = request.getParameter("imageUrls");
@@ -47,6 +49,8 @@ public class OfficeController extends HttpServlet {
 
             office.setStatusId(1);
             office.setName(name);
+            office.setMinArea(Double.valueOf(minArea));
+            office.setMinTime(Integer.valueOf(minTime));
             office.setAddress(address);
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
@@ -92,6 +96,9 @@ public class OfficeController extends HttpServlet {
             office.setStatusId(1);
             office.setName(name);
             office.setAddress(address);
+            office.setMinArea(Double.valueOf(minArea));
+            office.setMinTime(Integer.valueOf(minTime));
+
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
             office.setCreateDate(new Timestamp((new Date()).getTime()));

@@ -68,13 +68,15 @@
                                 <c:if test="${item.statusId != 4}">
                                     <tr>
                                         <td><a class="btn"
-                                               href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.username}</a>
+                                               href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
                                         </td>
                                         <td>${item.officeByOfficeId.name}</td>
                                         <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.startDate}"/>
                                         </td>
                                         <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.endDate}"/></td>
-                                        <td>${item.paymentFee}</td>
+                                        <td>
+                                            <fmt:formatNumber type="number"
+                                                              value="${item.paymentFee}" /></td>
                                         <td>${item.paymentTermByPaymentTerm.description}</td>
                                         <c:if test="${user.roleId == 2}">
                                             <td>

@@ -9,9 +9,10 @@
         <td>${item.priceTermByPriceTerm.description}</td>
         <td>${item.area}</td>
         <td>${item.address}</td>
-        <td><a class="btn"
-               href="office?action=edit&id=${item.id}">
-Sửa
-</a></td>
-</tr>
+        <td>
+            <a href="office?action=editing&id=${item.id}"
+               title="Chi tiết"
+               class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
+        </td>
+    </tr>
 </c:forEach>

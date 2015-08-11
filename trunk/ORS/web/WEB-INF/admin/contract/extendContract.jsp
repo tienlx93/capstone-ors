@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Gia hạn hợp đồng
+                        <h2 style="margin-top: 5px">Gia hạn hợp đồng</h2>
                     </div>
                     <div>
                         <form action="contract?action=editExtend" method="post">
@@ -51,72 +51,151 @@
                                 <label for="id" class="col-sm-2 control-label">Id</label>
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
+                            <div class="row" style="margin: auto">
+                                <div class="col-sm-6" style="border-right: 2px solid #000000">
+                                    <div><h3>Bên cho thuê văn phòng (Bên A)</h3></div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Ông(Bà):
+                                        </div>
 
-                            <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
+                                        <div class="col-sm-9">
+                                            Công ty ORS
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Email:
+                                        </div>
 
-                                <div class="col-sm-10">
-                                    ${info.accountByCustomerUsername.username}
-                                    <input type="hidden" id="customerName" name="customerUsername"
-                                           value="${info.accountByCustomerUsername.username}">
+                                        <div class="col-sm-9">
+                                            contact@tienlx.me
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">Là
+                                            đại diện của văn
+                                            phòng:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${info.officeByOfficeId.name}
+                                            <input type="hidden" id="officeID" name="officeID"
+                                                   value="${info.officeByOfficeId.id}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+
+                                    <div><h3>Bên thuê văn phòng (Bên B)</h3></div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Ông(Bà):
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${info.accountByCustomerUsername.profileByUsername.fullName}
+                                            <input type="hidden" id="customerName" name="customerName"
+                                                   value="${info.customerUsername}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Địa chỉ:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${info.accountByCustomerUsername.profileByUsername.address}
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Số điện thoại:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${info.accountByCustomerUsername.profileByUsername.phone}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="form-group clearfix" hidden>
-                                <div class="col-sm-10">
-                                    <input type="hidden" name="officeId" value="${info.officeId}">
+                            <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
+                                <div><h3>Thông tin thuê văn phòng</h3></div>
+                                <div class="form-group clearfix">
+                                    <div for="officeID" class="col-sm-2 control-label">Tên văn phòng:</div>
+
+                                    <div class="col-sm-10" style="font-weight: bold">
+                                        ${info.officeByOfficeId.name}
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group clearfix">
+                                    <div for="officeID" class="col-sm-2 control-label">Loại văn phòng:</div>
 
-                            <div class="form-group clearfix">
-                                <label for="nameOfiice" class="col-sm-2 control-label">Văn phòng</label>
-
-                                <div class="col-sm-10">
-                                    ${info.officeByOfficeId.name}
-                                    <input type="hidden" id="nameOfiice"
-                                           value="${info.officeByOfficeId.id}">
+                                    <div class="col-sm-10" style="font-weight: bold;">
+                                        ${info.officeByOfficeId.categoryByCategoryId.description}
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group clearfix">
+                                    <div for="officeID" class="col-sm-2 control-label">Địa chỉ văn phòng:</div>
 
-                            <div class="form-group clearfix" hidden>
-                                <div class="col-sm-10">
-                                    <input type="hidden" name="startDate" value="${info.startDate}">
+                                    <div class="col-sm-10">
+                                        ${info.officeByOfficeId.address}
+                                    </div>
                                 </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
-
-                                <div class="col-sm-10">
-                                    <input style="display: inline-block" type='text' class="form-control" name="endDate"
-                                           id="endDate"
-                                           value="${info.endDate}"/>
+                                <div class="form-group clearfix" hidden>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" name="officeId" value="${info.officeId}">
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group clearfix">
-                                <label for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</label>
+                                <div class="form-group clearfix">
+                                    <div for="startDate" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):</div>
 
-                                <div class="col-sm-10">
-                                    <select name="paymentTerm" class="form-control" id="paymentTerm">
-                                        <c:forEach var="item" items="${paymentTermList}">
-                                            <option value="${item.id}"
-                                                    <c:if test="${info.paymentTerm ==item.id}">selected</c:if> >
-                                                    ${item.description}</option>
-                                        </c:forEach>
-                                    </select>
+                                    <div class="col-sm-4">
+                                        ${info.officeByOfficeId.area}
+                                    </div>
+                                    <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
+
+                                    <div class="col-sm-4">
+                                        ${info.paymentFee}
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group clearfix">
+                                    <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</div>
 
-                            <div class="form-group clearfix">
-                                <label for="paymentFee" class="col-sm-2 control-label">Giá thuê</label>
+                                    <div class="col-sm-4" id="startDate">
+                                        ${info.startDate}
+                                    </div>
+                                    <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết thúc</div>
 
-                                <div class="col-sm-10">
-                                    <input type='text' class="form-control" name="paymentFee" id="paymentFee"
-                                           value="${info.paymentFee}"/>
+                                    <div class="col-sm-4" id="end" name="end">
+                                        ${info.endDate}
+                                    </div>
+                                    <input type="hidden" value="" id="extendDate" name="extendDate"/>
+
+                                    <input style="display: inline-block"  type='hidden' class="form-control" name="endDate"
+                                           id="endDate" value="${info.endDate}"/>
                                 </div>
-                            </div>
+                                <div class="form-group clearfix">
+                                    <div for="startDate" class="col-sm-2 control-label">Thời gian gia hạn(tháng):</div>
 
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' min="0" class="form-control" name="extendTime"
+                                               id="extendTime" onchange="calculateEndDate()"
+                                               value=""/>
+                                    </div>
+
+                                </div>
+                                <%--<div class="form-group clearfix">--%>
+                                    <%--<div for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</div>--%>
+
+                                    <%--<div class="col-sm-4">--%>
+                                        <%--${info.paymentTerm.description}--%>
+                                    <%--</div>--%>
+                                    <%----%>
+                                <%--</div>--%>
+                            </div>
                             <div class="button-post">
                                 <button type="submit" value="confirm" name="button" class="btn btn-primary">Xác nhận</button>
                                 <button type="submit" value="cancel" name="button" class="btn btn-success">Hủy yêu cầu</button>
@@ -135,33 +214,38 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        var nowTemp = new Date();
-        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-
-        var start = $('#startDate').datepicker({
-            format: 'yyyy-mm-dd',
-            onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
-            }
-        }).on('changeDate', function (ev) {
-            if (ev.date.valueOf() > checkout.date.valueOf()) {
-                var newDate = new Date(ev.date);
-                newDate.setDate(newDate.getDate() + 1);
-                end.setValue(newDate);
-            }
-            start.hide();
-            $('#endDate')[0].focus();
-        }).data('datepicker');
-
-        var end = $('#endDate').datepicker({
-            format: 'yyyy-mm-dd',
-            onRender: function (date) {
-                return date.valueOf() <= start.date.valueOf() ? 'disabled' : '';
-            }
-        }).on('changeDate', function (ev) {
-            end.hide();
-        }).data('datepicker');
+        document.getElementById('startDate').innerHTML = formatTime(document.getElementById('startDate').innerHTML);
+        document.getElementById('end').innerHTML = formatTime(document.getElementById('end').innerHTML);
     });
+    function calculateEndDate() {
+        var end = document.getElementById('end');
+        var start = document.getElementById('endDate').value.split("-");
+        var startTime = Date.parse(new Date(start[0], start[1] - 1, start[2]));
+        var endTime;
+        var time = document.getElementById('extendTime').value;
+        endTime = startTime + (86400000 * time * 30);
+        end.innerHTML = formatTime(endTime) != undefined ? formatTime(endTime) : "";
+        document.getElementById('extendDate').value = end.innerHTML;
+    }
+    ;
+    function formatTime(time) {
+        if (time) {
+            var formatTime = new Date(time);
+            var day = formatTime.getDate();
+            var month = formatTime.getMonth() + 1;
+            if (day < 10) {
+                day = '0' + day
+            }
+            if (month < 10) {
+                month = '0' + month
+            }
+            var year = formatTime.getFullYear();
+
+            return day + '-' + month + '-' + year;
+        }
+
+    }
+    ;
 </script>
 
 </body>

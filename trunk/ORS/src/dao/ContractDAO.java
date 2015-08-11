@@ -91,6 +91,28 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return false;
     }
 
+    public boolean updateContract(int id, Contract newContract) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Contract contract = (Contract) session.get(Contract.class, id);
+            contract.setCustomerUsername(newContract.getCustomerUsername());
+            contract.setOfficeId(newContract.getOfficeId());
+            contract.setStartDate(newContract.getStartDate());
+            contract.setEndDate(newContract.getEndDate());
+            contract.setPaymentFee(newContract.getPaymentFee());
+            contract.setPaymentTerm(newContract.getPaymentTerm());
+            contract.setStatusId(newContract.getStatusId());
+            contract.setCancelDate(newContract.getCancelDate());
+            session.update(contract);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
+    }
     public void update(Integer id, String customerUsername, int officeId, Date startDate, Date endDate,
                        int paymentFee, int paymentTerm, int statusId) {
 

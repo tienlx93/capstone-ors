@@ -12,8 +12,8 @@
                     <td colspan="2"><h4>Bên cho thuê văn phòng (Bên A):</h4><br></td>
                 </tr>
                 <tr>
-                    <td class="textright">Công ty:</td>
-                    <td><span class="spanleft">ORS</span></td>
+                    <td class="textright">Ông (Bà):</td>
+                    <td><span class="spanleft">Công ty ORS</span></td>
                 </tr>
                 <tr>
                     <td class="textright">Email:</td>
@@ -38,7 +38,7 @@
                 </tr>
 
                 <tr>
-                    <td class="textright">{{profile.title}}:</td>
+                    <td class="textright">Ông (Bà):</td>
                     <td><span class="spanleft">{{profile.fullName}}</span></td>
                 </tr>
                 <tr>
@@ -55,6 +55,14 @@
                 </tr>
 
                 <tr>
+                    <td class="textright">Tên văn phòng:</td>
+                    <td><span class="spanleft">{{data.officeName}}</span></td>
+                </tr>
+                <tr>
+                    <td class="textright">Loại văn phòng:</td>
+                    <td><span class="spanleft">{{data.category}}</span></td>
+                </tr>
+                <tr>
                     <td class="textright">Địa chỉ văn phòng:</td>
                     <td><span class="spanleft">{{data.address}}</span></td>
                 </tr>
@@ -68,11 +76,11 @@
                 </tr>
                 <tr>
                     <td class="textright">Ngày bắt đầu hợp đồng:</td>
-                    <td><span class="spanleft">{{data.startDay | toLocaleDate}}</span></td>
+                    <td><span class="spanleft">{{data.startDay | date:'dd-MM-yyyy'}}</span></td>
                 </tr>
                 <tr>
                     <td class="textright">Ngày kết thúc hợp đồng:</td>
-                    <td><span class="spanleft">{{data.endDay | toLocaleDate}}</span></td>
+                    <td><span class="spanleft">{{data.endDay | date:'dd-MM-yyyy'}}</span></td>
                 </tr>
 
                 <tr>
@@ -89,7 +97,7 @@
                 </tr>
                 <tr>
                     <td class="textright">Số tiền thanh toán mỗi kỳ:</td>
-                    <td><span class="spanleft">{{data.price * Term | currency:"vnd":0}} </span></td>
+                    <td><span class="spanleft">{{data.price * data.area * Term | currency:"vnd":0}} </span></td>
                 </tr>
                 </tbody>
             </table>

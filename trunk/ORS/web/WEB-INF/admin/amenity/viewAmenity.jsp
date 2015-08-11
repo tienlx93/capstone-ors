@@ -42,10 +42,10 @@
             Danh sách tiện nghi
           </div>
           <div>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/amenity?action=new">
+            <button class="btn-default"><a class="btn" href="${pageContext.request.contextPath}/admin/amenity?action=new">
               <span class="icon color5"><i class="fa fa-plus"></i></span>
               Thêm mới tiện nghi
-            </a>
+            </a></button>
           </div>
           <div>
             <table class="table">

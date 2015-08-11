@@ -42,10 +42,10 @@
             Danh sách tiện nghi
           </div>
           <div>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/amenity?action=new">
+            <button class="btn-default"><a class="btn" href="${pageContext.request.contextPath}/admin/amenity?action=new">
               <span class="icon color5"><i class="fa fa-plus"></i></span>
               Thêm mới tiện nghi
-            </a>
+            </a></button>
           </div>
           <div>
             <table class="table">
@@ -56,6 +56,7 @@
                 <th>Trọng số</th>
                 <th>Độ ưu tiên</th>
                 <th></th>
+                <th></th>
               </tr>
               </thead>
               <tbody id="table-body">
@@ -65,12 +66,18 @@
                   <td>${item.description}</td>
                   <td>${item.weight}</td>
                   <td>${item.priority}</td>
-                  <td><a href="amenity?action=edit&id=${item.id}">Cập nhật</a> </br>
-                    <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
-                      <input type="hidden" value="${item.id}" name="id">
-                      <button type="submit" class="btn btn-danger" name="action" value="delete">Xóa</button>
-                    </form>
+                  <td><form action="${pageContext.request.contextPath}/admin/amenity" method="post">
+                    <button  type="submit" class="btn btn" name="action" value="delete" class="btn btn-icon btn-default"><i class="fa fa-trash-o color5"></i></button>
+                    <input type="hidden" value="${item.id}" name="id">
+
+                  </form></td>
+                  <td>
+                    <a href="amenity?action=edit&id=${item.id}"
+                       title="Cập nhật"
+                       class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+
                   </td>
+
                 </tr>
               </c:forEach>
               </tbody>

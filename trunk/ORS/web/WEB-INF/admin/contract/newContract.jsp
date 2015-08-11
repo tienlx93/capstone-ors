@@ -122,37 +122,46 @@
                             </div>
                             <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
                                 <div><h3>Thông tin thuê văn phòng</h3></div>
-                                <div class="form-group clearfix">
-                                    <div for="officeID" class="col-sm-2 control-label">Tên văn phòng</div>
+                                <div class="row" style="margin: auto">
+                                    <div class="col-sm-6">
+                                    <div class="form-group clearfix">
+                                        <div for="officeID" style="padding: 0" class="col-sm-4 control-label">Tên văn phòng</div>
 
-                                    <div class="col-sm-10" style="font-weight: bold">
-                                        ${appointmentList.officeByOfficeId.name}
-                                        <input type="hidden" id="officeID" name="officeID"
-                                               value="${appointmentList.officeByOfficeId.id}">
+                                        <div class="col-sm-8" style="font-weight: bold">
+                                            ${appointmentList.officeByOfficeId.name}
+                                            <input type="hidden" id="officeID" name="officeID"
+                                                   value="${appointmentList.officeByOfficeId.id}">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group clearfix" hidden>
-                                    <div for="categoryId" class="col-sm-2 control-label">Id</div>
-                                    ${office.categoryId}<input type="hidden" name="categoryId" id="categoryId"
-                                                               value="${office.categoryId}">
-                                </div>
-                                <div class="form-group clearfix">
-                                    <div for="officeCategory" class="col-sm-2 control-label">Loại văn phòng</div>
-
-                                    <div class="col-sm-10" style="font-weight: bold">
-                                        ${office.categoryByCategoryId.description}
-                                        <input type="hidden" id="officeCategory" name="officeCategory"
-                                               value="${office.categoryByCategoryId.description}">
+                                    <div class="form-group clearfix" hidden>
+                                        <div for="categoryId" class="col-sm-2 control-label">Id</div>
+                                        ${office.categoryId}<input type="hidden" name="categoryId" id="categoryId"
+                                                                   value="${office.categoryId}">
                                     </div>
-                                </div>
-                                <div class="form-group clearfix">
-                                    <div for="officeAddress" class="col-sm-2 control-label">Địa chỉ văn phòng</div>
+                                    <div class="form-group clearfix">
+                                        <div for="officeCategory" style="padding: 0" class="col-sm-4 control-label">Loại văn phòng</div>
 
-                                    <div class="col-sm-10">
+                                        <div class="col-sm-8" style="font-weight: bold">
+                                            ${office.categoryByCategoryId.description}
+                                            <input type="hidden" id="officeCategory" name="officeCategory"
+                                                   value="${office.categoryByCategoryId.description}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                    <div for="officeAddress"  style="padding: 0" class="col-sm-4 control-label">Địa chỉ văn phòng</div>
+
+                                    <div class="col-sm-8">
                                         ${office.address}
                                         <input type="hidden" id="officeAddress" name="officeAddress"
                                                value="${office.address}">
                                     </div>
+                                </div>
+                                        </div>
+                                    <%--<div class="col-sm-6">--%>
+                                        <%--<div class="images clearfix" id="images">--%>
+                                        <%--</div>--%>
+                                        <%--<div class="clear-float"></div>--%>
+                                    <%--</div>--%>
                                 </div>
                                 <c:if test="${office.categoryId == 2}">
                                     <div class="form-group clearfix">
@@ -169,7 +178,7 @@
                                             <input name="parentArea" value="${office.area}">
                                             <input name="minArea" value="${office.minArea}">
                                         </div>
-                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</div>
+                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m2:</div>
 
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
@@ -200,7 +209,7 @@
                                             <input type="hidden" id="officeArea"
                                                    name="officeArea" value="${office.area}">
                                         </div>
-                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</div>
+                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m2:</div>
 
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
@@ -221,7 +230,7 @@
                                                value="${contract.startDate}"/>
                                     </div>
 
-                                    <div for="time" class="col-sm-2 control-label">Thời gian thuê(tháng):</div>
+                                    <div for="time" style="text-align: right" class="col-sm-2 control-label">Thời gian thuê(tháng):</div>
 
                                     <div class="col-sm-4">
                                         <input type='number' class="form-control"
@@ -260,7 +269,7 @@
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div for="deposit" class="col-sm-2 control-label">Tiền đặt cọc văn phòng</div>
+                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt cọc văn phòng</div>
 
                                     <div class="col-sm-4">
                                         <input style="display: inline-block" type='number' class="form-control"
@@ -310,6 +319,7 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
@@ -404,6 +414,18 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
     ;
+//    function Comma(Num) { //function to add commas to textboxes
+//        Num += '';
+//        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+//        Num = Num.replace(',', ''); Num = Num.replace(',', ''); Num = Num.replace(',', '');
+//        x = Num.split('.');
+//        x1 = x[0];
+//        x2 = x.length > 1 ? '.' + x[1] : '';
+//        var rgx = /(\d+)(\d{3})/;
+//        while (rgx.test(x1))
+//            x1 = x1.replace(rgx, '$1' + '.' + '$2');
+//        return x1 + x2;
+//    };
 </script>
 
 </body>

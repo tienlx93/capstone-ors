@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Thông tin hợp đồng
+                        <h2 style="margin-top: 5px">Thông tin hợp đồng</h2>
                     </div>
                     <div>
                         <form action="contract" method="get" name="contractDetail" onsubmit="return validateArea()">
@@ -155,7 +155,6 @@
                                     ${contract.paymentFee} VNĐ
                                 </div>
                             </div>
-
                             <div class="form-group clearfix">
                                 <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
@@ -169,7 +168,6 @@
                                     ${contract.endDate}
                                 </div>
                             </div>
-
                             <div class="form-group clearfix">
                                 <div class="col-sm-2 control-label">Kỳ hạn thanh toán:</div>
 

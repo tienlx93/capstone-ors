@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Tạo hợp đồng
+                        <h2 style="margin-top: 5px">Tạo hợp đồng</h2>
                     </div>
                     <div>
                         <form action="contract" method="post" name="createContract" onsubmit="return validateArea()">
@@ -53,206 +53,246 @@
                                                             value="${appointmentList.id}">
                             </div>
 
-                            <div>Bên cho thuê văn phòng (Bên A)</div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Ông(Bà):</label>
+                            <div class="row" style="margin: auto">
+                                <div class="col-sm-6" style="border-right: 2px solid #000000">
+                                    <div><h3>Bên cho thuê văn phòng (Bên A)</h3></div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Ông(Bà):
+                                        </div>
 
-                                <div class="col-sm-10">
-                                    Công ty ORS
+                                        <div class="col-sm-9">
+                                            Công ty ORS
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Email:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            contact@tienlx.me
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">Là
+                                            đại diện của văn
+                                            phòng:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${appointmentList.officeByOfficeId.name}
+                                            <input type="hidden" id="officeID" name="officeID"
+                                                   value="${appointmentList.officeByOfficeId.id}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6">
+                                    <div><h3>Bên thuê văn phòng (Bên B)</h3></div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Ông(Bà):
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${appointmentList.accountByCustomerUsername.profileByUsername.fullName}
+                                            <input type="hidden" id="customerName" name="customerName"
+                                                   value="${appointmentList.customerUsername}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Địa chỉ:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${appointmentList.accountByCustomerUsername.profileByUsername.address}
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Số điện thoại:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${appointmentList.accountByCustomerUsername.profileByUsername.phone}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Email:</label>
-
-                                <div class="col-sm-10">
-                                    contact@tienlx.me
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Là đại diện của văn phòng:</label>
-
-                                <div class="col-sm-10">
-                                    ${appointmentList.officeByOfficeId.name}
-                                    <input type="hidden" id="officeID" name="officeID"
-                                           value="${appointmentList.officeByOfficeId.id}">
-                                </div>
-                            </div>
-
-                            <div>Bên thuê văn phòng (Bên B)</div>
-                            <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Ông(Bà):</label>
-
-                                <div class="col-sm-10">
-                                    ${appointmentList.accountByCustomerUsername.profileByUsername.fullName}
-                                    <input type="hidden" id="customerName" name="customerName"
-                                           value="${appointmentList.customerUsername}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Địa chỉ:</label>
-
-                                <div class="col-sm-10">
-                                    ${appointmentList.accountByCustomerUsername.profileByUsername.address}
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Số điện thoại:</label>
-
-                                <div class="col-sm-10">
-                                    ${appointmentList.accountByCustomerUsername.profileByUsername.phone}
-                                </div>
-                            </div>
-
-                            <div>Thông tin thuê văn phòng:</div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Tên văn phòng</label>
-
-                                <div class="col-sm-10">
-                                    ${appointmentList.officeByOfficeId.name}
-                                    <input type="hidden" id="officeID" name="officeID"
-                                           value="${appointmentList.officeByOfficeId.id}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix" hidden>
-                                <label for="categoryId" class="col-sm-2 control-label">Id</label>
-                                ${office.categoryId}<input type="hidden" name="categoryId" id="categoryId"
-                                                           value="${office.categoryId}">
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="officeCategory" class="col-sm-2 control-label">Loại văn phòng</label>
-
-                                <div class="col-sm-10">
-                                    ${office.categoryByCategoryId.description}
-                                    <input type="hidden" id="officeCategory" name="officeCategory"
-                                           value="${office.categoryByCategoryId.description}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="officeAddress" class="col-sm-2 control-label">Địa chỉ văn phòng</label>
-
-                                <div class="col-sm-10">
-                                    ${office.address}
-                                    <input type="hidden" id="officeAddress" name="officeAddress"
-                                           value="${office.address}">
-                                </div>
-                            </div>
-                            <c:if test="${office.categoryId == 2}">
+                            <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
+                                <div><h3>Thông tin thuê văn phòng</h3></div>
                                 <div class="form-group clearfix">
-                                    <label for="officeArea" class="col-sm-2 control-label">Diện tích thuê văn
-                                        phòng(m2):</label>
+                                    <div for="officeID" class="col-sm-2 control-label">Tên văn phòng</div>
+
+                                    <div class="col-sm-10" style="font-weight: bold">
+                                        ${appointmentList.officeByOfficeId.name}
+                                        <input type="hidden" id="officeID" name="officeID"
+                                               value="${appointmentList.officeByOfficeId.id}">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix" hidden>
+                                    <div for="categoryId" class="col-sm-2 control-label">Id</div>
+                                    ${office.categoryId}<input type="hidden" name="categoryId" id="categoryId"
+                                                               value="${office.categoryId}">
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="officeCategory" class="col-sm-2 control-label">Loại văn phòng</div>
+
+                                    <div class="col-sm-10" style="font-weight: bold">
+                                        ${office.categoryByCategoryId.description}
+                                        <input type="hidden" id="officeCategory" name="officeCategory"
+                                               value="${office.categoryByCategoryId.description}">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="officeAddress" class="col-sm-2 control-label">Địa chỉ văn phòng</div>
 
                                     <div class="col-sm-10">
-                                        <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
-                                               name="officeArea" min="${office.minArea}"
-                                               value="${office.minArea}" required="true">
-                                        Diện tích thuê tối thiểu là: ${office.minArea} m2
+                                        ${office.address}
+                                        <input type="hidden" id="officeAddress" name="officeAddress"
+                                               value="${office.address}">
+                                    </div>
+                                </div>
+                                <c:if test="${office.categoryId == 2}">
+                                    <div class="form-group clearfix">
+                                        <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê văn
+                                            phòng(m2):
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
+                                                   name="officeArea" min="${office.minArea}" class="form-control"
+                                                   value="${office.minArea}" required="true">
+                                        </div>
+                                        <div hidden>
+                                            <input name="parentArea" value="${office.area}">
+                                            <input name="minArea" value="${office.minArea}">
+                                        </div>
+                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</div>
+
+                                        <div class="col-sm-4">
+                                            <input style="display: inline-block" type='number'
+                                                   onchange="calculatePaymentFee()" class="form-control"
+                                                   name="paymentFee"
+                                                   id="paymentFee" value="${office.price}" required="true"/>
+                                        </div>
+                                        <div class="col-sm-12" style="margin: auto">
+                                            <div class="col-sm-2" style="padding: 0"><h5>Lưu ý:</h5></div>
+                                            <div class="col-sm-10">
+                                                <h5>Diện tích thuê tối thiểu là: <span
+                                                        style="font-weight: bold">${office.minArea} m2</span> - Diện
+                                                    tích thuê tối đa là: <span style="font-weight: bold">${office.area} m2</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </c:if>
+                                <c:if test="${office.categoryId == 1}">
+                                    <div class="form-group clearfix">
+                                        <div for="officeArea" class="col-sm-2 control-label">Diện tích văn
+                                            phòng(m2):
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                                ${office.area}
+                                            <input type="hidden" id="officeArea"
+                                                   name="officeArea" value="${office.area}">
+                                        </div>
+                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</div>
+
+                                        <div class="col-sm-4">
+                                            <input style="display: inline-block" type='number'
+                                                   onchange="calculatePaymentFee()" class="form-control"
+                                                   name="paymentFee"
+                                                   id="paymentFee" value="${office.price / office.area}"
+                                                   required="true"/>
+                                        </div>
+                                    </div>
+                                </c:if>
+                                <div class="form-group clearfix">
+                                    <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</div>
+
+                                    <div class="col-sm-4">
+                                        <input type='text' class="form-control"
+                                               name="startDate"
+                                               id="startDate"
+                                               value="${contract.startDate}"/>
+                                    </div>
+
+                                    <div for="time" class="col-sm-2 control-label">Thời gian thuê(tháng):</div>
+
+                                    <div class="col-sm-4">
+                                        <input type='number' class="form-control"
+                                               onchange="calculateEndDate();calculatePaymentFee()"
+                                               name="time" min="${office.minTime}"
+                                               id="time" required="true"
+                                               value="${office.minTime}"/>
+                                        Thời gian thuê tối thiểu là: ${office.minTime} tháng
                                     </div>
                                     <div hidden>
-                                        <input name="parentArea" value="${office.area}">
-                                        <input name="minArea" value="${office.minArea}">
+                                        <input name="minTime" value="${office.minTime}">
+                                    </div>
+                                    <div for="endDate" class="col-sm-2 control-label">Ngày kết thúc</div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" readonly type='text'
+                                               class="form-control"
+                                               name="endDate"
+                                               id="endDate"
+                                               value="${contract.endDate}"/>
                                     </div>
                                 </div>
-                            </c:if>
-                            <c:if test="${office.categoryId == 1}">
+
                                 <div class="form-group clearfix">
-                                    <label for="officeArea" class="col-sm-2 control-label">Diện tích văn
-                                        phòng(m2):</label>
 
-                                    <div class="col-sm-10">
-                                            ${office.area}
-                                        <input type="hidden" id="officeArea"
-                                               name="officeArea" value="${office.area}">
+                                    <div for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</div>
+
+                                    <div class="col-sm-4">
+                                        <select name="paymentTerm" class="form-control"
+                                                onchange="calculatePaymentFee();"
+                                                id="paymentTerm" required="true">
+                                            <option value="">Xin chọn thời hạn thanh toán</option>
+                                            <c:forEach var="item" items="${paymentTermList}">
+                                                <option value="${item.id}">
+                                                        ${item.description}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div for="deposit" class="col-sm-2 control-label">Tiền đặt cọc văn phòng</div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="deposit" min="0" required="true"
+                                               id="deposit" value=""/>
                                     </div>
                                 </div>
-                            </c:if>
-                            <div class="form-group clearfix">
-                                <label for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</label>
-
-                                <div class="col-sm-10">
-                                    <input type='text' class="form-control"
-                                           name="startDate"
-                                           id="startDate"
-                                           value="${contract.startDate}"/>
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="time" class="col-sm-2 control-label">Thời gian thuê(tháng):</label>
-
-                                <div class="col-sm-10">
-                                    <input type='number' class="form-control"
-                                           onchange="calculateEndDate();calculatePaymentFee()"
-                                           name="time" min="${office.minTime}"
-                                           id="time" required="true"
-                                           value="${office.minTime}"/>
-                                    Thời gian thuê tối thiểu là: ${office.minTime} tháng
-                                </div>
-                                <div hidden>
-                                    <input name="minTime" value="${office.minTime}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
-
-                                <div class="col-sm-10">
-                                    <input style="display: inline-block" readonly type='text' class="form-control"
-                                           name="endDate"
-                                           id="endDate"
-                                           value="${contract.endDate}"/>
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</label>
-
-                                <div class="col-sm-10">
-                                    <select name="paymentTerm" class="form-control" onchange="calculatePaymentFee();"
-                                            id="paymentTerm" required="true">
-                                        <option value="">Xin chọn thời hạn thanh toán</option>
-                                        <c:forEach var="item" items="${paymentTermList}">
-                                            <option value="${item.id}">
-                                                    ${item.description}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-                            <c:if test="${office.categoryId == 2}">
                                 <div class="form-group clearfix">
-                                    <label for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</label>
-
-                                    <div class="col-sm-10">
-                                        <input style="display: inline-block" type='number'
-                                               onchange="calculatePaymentFee()" class="form-control"
-                                               name="paymentFee"
-                                               id="paymentFee" value="${office.price}" required="true"/>
+                                    <div for="price" class="col-sm-12 control-label"><h4>Tổng số tiền bên B phải thanh
+                                        toán cho bên A theo mỗi
+                                        kỳ (<span name="term" id="term" style="font-weight: bold"></span>) là: <span
+                                                name="price" id="price" style="font-weight: bold"></span> VNĐ</h4>
                                     </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${office.categoryId == 1}">
-                                <div class="form-group clearfix">
-                                    <label for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</label>
-
-                                    <div class="col-sm-10">
-                                        <input style="display: inline-block" type='number'
-                                               onchange="calculatePaymentFee()" class="form-control"
-                                               name="paymentFee"
-                                               id="paymentFee" value="${office.price / office.area}" required="true"/>
-                                    </div>
-                                </div>
-                            </c:if>
-                            <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2 control-label">Số tiền phải thanh toán mỗi
-                                    kỳ(VNĐ):</label>
-
-                                <div class="col-sm-10">
-                                    <span name="price" id="price"></span>
                                 </div>
                             </div>
-                            <div class="form-group clearfix">
-                                <label for="deposit" class="col-sm-2 control-label">Tiền đặt cọc</label>
+                            <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
+                                <div><h3>Thông tin thêm</h3></div>
+                                <div class="form-group clearfix">
+                                    <div class="col-sm-2 control-label">Hình ảnh</div>
+                                    <br>
+                                    <input type="hidden" name="imageUrl" id="imageUrl" value="${contract.imageUrl}">
 
-                                <div class="col-sm-10">
-                                    <input style="display: inline-block" type='number' class="form-control"
-                                           name="deposit"
-                                           id="deposit" value=""/>
+                                    <div class="images clearfix" id="images">
+                                        <div class="upload-img">
+                                            <div class="img"><img
+                                                    src="${contract.imageUrl!=null?contract.imageUrl:'/upload/placeholder.jpg'}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="clear-float"></div>
+                                    <input type="file" id="file" name="file" accept="image/*"
+                                           title="Mời chọn hình ảnh">
                                 </div>
                             </div>
                             <div class="button-post">
@@ -310,6 +350,7 @@
             console.log(total);
             var price = document.getElementById('price');
             price.innerHTML = numberWithCommas(total);
+            document.getElementById('term').innerHTML = time + ' tháng';
         }
     }
     ;
@@ -360,7 +401,7 @@
     }
     ;
     function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
     ;
 </script>

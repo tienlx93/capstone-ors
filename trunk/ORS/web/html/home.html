@@ -14,44 +14,52 @@
         <div class="container">
             <div class="search-title">Tìm kiếm văn phòng của bạn</div>
             <fieldset class="search-field">
-                <div class="search-line row">
-                    <div class="col-md-12" style="padding: 0">
+                <div class="search-line clearfix">
+                    <div class="col-sm-12 col-md-7" style="padding: 0">
                         <span class="search-label">Địa chỉ</span>
                         <div class="search-input">
-                            <input type="text" ng-model="searchKey" style="width: 100%"
+                            <input type="text" ng-model="searchKey" style="width: 100%" id="place"
                                    placeholder="quận, huyện, địa chỉ,..." googleplace/>
                             <input type="hidden" ng-model="searchTerm.latitude" id="latitude">
                             <input type="hidden" ng-model="searchTerm.longitude" id="longitude">
                         </div>
                     </div>
-                </div>
-                <div class="search-line row">
-                    <div class="col-sm-12 col-md-6" style="padding: 0">
-                        <span class="search-label">Khoảng giá</span>
+                    <div class="col-sm-12 col-md-5" style="padding: 0">
+                        <span class="search-label">Giá / m<sup>2</sup></span>
 
-                        <div class="search-input" style="margin-bottom: 10px;">
-                            <select ng-model="priceRange" style="width: 100%">
-                                <option value="0">Thỏa thuận</option>
-                                <option value="1">100.000 - 200.000</option>
-                                <option value="2">200.000 - 300.000</option>
-                                <option value="3">300.000 - 400.000</option>
-                                <option value="4">400.000 - 500.000</option>
-                                <option value="5">&gt; 500.000</option>
-                            </select>
+                        <div class="search-input" >
+                            <input type="text" ng-model="price" real-time-currency style="width: 100%"/>
                         </div>
                     </div>
-                    <div class="col-sm-12 col-md-6" style="padding: 0">
-                        <button class="btn btn-green" style="width: 100%" ng-click="searchListOffice()">
-                            Tìm kiếm
-                        </button>
+                </div>
+                <div class="panel panel-default panel-inverse">
+                    <div class="panel-heading" role="tab" id="headingOne">
+                        <h4 class="panel-title">
+                            <a href data-toggle="collapse" data-parent="#accordion" ng-click="isCollapsed = !isCollapsed"
+                               aria-expanded="true" aria-controls="collapseOne">
+                                Tìm theo danh sách tiện nghi
+                                <span class="caret"></span>
+                            </a>
+                        </h4>
                     </div>
-
+                    <div id="collapseOne" class="panel-collapse in" role="tabpanel" aria-labelledby="headingOne"
+                         collapse="isCollapsed" style="height: auto;">
+                        <div class="panel-body" style="text-align: left;">
+                            <ul>
+                                <li ng-repeat="amenity in amenityWeight track by $index" class="col-sm-3">
+                                    <label style="font-weight: normal;">
+                                        <input type="checkbox" ng-model="q[$index]" value="{{$index}}"> {{amenity.amenity}}
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="search-line row">
-                    <h3 style="text-align: center;">
-                        <a href="#/requestOffice" class="btn btn-green" style="  width: 100%;line-height: 26px;font-size: 20px;font-weight: 600;">Đặt yêu cầu văn phòng</a>
-                    </h3>
+                <div class="search-line">
+                    <button class="btn btn-green" style="width: 100%" ng-click="searchListOffice()">
+                        Tìm kiếm
+                    </button>
                 </div>
             </fieldset>
         </div>

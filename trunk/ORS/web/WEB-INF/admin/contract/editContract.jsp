@@ -43,166 +43,321 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Sửa thông tin hợp đồng
+                        <h2 style="margin-top: 5px">Sửa thông tin hợp đồng</h2>
                     </div>
                     <div>
-                        <form action="contract" method="post" id="form">
-                            <div class="form-group clearfix hidden">
+                        <form action="contract" method="post" id="form" onsubmit="return validateArea()">
+                            <div class="form-group clearfix" hidden>
                                 <div class="col-sm-10">
                                     <input type="hidden" id="contractId" name="contractId"
                                            value="${contract.id}">
                                 </div>
                             </div>
-                            <div>Bên cho thuê văn phòng (Bên A)</div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Ông(Bà):</label>
 
-                                <div class="col-sm-10">
-                                    Công ty ORS
+                            <div class="row" style="margin: auto">
+                                <div class="col-sm-6" style="border-right: 2px solid #000000">
+                                    <div><h3>Bên cho thuê văn phòng (Bên A)</h3></div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Ông (Bà):
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            Công ty ORS
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Email:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            contact@tienlx.me
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">Là
+                                            đại diện của văn
+                                            phòng:
+                                        </div>
+
+                                        <div class="col-sm-9">
+
+                                            ${contract.officeByOfficeId.name}
+                                            <input type="hidden" id="officeID" name="officeID"
+                                                   value="${contract.officeByOfficeId.id}">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-sm-6">
+                                    <div><h3>Bên thuê văn phòng (Bên B)</h3></div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Ông (Bà):
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${contract.accountByCustomerUsername.profileByUsername.fullName}
+                                            <input type="hidden" id="customerName" name="customerName"
+                                                   value="${contract.customerUsername}">
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Địa chỉ:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${contract.accountByCustomerUsername.profileByUsername.address}
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="customerName"
+                                             class="col-sm-3 control-label">Số điện thoại:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${contract.accountByCustomerUsername.profileByUsername.phone}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Email:</label>
+                            <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
+                                <div><h3>Thông tin thuê văn phòng</h3></div>
+                                <div class="form-group clearfix">
+                                    <div for="officeID" class="col-sm-2 control-label">Tên văn phòng</div>
 
-                                <div class="col-sm-10">
-                                    contact@tienlx.me
+                                    <div class="col-sm-10" style="font-weight: bold">
+                                        ${contract.officeByOfficeId.name}
+                                        <input type="hidden" id="officeID" name="officeID"
+                                               value="${contract.officeByOfficeId.id}">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="officeCategory" class="col-sm-2 control-label">Loại văn phòng</div>
+
+                                    <div class="col-sm-10" style="font-weight: bold">
+                                        ${contract.officeByOfficeId.categoryByCategoryId.description}
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="officeAddress" class="col-sm-2 control-label">Địa chỉ văn phòng</div>
+
+                                    <div class="col-sm-10">
+                                        ${contract.officeByOfficeId.address}
+                                    </div>
+                                </div>
+
+                                <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 2}">
+                                    <div class="form-group clearfix">
+                                        <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê văn
+                                            phòng (m<sup>2</sup>):
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
+                                                   name="officeArea" min="${contract.officeByOfficeId.minArea}"
+                                                   class="form-control"
+                                                   value="${contract.officeByOfficeId.minArea}" required="true">
+                                        </div>
+                                        <div hidden>
+                                            <input name="parentArea" value="${contract.officeByOfficeId.area}">
+                                            <input name="minArea" value="${contract.officeByOfficeId.minArea}">
+                                        </div>
+                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <input style="display: inline-block" type='number'
+                                                   onchange="calculatePaymentFee()" class="form-control"
+                                                   name="paymentFee"
+                                                   id="paymentFee" value="${contract.paymentFee}" required="true"/>
+                                        </div>
+                                        <div class="col-sm-12" style="margin: auto">
+                                            <div class="col-sm-2" style="padding: 0"><h5>Lưu ý:</h5></div>
+                                            <div class="col-sm-10">
+                                                <h5>Diện tích thuê tối thiểu là: <span
+                                                        style="font-weight: bold">${contract.officeByOfficeId.minArea} m<sup>2</sup></span>
+                                                    <br>Diện tích thuê tối đa là: <span
+                                                            style="font-weight: bold">${contract.officeByOfficeId.officeByParentOfficeId.area} m<sup>2</sup></span>
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </c:if>
+                                <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 1}">
+                                    <div class="form-group clearfix">
+                                        <div for="officeArea" class="col-sm-2 control-label">Diện tích văn
+                                            phòng (m<sup>2</sup>):
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                                ${contract.officeByOfficeId.area}
+                                            <input type="hidden" id="officeArea"
+                                                   name="officeArea" value="${contract.officeByOfficeId.area}">
+                                        </div>
+                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <input style="display: inline-block" type='number'
+                                                   onchange="calculatePaymentFee()" class="form-control"
+                                                   name="paymentFee"
+                                                   id="paymentFee"
+                                                   value="${contract.officeByOfficeId.price / contract.officeByOfficeId.area}"
+                                                   required="true"/>
+                                        </div>
+                                    </div>
+                                </c:if>
+
+                                <div class="form-group clearfix">
+                                    <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</div>
+
+                                    <div class="col-sm-4">
+                                        <input type='text' class="form-control"
+                                               name="startDate"
+                                               id="startDate"
+                                               value="${contract.startDate}"/>
+                                    </div>
+
+                                    <div for="time" class="col-sm-2 control-label">Thời gian thuê (tháng):</div>
+
+                                    <div class="col-sm-4">
+                                        <input type='number' class="form-control"
+                                               onchange="calculateEndDate();calculatePaymentFee()"
+                                               name="time" min="${contract.officeByOfficeId.minTime}"
+                                               id="time" required="true"
+                                               value="${contract.officeByOfficeId.minTime}"/>
+                                        Thời gian thuê tối thiểu là: ${contract.officeByOfficeId.minTime} tháng
+                                    </div>
+                                    <div hidden>
+                                        <input name="minTime" value="${contract.officeByOfficeId.minTime}">
+                                    </div>
+                                    <div for="endDate" class="col-sm-2 control-label">Ngày kết thúc</div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" readonly type='text'
+                                               class="form-control"
+                                               name="endDate"
+                                               id="endDate"
+                                               value="${contract.endDate}"/>
+                                    </div>
+                                </div>
+
+                                <%--<div class="form-group clearfix">
+                                    <label for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</label>
+
+                                    <div class="col-sm-10">
+                                        <input style="display: inline-block" type='text' class="form-control"
+                                               name="startDate"
+                                               id="startDate"
+                                               value="${contract.startDate}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="time" class="col-sm-2 control-label">Thời gian thuê(tháng):</label>
+
+                                    <div class="col-sm-10">
+                                        <input type='number' class="form-control"
+                                               onchange="calculateEndDate();calculatePaymentFee()"
+                                               name="time" min="${contract.officeByOfficeId.minTime}"
+                                               id="time" required="true"
+                                               value="${contract.officeByOfficeId.minTime}"/>
+                                        Thời gian thuê tối thiểu là: ${contract.officeByOfficeId.minTime} tháng
+                                    </div>
+                                    <div hidden>
+                                        <input name="minTime" value="${contract.officeByOfficeId.minTime}">
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
+
+                                    <div class="col-sm-10">
+                                        <input style="display: inline-block" readonly type='text'
+                                               class="form-control"
+                                               name="endDate"
+                                               id="endDate"
+                                               value="${contract.endDate}"/>
+                                    </div>
+                                </div>--%>
+
+                                <div class="form-group clearfix">
+
+                                    <div for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</div>
+
+                                    <div class="col-sm-4">
+                                        <select name="paymentTerm" class="form-control"
+                                                onchange="calculatePaymentFee();"
+                                                id="paymentTerm" required="true">
+                                            <option value="">Xin chọn thời hạn thanh toán</option>
+                                            <c:forEach var="item" items="${paymentTermList}">
+                                                <option value="${item.id}"
+                                                        <c:if test="${contract.paymentTerm ==item.id}">selected</c:if> >
+                                                        ${item.description}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                    <div for="deposit" class="col-sm-2 control-label">Tiền đặt cọc văn phòng</div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="deposit"
+                                               id="deposit" value="${contract.deposit}"/>
+                                    </div>
+                                </div>
+
+                                <div class="form-group clearfix">
+                                    <div class="col-sm-2 control-label">Hình ảnh</div><br>
+
+                                    <div class="images clearfix" id="images">
+                                    </div>
+                                    <div class="clear-float"></div>
+                                    <input type="hidden" id="imageUrls" name="imageUrls"
+                                           value="${contract.officeByOfficeId.imageUrls}">
+                                </div>
+
+                                <%--<div class="form-group clearfix">
+                                    <label class="col-sm-2 control-label">Kỳ hạn thanh toán</label>
+
+                                    <div class="col-sm-10">
+                                        <select name="paymentTerm" class="form-control" id="paymentTerm">
+                                            <c:forEach var="item" items="${paymentTermList}">
+                                                <option value="${item.id}"
+                                                        <c:if test="${contract.paymentTerm ==item.id}">selected</c:if> >
+                                                        ${item.description}</option>
+                                            </c:forEach>
+                                        </select>
+                                    </div>
+                                </div>--%>
+
+                                <%--<div class="form-group clearfix">
+                                    <label for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</label>
+
+                                    <div class="col-sm-10">
+                                        <input style="display: inline-block" type='text' class="form-control"
+                                               name="paymentFee"
+                                               id="paymentFee" value="${contract.paymentFee}"/>
+                                    </div>
+                                </div>--%>
+                                <%--<div class="form-group clearfix">
+                                    <label for="deposit" class="col-sm-2 control-label">Tiền đặt cọc</label>
+
+                                    <div class="col-sm-10">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="deposit"
+                                               id="deposit" value="${contract.deposit}"/>
+                                    </div>
+                                </div>--%>
+                                <div class="button-post">
+                                    <button type="submit" value="update" class="btn btn-primary" name="action">Cập
+                                        nhật
+                                    </button>
+                                    <a href="/admin/contract" class="btn btn-default">Hủy</a>
                                 </div>
                             </div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Là đại diện của văn phòng:</label>
 
-                                <div class="col-sm-10">
-                                    ${contract.officeByOfficeId.name}
-                                    <input type="hidden" id="officeID" name="officeID"
-                                           value="${contract.officeByOfficeId.id}">
-                                </div>
-                            </div>
-
-                            <div>Bên thuê văn phòng (Bên B)</div>
-                            <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Ông(Bà):</label>
-
-                                <div class="col-sm-10">
-                                    ${contract.accountByCustomerUsername.profileByUsername.fullName}
-                                    <input type="hidden" id="customerName" name="customerName"
-                                           value="${contract.customerUsername}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Địa chỉ:</label>
-
-                                <div class="col-sm-10">
-                                    ${contract.accountByCustomerUsername.profileByUsername.address}
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Số điện thoại:</label>
-
-                                <div class="col-sm-10">
-                                    ${contract.accountByCustomerUsername.profileByUsername.phone}
-                                </div>
-                            </div>
-
-
-                            <div>Thông tin thuê văn phòng:</div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Tên văn phòng</label>
-
-                                <div class="col-sm-10">
-                                    ${contract.officeByOfficeId.name}
-                                    <input type="hidden" id="officeID" name="officeID"
-                                           value="${contract.officeByOfficeId.id}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Loại văn phòng:</label>
-
-                                <div class="col-sm-10">
-                                    ${contract.officeByOfficeId.categoryByCategoryId.description}
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="officeID" class="col-sm-2 control-label">Địa chỉ văn phòng:</label>
-
-                                <div class="col-sm-10">
-                                    ${contract.officeByOfficeId.address}
-                                </div>
-                            </div>
-
-
-                            <div class="form-group clearfix">
-                                <label for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</label>
-
-                                <div class="col-sm-10">
-                                    <input style="display: inline-block" type='text' class="form-control"
-                                           name="startDate"
-                                           id="startDate"
-                                           value="${contract.startDate}"/>
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="time" class="col-sm-2 control-label">Thời gian thuê(tháng):</label>
-
-                                <div class="col-sm-10">
-                                    <input type='number' class="form-control"
-                                           onchange="calculateEndDate();calculatePaymentFee()"
-                                           name="time" min="${contract.officeByOfficeId.minTime}"
-                                           id="time" required="true"
-                                           value="${contract.officeByOfficeId.minTime}"/>
-                                    Thời gian thuê tối thiểu là: ${contract.officeByOfficeId.minTime} tháng
-                                </div>
-                                <div hidden>
-                                    <input name="minTime" value="${contract.officeByOfficeId.minTime}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
-
-                                <div class="col-sm-10">
-                                    <input style="display: inline-block" readonly type='text' class="form-control"
-                                           name="endDate"
-                                           id="endDate"
-                                           value="${contract.endDate}"/>
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Kỳ hạn thanh toán</label>
-
-                                <div class="col-sm-10">
-                                    <select name="paymentTerm" class="form-control" id="paymentTerm">
-                                        <c:forEach var="item" items="${paymentTermList}">
-                                            <option value="${item.id}"
-                                                    <c:if test="${contract.paymentTerm ==item.id}">selected</c:if> >
-                                                    ${item.description}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</label>
-
-                                <div class="col-sm-10">
-                                    <input style="display: inline-block" type='text' class="form-control"
-                                           name="paymentFee"
-                                           id="paymentFee" value="${contract.paymentFee}"/>
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="deposit" class="col-sm-2 control-label">Tiền đặt cọc</label>
-
-                                <div class="col-sm-10">
-                                    <input style="display: inline-block" type='number' class="form-control"
-                                           name="deposit"
-                                           id="deposit" value="${contract.deposit}"/>
-                                </div>
-                            </div>
-                            <div class="button-post">
-                                <button type="submit" value="update" class="btn btn-primary" name="action">Cập nhật
-                                </button>
-                                <a href="/admin/contract" class="btn btn-default">Hủy</a>
-                            </div>
                         </form>
                     </div>
 
@@ -270,19 +425,29 @@
     ;
     function validateArea() {
         var parentArea = document.createContract.parentArea.value;
+        var minArea = document.createContract.minArea, value;
         var area = document.createContract.officeArea.value;
 
+        console.log(parentArea);
+        console.log(area);
         if (parseFloat(area) > parseFloat(parentArea)) {
             alert('Diện tích văn phòng con không được lớn hơn diện tích văn phòng cha!');
+            return false;
+        } else if (parseFloat(minArea) > parseFloat(area)) {
+            alert('Diện tích thuê không được nhỏ hơn diện tích tối thiểu');
             return false;
         }
         return true;
     }
     ;
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    ;
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/street.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
 
 </body>
 </html>

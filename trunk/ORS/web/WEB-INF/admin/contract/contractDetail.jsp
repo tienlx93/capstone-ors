@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Thông tin hợp đồng
+                        <h2 style="margin-top: 5px">Thông tin hợp đồng</h2>
                     </div>
                     <div>
                         <form action="contract" method="get" name="contractDetail" onsubmit="return validateArea()">
@@ -144,18 +144,17 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m2):</div>
+                                <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):</div>
 
                                 <div name="officeArea" id="officeArea" class="col-sm-4">
                                     ${contract.officeByOfficeId.area}
                                 </div>
-                                <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</div>
+                                <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
 
                                 <div name="paymentFee" id="paymentFee" class="col-sm-4">
                                     ${contract.paymentFee} VNĐ
                                 </div>
                             </div>
-
                             <div class="form-group clearfix">
                                 <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
@@ -169,7 +168,6 @@
                                     ${contract.endDate}
                                 </div>
                             </div>
-
                             <div class="form-group clearfix">
                                 <div class="col-sm-2 control-label">Kỳ hạn thanh toán:</div>
 

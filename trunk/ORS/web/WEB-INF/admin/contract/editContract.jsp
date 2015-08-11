@@ -180,7 +180,7 @@
                                                 <h5>Diện tích thuê tối thiểu là: <span
                                                         style="font-weight: bold">${contract.officeByOfficeId.minArea} m<sup>2</sup></span>
                                                     <br>Diện tích thuê tối đa là: <span
-                                                            style="font-weight: bold">${contract.officeByOfficeId.area} m<sup>2</sup></span>
+                                                            style="font-weight: bold">${contract.officeByOfficeId.officeByParentOfficeId.area} m<sup>2</sup></span>
                                                 </h5>
                                             </div>
                                         </div>

@@ -28,6 +28,8 @@ public class OfficeJSON {
     private List<String> amenities;
     private List<String> images;
     private String status;
+    private Double minArea;
+    private int minTime;
 
     public OfficeJSON() {
     }
@@ -43,6 +45,8 @@ public class OfficeJSON {
         this.address = office.getAddress();
         this.latitude = office.getLatitude();
         this.longitude = office.getLongitude();
+        this.minArea = office.getMinArea();
+        this.minTime = office.getMinTime();
         this.district = office.getDistrict();
         this.city = office.getCity();
         this.category = office.getCategoryByCategoryId().getDescription();
@@ -59,6 +63,7 @@ public class OfficeJSON {
             }
         }
         this.status = office.getOfficeStatusByStatusId().getDescription();
+
     }
 
     public int getId() {
@@ -195,5 +200,21 @@ public class OfficeJSON {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public int getMinTime() {
+        return minTime;
+    }
+
+    public void setMinTime(int minTime) {
+        this.minTime = minTime;
+    }
+
+    public double getMinArea() {
+        return minArea;
+    }
+
+    public void setMinArea(double minArea) {
+        this.minArea = minArea;
     }
 }

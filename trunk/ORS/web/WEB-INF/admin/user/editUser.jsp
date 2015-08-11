@@ -46,7 +46,7 @@
           <div>
             <form action="${pageContext.request.contextPath}/admin/user" method="post">
               <div class="form-group">
-                <label>Tên đăng nh</label>
+                <label>Tên đăng nhập</label>
                 <span>${account.username}</span>
                 <input type="hidden" name="username" class="" value="${account.username}">
               </div>

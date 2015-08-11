@@ -32,7 +32,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="title">Quản lí tài khoản</h1>
+        <h1 class="page-header">Quản lí tài khoản</h1>
     </div>
 
     <div class="container-padding">
@@ -70,7 +70,8 @@
                                     <td>
                                         <form action="${pageContext.request.contextPath}/admin/user" method="post">
                                             <input type="hidden" value="${item.username}" name="username">
-                                            <button type="submit" name="action" value="delete">Xóa</button>
+
+                                            <button type="submit" class="btn btn-danger" name="action" value="delete">Xóa</button>
                                         </form>
                                         <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}">
                                             Sửa</a>

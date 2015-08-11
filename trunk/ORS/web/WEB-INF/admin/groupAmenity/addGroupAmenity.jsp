@@ -41,7 +41,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            Thêm mới nhóm tiện nghi
+            <h1 class="page-header">Thêm mới nhóm tiện nghi</h1>
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/groupAmenity" method="post">
@@ -56,8 +56,10 @@
               </div>
 
               <div class="button-post">
+                <button type="submit" value="save" class="btn btn-primary" name="action">Tạo mới
+                </button>
                 <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
-                <button type="submit" value="save" name="action">Tạo mới</button>
+
               </div>
             </form>
           </div>

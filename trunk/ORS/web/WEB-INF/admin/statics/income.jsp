@@ -37,7 +37,7 @@
 <jsp:include page="/WEB-INF/admin/left.jsp"/>
 <div class="content">
     <div class="page-header">
-        <h1 class="title">Thống kê</h1>
+        <h1 class="page-header">Thống kê</h1>
     </div>
 
     <div class="container-padding">

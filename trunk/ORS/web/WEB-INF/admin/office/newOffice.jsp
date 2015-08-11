@@ -34,7 +34,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="title">Quản lí văn phòng</h1>
+        <h1 class="page-header">Quản lí văn phòng</h1>
     </div>
 
     <div class="container-padding">

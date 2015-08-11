@@ -38,6 +38,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 } else if (data.paymentTerm == "6 tháng") {
                     $scope.Term = 6;
                 } else $scope.Term = 1;
+
             }
         });
 

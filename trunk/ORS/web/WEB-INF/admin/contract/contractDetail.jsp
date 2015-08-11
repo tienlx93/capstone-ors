@@ -144,12 +144,12 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m2):</div>
+                                <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):</div>
 
                                 <div name="officeArea" id="officeArea" class="col-sm-4">
                                     ${contract.officeByOfficeId.area}
                                 </div>
-                                <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</div>
+                                <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
 
                                 <div name="paymentFee" id="paymentFee" class="col-sm-4">
                                     ${contract.paymentFee} VNĐ

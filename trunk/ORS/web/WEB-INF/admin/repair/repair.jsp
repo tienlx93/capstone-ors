@@ -167,7 +167,7 @@
                               <form action="repair?action=editing" method="post">
                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                 <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
-                                ${item.contractByContractId.customerUsername}</a></td>
+                                    ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                                 <td>
                                   <fmt:formatDate value="${item.createTime}" pattern="dd-MM-yyyy"/>
                                 </td>
@@ -240,7 +240,7 @@
                               <tr>
                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                 <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
-                                    ${item.contractByContractId.customerUsername}</a></td>td>
+                                    ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.assignedTime}" /></td>
                                 <td>${item.description}</td>
                                 <td>
@@ -276,7 +276,7 @@
                               <tr>
                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                 <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
-                                    ${item.contractByContractId.customerUsername}</a></td>
+                                    ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.assignedTime}" /></td>
                                 <td>${item.assignedStaff}</td>
                                 <td>${item.description}</td>
@@ -314,7 +314,7 @@
                           <tr>
                             <td>${item.contractByContractId.officeByOfficeId.name}</td>
                             <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
-                                ${item.contractByContractId.customerUsername}</a></td>
+                                ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignedStaff}</td>
                             </c:if>
@@ -352,7 +352,7 @@
                           <tr>
                             <td>${item.contractByContractId.officeByOfficeId.name}</td>
                             <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
-                                ${item.contractByContractId.customerUsername}</a></td>
+                                ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignedStaff}</td>
                             </c:if>
@@ -390,7 +390,7 @@
                           <tr>
                             <td>${item.contractByContractId.officeByOfficeId.name}</td>
                             <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
-                                ${item.contractByContractId.customerUsername}</a></td>
+                                ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignedStaff}</td>
                             </c:if>

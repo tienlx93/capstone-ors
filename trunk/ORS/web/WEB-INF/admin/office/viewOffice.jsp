@@ -42,11 +42,11 @@
                     <div class="panel-title">
                         Danh sách văn phòng
                     </div>
-                    <div>
+                    <div><button class="btn-default">
                         <a class="btn" href="${pageContext.request.contextPath}/admin/office?action=new">
                             <span class="icon color5"><i class="fa fa-plus"></i></span>
                             Thêm mới văn phòng
-                        </a>
+                        </a></button>
                     </div>
                     <div>
                         <table class="table">
@@ -70,10 +70,11 @@
                                     <td>${item.priceTermByPriceTerm.description}</td>
                                     <td>${item.area}</td>
                                     <td>${item.address}</td>
-                                    <td><a class="btn"
-                                           href="office?action=editing&id=${item.id}">
-                                        Xem chi tiết
-                                    </a></td>
+                                    <td>
+                                        <a href="office?action=editing&id=${item.id}"
+                                           title="Chi tiết"
+                                           class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>

@@ -150,12 +150,12 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <div for="startDate" class="col-sm-2 control-label">Diện tích thuê(m2):</div>
+                                    <div for="startDate" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):</div>
 
                                     <div class="col-sm-4">
                                         ${info.officeByOfficeId.area}
                                     </div>
-                                    <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m2:</div>
+                                    <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
 
                                     <div class="col-sm-4">
                                         ${info.paymentFee}

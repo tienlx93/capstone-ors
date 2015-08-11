@@ -61,7 +61,8 @@ public class ContractController extends HttpServlet {
                     officeChildren.setDistrict(officeParent.getDistrict());
                     officeChildren.setCity(officeParent.getCity());
                     officeChildren.setMinTime(officeParent.getMinTime());
-                    officeChildren.setMinArea(officeParent.getMinArea())    ;
+                    officeChildren.setMinArea(officeParent.getMinArea());
+                    officeChildren.setImageUrls(officeParent.getImageUrls());
                     officeChildren.setParentOfficeId(officeParent.getId());
 
                     officeDao.save(officeChildren);

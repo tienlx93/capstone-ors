@@ -166,7 +166,7 @@
                                 <c:if test="${office.categoryId == 2}">
                                     <div class="form-group clearfix">
                                         <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê văn
-                                            phòng(m2):
+                                            phòng(m<sup>2</sup>):
                                         </div>
 
                                         <div class="col-sm-4">
@@ -178,7 +178,7 @@
                                             <input name="parentArea" value="${office.area}">
                                             <input name="minArea" value="${office.minArea}">
                                         </div>
-                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m2:</div>
+                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
 
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
@@ -190,8 +190,8 @@
                                             <div class="col-sm-2" style="padding: 0"><h5>Lưu ý:</h5></div>
                                             <div class="col-sm-10">
                                                 <h5>Diện tích thuê tối thiểu là: <span
-                                                        style="font-weight: bold">${office.minArea} m2</span> - Diện
-                                                    tích thuê tối đa là: <span style="font-weight: bold">${office.area} m2</span>
+                                                        style="font-weight: bold">${office.minArea} m<sup>2</sup></span> - Diện
+                                                    tích thuê tối đa là: <span style="font-weight: bold">${office.area} m<sup>2</sup></span>
                                                 </h5>
                                             </div>
                                         </div>
@@ -201,7 +201,7 @@
                                 <c:if test="${office.categoryId == 1}">
                                     <div class="form-group clearfix">
                                         <div for="officeArea" class="col-sm-2 control-label">Diện tích văn
-                                            phòng(m2):
+                                            phòng(m<sup>2</sup>):
                                         </div>
 
                                         <div class="col-sm-4">
@@ -209,7 +209,7 @@
                                             <input type="hidden" id="officeArea"
                                                    name="officeArea" value="${office.area}">
                                         </div>
-                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m2:</div>
+                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
 
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'

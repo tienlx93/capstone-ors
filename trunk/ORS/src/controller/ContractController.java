@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
@@ -29,6 +31,8 @@ public class ContractController extends HttpServlet {
         String button = request.getParameter("button");
         switch (action) {
             case "save": {
+                Contract contract = new Contract();
+
                 if (Integer.parseInt(request.getParameter("categoryId")) == 2) {
                     OfficeDAO officeDao = new OfficeDAO();
                     Office officeParent = officeDao.get(Integer.parseInt(request.getParameter("officeID")));
@@ -41,7 +45,7 @@ public class ContractController extends HttpServlet {
                     officeChildren.setName(officeParent.getName());
                     officeChildren.setAddress(address);
                     officeChildren.setCategoryId(officeParent.getCategoryId());
-                    officeChildren.setDescription("");
+                    officeChildren.setDescription(officeParent.getDescription());
                     officeChildren.setCreateDate(new Timestamp((new java.util.Date()).getTime()));
                     if (!officeChildren.equals("")) {
                         officeChildren.setPrice(officeParent.getPrice());
@@ -56,12 +60,15 @@ public class ContractController extends HttpServlet {
                     officeChildren.setLongitude(officeParent.getLongitude());
                     officeChildren.setDistrict(officeParent.getDistrict());
                     officeChildren.setCity(officeParent.getCity());
+                    officeChildren.setMinTime(officeParent.getMinTime());
+                    officeChildren.setMinArea(officeParent.getMinArea())    ;
                     officeChildren.setParentOfficeId(officeParent.getId());
 
                     officeDao.save(officeChildren);
 
                     officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
-                } else if(Integer.parseInt(request.getParameter("categoryId")) == 1){
+                    contract.setOfficeId(officeChildren.getId());
+                } else if (Integer.parseInt(request.getParameter("categoryId")) == 1) {
                     OfficeDAO officeDao = new OfficeDAO();
                     Office office = officeDao.get(Integer.parseInt(request.getParameter("officeID")));
 
@@ -70,7 +77,6 @@ public class ContractController extends HttpServlet {
                 }
 
                 ContractDAO dao = new ContractDAO();
-                Contract contract = new Contract();
 
                 AppointmentDAO appointmentDao = new AppointmentDAO();
                 String appointmentID = request.getParameter("appointmentID");
@@ -83,15 +89,29 @@ public class ContractController extends HttpServlet {
                 String endDateStr = request.getParameter("endDate");
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
+                String deposit = request.getParameter("deposit");
 
+                SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+
+                try {
+                    String reformattedStart = myFormat.format(fromUser.parse(startDateStr));
+                    String reformattedEnd = myFormat.format(fromUser.parse(endDateStr));
+                    contract.setStartDate(Date.valueOf(reformattedStart));
+                    contract.setEndDate(Date.valueOf(reformattedEnd));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 contract.setStatusId(1);
                 contract.setCustomerUsername(customerName);
-                contract.setOfficeId(Integer.parseInt(officeID));
-                contract.setStartDate(Date.valueOf(startDateStr));
-                contract.setEndDate(Date.valueOf(endDateStr));
+                if(Integer.parseInt(request.getParameter("categoryId")) == 1) {
+                    contract.setOfficeId(Integer.parseInt(officeID));
+                }
                 contract.setPaymentFee(Integer.parseInt(paymentFee));
                 contract.setPaymentTerm(Integer.parseInt(paymentTerm));
+                contract.setDeposit(Long.parseLong(deposit));
 
                 dao.save(contract);
                 response.sendRedirect("/admin/contract");
@@ -130,18 +150,24 @@ public class ContractController extends HttpServlet {
                 ContractDAO dao = new ContractDAO();
                 switch (button) {
                     case "confirm":
-                        dao.changeStatus(id, 4);
+//                        dao.changeStatus(id, 4);
 
                         // Update area for office parent when contract has been confirmed to expire
                         Contract contract = dao.get(id);
+
+                        // add cancel date when return
+                        contract.setCancelDate(new Date((new java.util.Date()).getTime()));
+                        contract.setStatusId(4);
+                        dao.updateContract(id, contract);
+
                         OfficeDAO officeDAO = new OfficeDAO();
                         Office office = officeDAO.get(contract.getOfficeId());
-                        if(office.getParentOfficeId() != null) {
+                        if (office.getParentOfficeId() != null) {
                             Office officeParent = officeDAO.get(office.getParentOfficeId());
                             officeDAO.updateArea(officeParent.getId(), officeParent.getArea() + office.getArea());
                         } else {
                             office.setStatusId(1);
-                            officeDAO.update(office.getId(),office);
+                            officeDAO.update(office.getId(), office);
                         }
 
                         // Update rental item when contract has been confirmed to expire
@@ -150,7 +176,7 @@ public class ContractController extends HttpServlet {
 
                         RentalDetailDAO rentalDetailDAO = new RentalDetailDAO();
                         RentalItemDAO rentalItemDAO = new RentalItemDAO();
-                        if(rentals != null) {
+                        if (rentals != null) {
                             for (Rental rental : rentals) {
                                 List<RentalDetail> rentalDetailList = rentalDetailDAO.getRentalDetailByRental(rental.getId());
                                 for (RentalDetail rentalDetail : rentalDetailList) {
@@ -159,6 +185,7 @@ public class ContractController extends HttpServlet {
                                 }
                             }
                         }
+
                         break;
                     case "cancel":
                         dao.changeStatus(id, 1);
@@ -182,8 +209,8 @@ public class ContractController extends HttpServlet {
                 contract.setPaymentTerm(Integer.parseInt(paymentTerm));
                 contract.setPaymentFee(Integer.parseInt(paymentFee));
 
-                contractDAO.update(contract.getId(), contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(),contract.getEndDate(),
-                        contract.getPaymentFee(), contract.getPaymentTerm(),contract.getStatusId());
+                contractDAO.update(contract.getId(), contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(),
+                        contract.getPaymentFee(), contract.getPaymentTerm(), contract.getStatusId());
                 response.sendRedirect("/admin/contract");
                 break;
         }
@@ -276,6 +303,7 @@ public class ContractController extends HttpServlet {
                         request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                         rd = request.getRequestDispatcher("/WEB-INF/admin/contract/extendContract.jsp");
                         rd.forward(request, response);
+                        break;
                     case "viewProfile":
                         AccountDAO daoAcc = new AccountDAO();
                         request.setAttribute("info", daoAcc.get(request.getParameter("username")));
@@ -284,7 +312,7 @@ public class ContractController extends HttpServlet {
                 }
             }
 
-        }else {
+        } else {
             response.sendRedirect("/admin");
         }
     }

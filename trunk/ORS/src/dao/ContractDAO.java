@@ -91,6 +91,22 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return false;
     }
 
+    public boolean changeEndDate(int id, Date end) {
+        Transaction trans = session.beginTransaction();
+        try {
+            Contract contract = (Contract) session.get(Contract.class, id);
+            contract.setEndDate(end);
+            session.update(contract);
+            trans.commit();
+            return true;
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+        return false;
+    }
+
     public boolean updateContract(int id, Contract newContract) {
         Transaction trans = session.beginTransaction();
         try {

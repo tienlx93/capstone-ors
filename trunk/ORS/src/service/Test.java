@@ -12,9 +12,9 @@ import java.util.Date;
  */
 public class Test {
     public static void main(final String[] args) {
-        /*ClusteringService service = new ClusteringService();
+        ClusteringService service = new ClusteringService();
         int[] clustering = service.doCluster();
-        service.getkMeans().ShowClustered(clustering, 5, 4);*/
+        service.getkMeans().ShowClustered(clustering, 5, 4);
 
         /*MatchingService service = new MatchingService();
         OfficeDAO dao = new OfficeDAO();
@@ -50,7 +50,7 @@ public class Test {
             System.out.println(matching);
             System.out.println();
         }*/
-        OfficeDAO dao = new OfficeDAO();
+        /*OfficeDAO dao = new OfficeDAO();
         DateTime dt = new DateTime(2015, 12, 1, 0, 0);
         System.out.println(dt.toString());
         Date startDate = dt.toDate();
@@ -58,7 +58,7 @@ public class Test {
         Date endDate = dt.toDate();
         String district = "";
         //Long income = dao.calculateIncome(startDate, endDate, district);
-        System.out.println(dt.toString());
+        System.out.println(dt.toString());*/
 
 
 

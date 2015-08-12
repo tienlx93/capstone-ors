@@ -39,6 +39,9 @@ public class Office {
     private Long basePrice;
     private Double minArea;
     private Integer minTime;
+    private String ownerName;
+    private String ownerPhone;
+    private String ownerAddress;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -386,5 +389,35 @@ public class Office {
 
     public void setMinTime(Integer minTime) {
         this.minTime = minTime;
+    }
+
+    @Basic
+    @Column(name = "OwnerName", nullable = true, insertable = true, updatable = true)
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    @Basic
+    @Column(name = "OwnerPhone", nullable = true, insertable = true, updatable = true)
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
+    }
+
+    @Basic
+    @Column(name = "OwnerAddress", nullable = true, insertable = true, updatable = true)
+    public String getOwnerAddress() {
+        return ownerAddress;
+    }
+
+    public void setOwnerAddress(String ownerAddress) {
+        this.ownerAddress = ownerAddress;
     }
 }

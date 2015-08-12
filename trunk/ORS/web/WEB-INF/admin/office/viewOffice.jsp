@@ -42,8 +42,8 @@
                     <div class="panel-title">
                         Danh sách văn phòng
                     </div>
-                    <div><button class="btn-default">
-                        <a class="btn" href="${pageContext.request.contextPath}/admin/office?action=new">
+                    <div><button class="btn btn-default">
+                        <a class="" href="${pageContext.request.contextPath}/admin/office?action=new">
                             <span class="icon color5"><i class="fa fa-plus"></i></span>
                             Thêm mới văn phòng
                         </a></button>

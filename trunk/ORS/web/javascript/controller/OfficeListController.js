@@ -1,11 +1,9 @@
-controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$routeParams',
-    function ($scope, $location, Api, $routeParams) {
+controllers.controller('OfficeListController', ['$scope', '$rootScope', '$location', 'Api', '$routeParams',
+    function ($scope, $rootScope, $location, Api, $routeParams) {
         $scope.currentPage = 1;
         $scope.numPerPage = 5;
         $scope.maxSize = 5;
-        $scope.q = [];
         $scope.filteredOffices = [];
-        $scope.amenityWeight = [];
         $scope.filter = [];
         $scope.isCollapsed = true;
         var url = $routeParams.query;
@@ -54,25 +52,16 @@ controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$
                     $scope.filter = $scope.officeList;
                     $scope.totalItems = $scope.filter.length;
                     updatePage();
-                    $scope.q = [];
-                    for (var j = 0; j < $scope.amenityWeight.length; j ++) {
-                        $scope.q.push(false);
-                    }
+                    /*$rootScope.q = [];
+                     for (var j = 0; j < $rootScope.amenityWeight.length; j ++) {
+                     $rootScope.q.push(false);
+                     }*/
                 }
             });
         };
+        $scope.searchOffice();
 
-        $scope.$watch(function () {
-            if ($scope.officeList && $scope.officeList.length > 0) {
-                var selected = 0;
-                for (var i = 0; i < $scope.q.length; i++) {
-                    if ($scope.q[i] == true) {
-                        selected++;
-                    }
-                }
-                return selected;
-            }
-        }, function (selected) {
+        function filter(selected) {
             $scope.filter = [];
             var matching = selected * 100;
             var matchingPoint;
@@ -83,11 +72,11 @@ controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$
                     for (var i = 0; i < $scope.officeList.length; i++) {
                         matchingPoint = 0;
                         var officeAmenity = $scope.officeList[i].amenityJSON;
-                        for (var k = 0; k < $scope.q.length; k++) {
-                            if ($scope.q[k] == true) {
-                                var nearest = closest($scope.amenityWeight[k], officeAmenity);
+                        for (var k = 0; k < $rootScope.q.length; k++) {
+                            if ($rootScope.q[k] == true) {
+                                var nearest = closest($rootScope.amenityWeight[k], officeAmenity);
                                 if (nearest >= 0) {
-                                    var distance = Math.abs(nearest - $scope.amenityWeight[k].weight);
+                                    var distance = Math.abs(nearest - $rootScope.amenityWeight[k].weight);
                                     var point = 0;
                                     if (distance > 2) {
                                         point = 0;
@@ -111,18 +100,36 @@ controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$
                 }
             }
             $scope.totalItems = $scope.filter.length;
-        });
-
-        Api.amenityWeight(function (data) {
-            $scope.amenityWeight = data;
-            $scope.q = [];
-            for (var i = 0; i < data.length; i ++) {
-                $scope.q.push(false);
-            }
-        });
+        }
 
         $scope.$watch(function () {
-            if($scope.filter) {
+            if ($scope.officeList && $scope.officeList.length > 0 && $rootScope.q) {
+                var selected = 0;
+                for (var i = 0; i < $rootScope.q.length; i++) {
+                    if ($rootScope.q[i] == true) {
+                        selected++;
+                    }
+                }
+                return selected;
+            }
+        }, function (selected) {
+            filter(selected);
+        });
+
+        if (!$rootScope.amenityWeight || !$rootScope.q || $rootScope.amenityWeight.length == 0 || $rootScope.q.length == 0) {
+            $rootScope.amenityWeight = [];
+            Api.amenityWeight(function (data) {
+                $rootScope.amenityWeight = data;
+                if ($rootScope.q.length == 0) {
+                    for (var i = 0; i < data.length; i++) {
+                        $rootScope.q.push(false);
+                    }
+                }
+            });
+        }
+
+        $scope.$watch(function () {
+            if ($scope.filter) {
                 return $scope.currentPage + $scope.numPerPage + $scope.filter.length;
             }
         }, function () {
@@ -134,5 +141,4 @@ controllers.controller('OfficeListController', ['$scope', '$location', 'Api', '$
             $scope.filteredOffices = $scope.filter.slice(begin, end);
         }
 
-        $scope.searchOffice();
     }]);

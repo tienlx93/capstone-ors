@@ -1,12 +1,13 @@
-controllers.controller('HomeController', ['$scope','$location', 'Api', 'toastr',
-    function ($scope, $location, Api, toastr) {
+controllers.controller('HomeController', ['$scope', '$rootScope', '$location', 'Api', 'toastr',
+    function ($scope, $rootScope, $location, Api, toastr) {
         $scope.searchKey ='';
-
         $scope.gPlace = {};
         $scope.searchTerm = {};
         $scope.priceRange = 0;
-
         $scope.listNewOffice = [];
+        $rootScope.q = [];
+        $rootScope.amenityWeight = [];
+        $scope.isCollapsed = true;
 
         $scope.getNewOffice = function () {
             Api.getNewOffice(function(data) {
@@ -24,12 +25,34 @@ controllers.controller('HomeController', ['$scope','$location', 'Api', 'toastr',
 
         $scope.searchListOffice = function () {
             if ($scope.searchTerm.latitude) {
+                $rootScope.searchKey = $("#place").val();
                 $location.path("/list/latitude=" + $scope.searchTerm.latitude
                 + "&longitude=" + $scope.searchTerm.longitude
                 + "&priceRange=" + $scope.priceRange);
             } else {
                 toastr.error("Mời nhập vào địa chỉ");
             }
+        };
 
-        }
+        Api.amenityWeight(function (data) {
+            $rootScope.amenityWeight = data;
+            $rootScope.q = [];
+            for (var i = 0; i < data.length; i ++) {
+                $rootScope.q.push(false);
+            }
+        });
+
+        $scope.$watch('price', function(price) {
+            if (!price || price < 100000) {
+                $scope.priceRange = 0;
+            } else if (price < 200000) {
+                $scope.priceRange = 1;
+            } else if (price < 300000) {
+                $scope.priceRange = 3;
+            } else if (price < 400000) {
+                $scope.priceRange = 4;
+            } else {
+                $scope.priceRange = 5;
+            }
+        })
     }]);

@@ -1,0 +1,13 @@
+USE [ors]
+
+ALTER TABLE Office
+ADD [OwnerName] NVARCHAR(150)
+
+ALTER TABLE Office
+ADD [OwnerPhone] NVARCHAR(15)
+
+ALTER TABLE Office
+ADD [OwnerAddress] NVARCHAR(150)
+
+ALTER TABLE [Contract]
+ADD [CancelFee] BIGINT

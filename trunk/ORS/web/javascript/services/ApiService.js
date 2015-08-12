@@ -45,6 +45,40 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.contractReturnAfter = function (id, callback) {
+            $http({
+                method: 'POST',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'contractReturnAfter',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.checkContractReturn = function (id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'checkContractReturn',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
         services.contractExtend = function (id, callback) {
             $http({
                 method: 'POST',

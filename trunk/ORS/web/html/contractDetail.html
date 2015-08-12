@@ -13,20 +13,20 @@
                 </tr>
                 <tr>
                     <td class="textright">Ông (Bà):</td>
-                    <td><span class="spanleft">Công ty ORS</span></td>
+                    <td><span class="spanleft">{{}}</span></td>
                 </tr>
                 <tr>
-                    <td class="textright">Email:</td>
-                    <td><span class="spanleft">contact@tienlx.me</span></td>
+                    <td class="textright">Điện thoại:</td>
+                    <td><span class="spanleft">{{}}</span></td>
                 </tr>
                 <tr>
-                    <td class="textright">Là đại diện của văn phòng:</td>
-                    <td><span class="spanleft">{{data.officeName}}</span></td>
+                    <td class="textright">Địa chỉ:</td>
+                    <td><span class="spanleft">{{}}</span></td>
                 </tr>
                 </tbody>
             </table>
             <br>
-            <h4>Thông tin thêm</h4>
+            <h4>File hợp đồng</h4>
             <br>
             <img src="/img/office.jpg">
         </div>
@@ -86,7 +86,6 @@
                 <tr>
                     <td colspan="2"><br><h4>Thông tin thanh toán:</h4><br></td>
                 </tr>
-
                 <tr>
                     <td class="textright">Số tiền đặt cọc:</td>
                     <td><span class="spanleft">{{data.deposit | currency:"vnd":0}}</span></td>
@@ -98,6 +97,19 @@
                 <tr>
                     <td class="textright">Số tiền thanh toán mỗi kỳ:</td>
                     <td><span class="spanleft">{{data.price * data.area * Term | currency:"vnd":0}} </span></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <table>
+                <tbody>
+                <tr>
+                    <td style="padding-right: 10px;"><h4>Tình trạng hợp đồng:</h4></td>
+                    <td ng-if="data.status == 3" class="contract-status color9-bg"> Đang yêu cầu hủy hợp đồng trước
+                        hạn
+                    </td>
+                    <td ng-if="data.status == 2" class="contract-status color7-bg"> Đang yêu cầu gia hạn hợp đồng</td>
+                    <td ng-if="data.status == 1" class="contract-status color12-bg"> Khả dụng</td>
                 </tr>
                 </tbody>
             </table>
@@ -133,11 +145,7 @@
                     </tbody>
                 </table>
             </div>
-            <h4>Trạng thái:</h4><br>
-            <span ng-if="data.status == 3" class="contract-status color9-bg"> Đang yêu cầu hủy hợp đồng trước hạn</span>
-            <span ng-if="data.status == 2" class="contract-status color7-bg"> Đang yêu cầu gia hạn hợp đồng</span>
-            <span ng-if="data.status == 1" class="contract-status color12-bg"> Khả dụng</span>
-            <br><br>
+            <br>
             <a ng-if="data.status == 1 || data.status == 2" href="#/rental/{{data.contractId}}" class="btn btn-green">
                 Yêu cầu thuê thiết bị</a>
             <a ng-if="data.status == 1 || data.status == 2" href="#/requestRepair/{{data.contractId}}"

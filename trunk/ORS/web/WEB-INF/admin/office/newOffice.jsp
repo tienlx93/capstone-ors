@@ -46,6 +46,7 @@
                     </div>
                     <div>
                         <form action="office" method="post" id="form">
+                            <div><h3>Thông tin cơ bản</h3></div>
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2 control-label">Tên văn phòng</label>
 
@@ -65,7 +66,7 @@
                                 </div>
                                 <div class="col-sm-10">
                                     <table id="autocomplete">
-                                        <tr>
+                                        <tr class="hidden">
                                             <td class="label">Địa chỉ</td>
                                             <td class="slimField">
                                                 <input class="field" id="street_number" disabled="true"></td>
@@ -93,6 +94,7 @@
                                     <div id="map-canvas"></div>
                                 </div>
                             </div>
+                            <div><h3>Mô tả văn phòng</h3></div>
                             <div class="form-group clearfix">
                                 <label for="description" class="col-sm-2 control-label">Mô tả văn phòng</label>
 
@@ -144,46 +146,6 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" name="price" class="form-control" id="price"
-                                           value="${office.price}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2 control-label">Diện tích thuê tối thiểu</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" name="minArea" class="form-control" id="minArea"
-                                           value="${office.minArea}">
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2 control-label">Thời gian thuê tối thiểu</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" name="minTime" class="form-control" id="minTime"
-                                           value="${office.minTime}">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group clearfix">
-                                <label for="priceTerm" class="col-sm-2 control-label">Đơn vị giá</label>
-
-                                <div class="col-sm-10">
-                                    <select name="priceTerm" class="form-control" id="priceTerm" required>
-                                        <c:forEach var="item" items="${priceTermList}">
-                                            <option value="${item.id}"
-                                                    <c:if test="${office.priceTerm==item.id}">selected</c:if> >
-                                                    ${item.description}</option>
-                                        </c:forEach>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
                                 <label for="floor" class="col-sm-2 control-label">Số tầng</label>
 
                                 <div class="col-sm-10">
@@ -198,6 +160,68 @@
                                 <div class="col-sm-10">
                                     <input type="text" name="area" class="form-control" id="area"
                                            value="${office.area}" required>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="minArea" class="col-sm-2 control-label">Diện tích thuê tối thiểu</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="minArea" class="form-control" id="minArea"
+                                           value="${office.minArea}">
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="minTime" class="col-sm-2 control-label">Thời gian thuê tối thiểu</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="minTime" class="form-control" id="minTime"
+                                           value="${office.minTime}">
+                                </div>
+                            </div>
+
+                            <div><h3>Điều khoản giá</h3></div>
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" name="price" class="form-control" id="price"
+                                           value="${office.price}">
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="priceTerm" class="col-sm-2 control-label">Đơn vị giá</label>
+
+                                <div class="col-sm-10">
+                                    <select name="priceTerm" class="form-control" id="priceTerm" required>
+                                        <c:forEach var="item" items="${priceTermList}">
+                                            <option value="${item.id}"
+                                                    <c:if test="${office.priceTerm==item.id}">selected</c:if> >
+                                                    ${item.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div><h3>Thông tin chủ văn phòng</h3></div>
+                            <div class="form-group clearfix">
+                                <label for="ownerName" class="col-sm-2 control-label">Tên người đại diện</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ownerName" class="form-control" id="ownerName"
+                                           value="${office.ownerName}">
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="ownerPhone" class="col-sm-2 control-label">Số điện thoại người đại diện</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ownerPhone" class="form-control" id="ownerPhone"
+                                           value="${office.ownerPhone}">
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="ownerAddress" class="col-sm-2 control-label">Địa chỉ người đại diện</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ownerAddress" class="form-control" id="ownerAddress"
+                                           value="${office.ownerAddress}">
                                 </div>
                             </div>
 

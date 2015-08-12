@@ -103,9 +103,8 @@ public class RepairController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("filter")) {
                 String sId = request.getParameter("officeId");
-                String officeName = new String(request.getParameter("office").getBytes(
-                        "iso-8859-1"), "UTF-8");
                 String staff = request.getParameter("staff");
+                String officeName = "";
                 int id = -1;
                 OfficeDAO officeDAO = new OfficeDAO();
                 List<Repair> list;
@@ -116,6 +115,8 @@ public class RepairController extends HttpServlet {
                     request.setAttribute("office", office.getName());
                     list = dao.getRepairListByFilter(id);
                 } else {
+                    officeName = new String(request.getParameter("office").getBytes(
+                            "iso-8859-1"), "UTF-8");
                     list = dao.getRepairListByFilter(officeName, staff);
                 }
                 request.setAttribute("office", office != null ? office.getName() : officeName);

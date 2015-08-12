@@ -27,6 +27,7 @@ public class Contract {
     private Long deposit;
     private Date cancelDate;
     private String imageUrl;
+    private Long cancelFee;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -238,5 +239,15 @@ public class Contract {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Basic
+    @Column(name = "CancelFee", nullable = true, insertable = true, updatable = true)
+    public Long getCancelFee() {
+        return cancelFee;
+    }
+
+    public void setCancelFee(Long cancelFee) {
+        this.cancelFee = cancelFee;
     }
 }

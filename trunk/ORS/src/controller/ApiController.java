@@ -16,9 +16,10 @@ import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
-import java.sql.Timestamp;
+import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
+import java.util.Date;
 
 /**
  * Created by ASUS on 6/9/2015.
@@ -42,6 +43,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "contractReturn":
                 contractReturn(request, out);
+                break;
+            case "contractReturnAfter":
+                contractReturnAfter(request, out);
                 break;
             case "contractExtend":
                 contractExtend(request, out);
@@ -111,6 +115,9 @@ public class ApiController extends HttpServlet {
                 break;
             case "getContractList":
                 getContractList(request, out);
+                break;
+            case "checkContractReturn":
+                checkContractReturn(request, out);
                 break;
             case "getProfile":
                 getProfile(request, out);
@@ -460,7 +467,43 @@ public class ApiController extends HttpServlet {
             int id = Integer.parseInt(request.getParameter("id"));
             ContractDAO dao = new ContractDAO();
             dao.changeStatus(id, 3);
-            out.print(gson.toJson("Success"));
+            out.print(gson.toJson("OK"));
+        } else {
+            out.print(gson.toJson("Wrong"));
+        }
+    }
+
+    private void contractReturnAfter(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            ContractDAO dao = new ContractDAO();
+            Contract contract = dao.get(id);
+            dao.changeStatus(id, 3);
+            long y = contract.getEndDate().getTime() + 2592000000l;
+            java.sql.Date endDate = new java.sql.Date(y);
+            dao.changeEndDate(id, endDate);
+            out.print(gson.toJson("OK"));
+        } else {
+            out.print(gson.toJson("Wrong"));
+        }
+    }
+
+    private void checkContractReturn(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        if (account != null) {
+            int id = Integer.parseInt(request.getParameter("id"));
+            ContractDAO dao = new ContractDAO();
+            Contract contract = dao.get(id);
+            Date date = new Date();
+            long x = 7776000000l;
+            if (date.getTime() < contract.getStartDate().getTime() + x) {
+                out.print(gson.toJson("First"));
+            } else {
+                out.print(gson.toJson("Second"));
+            }
         } else {
             out.print(gson.toJson("Wrong"));
         }
@@ -1061,11 +1104,11 @@ public class ApiController extends HttpServlet {
 //                                office1.getArea(), contract.getDeposit());
 //                        out.print(gson.toJson(json));
 //                    } else {
-                        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-                                contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
-                                paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-                                office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription());
-                        out.print(gson.toJson(json));
+                    ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                            contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
+                            paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription());
+                    out.print(gson.toJson(json));
 //                    }
                 } else {
                     out.print(gson.toJson("Expire"));

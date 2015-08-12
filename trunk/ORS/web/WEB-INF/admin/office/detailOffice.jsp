@@ -76,6 +76,14 @@
                                     <b>Diện tích: </b>${info.area} m<SUP>2</SUP>
                                 </div>
                             </div>
+                                <div class="form-group clearfix">
+                                    <div class="col-sm-10">
+                                        <b>Thời gian thuê tối thiểu: </b>${info.minTime}</SUP>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                                        <b>Diện tích thuê tối thiểu: </b>${info.minArea}  m<SUP>2
+                                    </div>
+                                </div>
 
                             <div class="form-group clearfix">
                                 <div class="col-sm-10">

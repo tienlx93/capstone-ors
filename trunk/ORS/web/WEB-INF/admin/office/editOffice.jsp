@@ -190,6 +190,22 @@
                          value="${office.area}" required>
                 </div>
               </div>
+              <div class="form-group clearfix">
+                <label for="area" class="col-sm-2 control-label">Diện tích thuê tối thiểu (m<sup>2</sup>)</label>
+
+                <div class="col-sm-10">
+                  <input type="text" name="minArea" class="form-control" id="minArea"
+                         value="${office.minArea}" required>
+                </div>
+              </div>
+              <div class="form-group clearfix">
+                <label for="area" class="col-sm-2 control-label">Thời gian thuê tối thiểu </label>
+
+                <div class="col-sm-10">
+                  <input type="text" name="minTime" class="form-control" id="minTime"
+                         value="${office.minTime}" required>
+                </div>
+              </div>
 
               <div class="button-post">
                 <input type="hidden" id="imageUrls" name="imageUrls" value="${office.imageUrls}">

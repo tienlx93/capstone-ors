@@ -141,6 +141,9 @@
       <column name="CreateDate" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
       <column name="ViewCount" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="MinTime" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="OwnerName" sqlType="nvarchar" precision="150" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="OwnerPhone" sqlType="nvarchar" precision="15" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="OwnerAddress" sqlType="nvarchar" precision="150" scale="0" nullable="true" jdbcType="-9"/>
       <primary-key name="PK_Office" columns="Id"/>
       <foreign-key name="FK_Office_Category" columns="CategoryId" ref-table="Category" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_Office" columns="ParentOfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>

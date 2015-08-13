@@ -55,24 +55,33 @@
                             </div>
 
                             <div class="row" style="margin: auto">
-                                <div class="col-sm-6" style="border-right: 2px solid #000000">
+                                <div class="col-sm-12">
                                     <div><h3>Bên cho thuê văn phòng (Bên A)</h3></div>
                                     <div class="form-group clearfix">
                                         <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
-                                            Ông (Bà):
+                                            Ông(Bà):
                                         </div>
 
                                         <div class="col-sm-9">
-                                            Công ty ORS
+                                            ${office.ownerName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
                                         <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
-                                            Email:
+                                            Địa chỉ:
                                         </div>
 
                                         <div class="col-sm-9">
-                                            contact@tienlx.me
+                                            ${office.ownerAddress}
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Số điện thoại:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${office.ownerPhone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -82,19 +91,18 @@
                                         </div>
 
                                         <div class="col-sm-9">
-
                                             ${contract.officeByOfficeId.name}
                                             <input type="hidden" id="officeID" name="officeID"
                                                    value="${contract.officeByOfficeId.id}">
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
+
                                     <div><h3>Bên thuê văn phòng (Bên B)</h3></div>
                                     <div class="form-group clearfix">
                                         <div style="text-align: right" for="customerName"
-                                             class="col-sm-3 control-label">Ông (Bà):
+                                             class="col-sm-3 control-label">Ông(Bà):
                                         </div>
 
                                         <div class="col-sm-9">
@@ -123,8 +131,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
-                                <div><h3>Thông tin thuê văn phòng</h3></div>
+                            <div class="row" style="margin: 20px auto;">
+                                <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                    <h3>Thông tin thuê văn phòng</h3></div>
                                 <div class="form-group clearfix">
                                     <div for="officeID" class="col-sm-2 control-label">Tên văn phòng</div>
 
@@ -159,28 +168,38 @@
                                             <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
                                                    name="officeArea" min="${contract.officeByOfficeId.minArea}"
                                                    class="form-control"
-                                                   value="${contract.officeByOfficeId.minArea}" required="true">
+                                                   value="${contract.officeByOfficeId.area}" required="true">
                                         </div>
                                         <div hidden>
                                             <input name="parentArea" value="${contract.officeByOfficeId.area}">
                                             <input name="minArea" value="${contract.officeByOfficeId.minArea}">
                                         </div>
-                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:
+                                        <div for="time" style="text-align: right" class="col-sm-2 control-label">Thời
+                                            gian thuê (tháng):
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <input style="display: inline-block" type='number'
-                                                   onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee"
-                                                   id="paymentFee" value="${contract.paymentFee}" required="true"/>
+                                            <input type='number' class="form-control"
+                                                   onchange="calculateEndDate();calculatePaymentFee()"
+                                                   name="time" min="${contract.officeByOfficeId.minTime}"
+                                                   id="time" required="true"
+                                                   value="${contract.officeByOfficeId.minTime}"/>
                                         </div>
+                                        <div hidden>
+                                            <input name="minTime" value="${contract.officeByOfficeId.minTime}">
+                                        </div>
+
                                         <div class="col-sm-12" style="margin: auto">
                                             <div class="col-sm-2" style="padding: 0"><h5>Lưu ý:</h5></div>
                                             <div class="col-sm-10">
-                                                <h5>Diện tích thuê tối thiểu là: <span
+                                                <h5 style=" color: red">Diện tích thuê tối thiểu là: <span
                                                         style="font-weight: bold">${contract.officeByOfficeId.minArea} m<sup>2</sup></span>
-                                                    <br>Diện tích thuê tối đa là: <span
+                                                    - Diện
+                                                    tích thuê tối đa là: <span
                                                             style="font-weight: bold">${contract.officeByOfficeId.officeByParentOfficeId.area} m<sup>2</sup></span>
+                                                    - Thời gian thuê tối thiểu là: <span
+                                                            style="font-weight: bold">${contract.officeByOfficeId.minTime} tháng</span>
+
                                                 </h5>
                                             </div>
                                         </div>
@@ -198,22 +217,37 @@
                                             <input type="hidden" id="officeArea"
                                                    name="officeArea" value="${contract.officeByOfficeId.area}">
                                         </div>
-                                        <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:
+                                        <div for="time" style="text-align: right" class="col-sm-2 control-label">Thời
+                                            gian thuê (tháng):
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <input style="display: inline-block" type='number'
-                                                   onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee"
-                                                   id="paymentFee"
-                                                   value="${contract.officeByOfficeId.price / contract.officeByOfficeId.area}"
-                                                   required="true"/>
+                                            <input type='number' class="form-control"
+                                                   onchange="calculateEndDate();calculatePaymentFee()"
+                                                   name="time" min="${contract.officeByOfficeId.minTime}"
+                                                   id="time" required="true"
+                                                   value="${contract.officeByOfficeId.minTime}"/>
                                         </div>
+                                        <div hidden>
+                                            <input name="minTime" value="${contract.officeByOfficeId.minTime}">
+                                        </div>
+                                        <div class="col-sm-12" style="margin: auto;">
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-2" style="padding: 0;text-align: right"><h5
+                                                    style=" color: red">Lưu ý:</h5>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5 style=" color: red">Thời gian thuê tối thiểu là: <span
+                                                        style="font-weight: bold">${contract.officeByOfficeId.minTime} tháng</span>
+                                                </h5>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </c:if>
 
                                 <div class="form-group clearfix">
-                                    <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</div>
+                                    <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
                                     <div class="col-sm-4">
                                         <input type='text' class="form-control"
@@ -222,20 +256,10 @@
                                                value="${contract.startDate}"/>
                                     </div>
 
-                                    <div for="time" class="col-sm-2 control-label">Thời gian thuê (tháng):</div>
 
-                                    <div class="col-sm-4">
-                                        <input type='number' class="form-control"
-                                               onchange="calculateEndDate();calculatePaymentFee()"
-                                               name="time" min="${contract.officeByOfficeId.minTime}"
-                                               id="time" required="true"
-                                               value="${contract.officeByOfficeId.minTime}"/>
-                                        Thời gian thuê tối thiểu là: ${contract.officeByOfficeId.minTime} tháng
+                                    <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết
+                                        thúc:
                                     </div>
-                                    <div hidden>
-                                        <input name="minTime" value="${contract.officeByOfficeId.minTime}">
-                                    </div>
-                                    <div for="endDate" class="col-sm-2 control-label">Ngày kết thúc</div>
 
                                     <div class="col-sm-4">
                                         <input style="display: inline-block" readonly type='text'
@@ -245,43 +269,6 @@
                                                value="${contract.endDate}"/>
                                     </div>
                                 </div>
-
-                                <%--<div class="form-group clearfix">
-                                    <label for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</label>
-
-                                    <div class="col-sm-10">
-                                        <input style="display: inline-block" type='text' class="form-control"
-                                               name="startDate"
-                                               id="startDate"
-                                               value="${contract.startDate}"/>
-                                    </div>
-                                </div>
-                                <div class="form-group clearfix">
-                                    <label for="time" class="col-sm-2 control-label">Thời gian thuê(tháng):</label>
-
-                                    <div class="col-sm-10">
-                                        <input type='number' class="form-control"
-                                               onchange="calculateEndDate();calculatePaymentFee()"
-                                               name="time" min="${contract.officeByOfficeId.minTime}"
-                                               id="time" required="true"
-                                               value="${contract.officeByOfficeId.minTime}"/>
-                                        Thời gian thuê tối thiểu là: ${contract.officeByOfficeId.minTime} tháng
-                                    </div>
-                                    <div hidden>
-                                        <input name="minTime" value="${contract.officeByOfficeId.minTime}">
-                                    </div>
-                                </div>
-                                <div class="form-group clearfix">
-                                    <label for="endDate" class="col-sm-2 control-label">Ngày kết thúc</label>
-
-                                    <div class="col-sm-10">
-                                        <input style="display: inline-block" readonly type='text'
-                                               class="form-control"
-                                               name="endDate"
-                                               id="endDate"
-                                               value="${contract.endDate}"/>
-                                    </div>
-                                </div>--%>
 
                                 <div class="form-group clearfix">
 
@@ -299,57 +286,84 @@
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div for="deposit" class="col-sm-2 control-label">Tiền đặt cọc văn phòng</div>
+                                    <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 2}">
 
-                                    <div class="col-sm-4">
-                                        <input style="display: inline-block" type='number' class="form-control"
-                                               name="deposit"
-                                               id="deposit" value="${contract.deposit}"/>
-                                    </div>
+                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">
+                                            Giá thuê/m<sup>2</sup>:
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <input style="display: inline-block" type='number'
+                                                   onchange="calculatePaymentFee()" class="form-control"
+                                                   name="paymentFee"
+                                                   id="paymentFee" value="${contract.paymentFee}" required="true"/>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 1}">
+                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">
+                                            Giá thuê/m<sup>2</sup>:
+                                        </div>
+
+                                        <div class="col-sm-4">
+                                            <input style="display: inline-block" type='number'
+                                                   onchange="calculatePaymentFee()" class="form-control"
+                                                   name="paymentFee"
+                                                   id="paymentFee"
+                                                   value="${contract.officeByOfficeId.price / contract.officeByOfficeId.area}"
+                                                   required="true"/>
+                                        </div>
+                                    </c:if>
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <div class="col-sm-2 control-label">Hình ảnh</div><br>
+                                    <div for="deposit" class="col-sm-2 control-label">Tiền đặt cọc văn phòng:</div>
 
-                                    <div class="images clearfix" id="images">
-                                    </div>
-                                    <div class="clear-float"></div>
-                                    <input type="hidden" id="imageUrls" name="imageUrls"
-                                           value="${contract.officeByOfficeId.imageUrls}">
-                                </div>
-
-                                <%--<div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Kỳ hạn thanh toán</label>
-
-                                    <div class="col-sm-10">
-                                        <select name="paymentTerm" class="form-control" id="paymentTerm">
-                                            <c:forEach var="item" items="${paymentTermList}">
-                                                <option value="${item.id}"
-                                                        <c:if test="${contract.paymentTerm ==item.id}">selected</c:if> >
-                                                        ${item.description}</option>
-                                            </c:forEach>
-                                        </select>
-                                    </div>
-                                </div>--%>
-
-                                <%--<div class="form-group clearfix">
-                                    <label for="paymentFee" class="col-sm-2 control-label">Giá thuê/m2:</label>
-
-                                    <div class="col-sm-10">
-                                        <input style="display: inline-block" type='text' class="form-control"
-                                               name="paymentFee"
-                                               id="paymentFee" value="${contract.paymentFee}"/>
-                                    </div>
-                                </div>--%>
-                                <%--<div class="form-group clearfix">
-                                    <label for="deposit" class="col-sm-2 control-label">Tiền đặt cọc</label>
-
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-4">
                                         <input style="display: inline-block" type='number' class="form-control"
-                                               name="deposit"
+                                               name="deposit" onchange="calculatePaymentFee()"
                                                id="deposit" value="${contract.deposit}"/>
                                     </div>
-                                </div>--%>
+
+
+                                    <div for="total" style="text-align: right" class="col-sm-2 control-label">Số tiền
+                                        phải thanh toán mỗi kỳ:
+                                    </div>
+
+                                    <div class="col-sm-4" name="total" id="total">
+
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="totalContract" class="col-sm-2 control-label">Tổng giá
+                                        trị hợp đồng:
+                                    </div>
+
+                                    <div class="col-sm-4" name="totalContract" id="totalContract">
+
+                                    </div>
+                                </div>
+
+                                <div class="row" style="margin: 20px auto; ">
+                                    <div style="text-align:center; border-bottom:2px solid #000000"><h3>Hình ảnh văn bản
+                                        hợp
+                                        đồng</h3></div>
+                                    <div class="form-group clearfix">
+                                        <div class="col-sm-2 control-label">Hình ảnh</div>
+                                        <br>
+                                        <input type="hidden" name="imageUrl" id="imageUrl" value="${contract.imageUrl}">
+
+                                        <div class="images clearfix" id="images">
+                                            <div class="upload-img">
+                                                <div class="img"><img
+                                                        src="${contract.imageUrl!=null?contract.imageUrl:'/upload/placeholder.jpg'}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="clear-float"></div>
+                                        <input type="file" id="file" name="file" accept="image/*"
+                                               title="Mời chọn hình ảnh">
+                                    </div>
+                                </div>
                                 <div class="button-post">
                                     <button type="submit" value="update" class="btn btn-primary" name="action">Cập
                                         nhật
@@ -376,8 +390,6 @@
         var start = new Date(startDate);
         var end = new Date(endDate);
 
-        console.log(start);
-        console.log(end);
         var time = document.getElementById('time');
         time.value = Math.ceil((end.getTime() - start.getTime()) / (86400000 * 30));
 
@@ -393,6 +405,29 @@
             calculateEndDate();
 //      calculatePaymentFee();
         }).data('datepicker');
+
+        var paymentTerm = document.getElementById('paymentTerm').value;
+        var time;
+        switch (paymentTerm) {
+            case '1':
+                time = 1;
+                break;
+            case '2':
+                time = 3;
+                break;
+            case '3':
+                time = 6;
+                break;
+        }
+        var area = document.getElementById('officeArea').value;
+        var fee = document.getElementById('paymentFee').value;
+
+        var total = time * parseInt(fee) * parseFloat(area);
+        var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
+        var contractTotal= total + parseFloat(deposit);
+        document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
+        document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
+        document.getElementById('totalContract').innerHTML = numberWithCommas(contractTotal) + ' VNĐ';
     });
     function calculateEndDate() {
         var end = document.getElementById('endDate');
@@ -405,6 +440,36 @@
         end.value = formatTime(endTime) != undefined ? formatTime(endTime) : "";
     }
     ;
+    function calculatePaymentFee() {
+        var paymentTerm = document.getElementById('paymentTerm').value;
+        var officeArea = document.getElementById('officeArea').value;
+        var paymentFee = document.getElementById('paymentFee').value;
+        var contractTime = document.getElementById('time').value;
+        var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
+
+        var time;
+        console.log(deposit);
+        switch (paymentTerm) {
+            case '1':
+                time = 1;
+                break;
+            case '2':
+                time = 3;
+                break;
+            case '3':
+                time = 6;
+                break;
+        }
+        if (paymentTerm != '' && officeArea != null && paymentFee != null) {
+            var total = numberWithCommas(parseInt(paymentFee) * officeArea * time);
+            var price = document.getElementById('total');
+            price.innerHTML = numberWithCommas(total) + ' VNĐ';
+            var contractTotal = numberWithCommas((officeArea * contractTime * parseInt(paymentFee)) + parseFloat(deposit));
+            console.log(contractTotal);
+
+            document.getElementById('totalContract').innerHTML = contractTotal + ' VNĐ';
+        }
+    }
     function formatTime(time) {
         if (time) {
             var formatTime = new Date(time);

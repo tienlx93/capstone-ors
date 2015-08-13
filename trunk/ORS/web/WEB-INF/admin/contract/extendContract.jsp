@@ -52,7 +52,7 @@
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
                             <div class="row" style="margin: auto">
-                                <div class="col-sm-6" style="border-right: 2px solid #000000">
+                                <div class="col-sm-12">
                                     <div><h3>Bên cho thuê văn phòng (Bên A)</h3></div>
                                     <div class="form-group clearfix">
                                         <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
@@ -60,16 +60,25 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            Công ty ORS
+                                            ${office.ownerName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
                                         <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
-                                            Email:
+                                            Địa chỉ:
                                         </div>
 
                                         <div class="col-sm-9">
-                                            contact@tienlx.me
+                                            ${office.ownerAddress}
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Số điện thoại:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${office.ownerPhone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -85,7 +94,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
 
                                     <div><h3>Bên thuê văn phòng (Bên B)</h3></div>
                                     <div class="form-group clearfix">
@@ -120,8 +129,10 @@
                                 </div>
                             </div>
 
-                            <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
-                                <div><h3>Thông tin thuê văn phòng</h3></div>
+                            <
+                            <div class="row" style="margin: 20px auto; ">
+                                <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                    <h3>Thông tin thuê văn phòng</h3></div>
                                 <div class="form-group clearfix">
                                     <div for="officeID" class="col-sm-2 control-label">Tên văn phòng:</div>
 
@@ -150,16 +161,22 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <div for="startDate" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):</div>
+                                    <div for="startDate" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):
+                                    </div>
 
                                     <div class="col-sm-4">
                                         ${info.officeByOfficeId.area}
                                     </div>
-                                    <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
+                                    <div class="col-sm-2 control-label" style="text-align: right">Kỳ hạn thanh toán:
+                                    </div>
 
                                     <div class="col-sm-4">
-                                        ${info.paymentFee}
+                                        ${info.paymentTermByPaymentTerm.description}
+                                        <input type="hidden" name="paymentTerm" id="paymentTerm"
+                                               value="${info.paymentTerm}">
                                     </div>
+
+
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</div>
@@ -167,38 +184,52 @@
                                     <div class="col-sm-4" id="startDate">
                                         ${info.startDate}
                                     </div>
-                                    <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết thúc</div>
+                                    <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết
+                                        thúc
+                                    </div>
 
                                     <div class="col-sm-4" id="end" name="end">
                                         ${info.endDate}
                                     </div>
                                     <input type="hidden" value="" id="extendDate" name="extendDate"/>
 
-                                    <input style="display: inline-block"  type='hidden' class="form-control" name="endDate"
+                                    <input style="display: inline-block" type='hidden' class="form-control"
+                                           name="endDate"
                                            id="endDate" value="${info.endDate}"/>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
+
+                                    <div class="col-sm-4" name="paymentFee" id="paymentFee">
+                                        ${info.paymentFee}
+                                    </div>
+                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Số
+                                        tiền đặt cọc:
+                                    </div>
+                                    <input type="hidden" id="depositValue" name="depositValue"
+                                           value="${info.deposit}">
+                                    <div class="col-sm-4" id="deposit" name="deposit">
+                                        ${info.deposit} <span>VNĐ</span>
+
+                                    </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Thời gian gia hạn(tháng):</div>
 
                                     <div class="col-sm-4">
-                                        <input style="display: inline-block" type='number' min="0" class="form-control" name="extendTime"
+                                        <input style="display: inline-block" type='number' min="0" class="form-control"
+                                               name="extendTime"
                                                id="extendTime" onchange="calculateEndDate()"
                                                value=""/>
                                     </div>
-
                                 </div>
-                                <%--<div class="form-group clearfix">--%>
-                                    <%--<div for="paymentTerm" class="col-sm-2 control-label">Kỳ hạn thanh toán</div>--%>
 
-                                    <%--<div class="col-sm-4">--%>
-                                        <%--${info.paymentTerm.description}--%>
-                                    <%--</div>--%>
-                                    <%----%>
-                                <%--</div>--%>
                             </div>
                             <div class="button-post">
-                                <button type="submit" value="confirm" name="button" class="btn btn-primary">Xác nhận</button>
-                                <button type="submit" value="cancel" name="button" class="btn btn-success">Hủy yêu cầu</button>
+                                <button type="submit" value="confirm" name="button" class="btn btn-primary">Xác nhận
+                                </button>
+                                <button type="submit" value="cancel" name="button" class="btn btn-success">Hủy yêu cầu
+                                </button>
                                 <a href="${pageContext.request.contextPath}/admin/contract?action=return"
                                    class="btn btn-default">Quay về</a>
                             </div>
@@ -216,6 +247,11 @@
     $(document).ready(function () {
         document.getElementById('startDate').innerHTML = formatTime(document.getElementById('startDate').innerHTML);
         document.getElementById('end').innerHTML = formatTime(document.getElementById('end').innerHTML);
+        document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('deposit').innerText);
+        var fee = document.getElementById('paymentFee').innerText;
+
+        document.getElementById('paymentFee').innerHTML = numberWithCommas(fee) + ' VNĐ';
+
     });
     function calculateEndDate() {
         var end = document.getElementById('end');
@@ -244,6 +280,10 @@
             return day + '-' + month + '-' + year;
         }
 
+    }
+    ;
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
     ;
 </script>

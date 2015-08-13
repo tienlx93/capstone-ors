@@ -156,13 +156,15 @@ public class ContractController extends HttpServlet {
                 switch (button) {
                     case "confirm":
 //                        dao.changeStatus(id, 4);
-
+                        String returnMoney = request.getParameter("returnMoney");
                         // Update area for office parent when contract has been confirmed to expire
                         Contract contract = dao.get(id);
 
                         // add cancel date when return
                         contract.setCancelDate(new Date((new java.util.Date()).getTime()));
                         contract.setStatusId(4);
+                        contract.setDeposit(null);
+                        contract.setCancelFee(Long.getLong(returnMoney));
                         dao.updateContract(id, contract);
 
                         OfficeDAO officeDAO = new OfficeDAO();

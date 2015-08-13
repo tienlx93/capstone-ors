@@ -1,4 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
+
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
@@ -54,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="row" style="margin: auto">
-                                <div class="col-sm-6" style="border-right: 2px solid #000000">
+                                <div class="col-sm-12">
                                     <div><h3>Bên cho thuê văn phòng (Bên A)</h3></div>
                                     <div class="form-group clearfix">
                                         <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
@@ -62,16 +64,25 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            Công ty ORS
+                                            ${office.ownerName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
                                         <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
-                                            Email:
+                                            Địa chỉ:
                                         </div>
 
                                         <div class="col-sm-9">
-                                            contact@tienlx.me
+                                            ${office.ownerAddress}
+                                        </div>
+                                    </div>
+                                    <div class="form-group clearfix">
+                                        <div style="text-align: right" for="officeID" class="col-sm-3 control-label">
+                                            Số điện thoại:
+                                        </div>
+
+                                        <div class="col-sm-9">
+                                            ${office.ownerPhone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -87,7 +98,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6">
+                                <div class="col-sm-12">
 
                                     <div><h3>Bên thuê văn phòng (Bên B)</h3></div>
                                     <div class="form-group clearfix">
@@ -121,75 +132,127 @@
                                     </div>
                                 </div>
                             </div>
-                            <div style="margin: 40px auto 10px auto; border-top:2px solid #000000;padding: 15px"><h3>Thông tin thuê văn phòng</h3></div>
-                            <div class="form-group clearfix">
-                                <div for="officeID" class="col-sm-2 control-label">Tên văn phòng:</div>
+                            <div class="row" style="margin: 20px auto; ">
+                                <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                    <h3>Thông tin thuê văn phòng</h3></div>
+                                <div class="row" style="margin: auto">
 
-                                <div class="col-sm-10" style="font-weight: bold">
-                                    ${contract.officeByOfficeId.name}
+                                    <div class="col-sm-6">
+
+                                        <div class="form-group clearfix">
+                                            <div for="officeID" style="padding: 0" class="col-sm-4 control-label">Tên
+                                                văn phòng:
+                                            </div>
+
+                                            <div class="col-sm-8" style="font-weight: bold">
+                                                ${contract.officeByOfficeId.name}
+                                            </div>
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <div for="officeID" style="padding: 0" class="col-sm-4 control-label">Loại
+                                                văn phòng:
+                                            </div>
+
+                                            <div class="col-sm-8" style="font-weight: bold">
+                                                ${contract.officeByOfficeId.categoryByCategoryId.description}
+                                            </div>
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <div for="officeID" style="padding: 0" class="col-sm-4 control-label">Địa
+                                                chỉ văn phòng:
+                                            </div>
+
+                                            <div class="col-sm-8">
+                                                ${contract.officeByOfficeId.address}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group clearfix">
+                                            <div class="col-sm-4 control-label" style="text-align: right">Hình ảnh văn
+                                                phòng:
+                                            </div>
+                                            <br>
+
+                                            <div class="col-sm-8">
+                                                <div class="images clearfix" id="imageOffice">
+                                                </div>
+                                                <div class="clear-float"></div>
+                                                <input type="hidden" id="imageUrls" name="imageUrls"
+                                                       value="${office.imageUrls}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):
+                                    </div>
+
+                                    <div name="officeArea" id="officeArea" class="col-sm-4">
+                                        ${contract.officeByOfficeId.area}
+                                    </div>
+                                    <div class="col-sm-2 control-label" style="text-align: right">Kỳ hạn thanh toán:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${contract.paymentTermByPaymentTerm.description}
+                                        <input type="hidden" name="paymentTerm" id="paymentTerm"
+                                               value="${contract.paymentTerm}">
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
+
+                                    <div name="startDate" id="startDate" class="col-sm-4">
+                                        <fmt:formatDate value="${contract.startDate}"
+                                                        pattern="dd-MM-yyyy"/>
+
+                                    </div>
+                                    <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết
+                                        thúc:
+                                    </div>
+
+                                    <div name="endDate" id="endDate" class="col-sm-4">
+                                        <fmt:formatDate value="${contract.endDate}"
+                                                        pattern="dd-MM-yyyy"/>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
+
+                                    <div name="paymentFee" id="paymentFee" class="col-sm-4">
+                                        ${contract.paymentFee} VNĐ
+                                    </div>
+                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Số
+                                        tiền đặt cọc:
+                                    </div>
+                                    <input type="hidden" id="depositValue" name="depositValue"
+                                           value="${contract.deposit}">
+                                    <div class="col-sm-4" id="deposit" name="deposit">
+                                        ${contract.deposit} <span>VNĐ</span>
+
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="total" class="col-sm-2 control-label">Tổng số tiền thanh toán mỗi kỳ:
+                                    </div>
+
+                                    <div name="total" id="total" style="font-weight: bold" class="col-sm-4">
+                                    </div>
+                                    <div for="totalContract" style="text-align: right" class="col-sm-2 control-label">
+                                        Tổng giá trị hợp đồng:
+                                    </div>
+
+                                    <div name="totalContract" id="totalContract" class="col-sm-4">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group clearfix">
-                                <div for="officeID" class="col-sm-2 control-label">Loại văn phòng:</div>
 
-                                <div class="col-sm-10" style="font-weight: bold">
-                                    ${contract.officeByOfficeId.categoryByCategoryId.description}
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <div for="officeID" class="col-sm-2 control-label">Địa chỉ văn phòng:</div>
-
-                                <div class="col-sm-10">
-                                    ${contract.officeByOfficeId.address}
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):</div>
-
-                                <div name="officeArea" id="officeArea" class="col-sm-4">
-                                    ${contract.officeByOfficeId.area}
-                                </div>
-                                <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
-
-                                <div name="paymentFee" id="paymentFee" class="col-sm-4">
-                                    ${contract.paymentFee} VNĐ
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
-
-                                <div name="startDate" id="startDate" class="col-sm-4">
-                                    ${contract.startDate}
-
-                                </div>
-                                <div for="endDate" class="col-sm-2 control-label">Ngày kết thúc:</div>
-
-                                <div name="endDate" id="endDate" class="col-sm-4">
-                                    ${contract.endDate}
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <div class="col-sm-2 control-label">Kỳ hạn thanh toán:</div>
-
-                                <div class="col-sm-4">
-                                    ${contract.paymentTermByPaymentTerm.description}
-                                    <input type="hidden" name="paymentTerm" id="paymentTerm"
-                                           value="${contract.paymentTerm}">
-                                </div>
-                                <div for="paymentFee" class="col-sm-2 control-label">Số tiền đặt cọc:</div>
-
-                                <div class="col-sm-4" id="deposit">
-                                    ${contract.deposit} VNĐ
-                                </div>
-                            </div>
-
-                            <div style="padding: 15px">
-                                <h4>Số tiền bên B ông(bà): <span style="font-weight: bold">${contract.accountByCustomerUsername.profileByUsername.fullName}</span>,
-                                phải thanh toán mỗi kỳ(<span style="font-weight: bold">${contract.paymentTermByPaymentTerm.description}</span>) cho bên A ông(bà): Công ty ORS, là: <span id="total" style="font-weight: bold"></span>
-                                đồng.</h4>
-                            </div>
-                            <div class="row" style="margin: 40px auto 10px auto; border-top:2px solid #000000">
-                                <div><h3>Thông tin thêm</h3></div>
+                            <div class="row" style="margin: 20px auto; ">
+                                <div style="text-align:center; border-bottom:2px solid #000000"><h3>Hình ảnh văn bản
+                                    hợp
+                                    đồng</h3></div>
                                 <div class="form-group clearfix">
                                     <div class="col-sm-2 control-label">Hình ảnh</div>
                                     <br>
@@ -208,10 +271,10 @@
                                 </div>
                             </div>
                             <div class="button-post">
-                                <a class="btn btn-primary" href="contract?action=edit&id=${contract.id}">Chỉnh sửa</a>
+                                <a class="btn btn-primary" href="contract?action=edit&id=${contract.id}">Chỉnh
+                                    sửa</a>
                                 <a href="/admin/contract" class="btn btn-default">Quay về</a>
                             </div>
-
                         </form>
                     </div>
                 </div>
@@ -225,8 +288,6 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var paymentTerm = document.getElementById('paymentTerm').value;
-
-
         var time;
         switch (paymentTerm) {
             case '1':
@@ -243,16 +304,37 @@
         var fee = document.getElementById('paymentFee').innerText;
 
         var total = time * parseInt(fee) * parseFloat(area);
-
-        document.getElementById('total').innerHTML = numberWithCommas(total);
+        var deposit = document.getElementById('depositValue').value != '' ? document.getElementById('depositValue').value : 0;
+        var contractTotal= total + parseFloat(deposit);
+        document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('deposit').innerText);
+        document.getElementById('totalContract').innerHTML = numberWithCommas(contractTotal) + ' VNĐ';
 
+        imageUrls = $("#imageUrls").val();
+        console.log(imageUrls);
+        renderImg(imageUrls);
     });
 
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
+    ;
+    var renderImg = function () {
+        var list = imageUrls.split(",");
+        console.log(list);
+        for (var i = 0; i < list.length; i++) {
+            var img = list[i];
+            if (img) {
+                $('#imageOffice').append('<div class="upload-img">' +
+                '<div class="img"><img src="' + img + '"></div>' +
+                '</div>');
+            }
+        }
+    };
+
 </script>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>--%>
+
 </body>
 </html>

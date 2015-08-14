@@ -8,3 +8,10 @@
 .spanleft {
     padding-left: 10px;
 }
+
+.right-infoRepair {
+    padding: 40px;
+    float: left;
+    width: 540px;
+    border-left: 1px solid #b5b5b5;
+}

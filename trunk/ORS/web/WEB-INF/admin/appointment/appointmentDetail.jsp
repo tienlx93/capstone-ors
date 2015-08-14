@@ -38,13 +38,16 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="page-header">Quản lí lịch hẹn</h1>
+        <h1 class="title">Quản lí lịch hẹn</h1>
     </div>
 
     <div class="container-padding">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
+                    <div class="panel-title">
+                        <h2 style="margin-top: 5px">Chi tiết lịch hẹn</h2>
+                    </div>
                     <div>
                         <form action="appointment?action=editing" method="post" name="appointment">
                             <div class="form-group" hidden>
@@ -53,23 +56,35 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="customerName" class="col-sm-2 control-label">Khách hàng</label>
-
-                                <div class="col-sm-10">
+                                <label class="col-sm-2 control-label">Khách hàng</label>
+                                <div class="col-sm-4">
                                     ${info.accountByCustomerUsername.profileByUsername.fullName}
-                                    <input type="hidden" id="customerName"
-                                           value="${info.accountByCustomerUsername.username}">
+                                </div>
+
+                                <label class="col-sm-2 control-label">Số điện thoại</label>
+                                <div class="col-sm-4">
+                                    ${info.accountByCustomerUsername.profileByUsername.phone}
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="nameOfiice" class="col-sm-2 control-label">Tên văn phòng</label>
-
-                                <div class="col-sm-10">
+                                <label class="col-sm-2 control-label">Tên văn phòng</label>
+                                <div class="col-sm-4">
                                     ${info.officeByOfficeId.name}
-                                    <input type="hidden" id="nameOfiice"
-                                           value="${info.officeByOfficeId.name}">
                                 </div>
+
+                                <label class="col-sm-2 control-label">Địa chỉ văn phòng</label>
+                                <div class="col-sm-4">
+                                    ${info.officeByOfficeId.address}
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Loại văn phòng</label>
+                                <div class="col-sm-4">
+                                    ${info.officeByOfficeId.categoryByCategoryId.description}
+                                </div>
+
                             </div>
 
                             <c:if test="${user.roleId==2}">
@@ -78,7 +93,7 @@
                                         giao</label>
                                     <% AccountDAO acc = new AccountDAO();
                                         List<Account> listAcc = acc.findStaff();%>
-                                    <div class="col-sm-10">
+                                    <div class="col-sm-4">
                                         <c:choose>
                                             <c:when test="${info.statusId == 5 || info.statusId == 4 || info.statusId == 3}">
                                                 ${info.assignedStaff}
@@ -107,15 +122,32 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
+
+                                    <label for="time" class="col-sm-2 control-label">Thời gian gặp</label>
+                                    <div class="col-sm-4">
+                                    <c:choose>
+                                        <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
+                                            <div class="col-sm-4">
+                                                <input type='text' class="form-control"
+                                                       name="time"
+                                                       id="time"
+                                                       value="${info.time}"/>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${info.time}
+                                        </c:otherwise>
+                                    </c:choose>
+                                    </div>
                                 </div>
                             </c:if>
 
 
-                            <div class="form-group clearfix">
+                            <%--<div class="form-group clearfix">
                                 <label for="time" class="col-sm-2 control-label">Thời gian gặp</label>
                                 <c:choose>
                                     <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-4">
                                             <input type='text' class="form-control"
                                                    name="time"
                                                    id="time"
@@ -127,10 +159,10 @@
                                     </c:otherwise>
                                 </c:choose>
 
-                                <%--<div class="col-sm-10">--%>
-                                <%--${info.time}--%>
-                                <%--</div>--%>
-                            </div>
+                                &lt;%&ndash;<div class="col-sm-10">&ndash;%&gt;
+                                &lt;%&ndash;${info.time}&ndash;%&gt;
+                                &lt;%&ndash;</div>&ndash;%&gt;
+                            </div>--%>
                             <c:if test="${info.statusId != 1 && info.statusId != 2}">
                                 <div class="form-group clearfix">
                                     <label for="appointmentStatusId" class="col-sm-2 control-label">Ý kiến khách

@@ -8,9 +8,12 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.JsPromptResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
@@ -29,7 +32,43 @@ public class MainActivity extends Activity {
         webSettings.setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new WebAppInterface(this), "Android");
         webView.loadUrl(url);
-        webView.setWebChromeClient(new WebChromeClient() { });
+        webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, final JsPromptResult result)
+            {
+                final LayoutInflater factory = LayoutInflater.from(MainActivity.this);
+                final View v = factory.inflate(R.layout.javascript_prompt_dialog, null);
+                ((TextView)v.findViewById(R.id.prompt_message_text)).setText(message);
+                ((EditText)v.findViewById(R.id.prompt_input_field)).setText(defaultValue);
+
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Office rental service")
+                        .setView(v)
+                        .setPositiveButton(android.R.string.ok,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        String value = ((EditText)v.findViewById(R.id.prompt_input_field)).getText()
+                                                .toString();
+                                        result.confirm(value);
+                                    }
+                                })
+                        .setNegativeButton(android.R.string.cancel,
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int whichButton) {
+                                        result.cancel();
+                                    }
+                                })
+                        .setOnCancelListener(
+                                new DialogInterface.OnCancelListener() {
+                                    public void onCancel(DialogInterface dialog) {
+                                        result.cancel();
+                                    }
+                                })
+                        .show();
+
+                return true;
+            };
+        });
     }
 
     @Override

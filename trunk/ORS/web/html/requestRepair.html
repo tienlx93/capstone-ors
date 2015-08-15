@@ -13,25 +13,31 @@
                 </div>
             </div>
         </div>
-        <div class="right-info" id="info">
+        <div class="right-infoRepair" id="info">
             <div class="info"><h2>Yêu cầu sửa chữa</h2></div>
 
             <!--<h2 class="descriptionRepair">Yêu cầu sửa chữa</h2>-->
+            <table class="descriptionRepair">
+                <tbody>
+                <tr>
+                    <td><label class="descriptionRepair">Tên văn phòng:</label></td>
+                    <td><span class="spanleft">{{officeName}}</span></td>
+                </tr>
+                <tr>
+                    <td><label class="descriptionRepair">Địa chỉ văn phòng:</label></td>
+                    <td><span class="spanleft">{{officeAddress}}</span></td>
+                </tr>
+                <tr>
+                    <td><label class="descriptionRepair">Chủ văn phòng:</label></td>
+                    <td><span class="spanleft">{{officeOwnerName}}</span></td>
+                </tr>
+                <tr>
+                    <td><label class="descriptionRepair">Điện thoại:</label></td>
+                    <td><span class="spanleft">{{officeOwnerPhone}}</span></td>
+                </tr>
+                </tbody>
+            </table>
 
-            <div class="descriptionRepair">
-                <label class="">Tên văn phòng:</label>
-                <span class="spanleft">{{officeName}}</span>
-            </div>
-
-            <div class="descriptionRepair" hidden>
-                <label class="">Sửa chữa:</label>
-        <span class="spanleft">
-            <select>
-                <option>Thiết bị thuê thêm</option>
-                <option>Tiện ích văn phòng</option>
-            </select>
-        </span>
-            </div>
             <form name="form">
                 <div class="descriptionRepair">
                     <label class="">Sửa chữa:</label>
@@ -45,9 +51,11 @@
                 <div class="descriptionRepair">
                     <label class="">Mô tả yêu cầu sửa chữa:</label>
                     <br>
-                    <textarea ng-model="description" required name="description"></textarea>
+                    <textarea style="width: 100%" rows="5" ng-model="description" required
+                              name="description"></textarea>
+
                     <div>
-                    <span style="color: #ef4836;" ng-show="form.description.$dirty && form.description.$invalid">
+                    <span style="color: #ef4836; " ng-show="form.description.$dirty && form.description.$invalid">
                         <span ng-show="form.description.$error.required">Vui lòng điền mô tả </span>
                     </span>
                     </div>

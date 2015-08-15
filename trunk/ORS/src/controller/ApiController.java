@@ -922,7 +922,8 @@ public class ApiController extends HttpServlet {
                     list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
                             contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                             paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription()));
+                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
+                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress()));
                 }
             }
             if (list.size() > 0) {
@@ -1096,20 +1097,14 @@ public class ApiController extends HttpServlet {
         if (account != null) {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
                 if (contract.getStatusId() != 4) {
-//                    Office office1 = (Office) officeDAO.getChildOffice(office.getId());
-//                    if (office.getParentOfficeId() != null) {
-//                        ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-//                                contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(),
-//                                paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-//                                office1.getArea(), contract.getDeposit());
-//                        out.print(gson.toJson(json));
-//                    } else {
+
                     ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
                             contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                             paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription());
+                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
+                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress());
                     out.print(gson.toJson(json));
-//                    }
+
                 } else {
                     out.print(gson.toJson("Expire"));
                 }

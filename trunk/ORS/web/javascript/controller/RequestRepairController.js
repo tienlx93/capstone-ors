@@ -10,11 +10,14 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
             if (data == "Error") {
                 $scope.error = true;
             } else {
+                $scope.officeOwnerName = data.ownerName;
+                $scope.officeOwnerPhone = data.ownerPhone;
                 Api.getOffice(data.officeId, function (data) {
                     if (data == "Error") {
                         $scope.error = true;
                     } else {
                         $scope.officeName = data.name;
+                        $scope.officeAddress = data.address;
                         $scope.amenities = data.amenities;
                         $scope.img = data.images[0];
                     }

@@ -158,3 +158,7 @@ dropdown.change(function(){
         $("#price")[0].disabled = false;
     }
 });
+
+$("#isPercent").click( function(){
+    $('.collapse').collapse('toggle');
+});

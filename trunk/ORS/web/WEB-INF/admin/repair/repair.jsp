@@ -153,7 +153,7 @@
                           <th>Tên văn phòng</th>
                           <th>Khách hàng</th>
                           <th>Ngày tạo yêu cầu</th>
-                          <th>Mô tả</th>
+
                           <th>Đề xuất nhân viên</th>
                           <th>Đề xuất thời gian</th>
 
@@ -171,7 +171,6 @@
                                 <td>
                                   <fmt:formatDate value="${item.createTime}" pattern="dd-MM-yyyy"/>
                                 </td>
-                                <td>${item.description}</td>
                                 <td>
                                   <input type="hidden" name="id"
                                          value="${item.id}">
@@ -229,7 +228,7 @@
                             <th>Tên văn phòng</th>
                             <th>Khách hàng</th>
                             <th>Ngày sửa chữa</th>
-                            <th>Mô tả</th>
+
 
                             <th></th>
                           </tr>
@@ -242,7 +241,7 @@
                                 <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
                                     ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.assignedTime}" /></td>
-                                <td>${item.description}</td>
+
                                 <td>
                                   <a href="repair?action=edit&id=${item.id}"
                                      title="Chi tiết"
@@ -265,7 +264,6 @@
                             <th>Khách hàng</th>
                             <th>Ngày sửa chữa</th>
                             <th>Nhân viên được giao</th>
-                            <th>Mô tả</th>
 
                             <th></th>
                           </tr>
@@ -279,7 +277,7 @@
                                     ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                                 <td><fmt:formatDate pattern="dd-MM-yyyy" value="${item.assignedTime}" /></td>
                                 <td>${item.assignedStaff}</td>
-                                <td>${item.description}</td>
+
                                 <td>
                                   <a href="repair?action=edit&id=${item.id}"
                                      title="Chi tiết"
@@ -304,7 +302,7 @@
                         <c:if test="${user.roleId == 2}">
                           <th>Nhân viên được giao</th>
                         </c:if>
-                        <th>Mô tả</th>
+
                         <th></th>
                       </tr>
                       </thead>
@@ -318,7 +316,7 @@
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignedStaff}</td>
                             </c:if>
-                            <td>${item.description}</td>
+
                             <td>
                               <a href="repair?action=edit&id=${item.id}"
                                  title="Chi tiết"
@@ -341,7 +339,7 @@
                         <c:if test="${user.roleId == 2}">
                           <th>Nhân viên được giao</th>
                         </c:if>
-                        <th>Mô tả</th>
+
 
                         <th></th>
                       </tr>
@@ -356,7 +354,7 @@
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignedStaff}</td>
                             </c:if>
-                            <td>${item.description}</td>
+
                             <td>
                               <a href="repair?action=edit&id=${item.id}"
                                  title="Chi tiết"
@@ -379,7 +377,7 @@
                         <c:if test="${user.roleId == 2}">
                           <th>Nhân viên được giao</th>
                         </c:if>
-                        <th>Mô tả</th>
+
 
                         <th></th>
                       </tr>
@@ -394,7 +392,7 @@
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignedStaff}</td>
                             </c:if>
-                            <td>${item.description}</td>
+
                             <td>
                               <a href="repair?action=edit&id=${item.id}"
                                  title="Chi tiết"
@@ -427,7 +425,7 @@
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
     $('.datetime').datepicker({
-      format: 'yyyy-mm-dd',
+      format: 'dd-MM-yyyy',
       onRender: function (date) {
         return date.valueOf() < now.valueOf() ? 'disabled' : '';
       }

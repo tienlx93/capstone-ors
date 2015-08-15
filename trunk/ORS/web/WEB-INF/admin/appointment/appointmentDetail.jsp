@@ -2,6 +2,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="dao.AccountDAO" %>
 <%@ page import="entity.Account" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%--
   Created by IntelliJ IDEA.
   User: Thành
@@ -107,6 +108,39 @@
                             </div>
 
                             <c:if test="${user.roleId==2}">
+                                        <%--<c:choose>
+                                            <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
+                                                <div class="col-sm-3">
+                                                    <input type='text' class="form-control"
+                                                           name="time"
+                                                           id="time"
+                                                           value="${info.time}"/>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="col-sm-3">
+                                                        ${info.time}
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>--%>
+
+
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 control-label">Ngày gặp</label>
+
+                                    <div class="col-sm-4">
+                                        <fmt:formatDate value="${info.time}"
+                                                        pattern="dd-MM-YYYY"/>
+                                    </div>
+
+                                    <label class="col-sm-2 control-label">Thời gian gặp</label>
+
+                                    <div class="col-sm-4">
+                                        <fmt:formatDate value="${info.time}"
+                                                        pattern="hh:mm a"/>
+                                    </div>
+                                </div>
+
                                 <div class="form-group clearfix">
                                     <label for="assignedStaff" class="col-sm-2 control-label">Nhân viên được
                                         giao</label>
@@ -141,27 +175,8 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
-
-                                    <label for="time" class="col-sm-2 control-label">Thời gian gặp</label>
-
-
-                                    <c:choose>
-                                        <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                            <div class="col-sm-3">
-                                                <input type='text' class="form-control"
-                                                       name="time"
-                                                       id="time"
-                                                       value="${info.time}"/>
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="col-sm-3">
-                                                    ${info.time}
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
-
                                 </div>
+
                             </c:if>
 
 
@@ -198,7 +213,7 @@
                                 </div>
                             </c:if>
                             <div class="form-group clearfix">
-                                <label for="appointmentStatusId" class="col-sm-2 control-label">Tình trạng</label>
+                                <label for="appointmentStatusId" class="col-sm-2 control-label">Trạng thái</label>
 
                                 <div class="col-sm-10">
                                     ${info.appointmentStatusByStatusId.description}

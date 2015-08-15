@@ -170,7 +170,7 @@
                                       </td>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td>
-                                        <fmt:formatDate value="${item.time}" pattern="dd-MM-yyyy hh:mm"/>
+                                        <fmt:formatDate value="${item.time}" pattern="dd-MM-yyyy hh:mm a"/>
                                       </td>
                                       <td>
                                         <input type="hidden" name="id"
@@ -239,7 +239,7 @@
                                       </c:if>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td><fmt:formatDate value="${item.time}"
-                                                          pattern="dd-MM-YYYY hh:mm"/></td>
+                                                          pattern="dd-MM-YYYY hh:mm a"/></td>
 
                                       <td>
                                         <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
@@ -283,7 +283,7 @@
                                       </c:if>
                                       <td>${item.officeByOfficeId.name}</td>
                                       <td><fmt:formatDate value="${item.time}"
-                                                          pattern="yyyy-MM-dd hh:mm"/></td>
+                                                          pattern="yyyy-MM-dd hh:mm a"/></td>
 
                                       <td>
                                         <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
@@ -327,7 +327,7 @@
                                   </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
                                   <td><fmt:formatDate value="${item.time}"
-                                                      pattern="yyyy-MM-dd hh:mm"/></td>
+                                                      pattern="yyyy-MM-dd hh:mm a"/></td>
 
                                   <td>
                                     <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
@@ -369,7 +369,7 @@
                                   </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
                                   <td><fmt:formatDate value="${item.time}"
-                                                      pattern="yyyy-MM-dd hh:mm"/></td>
+                                                      pattern="yyyy-MM-dd hh:mm a"/></td>
 
                                   <td>
                                     <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
@@ -411,7 +411,7 @@
                                   </c:if>
                                   <td>${item.officeByOfficeId.name}</td>
                                   <td><fmt:formatDate value="${item.time}"
-                                                      pattern="yyyy-MM-dd hh:mm"/></td>
+                                                      pattern="yyyy-MM-dd hh:mm a"/></td>
 
                                   <td>
                                     <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"

@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +59,15 @@ public class RepairController extends HttpServlet {
                     sms.send();
                     break;
                 case "assign":
-                    Date date = java.sql.Date.valueOf(assignedTime);
+                    SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String reformatted = null;
+                    try {
+                        reformatted = myFormat.format(fromUser.parse(assignedTime));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Date date = java.sql.Date.valueOf(reformatted);
                     dao.update(id, contractId, assignedStaff, description, date, 2);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     sms.setMessage("Yeu cau sua chua cua ban da duoc chap nhan. Thoi gian du kien: " + df.format(date));

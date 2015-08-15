@@ -61,8 +61,19 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
                 image: url
             });
         };
-
+        $scope.$watch('price', function(price) {
+            if (!price || price < 100000) {
+                $scope.priceRange = 0;
+            } else if (price < 200000) {
+                $scope.priceRange = 1;
+            } else if (price < 300000) {
+                $scope.priceRange = 3;
+            } else if (price < 400000) {
+                $scope.priceRange = 4;
+            } else {
+                $scope.priceRange = 5;
+            }
+        })
     }
-
 ]);
 

@@ -11,6 +11,6 @@
     Capstone project - Office Rental Service
   </div>
   <div class="col-md-6 text-right">
-    Template by <a href="" target="_blank">Egemem</a>
+    Project by <a href="" target="_blank">Group 6</a>
   </div>
 </div>

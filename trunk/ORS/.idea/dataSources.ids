@@ -96,6 +96,7 @@
       <column name="Deposit" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="CancelDate" sqlType="date" precision="10" scale="0" nullable="true" jdbcType="91"/>
       <column name="ImageUrl" sqlType="nvarchar" precision="150" scale="0" nullable="true" jdbcType="-9"/>
+      <column name="CancelFee" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <primary-key name="PK_Contract" columns="Id"/>
       <foreign-key name="FK_Contract_Account" columns="CustomerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_ContractStatus" columns="StatusId" ref-table="ContractStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>

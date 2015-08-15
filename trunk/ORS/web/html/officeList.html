@@ -18,14 +18,7 @@
                 <div class="col-sm-6 col-md-4" style="padding: 0">
                     <span class="col-md-4">Khoảng giá</span>
                     <div class="col-md-8">
-                        <select ng-model="searchTerm.priceRange" style="width: 100%;padding: 4px;">
-                            <option value="0">Thỏa thuận</option>
-                            <option value="1">100.000 - 200.000</option>
-                            <option value="2">200.000 - 300.000</option>
-                            <option value="3">300.000 - 400.000</option>
-                            <option value="4">400.000 - 500.000</option>
-                            <option value="5">&gt; 500.000</option>
-                        </select>
+                        <input type="text" ng-model="price" real-time-currency style="width: 100%"/>
                     </div>
                 </div>
                 <div class="col-sm-6 col-md-2">

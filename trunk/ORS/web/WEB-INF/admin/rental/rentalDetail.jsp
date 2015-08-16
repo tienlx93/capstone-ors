@@ -40,16 +40,16 @@
 <jsp:include page="/WEB-INF/admin/left.jsp"/>
 <div class="content">
     <div class="page-header">
-        <h1 class="page-header">Quản lí yêu cầu thuê thiết bị</h1>
+        <h1 class="title">Quản lí yêu cầu thuê thiết bị</h1>
     </div>
 
     <div class="container-padding">
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-title">
-                        Xem chi tiết
-                    </div>
+                    <%--<div class="panel-title">--%>
+                    <%--Xem chi tiết--%>
+                    <%--</div>--%>
                     <div>
                         <form action="rental?action=editing" method="post">
                             <div class="form-group" hidden>
@@ -57,7 +57,7 @@
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
 
-                            <div class="form-group clearfix">
+                            <div class="form-group clearfix" hidden>
                                 <label for="contractId" class="col-sm-2 control-label">Hợp đồng</label>
 
                                 <div class="col-sm-10">
@@ -66,16 +66,107 @@
                                 </div>
 
                             </div>
+
+                            <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                <h2>Thông tin tổng quát</h2></div>
+                            <h3>Chủ sở hữu</h3>
+
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Chủ văn phòng</label>
+
+                                <div class="col-sm-4">
+                                    ${info.contractByContractId.officeByOfficeId.ownerName}
+                                </div>
+
+                                <label class="col-sm-2 control-label">Số điện thoại</label>
+
+                                <div class="col-sm-4">
+                                    ${info.contractByContractId.officeByOfficeId.ownerPhone}
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Tên văn phòng</label>
+
+                                <div class="col-sm-4">
+                                    ${info.contractByContractId.officeByOfficeId.name}
+                                </div>
+                                <label class="col-sm-2 control-label">Địa chỉ văn phòng</label>
+
+                                <div class="col-sm-4">
+                                    ${info.contractByContractId.officeByOfficeId.address}
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Loại văn phòng</label>
+
+                                <div class="col-sm-4">
+                                    ${info.contractByContractId.officeByOfficeId.categoryByCategoryId.description}
+                                </div>
+                            </div>
+                            <h3>Khách hàng</h3>
+
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Tên khách hàng</label>
+
+                                <div class="col-sm-4">
+                                    ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Số điện thoại</label>
+
+                                <div class="col-sm-4">
+                                    ${info.contractByContractId.accountByCustomerUsername.profileByUsername.phone}
+                                </div>
+                            </div>
+
+                            <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                <h2>Chi tiết yêu cầu thuê thiết bị</h2></div>
+
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Ngày tạo yêu cầu</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate value="${info.createTime}"
+                                                    pattern="dd-MM-yyyy"/>
+
+                                </div>
+                                <label class="col-sm-2 control-label">Mô tả yêu cầu</label>
+
+                                <div class="col-sm-4">
+                                    ${info.description}
+                                </div>
+                            </div>
+
                             <c:if test="${user.roleId==2}">
                                 <div class="form-group clearfix">
+                                    <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
+                                    <c:choose>
+                                        <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
+                                            <div class="col-sm-4">
+                                                <fmt:formatDate
+                                                        value="${info.assignedTime}"
+                                                        pattern="dd-MM-yyyy" var="newDate"/>
+                                                <input type="text" name="assignedTime" id="assignedTime"
+                                                       class="form-control" value="${newDate}">
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div class="col-sm-4">
+                                                <fmt:formatDate value="${info.assignedTime}" pattern="yyyy-MM-dd"/>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
+
                                     <label for="assignStaff" class="col-sm-2 control-label">Nhân viên được giao</label>
 
                                     <% AccountDAO acc = new AccountDAO();
                                         List<Account> listAcc = acc.findStaff();%>
-                                    <div class="col-sm-10">
-
+                                    <div class="col-sm-4">
                                         <c:choose>
-                                            <c:when test="${info.statusId == 3 || info.statusId == 4}">
+                                            <c:when test="${info.statusId == 3 || info.statusId == 4 || info.statusId == 5}">
                                                 ${info.assignStaff}
                                                 <input type="hidden" name="assignStaff" id="assignStaff"
                                                        value="${info.assignStaff}">
@@ -101,14 +192,15 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
+
                                 </div>
                             </c:if>
 
-                            <div class="form-group clearfix">
+                            <%--<div class="form-group clearfix">
                                 <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
                                 <c:choose>
                                     <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-4">
                                             <input type='text' class="form-control"
                                                    name="assignedTime"
                                                    id="assignedTime"
@@ -116,38 +208,17 @@
                                         </div>
                                     </c:when>
                                     <c:otherwise>
-                                        <div class="col-sm-10">
+                                        <div class="col-sm-4">
                                             <fmt:formatDate value="${info.assignedTime}" pattern="yyyy-MM-dd"/>
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
 
-                            </div>
+                            </div>--%>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Mô tả</label>
+                                <label for="list" class="col-sm-2 control-label clearfix">Thiết bị khách hàng yêu cầu</label>
 
-                                <div class="col-sm-10">
-                                    ${info.description}
-                                    <input type="hidden" name="description" class="form-control"
-                                           value="${info.description}" />
-                                </div>
-                            </div>
-
-
-                            <div class="form-group clearfix">
-                                <label for="statusId" class="col-sm-2 control-label">Tình trạng</label>
-
-                                <div class="col-sm-10">
-                                    ${info.rentalStatusByStatusId.description}
-                                    <input type="hidden" name="statusId" id="statusIdF"
-                                           value="${info.statusId}">
-                                </div>
-                            </div>
-
-
-                            <div class="form-group clearfix">
-                                <label for="list" class="col-sm-2 control-label clearfix">Thông tin thiết bị thuê</label>
                                 <div class="col-sm-10">
                                     <table class="table" id="list">
                                         <thead>
@@ -162,9 +233,11 @@
                                         <c:forEach var="item" items="${detailList}">
                                             <tr>
                                                 <td>${item.rentalItemByRentalItemId.name}</td>
-                                                <td>${item.unitPrice} </td>
+                                                <td><fmt:formatNumber type="number"
+                                                                      value="${item.unitPrice}" /></td>
                                                 <td>${item.quantity} </td>
-                                                <td>${item.unitPrice * item.quantity} </td>
+                                                <td><fmt:formatNumber type="number"
+                                                                      value="${item.unitPrice * item.quantity}" /></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -172,36 +245,52 @@
                                 </div>
                             </div>
 
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Trạng thái</label>
+
+                                <div class="col-sm-10">
+                                    ${info.rentalStatusByStatusId.description}
+                                    <input type="hidden" name="statusId" id="statusIdF"
+                                           value="${info.statusId}">
+                                </div>
+                            </div>
 
                             <div class="button-post">
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
                                         <c:if test="${info.statusId == 1}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary">Giao việc
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
+                                                Giao việc
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn btn-danger">Từ chối
+                                            <button type="submit" value="reject" name="button" class="btn btn-danger">Từ
+                                                chối
                                             </button>
                                         </c:if>
                                         <c:if test="${info.statusId == 2}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary">Giao việc lại
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
+                                                Giao việc lại
                                             </button>
                                         </c:if>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${info.statusId == 2}">
-                                                <button type="submit" value="change5" name="button" class="btn btn-primary">Đồng ý
+                                                <button type="submit" value="change5" name="button"
+                                                        class="btn btn-primary">Đồng ý
                                                     thuê
                                                 </button>
-                                                <button type="submit" value="change1" name="button" class="btn btn-danger">Không
+                                                <button type="submit" value="change1" name="button"
+                                                        class="btn btn-danger">Không
                                                     đồng ý thuê
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.statusId == 5}">
-                                                <button type="submit" value="change3" name="button" class="btn btn-primary">Khách
+                                                <button type="submit" value="change3" name="button"
+                                                        class="btn btn-primary">Khách
                                                     hàng hài lòng
                                                 </button>
-                                                <button type="submit" value="change1" name="button" class="btn btn-danger">Khách
+                                                <button type="submit" value="change1" name="button"
+                                                        class="btn btn-danger">Khách
                                                     hàng không hài lòng
                                                 </button>
                                             </c:when>
@@ -229,7 +318,7 @@
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
         $('#assignedTime').datepicker({
-            format: 'yyyy-mm-dd',
+            format: 'dd-mm-yyyy',
             onRender: function (date) {
                 return date.valueOf() < now.valueOf() ? 'disabled' : '';
             }

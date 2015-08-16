@@ -133,15 +133,28 @@ public class ContractController extends HttpServlet {
                 String endDate = request.getParameter("extendDate");
                 SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+                Contract newContract = new Contract();
+                newContract.setCancelDate(contract.getCancelDate());
+                newContract.setCancelFee(contract.getCancelFee());;
+                newContract.setStatusId(1);
+                newContract.setDeposit(contract.getDeposit());
+                newContract.setComment(contract.getComment());
+                newContract.setOfficeId(contract.getOfficeId());
+                newContract.setStartDate(contract.getEndDate());
+                newContract.setCustomerUsername(contract.getCustomerUsername());
+                newContract.setPaymentFee(contract.getPaymentFee());
+                newContract.setPaymentTerm(contract.getPaymentTerm());
                 try {
                     String reformattedEnd = myFormat.format(fromUser.parse(endDate));
-                    contract.setEndDate(Date.valueOf(reformattedEnd));
+//                    contract.setEndDate(Date.valueOf(reformattedEnd));
+                    newContract.setEndDate(Date.valueOf(reformattedEnd));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 switch (button) {
                     case "confirm":
-                        dao.update(id, contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), contract.getPaymentTerm(), 1);
+//                        dao.update(id, contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), contract.getPaymentTerm(), 1);
+                        dao.save(newContract);
                         break;
                     case "cancel":
                         dao.changeStatus(id, 1);

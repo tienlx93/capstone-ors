@@ -12,6 +12,12 @@
 .right-infoRepair {
     padding: 40px;
     float: left;
-    width: 540px;
+    width: 60%;
     border-left: 1px solid #b5b5b5;
+}
+
+.left-infoRepair {
+    padding: 10px;
+    width: 40%;
+    float: left;
 }

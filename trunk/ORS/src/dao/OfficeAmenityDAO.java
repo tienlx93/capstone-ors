@@ -50,4 +50,19 @@ public class OfficeAmenityDAO extends BaseDAO<OfficeAmenity, Integer> {
         }
         return false;
     }
+
+    public List<OfficeAmenity> getAmenityIdByOfficeId(int id) {
+
+        try {
+            String sql = "from OfficeAmenity where officeId = ?";
+            Query query = session.createQuery(sql);
+            query.setInteger(0, id);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
 }

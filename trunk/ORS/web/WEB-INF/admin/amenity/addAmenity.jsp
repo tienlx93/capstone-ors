@@ -43,8 +43,6 @@
           <div class="panel-title">
             <h1 class="page-header">Thêm tiện nghi mới</h1>
           </div>
-          <p class="text-left"><b>Các ô có dấu * là bắt buộc</b></p>
-          <br/>
           <div class="text-center">
             <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
               <div class="form-group">
@@ -59,12 +57,12 @@
 
               <div class="form-group">
                 <label for="weight">Trọng số</label>
-                <input type="text" name="weight" class="" id="weight" required>
+                <input type="number" min="1" name="weight" class="" id="weight" required>
               </div>
 
               <div class="form-group">
                 <label for="priority">Độ ưu tiên</label>
-                <input type="text" name="priority" class="" id="priority" required>
+                <input type="number" min="0" name="priority" class="" id="priority" required>
               </div>
 
               <div class="form-group">
@@ -79,7 +77,6 @@
               <div class="button-post">
                 <button type="submit" value="save" class="btn btn-success" name="action"><i class="fa fa-arrow-right"></i>Tạo mới</button>
                 <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
-
               </div>
             </form>
           </div>

@@ -5,7 +5,7 @@
 <div class="container" id="descriptionRepair">
 
     <div class="panel-body">
-        <div class="left-request">
+        <div class="left-infoRepair">
             <div class="office clearfix">
                 <div class="img">
                     <!--<img src="/img/office.jpg">-->
@@ -41,15 +41,19 @@
             <form name="form">
                 <div class="descriptionRepair">
                     <label class="">Sửa chữa:</label>
-                    <span class="spanleft">
-                        <div class="checkbox" ng-repeat="amenity in amenities">
-                            <label><input type="checkbox" ng-click="toggleSelection(amenity)"
-                                          value="{{amenity}}">{{amenity}}</label>
-                        </div>
-                    </span>
+
+                    <div class="checkbox" ng-repeat="amenity in amenities">
+                        <ul>
+                            <li class="col-sm-6" style="padding-left: 50px;">
+                                <input type="checkbox" ng-click="toggleSelection(amenity)"
+                                       value="{{amenity}}" required/>{{amenity}}
+                            </li>
+                        </ul>
+                    </div>
+                    <br>
                 </div>
                 <div class="descriptionRepair">
-                    <label class="">Mô tả yêu cầu sửa chữa:</label>
+                    <label>Mô tả yêu cầu sửa chữa:</label>
                     <br>
                     <textarea style="width: 100%" rows="5" ng-model="description" required
                               name="description"></textarea>

@@ -1,13 +1,7 @@
 package controller;
 
-import dao.AccountDAO;
-import dao.ContractDAO;
-import dao.OfficeDAO;
-import dao.RepairDAO;
-import entity.Account;
-import entity.Contract;
-import entity.Office;
-import entity.Repair;
+import dao.*;
+import entity.*;
 import service.ConstantService;
 import service.SMSService;
 import service.ScheduleService;
@@ -21,10 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Th�nh on 01/06/2015.
@@ -58,7 +51,15 @@ public class RepairController extends HttpServlet {
                     sms.send();
                     break;
                 case "assign":
-                    Date date = java.sql.Date.valueOf(assignedTime);
+                    SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String reformatted = null;
+                    try {
+                        reformatted = myFormat.format(fromUser.parse(assignedTime));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    Date date = java.sql.Date.valueOf(reformatted);
                     dao.update(id, contractId, assignedStaff, description, date, 2);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     sms.setMessage("Yeu cau sua chua cua ban da duoc chap nhan. Thoi gian du kien: " + df.format(date));
@@ -126,6 +127,14 @@ public class RepairController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                Repair repair =  dao.get(Integer.parseInt(request.getParameter("id")));
+                Collection<RepairDetail> repairDetails = repair.getRepairDetailsById();
+                List<Amenity> list = new ArrayList<>();
+                for (RepairDetail repairDetail : repairDetails) {
+                    Amenity amenity = repairDetail.getAmenityByAmenityId();
+                    list.add(amenity);
+                }
+                request.setAttribute("listAmenity", list);
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
             } else if (action.equals("viewProfile")) {
                 AccountDAO daoAcc = new AccountDAO();

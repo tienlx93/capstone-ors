@@ -52,7 +52,9 @@ public class OfficeJSON {
         this.category = office.getCategoryByCategoryId().getDescription();
         this.amenities = new ArrayList<>();
         for (OfficeAmenity amenity : office.getOfficeAmenitiesById()) {
-            this.amenities.add(amenity.getAmenityByAmenityId().getName());
+            if (amenity.getAmenityByAmenityId().getAmenityGroupId() == 4) {
+                this.amenities.add(amenity.getAmenityByAmenityId().getName());
+            }
         }
         this.images = new ArrayList<>();
         StringTokenizer tokenizer = new StringTokenizer(office.getImageUrls(), ",");

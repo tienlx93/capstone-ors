@@ -62,10 +62,23 @@ public class ContractController extends HttpServlet {
                     officeChildren.setCity(officeParent.getCity());
                     officeChildren.setMinTime(officeParent.getMinTime());
                     officeChildren.setMinArea(officeParent.getMinArea());
+                    officeChildren.setOwnerName(officeParent.getOwnerName());
+                    officeChildren.setOwnerPhone(officeParent.getOwnerPhone());
+                    officeChildren.setOwnerAddress(officeParent.getOwnerAddress());
                     officeChildren.setImageUrls(officeParent.getImageUrls());
                     officeChildren.setParentOfficeId(officeParent.getId());
 
                     officeDao.save(officeChildren);
+
+                    OfficeAmenityDAO officeAmenityDAO = new OfficeAmenityDAO();
+                    List<OfficeAmenity> list = officeAmenityDAO.getAmenityIdByOfficeId(officeParent.getId());
+                    List<Integer> amenityListInt = new ArrayList<>();
+
+                    for (OfficeAmenity s : list) {
+                        amenityListInt.add(s.getAmenityId());
+                    }
+                    OfficeAmenityDAO dao = new OfficeAmenityDAO();
+                    dao.saveOfficeAmenity(officeChildren.getId(), amenityListInt);
 
                     officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
                     contract.setOfficeId(officeChildren.getId());

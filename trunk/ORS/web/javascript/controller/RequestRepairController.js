@@ -20,8 +20,10 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                         $scope.officeAddress = data.address;
                         if (data.amenities.length == 0 ) {
                             $scope.amenities = "Văn phòng này không có thiết bị có thể sửa chữa";
+                            $scope.have = false;
                         } else {
                             $scope.amenities = data.amenities;
+                            $scope.have = true;
                         }
                         $scope.img = data.images[0];
                     }

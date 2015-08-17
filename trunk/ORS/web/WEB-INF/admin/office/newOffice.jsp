@@ -25,6 +25,7 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body onload="initialize()">
@@ -45,14 +46,16 @@
                         Thêm mới văn phòng
                     </div>
                     <div>
-                        <form action="office" method="post" id="form">
+                        <form action="office" method="post" id="form" onsubmit="return validateform()">
                             <div><h3>Thông tin cơ bản</h3></div>
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2">Tên văn phòng *</label>
 
                                 <div class="col-sm-10">
                                     <input type="text" name="name" class="form-control" id="name"
-                                           value="${office.name}" required>
+                                           value="${office.name}" required
+                                           title="Tên văn phòng (5-150 kí tự)"
+                                           pattern=".{5,150}">
                                 </div>
                             </div>
 
@@ -150,7 +153,7 @@
 
                                 <div class="col-sm-10">
                                     <input type="number" name="floor" class="form-control" id="floor"
-                                           value="${office.floorNumber}"
+                                           value="${office.floorNumber}" min="0"
                                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                 </div>
                             </div>
@@ -159,23 +162,23 @@
 
                                 <div class="col-sm-10">
                                     <input type="text" name="area" class="form-control" id="area"
-                                           value="${office.area}" required>
+                                           value="${office.area}" required min="0">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
                                 <label for="minArea" class="col-sm-2">Diện tích thuê tối thiểu *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" name="minArea" class="form-control" id="minArea"
-                                           value="${office.minArea}">
+                                    <input type="number" name="minArea" class="form-control" id="minArea"
+                                           value="${office.minArea}" required min="0" step="any">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
                                 <label for="minTime" class="col-sm-2">Thời gian thuê tối thiểu *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" name="minTime" class="form-control" id="minTime"
-                                           value="${office.minTime}">
+                                    <input type="number" name="minTime" class="form-control" id="minTime"
+                                           value="${office.minTime}" required min="0" step="1">
                                 </div>
                             </div>
 
@@ -184,8 +187,8 @@
                                 <label for="price" class="col-sm-2">Giá (VND) *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" name="price" class="form-control" id="price"
-                                           value="${office.price}">
+                                    <input type="number" name="price" class="form-control" id="price"
+                                           value="${office.price}" step="1" title="Xin nhập giá hợp lệ">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
@@ -226,21 +229,27 @@
                                 <label for="ownerName" class="col-sm-2">Tên người đại diện *</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="ownerName" class="form-control" id="ownerName"
-                                           value="${office.ownerName}">
+                                           value="${office.ownerName}" required
+                                           title="Tên người đại diện (5-150 kí tự)"
+                                           pattern=".{5,150}">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
                                 <label for="ownerPhone" class="col-sm-2">Số điện thoại người đại diện *</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="ownerPhone" class="form-control" id="ownerPhone"
-                                           value="${office.ownerPhone}">
+                                           value="${office.ownerPhone}" required
+                                           title="Số điện thoại người đại diện (9-11 số)"
+                                           pattern="[0-9]{9,11}">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
                                 <label for="ownerAddress" class="col-sm-2">Địa chỉ người đại diện *</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="ownerAddress" class="form-control" id="ownerAddress"
-                                           value="${office.ownerAddress}">
+                                           value="${office.ownerAddress}" required
+                                           title="Địa chỉ người đại diện (5-150 kí tự)"
+                                           pattern=".{5,150}">
                                 </div>
                             </div>
 
@@ -266,6 +275,20 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/street.js"></script>
+<script>
+    function validateform() {
+        var lat = $("#latitude").val();
+        if (!lat || isNaN(lat)) {
+            bootbox.alert({
+                size: 'small',
+                message: "Mời nhập địa chỉ và chọn từ danh sách đề xuất"
+            });
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
 
 </body>
 </html>

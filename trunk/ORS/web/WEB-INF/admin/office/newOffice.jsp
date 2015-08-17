@@ -152,7 +152,7 @@
                                 <label for="floor" class="col-sm-2">Số tầng *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="number"min="0" name="floor" class="form-control" id="floor"
+                                    <input type="number" name="floor" class="form-control" id="floor"
                                            value="${office.floorNumber}" min="0"
                                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                 </div>
@@ -161,7 +161,7 @@
                                 <label for="area" class="col-sm-2">Diện tích (m<sup>2</sup>) *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="number" min="0" name="area" class="form-control" id="area"
+                                    <input type="number" name="area" class="form-control" id="area"
                                            value="${office.area}" required min="0">
                                 </div>
                             </div>
@@ -174,7 +174,7 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="minTime" min="0" class="col-sm-2">Thời gian thuê tối thiểu *</label>
+                                <label for="minTime" class="col-sm-2">Thời gian thuê tối thiểu *</label>
 
                                 <div class="col-sm-10">
                                     <input type="number" name="minTime" class="form-control" id="minTime"

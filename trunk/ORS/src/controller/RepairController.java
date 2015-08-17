@@ -1,13 +1,7 @@
 package controller;
 
-import dao.AccountDAO;
-import dao.ContractDAO;
-import dao.OfficeDAO;
-import dao.RepairDAO;
-import entity.Account;
-import entity.Contract;
-import entity.Office;
-import entity.Repair;
+import dao.*;
+import entity.*;
 import service.ConstantService;
 import service.SMSService;
 import service.ScheduleService;
@@ -23,9 +17,7 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Th�nh on 01/06/2015.
@@ -135,6 +127,14 @@ public class RepairController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                Repair repair =  dao.get(Integer.parseInt(request.getParameter("id")));
+                Collection<RepairDetail> repairDetails = repair.getRepairDetailsById();
+                List<Amenity> list = new ArrayList<>();
+                for (RepairDetail repairDetail : repairDetails) {
+                    Amenity amenity = repairDetail.getAmenityByAmenityId();
+                    list.add(amenity);
+                }
+                request.setAttribute("listAmenity", list);
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
             } else if (action.equals("viewProfile")) {
                 AccountDAO daoAcc = new AccountDAO();

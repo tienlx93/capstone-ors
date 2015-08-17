@@ -46,15 +46,19 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-title">
-                        <h2 style="margin-top: 5px">Chi tiết lịch hẹn</h2>
-                    </div>
+                    <%--<div class="panel-title">--%>
+                    <%--<h2 style="margin-top: 5px">Chi tiết lịch hẹn</h2>--%>
+                    <%--</div>--%>
                     <div>
                         <form action="appointment?action=editing" method="post" name="appointment">
                             <div class="form-group" hidden>
                                 <label for="id">Id</label>
                                 ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>
+
+                            <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                <h2>Thông tin tổng quát</h2></div>
+                            <h3>Chủ sở hữu</h3>
 
                             <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Chủ văn phòng</label>
@@ -90,16 +94,18 @@
                                 <div class="col-sm-4">
                                     ${info.officeByOfficeId.categoryByCategoryId.description}
                                 </div>
-
                             </div>
 
+                            <h3>Khách hàng</h3>
+
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Khách hàng</label>
+                                <label class="col-sm-2 control-label">Tên khách hàng</label>
 
                                 <div class="col-sm-4">
                                     ${info.accountByCustomerUsername.profileByUsername.fullName}
                                 </div>
-
+                            </div>
+                            <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-4">
@@ -107,40 +113,43 @@
                                 </div>
                             </div>
 
-                            <c:if test="${user.roleId==2}">
-                                        <%--<c:choose>
-                                            <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                                <div class="col-sm-3">
-                                                    <input type='text' class="form-control"
-                                                           name="time"
-                                                           id="time"
-                                                           value="${info.time}"/>
-                                                </div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <div class="col-sm-3">
-                                                        ${info.time}
-                                                </div>
-                                            </c:otherwise>
-                                        </c:choose>--%>
+                            <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                <h2>Chi tiết lịch hẹn</h2></div>
 
 
-                                <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Ngày gặp</label>
-
-                                    <div class="col-sm-4">
-                                        <fmt:formatDate value="${info.time}"
-                                                        pattern="dd-MM-YYYY"/>
+                            <%--<c:choose>
+                                <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
+                                    <div class="col-sm-3">
+                                        <input type='text' class="form-control"
+                                               name="time"
+                                               id="time"
+                                               value="${info.time}"/>
                                     </div>
-
-                                    <label class="col-sm-2 control-label">Thời gian gặp</label>
-
-                                    <div class="col-sm-4">
-                                        <fmt:formatDate value="${info.time}"
-                                                        pattern="hh:mm a"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="col-sm-3">
+                                            ${info.time}
                                     </div>
+                                </c:otherwise>
+                            </c:choose>--%>
+
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Ngày gặp</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate value="${info.time}"
+                                                    pattern="dd-MM-YYYY"/>
                                 </div>
 
+                                <label class="col-sm-2 control-label">Thời gian gặp</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate value="${info.time}"
+                                                    pattern="hh:mm a"/>
+                                </div>
+                            </div>
+
+                            <c:if test="${user.roleId==2}">
                                 <div class="form-group clearfix">
                                     <label for="assignedStaff" class="col-sm-2 control-label">Nhân viên được
                                         giao</label>

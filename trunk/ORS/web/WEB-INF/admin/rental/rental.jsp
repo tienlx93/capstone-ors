@@ -140,7 +140,7 @@
                           <th>Tên văn phòng</th>
                           <th>Khách hàng</th>
                           <th>Ngày tạo yêu cầu</th>
-                          <th>Mô tả</th>
+
                           <th>Đề xuất nhân viên</th>
                           <th>Đề xuất thời gian</th>
                           <th></th>
@@ -156,7 +156,6 @@
                                     ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
                                 <td><fmt:formatDate value="${item.createTime}"
                                                     pattern="dd-MM-yyyy"/></td>
-                                <td>${item.description}</td>
                                 <td>
                                   <input type="hidden" name="id"
                                          value="${item.id}">
@@ -217,7 +216,7 @@
                             <c:if test="${user.roleId == 2}">
                               <th>Nhân viên được giao</th>
                             </c:if>
-                            <th>Mô tả</th>
+
                             <th></th>
                           </tr>
                           </thead>
@@ -232,7 +231,7 @@
                                 <c:if test="${user.roleId == 2}">
                                   <td>${item.assignStaff}</td>
                                 </c:if>
-                                <td>${item.description}</td>
+
                                 <td>
                                   <a href="rental?action=edit&id=${item.id}"
                                      title="Chi tiết"
@@ -257,7 +256,7 @@
                             <c:if test="${user.roleId == 2}">
                               <th>Nhân viên được giao</th>
                             </c:if>
-                            <th>Mô tả</th>
+
 
                             <th></th>
                           </tr>
@@ -273,7 +272,7 @@
                                 <c:if test="${user.roleId == 2}">
                                   <td>${item.assignStaff}</td>
                                 </c:if>
-                                <td>${item.description}</td>
+
 
                                 <td>
                                   <a href="rental?action=edit&id=${item.id}"
@@ -299,7 +298,7 @@
                         <c:if test="${user.roleId == 2}">
                           <th>Nhân viên được giao</th>
                         </c:if>
-                        <th>Mô tả</th>
+
                         <th></th>
                       </tr>
                       </thead>
@@ -313,7 +312,7 @@
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignStaff}</td>
                             </c:if>
-                            <td>${item.description}</td>
+
                             <td>
                               <a href="rental?action=edit&id=${item.id}"
                                  title="Chi tiết"
@@ -336,7 +335,6 @@
                         <c:if test="${user.roleId == 2}">
                           <th>Nhân viên được giao</th>
                         </c:if>
-                        <th>Mô tả</th>
 
                         <th></th>
                       </tr>
@@ -351,7 +349,7 @@
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignStaff}</td>
                             </c:if>
-                            <td>${item.description}</td>
+
                             <td>
                               <a href="rental?action=edit&id=${item.id}"
                                  title="Chi tiết"
@@ -374,7 +372,7 @@
                         <c:if test="${user.roleId == 2}">
                           <th>Nhân viên được giao</th>
                         </c:if>
-                        <th>Mô tả</th>
+
                         <th></th>
                       </tr>
                       </thead>
@@ -388,7 +386,7 @@
                             <c:if test="${user.roleId == 2}">
                               <td>${item.assignStaff}</td>
                             </c:if>
-                            <td>${item.description}</td>
+
                             <td>
                               <a href="rental?action=edit&id=${item.id}"
                                  title="Chi tiết"
@@ -421,7 +419,7 @@
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
     $('.datetime').datepicker({
-      format: 'yyyy-mm-dd',
+      format: 'dd-mm-yyyy',
       onRender: function (date) {
         return date.valueOf() < now.valueOf() ? 'disabled' : '';
       }

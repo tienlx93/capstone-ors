@@ -47,9 +47,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <div class="panel-title">
+                    <%--<div class="panel-title">
                         <h2 style="margin-top: 5px">Chi tiết yêu cầu sửa chữa</h2>
-                    </div>
+                    </div>--%>
                     <div>
                         <form action="repair?action=editing" method="post">
                             <div class="form-group clearfix" hidden>
@@ -66,8 +66,10 @@
                                 </div>
                             </div>
 
-                            <div style="margin-bottom: 20px">
-                                <h3>Thông tin thuê văn phòng</h3></div>
+                            <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                <h2>Thông tin tổng quát</h2></div>
+                            <h3>Chủ sở hữu</h3>
+
                             <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Chủ văn phòng</label>
 
@@ -102,14 +104,16 @@
                                     ${info.contractByContractId.officeByOfficeId.categoryByCategoryId.description}
                                 </div>
                             </div>
+                            <h3>Khách hàng</h3>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Khách hàng</label>
+                                <label class="col-sm-2 control-label">Tên khách hàng</label>
 
                                 <div class="col-sm-4">
                                     ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
                                 </div>
-
+                            </div>
+                            <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-4">
@@ -117,21 +121,31 @@
                                 </div>
                             </div>
 
+                            <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
+                                <h2>Chi tiết yêu cầu sửa chữa</h2></div>
+
                             <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Ngày tạo yêu cầu</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate value="${info.createTime}"
+                                                    pattern="dd-MM-yyyy"/>
+
+                                </div>
                                 <label class="col-sm-2 control-label">Mô tả yêu cầu</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-4">
                                     ${info.description}
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Ngày tạo yêu cầu</label>
+                                <label class="col-sm-2 control-label">Cần sửa chữa</label>
 
-                                <div class="col-sm-10">
-                                    <td><fmt:formatDate value="${info.createTime}"
-                                                        pattern="dd-MM-yyyy"/></td>
-
+                                <div class="col-sm-10 row" style="margin: auto">
+                                    <c:forEach var="item" items="${listAmenity}">
+                                        <div class="col-sm-12" style="padding: 0">${item.name}</div>
+                                    </c:forEach>
                                 </div>
                             </div>
 

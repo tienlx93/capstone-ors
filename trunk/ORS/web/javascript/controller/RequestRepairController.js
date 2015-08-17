@@ -18,7 +18,11 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                     } else {
                         $scope.officeName = data.name;
                         $scope.officeAddress = data.address;
-                        $scope.amenities = data.amenities;
+                        if (data.amenities.length == 0 ) {
+                            $scope.amenities = "Văn phòng này không có thiết bị có thể sửa chữa";
+                        } else {
+                            $scope.amenities = data.amenities;
+                        }
                         $scope.img = data.images[0];
                     }
                 });
@@ -38,16 +42,16 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
             }
         };
 
-        $scope.submit = function($form){
+        $scope.submit = function ($form) {
             var amenities = $scope.selection;
             var description = $scope.description;
-            Api.requestRepair(id, amenities, description, function(data){
-                if (data=="Success") {
+            Api.requestRepair(id, amenities, description, function (data) {
+                if (data == "Success") {
                     toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
                     $location.path("/contractList");
                 } else {
                     toastr.error('Vui lòng chọn ít nhất một tiện nghi để sửa');
-                //    alert("Có lỗi xảy ra, xin thử lại");
+                    //    alert("Có lỗi xảy ra, xin thử lại");
                 }
             })
         };

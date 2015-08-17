@@ -109,7 +109,7 @@ $.ajax({url: "/api?action=amenity", success: function(result){
     });
 }});
 
-$("#area, #floor ").keydown(function (e) {
+$("#area, #floor, #minArea, #minTime, #ownerPhone ").keydown(function (e) {
     // Allow: backspace, delete, tab, escape, enter and .
     if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
             // Allow: Ctrl+A
@@ -129,6 +129,7 @@ $("#area, #floor ").keydown(function (e) {
     }
 });
 var dropdown = $("#priceTerm");
+var minArea = $("#divMinArea");
 dropdown.find("option[value=1]").show();
 dropdown.find("option[value=2]").hide();
 dropdown.find("option[value=3]").hide();
@@ -140,13 +141,14 @@ $("#category").change(function(){
         dropdown.find("option[value=2]").hide();
         dropdown.find("option[value=3]").hide();
         dropdown.find("option[value=4]").show();
-
+        minArea.hide();
     } else {
         dropdown[0].selectedIndex = 1;
         dropdown.find("option[value=1]").hide();
         dropdown.find("option[value=2]").show();
         dropdown.find("option[value=3]").show();
         dropdown.find("option[value=4]").show();
+        minArea.show();
     }
 });
 

@@ -52,7 +52,7 @@
                                 <label for="name" class="col-sm-2">Tên văn phòng *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" name="name" class="form-control" id="name"
+                                    <input type="text" maxlength="100" name="name" class="form-control" id="name"
                                            value="${office.name}" required
                                            title="Tên văn phòng (5-150 kí tự)"
                                            pattern=".{5,150}">
@@ -152,7 +152,7 @@
                                 <label for="floor" class="col-sm-2">Số tầng *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="number" name="floor" class="form-control" id="floor"
+                                    <input type="number"min="0" name="floor" class="form-control" id="floor"
                                            value="${office.floorNumber}" min="0"
                                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                 </div>
@@ -161,12 +161,12 @@
                                 <label for="area" class="col-sm-2">Diện tích (m<sup>2</sup>) *</label>
 
                                 <div class="col-sm-10">
-                                    <input type="text" name="area" class="form-control" id="area"
+                                    <input type="number" min="0" name="area" class="form-control" id="area"
                                            value="${office.area}" required min="0">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="minArea" class="col-sm-2">Diện tích thuê tối thiểu *</label>
+                                <label for="minArea" class="col-sm-2">Diện tích thuê tối thiểu (m<sup>2</sup>) *</label>
 
                                 <div class="col-sm-10">
                                     <input type="number" name="minArea" class="form-control" id="minArea"
@@ -174,7 +174,7 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="minTime" class="col-sm-2">Thời gian thuê tối thiểu *</label>
+                                <label for="minTime" min="0" class="col-sm-2">Thời gian thuê tối thiểu *</label>
 
                                 <div class="col-sm-10">
                                     <input type="number" name="minTime" class="form-control" id="minTime"
@@ -205,7 +205,7 @@
                                 <label for="basePrice" class="col-sm-3" style="text-align: right;">Giá thuê gốc *</label>
 
                                 <div class="col-sm-9">
-                                    <input type="text" name="basePrice" class="form-control" id="basePrice"
+                                    <input type="text" min="0" name="basePrice" class="form-control" id="basePrice"
                                            value="${office.basePrice}">
                                 </div>
                             </div>
@@ -230,8 +230,8 @@
                                 <div class="col-sm-10">
                                     <input type="text" name="ownerName" class="form-control" id="ownerName"
                                            value="${office.ownerName}" required
-                                           title="Tên người đại diện (5-150 kí tự)"
-                                           pattern=".{5,150}">
+                                           title="Tên người đại diện (5-50 kí tự)"
+                                           pattern=".{5,50}">
                                 </div>
                             </div>
                             <div class="form-group clearfix">

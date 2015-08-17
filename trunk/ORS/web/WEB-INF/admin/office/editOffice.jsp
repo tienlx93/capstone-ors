@@ -25,6 +25,7 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body onload="initialize()">
@@ -163,7 +164,7 @@
 
                                 <div class="col-sm-8">
                                     <input type="number" name="floor" class="form-control" id="floor"
-                                           value="${office.floorNumber}" min="1"
+                                           value="${office.floorNumber}" min="1" step="1"
                                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                 </div>
                             </div>
@@ -200,8 +201,8 @@
                                     (tháng)</label>
 
                                 <div class="col-sm-8">
-                                    <input type="number" name="minTime" class="form-control" id="minTime"
-                                           value="${office.minTime}" required>
+                                    <input type="number" name="minTime" class="form-control" id="minTime" step="1"
+                                           value="${office.minTime}" required min="1">
                                 </div>
                             </div>
 
@@ -211,8 +212,8 @@
                                     <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
 
                                     <div class="col-sm-8">
-                                        <input type="number" name="price" class="form-control" id="price"
-                                               value="${office.price}" disabled>
+                                        <input type="number" name="price" class="form-control" id="price" step="any"
+                                               value="${office.price}" disabled min="0" title="Vui lòng nhập số dương">
                                     </div>
                                 </div>
                             </c:if>
@@ -221,8 +222,8 @@
                                     <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
 
                                     <div class="col-sm-8">
-                                        <input type="number" name="price" class="form-control" id="price"
-                                               value="${office.price}">
+                                        <input type="number" name="price" class="form-control" id="price" step="any"
+                                               value="${office.price}" min="0">
                                     </div>
                                 </div>
                             </c:if>
@@ -242,7 +243,7 @@
 
                             <div><h3>Thông tin chủ văn phòng</h3></div>
                             <div class="form-group clearfix">
-                                <label for="ownerName" class="col-sm-2 control-label">Tên người đại diện</label>
+                                <label for="ownerName" class="col-sm-2 control-label">Tên</label>
 
                                 <div class="col-sm-8">
                                     <input type="text" name="ownerName" class="form-control" id="ownerName"
@@ -250,17 +251,16 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="ownerPhone" class="col-sm-2 control-label">Số điện thoại người đại
-                                    diện</label>
+                                <label for="ownerPhone" class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" maxlength="11" name="ownerPhone" class="form-control"
-                                           id="ownerPhone"
+                                    <input type="text" name="ownerPhone" class="form-control"
+                                           id="ownerPhone" title="Yêu cầu 10-11 ký tự" pattern=".{10,11}"
                                            value="${office.ownerPhone}" required>
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="ownerAddress" class="col-sm-2 control-label">Địa chỉ người đại diện</label>
+                                <label for="ownerAddress" class="col-sm-2 control-label">Địa chỉ</label>
 
                                 <div class="col-sm-8">
                                     <input type="text" name="ownerAddress" class="form-control" id="ownerAddress"

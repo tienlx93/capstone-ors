@@ -15,6 +15,7 @@ public class RentalItem {
     private Integer quantity;
     private Collection<RentalDetail> rentalDetailsById;
     private String imageUrl;
+    private int officeType;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -110,5 +111,15 @@ public class RentalItem {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    @Basic
+    @Column(name = "OfficeType", nullable = true, insertable = true, updatable = true)
+    public int getOfficeType() {
+        return officeType;
+    }
+
+    public void setOfficeType(int officeType) {
+        this.officeType = officeType;
     }
 }

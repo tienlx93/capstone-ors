@@ -41,7 +41,7 @@
             <form name="form">
                 <div class="descriptionRepair">
                     <label class="">Sửa chữa:</label>
-
+                    <span ng-show="!have">{{amenities}}</span>
                     <div class="checkbox" ng-repeat="amenity in amenities">
                         <ul>
                             <li class="col-sm-6" style="padding-left: 50px;">

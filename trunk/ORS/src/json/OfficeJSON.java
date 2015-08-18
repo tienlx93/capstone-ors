@@ -30,6 +30,9 @@ public class OfficeJSON {
     private String status;
     private Double minArea;
     private int minTime;
+    private String ownerName;
+    private String ownerAddress;
+    private String ownerPhone;
 
     public OfficeJSON() {
     }
@@ -47,6 +50,9 @@ public class OfficeJSON {
         this.longitude = office.getLongitude();
         this.minArea = office.getMinArea();
         this.minTime = office.getMinTime();
+        this.ownerName = office.getOwnerName();
+        this.ownerAddress = office.getOwnerAddress();
+        this.ownerPhone = office.getOwnerPhone();
         this.district = office.getDistrict();
         this.city = office.getCity();
         this.category = office.getCategoryByCategoryId().getDescription();
@@ -218,5 +224,29 @@ public class OfficeJSON {
 
     public void setMinArea(double minArea) {
         this.minArea = minArea;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String ownerName) {
+        this.ownerName = ownerName;
+    }
+
+    public String getOwnerAddress() {
+        return ownerAddress;
+    }
+
+    public void setOwnerAddress(String ownerAddress) {
+        this.ownerAddress = ownerAddress;
+    }
+
+    public String getOwnerPhone() {
+        return ownerPhone;
+    }
+
+    public void setOwnerPhone(String ownerPhone) {
+        this.ownerPhone = ownerPhone;
     }
 }

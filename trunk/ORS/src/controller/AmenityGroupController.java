@@ -36,15 +36,11 @@ public class AmenityGroupController extends HttpServlet {
             String username = request.getParameter("name");
           //  dao.delete(name);
     } else if (action.equals("update")) {
-            String name = request.getParameter("name");
             AmenityGroupDAO accDAO = new AmenityGroupDAO();
-            AmenityGroup acc = new AmenityGroup();
-            AmenityGroup accdemo = new AmenityGroup();
-            accdemo.setDescription(request.getParameter("description"));
-/*          String password = request.getParameter("password");
-            String email = request.getParameter("email");*/
-     /**//* String role = request.getParameter("role");*/
-            accDAO.update(name, accdemo);
+            int id = Integer.parseInt(request.getParameter("id"));
+            String name = request.getParameter("name");
+            String description = request.getParameter("description");
+            accDAO.updateN(id,name,description);
         }
         response.sendRedirect("/admin/groupAmenity");
     }

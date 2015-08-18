@@ -44,6 +44,11 @@ public class OfficeController extends HttpServlet {
         String longitude = request.getParameter("longitude");
         String district = request.getParameter("district");
         String city = request.getParameter("city");
+        String ownerName = request.getParameter("ownerName");
+        String ownerPhone = request.getParameter("ownerPhone");
+        String ownerAddress = request.getParameter("ownerAddress");
+        String isPercent = request.getParameter("isPercent");
+        String basePrice = request.getParameter("basePrice");
         if (action.equals("save")) {
             Office office = new Office();
 
@@ -57,6 +62,17 @@ public class OfficeController extends HttpServlet {
             office.setCreateDate(new Timestamp((new Date()).getTime()));
             if (price != null && !price.equals("")) {
                 office.setPrice(Long.valueOf(price));
+                if (isPercent != null) {
+                    office.setBasePrice(Long.valueOf(price));
+                } else {
+                    office.setBasePrice(Long.valueOf(basePrice));
+                }
+            } else {
+                if (isPercent != null) {
+                    office.setBasePrice(0L);
+                } else {
+                    office.setBasePrice(Long.valueOf(basePrice));
+                }
             }
             office.setPriceTerm(Integer.parseInt(priceTerm));
             if (floor != null && !floor.equals("")) {
@@ -68,6 +84,10 @@ public class OfficeController extends HttpServlet {
             office.setDistrict(district);
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
+            office.setOwnerName(ownerName);
+            office.setOwnerAddress(ownerAddress);
+            office.setOwnerPhone(ownerPhone);
+
 
             if (dao.save(office)) {
                 List<String> amenityList = saveAmenities(amenities);
@@ -96,7 +116,9 @@ public class OfficeController extends HttpServlet {
             office.setStatusId(1);
             office.setName(name);
             office.setAddress(address);
-            office.setMinArea(Double.valueOf(minArea));
+            if (office.getCategoryId() == 2) {
+                office.setMinArea(Double.valueOf(minArea));
+            }
             office.setMinTime(Integer.valueOf(minTime));
 
             office.setCategoryId(Integer.parseInt(category));
@@ -115,6 +137,9 @@ public class OfficeController extends HttpServlet {
             office.setDistrict(district);
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
+            office.setOwnerName(ownerName);
+            office.setOwnerPhone(ownerPhone);
+            office.setOwnerAddress(ownerAddress);
 
             if (dao.update(Integer.parseInt(id), office)) {
                 List<String> amenityList = saveAmenities(amenities);

@@ -127,7 +127,6 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
             amenity.setWeight(weight);
             amenity.setPriority(priority);
             amenity.setAmenityGroupId(amenityGroupId);
-
             session.update(amenity);
             trans.commit();
 
@@ -136,7 +135,6 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
                 trans.rollback();
             }
         }
-
     }
     public boolean removeAmenity(int id) {
         try {

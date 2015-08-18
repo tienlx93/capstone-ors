@@ -46,7 +46,7 @@
                         <h2 style="margin-top: 5px">Sửa thông tin hợp đồng</h2>
                     </div>
                     <div>
-                        <form action="contract" method="post" id="form" onsubmit="return validateArea()">
+                        <form action="contract" method="post" id="form" onsubmit="return validatePaymentTerm()">
                             <div class="form-group clearfix" hidden>
                                 <div class="col-sm-10">
                                     <input type="hidden" id="contractId" name="contractId"
@@ -286,9 +286,13 @@
                                             </c:forEach>
                                         </select>
                                     </div>
+
+                                </div>
+
+                                <div class="form-group clearfix">
                                     <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 2}">
 
-                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">
+                                        <div for="paymentFee" class="col-sm-2 control-label">
                                             Giá thuê/m<sup>2</sup>:
                                         </div>
 
@@ -300,7 +304,7 @@
                                         </div>
                                     </c:if>
                                     <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 1}">
-                                        <div for="paymentFee" style="text-align: right" class="col-sm-2 control-label">
+                                        <div for="paymentFee"  class="col-sm-2 control-label">
                                             Giá thuê/m<sup>2</sup>:
                                         </div>
 
@@ -313,10 +317,7 @@
                                                    required="true"/>
                                         </div>
                                     </c:if>
-                                </div>
-
-                                <div class="form-group clearfix">
-                                    <div for="deposit" class="col-sm-2 control-label">Tiền đặt cọc văn phòng:</div>
+                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt cọc văn phòng:</div>
 
                                     <div class="col-sm-4">
                                         <input style="display: inline-block" type='number' class="form-control"
@@ -324,21 +325,20 @@
                                                id="deposit" value="${contract.deposit}"/>
                                     </div>
 
-
-                                    <div for="total" style="text-align: right" class="col-sm-2 control-label">Số tiền
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="total"  class="col-sm-2 control-label">Số tiền
                                         phải thanh toán mỗi kỳ:
                                     </div>
 
-                                    <div class="col-sm-4" name="total" id="total">
+                                    <div class="col-sm-4" style="font-weight: bold" name="total" id="total">
 
                                     </div>
-                                </div>
-                                <div class="form-group clearfix">
-                                    <div for="totalContract" class="col-sm-2 control-label">Tổng giá
+                                    <div for="totalContract" style="text-align: right" class="col-sm-2 control-label">Tổng giá
                                         trị hợp đồng:
                                     </div>
 
-                                    <div class="col-sm-4" name="totalContract" id="totalContract">
+                                    <div class="col-sm-4" style="font-weight: bold" name="totalContract" id="totalContract">
 
                                     </div>
                                 </div>
@@ -448,7 +448,6 @@
         var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
 
         var time;
-        console.log(deposit);
         switch (paymentTerm) {
             case '1':
                 time = 1;
@@ -464,7 +463,7 @@
             var total = numberWithCommas(parseInt(paymentFee) * officeArea * time);
             var price = document.getElementById('total');
             price.innerHTML = numberWithCommas(total) + ' VNĐ';
-            var contractTotal = numberWithCommas((officeArea * contractTime * parseInt(paymentFee)) + parseFloat(deposit));
+            var contractTotal = numberWithCommas(officeArea * contractTime * parseInt(paymentFee));
             console.log(contractTotal);
 
             document.getElementById('totalContract').innerHTML = contractTotal + ' VNĐ';
@@ -505,6 +504,28 @@
         return true;
     }
     ;
+    function validatePaymentTerm() {
+        var paymentTerm = document.getElementById('paymentTerm').value;
+        var contractTime = document.getElementById('time').value;
+
+        var time;
+        switch (paymentTerm) {
+            case '1':
+                time = 1;
+                break;
+            case '2':
+                time = 3;
+                break;
+            case '3':
+                time = 6;
+                break;
+        }
+        if(contractTime < time) {
+            alert('Thời gian thuê không được nhỏ hơn kỳ hạn thanh toán');
+            return false;
+        }
+        return true;
+    }
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }

@@ -73,23 +73,24 @@
 
                                             <button  type="submit" class="btn btn" name="action" value="delete" class="btn btn-icon btn-default"><i class="fa fa-trash-o color5"></i></button>
                                         </form>
-
-
                                     </td>
                                     </td>
-                                    <c:if test="${item.roleId == 4}">
+
                                     <td>
-                                        <a href="user?action=editing&username=${item.username}"
-                                           title="Chi tiết"
-                                           class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
+
                                         <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}"
                                            title="Sửa"
                                            class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+                                        <c:if test="${item.roleId ==4}">
+                                            <a href="user?action=editing&username=${item.username}"
+                                               title="Chi tiết"
+                                               class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
+                                        </c:if>
                                     </td>
                                         <td>
 
                                         </td>
-                                   </c:if>
+
                                 </tr>
                             </c:forEach>
                             </tbody>

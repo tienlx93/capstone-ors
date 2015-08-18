@@ -806,8 +806,16 @@ public class ApiController extends HttpServlet {
         Account account = (Account) session.getAttribute("account");
         //String time = request.getParameter("time");
         String contractId = request.getParameter("contractId");
-        String amenities = new String(request.getParameter("amenities").getBytes(
-                "iso-8859-1"), "UTF-8");
+        String amenities;
+
+        String tokenAmenity = request.getParameter("amenities");
+        if (tokenAmenity == null) {
+            amenities = null;
+        } else {
+            amenities = new String(tokenAmenity.getBytes(
+                    "iso-8859-1"), "UTF-8");
+        }
+
         String description = new String(request.getParameter("description").getBytes(
                 "iso-8859-1"), "UTF-8");
         if (account != null) {
@@ -821,36 +829,37 @@ public class ApiController extends HttpServlet {
 
             boolean result = dao.save(repair);
 
-            if (result) {
-                List<String> amenityList = saveAmenities(amenities);
+            if (result && amenities != null) {
+                List<String> amenityList = splitAmenity(amenities);
                 AmenityDAO amenityDAO = new AmenityDAO();
                 List<Integer> amenityListInt = new ArrayList<>();
                 Amenity amenity;
                 for (String s : amenityList) {
                     amenity = amenityDAO.searchAmenity(s);
-                    amenityListInt.add(amenity.getId());
+                    if (amenity != null) {
+                        amenityListInt.add(amenity.getId());
+                    }
                 }
                 RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
                 repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
                 out.print(gson.toJson("Success"));
             } else {
-                out.print(gson.toJson("Error"));
+                out.print(gson.toJson("Error2"));
             }
         } else {
             out.print(gson.toJson("Error"));
         }
     }
 
-    private List<String> saveAmenities(String amenities) {
+    private List<String> splitAmenity(String amenities) {
         StringTokenizer tokenizer = new StringTokenizer(amenities, ",");
         List<String> amenityList = new ArrayList<>();
+        String amenity;
         while (tokenizer.hasMoreTokens()) {
-            amenityList.add(tokenizer.nextToken());
-        }
-        AmenityDAO amenityDAO = new AmenityDAO();
-        RequestAmenityDAO dao = new RequestAmenityDAO();
-        if (amenityDAO.addAmenities(amenityList)) {
-            dao.findAll();
+            amenity = tokenizer.nextToken();
+            if (amenity != null && !amenity.equals("")) {
+                amenityList.add(amenity);
+            }
         }
         return amenityList;
     }

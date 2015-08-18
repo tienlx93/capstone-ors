@@ -41,16 +41,17 @@
             <form name="form">
                 <div class="descriptionRepair">
                     <label class="">Sửa chữa:</label>
-                    <span ng-show="!have">{{amenities}}</span>
-                    <div class="checkbox" ng-repeat="amenity in amenities">
-                        <ul>
-                            <li class="col-sm-6" style="padding-left: 50px;">
-                                <input type="checkbox" ng-click="toggleSelection(amenity)"
-                                       value="{{amenity}}" required/>{{amenity}}
-                            </li>
-                        </ul>
-                    </div>
-                    <br>
+
+                    <ul class="clearfix">
+                        <li class="col-sm-6 checkbox amenity" ng-repeat="amenity in amenities">
+                            <label><input type="checkbox" ng-click="toggleSelection(amenity)"
+                                   value="{{amenity}}" />{{amenity}}</label>
+                        </li>
+                        <!--<li class="col-sm-6 checkbox amenity">
+                            <label><input type="checkbox" value=""/>Yêu cầu khác</label>
+                        </li>-->
+                    </ul>
+
                 </div>
                 <div class="descriptionRepair">
                     <label>Mô tả yêu cầu sửa chữa:</label>

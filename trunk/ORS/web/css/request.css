@@ -60,5 +60,8 @@ input.ng-dirty.ng-invalid {
 
 .errorpass {
     border-color: red;
-
+}
+.checkbox.amenity {
+    padding-left: 50px;
+    margin: 5px 0;
 }

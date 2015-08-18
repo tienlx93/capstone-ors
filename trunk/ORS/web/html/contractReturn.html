@@ -4,14 +4,12 @@
 </div>
 <form name="form">
     <div class="modal-body">
-        <h4 style="padding-bottom: 5px;">Điều khoản hủy hợp đồng</h4>
-        - Nếu bên B muốn chấm dứt hợp đồng trước thời hạn thì phải thông báo trước cho bên A ít nhất 1 tháng.
-        Bên A sẽ hoàn trả lại cho Bên B tiền đặt cọc và tiền thuê văn phòng còn thừa của Bên B (nếu có)<br>
-        - Nếu Bên B chấm dứt hợp đồng trước thời hạn mà không tuân thủ quy định nói trên, Bên B sẽ mất tiền đặt cọc.
+        <h4>Bạn đang yêu cầu hủy hợp đồng trước hạn.
+            Chúng tôi sẽ liên lạc với bạn để xác nhận và bàn giao văn phòng trong thời gian sớm nhất.</h4>
+        <h4>Nhấn "Đồng ý" để xác nhận</h4>
     </div>
     <div class="modal-footer">
-        <button ng-show="first" class="btn btn-green" type="submit" ng-click="contractReturn(form)">Hủy hợp đồng</button>
-        <button ng-show="second" class="btn btn-green" type="submit" ng-click="contractReturnAfter(form)">Hủy hợp đồng sau 1 tháng</button>
+        <button class="btn btn-green" type="submit" ng-click="contractReturn(form)">Đồng ý</button>
         <button class="btn btn-default" ng-click="cancel()">Hủy</button>
     </div>
 </form>

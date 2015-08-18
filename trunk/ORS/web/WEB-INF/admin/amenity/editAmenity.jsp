@@ -45,33 +45,44 @@
                     </div>
                     <div>
                         <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
-                            <div class="form-group">
-                                <label for="name">Tên tiện nghi</label>
-                                <span>${amenity.name}</span>
-                                <input type="hidden" name="name" class="" value="${amenity.name}" id="name">
+
+
+                            <div class="form-group clearfix">
+                                <label for="name" class="col-sm-2">Tên tiện nghi</label>
+
+                                <div class="col-sm-10">
+                                    <span>${amenity.name}</span>
+                                    <input type="hidden" name="name" class="" value="${amenity.name}" id="name" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="description">Mô tả</label>
-                                <input type="text" name="description" class="" id="description"
-                                       value="${amenity.description}">
+                            <div class="form-group clearfix">
+                                <label for="description" class="col-sm-2">Mô tả</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="description" class="" id="description"
+                                           value="${amenity.description}" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="weight">Trọng số</label>
-                                <input type="text" name="weight" class="" id="weight" value="${amenity.weight}">
+                            <div class="form-group clearfix">
+                                <label for="weight" class="col-sm-2">Trọng số</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="weight" class="" id="weight" value="${amenity.weight}" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="priority">Độ ưu tiên</label>
-                                <input type="text" name="priority" class="" id="priority" value="${amenity.priority}">
+                            <div class="form-group clearfix">
+                                <label for="priority" class="col-sm-2">Độ ưu tiên</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="priority" class="" id="priority" value="${amenity.priority}" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group clearfix">
                                 <input type="hidden" name="id" class="" value="${amenity.id}">
                                 <input type="hidden" name="group" class="" value="${amenity.amenityGroupId}">
                             </div>
-                            <div class="button-post">
+                            <div class="button-post clearfix">
                                 <button class="btn btn-primary" type="submit" value="update" name="action">Cập nhật
                                 </button>
                                 <a onclick="window.history.back()" class="btn btn-default">Hủy</a>

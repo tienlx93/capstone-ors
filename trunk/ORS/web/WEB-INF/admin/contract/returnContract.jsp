@@ -199,7 +199,8 @@
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
                                     <div name="startDate" id="startDate" class="col-sm-4">
-                                        ${info.startDate}
+                                            <fmt:formatDate value="${info.startDate}"
+                                                            pattern="dd-MM-yyyy"/>
                                             <input type="hidden" id="startDateValue" name="startDateValue"
                                                    value="${info.startDate}">
                                     </div>
@@ -208,7 +209,8 @@
                                     </div>
 
                                     <div name="endDate" id="endDate" class="col-sm-4">
-                                        ${info.endDate}
+                                            <fmt:formatDate value="${info.endDate}"
+                                                            pattern="dd-MM-yyyy"/>
                                             <input type="hidden" id="endDateValue" name="endDateValue"
                                                    value="${info.endDate}">
                                     </div>
@@ -228,7 +230,7 @@
                                     <input type="hidden" id="depositValue" name="depositValue"
                                            value="${info.deposit}">
                                     <div class="col-sm-4" id="deposit" name="deposit">
-
+                                        ${info.deposit}
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
@@ -246,7 +248,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div class="col-sm-2 control-label">Số tiền hoàn trả cho bên B:
+                                    <div class="col-sm-2 control-label">Số tiền hoàn trả cho bên B(VNĐ):
                                     </div>
 
                                     <div class="col-sm-4">
@@ -254,7 +256,14 @@
                                                style="width: 100%" onchange="calculateTotalContract()"
                                                value="">
                                     </div>
+                                    <div class="col-sm-2 control-label" style="text-align: right">Số tiền đặt cọc trả cho bên B(VNĐ):
+                                    </div>
 
+                                    <div class="col-sm-4">
+                                        <input type="number" name="returnDeposit" id="returnDeposit" min="0" max="${info.deposit}"
+                                               style="width: 100%"
+                                               value="${info.deposit}">
+                                    </div>
                                 </div>
                             </div>
                             <div class="row" style="margin: 20px auto; ">
@@ -262,13 +271,11 @@
                                     hợp
                                     đồng</h3></div>
                                 <div class="form-group clearfix">
-                                    <div class="col-sm-2 control-label">Hình ảnh</div>
-                                    <br>
                                     <input type="hidden" name="imageUrl" id="imageUrl" value="${info.imageUrl}">
 
                                     <div class="images clearfix" id="images">
                                         <div class="upload-img">
-                                            <div class="img"><img
+                                            <div class="img"><img width="100%"
                                                     src="${info.imageUrl!=null?info.imageUrl:'/upload/placeholder.jpg'}">
                                             </div>
                                         </div>
@@ -299,7 +306,8 @@
 <script type="text/javascript">
     $(document).ready(function () {
         calculateTotalContract();
-        document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('depositValue').value) + ' VNĐ'
+        document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('depositValue').value) + ' VNĐ';
+        document.getElementById('paymentFee').innerHTML = numberWithCommas(document.getElementById('paymentFeeValue').value) + ' VNĐ';
     });
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -307,7 +315,7 @@
     ;
     function calculateTotalContract() {
         var startDate = document.getElementById('startDateValue').value;
-        var endDate = document.getElementById('startDateValue').value;
+        var endDate = document.getElementById('endDateValue').value;
         var start = new Date(startDate);
         var end = new Date(endDate);
 
@@ -332,7 +340,7 @@
         var returnMoney = document.getElementById('returnMoney').value != '' ? document.getElementById('returnMoney').value : 0;
 
         var total = paymentFee * parseInt(officeArea) * payment;
-        var totalContract = total + parseFloat(deposit) - returnMoney;
+        var totalContract = paymentFee * parseInt(officeArea) * time;
 
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('totalContract').innerHTML = numberWithCommas(totalContract) + ' VNĐ';

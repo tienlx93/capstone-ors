@@ -45,23 +45,33 @@
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/user" method="post">
-              <div class="form-group">
-                <label>Tên đăng nhập</label>
-                <span>${account.username}</span>
-                <input type="hidden" name="username" class="" value="${account.username}">
+
+              <div class="form-group clearfix">
+                <label  class="col-sm-2">Tên đăng nhập</label>
+
+                <div class="col-sm-10">
+                  <span>${account.username}</span>
+                  <input type="hidden" name="username" class="" value="${account.username}">
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="password">Mật khẩu</label>
-                <input type="password" name="password" class="" id="password" value="${account.password}">
+
+              <div class="form-group clearfix">
+                <label for="password" class="col-sm-2">Mật khẩu</label>
+                <div class="col-sm-10">
+                  <input type="password" name="password" class="" id="password" value="${account.password}">
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" name="email" class="" id="email" value="${account.email}">
+
+              <div class="form-group clearfix">
+                <label for="email" class="col-sm-2">Email</label>
+                <div class="col-sm-10">
+                  <input type="email" name="email" class="" id="email" value="${account.email}">
+                </div>
               </div>
 
-              <div class="form-group" hidden>
+              <div class="form-group clearfix" hidden>
                 <input type="hidden" name="statusId" class="" value="${account.statusId}">
               </div>
               <c:choose>
@@ -69,13 +79,17 @@
 
                 </c:when>
                 <c:otherwise>
-                  <div class="form-group">
-                    <label for="role">Chức vụ</label>
+                  <div class="form-group clearfix" hiden>
+                    <label for="role" class="col-sm-2">Chức vụ</label>
+                    <div class="col-sm-10">
                     <select name="role" class="" id="role">
+
                       <c:forEach var="item" items="${roleList}">
                         <option value="${item.id}" <c:if test="${account.roleId==item.id}">selected</c:if> >${item.roleName}</option>
+
                       </c:forEach>
                     </select>
+                    </div>
                   </div>
                 </c:otherwise>
               </c:choose>

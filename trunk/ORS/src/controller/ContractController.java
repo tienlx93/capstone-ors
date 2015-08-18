@@ -148,7 +148,7 @@ public class ContractController extends HttpServlet {
                 SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
                 Contract newContract = new Contract();
                 newContract.setCancelDate(contract.getCancelDate());
-                newContract.setCancelFee(contract.getCancelFee());;
+                newContract.setCancelFee(contract.getCancelFee());
                 newContract.setStatusId(1);
                 newContract.setDeposit(contract.getDeposit());
                 newContract.setComment(contract.getComment());
@@ -183,14 +183,16 @@ public class ContractController extends HttpServlet {
                     case "confirm":
 //                        dao.changeStatus(id, 4);
                         String returnMoney = request.getParameter("returnMoney");
+                        String returnDeposit = request.getParameter("returnDeposit");
                         // Update area for office parent when contract has been confirmed to expire
                         Contract contract = dao.get(id);
 
                         // add cancel date when return
                         contract.setCancelDate(new Date((new java.util.Date()).getTime()));
                         contract.setStatusId(4);
-                        contract.setDeposit(null);
+                        contract.setDeposit(contract.getDeposit() - Long.getLong((returnDeposit)));
                         contract.setCancelFee(Long.getLong(returnMoney));
+
                         dao.updateContract(id, contract);
 
                         OfficeDAO officeDAO = new OfficeDAO();

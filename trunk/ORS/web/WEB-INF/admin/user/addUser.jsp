@@ -45,28 +45,42 @@
                     </div>
                     <div>
                         <form action="${pageContext.request.contextPath}/admin/user" method="post">
-                            <div class="form-group">
-                                <label for="username">Tên tài khoản</label>
-                                <input type="text" name="username" class="" id="username" required>
+
+
+                            <div class="form-group clearfix">
+                                <label for="username" class="col-sm-2">Tên đăng nhập</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="username" class="" id="username" value="${account.password}" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="password">Mật khẩu</label>
-                                <input type="password" name="password" class="" id="password" required>
+                            <div class="form-group ">
+                                <label for="password" class="col-sm-2">Mật khẩu</label>
+                                <div class="col-sm-10">
+                                    <input type="password" name="password" class="" id="password" value="${account.password}" required>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="form-group clearfix">
+                                <label for="email" class="col-sm-2">Email</label>
+                                <div class="col-sm-10">
+                                    <input type="email" name="email" class="" id="email" value="${account.email}" required>
+                                </div>
                             </div>
 
-                            <div class="form-group">
-                                <label for="email">Email</label>
-                                <input type="email" name="email" class="" id="email" required>
-                            </div>
 
-                            <div class="form-group">
-                                <label for="role">Chức vụ</label>
-                                <select name="role" class="" id="role" required>
-                                    <c:forEach var="item" items="${roleList}">
+                            <div class="form-group clearfix">
+                                <label for="role" class="col-sm-2">Chức vụ</label>
+                                <div class="col-sm-10">
+                                <select name="role" class="" id="role">
+                                    <div class="col-sm-10">
+                                        <c:forEach var="item" items="${roleList}">
+
                                         <option value="${item.id}">${item.roleName}</option>
+                                    </div>
                                     </c:forEach>
                                 </select>
+                                    </div>
                             </div>
 
                             <div class="button-post">

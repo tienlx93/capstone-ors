@@ -45,19 +45,29 @@
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/groupAmenity" method="post">
-              <div class="form-group">
-                <label for="">Tên tiện nghi</label>
-                <span>${amenitygroup.name}</span>
+
+              <div class="form-group clearfix">
+                <label for="" class="col-sm-2">Tên tiện nhóm nghi</label>
+                <div class="col-sm-10">
+                  <span>${amenitygroup.name}</span
+                  <input type="hidden" name="name" class="" value="${amenitygroup.name}" id="name" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="description">Mô tả</label>
-                <input type="text" name="description" class="" id="description" value="${amenitygroup.description}">
+              <div class="form-group clearfix">
+                <label for="description" class="col-sm-2">Mô tả</label>
+                <div class="col-sm-10">
+                  <input type="text" name="description" class="" id="description"
+                         value="${amenitygroup.description}" required>
+                </div>
               </div>
+
               <div>
                 <form action="${pageContext.request.contextPath}/admin/groupAmenity" method="post">
-                  <input type="hidden" value="${item.name}" name="name">
                 </form>
+              </div>
+              <div class="form-group clearfix">
+                <input type="hidden" name="id" class="" value="${amenitygroup.id}">
               </div>
               <div class="button-post">
                 <button class="btn btn-primary" type="submit" value="update" name="action">Cập nhật

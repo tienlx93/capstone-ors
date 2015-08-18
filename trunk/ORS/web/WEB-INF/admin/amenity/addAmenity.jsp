@@ -43,35 +43,49 @@
           <div class="panel-title">
             <h1 class="page-header">Thêm tiện nghi mới</h1>
           </div>
-          <div class="text-center">
+          <div>
             <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
-              <div class="form-group">
-                <label for="name">Tên tiện nghi</label>
-                <input type="text" name="name" class="" id="name" required>
+
+              <div class="form-group clearfix">
+                <label for="name" class="col-sm-2">Tên tiện nghi</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" class="" id="name" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="description">Mô tả</label>
-                <input type="text" name="description" class="" id="description">
+
+              <div class="form-group clearfix">
+                <label for="description" class="col-sm-2">Mô tả</label>
+                <div class="col-sm-10">
+                  <input type="text" name="description" class="" id="description" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="weight">Trọng số</label>
-                <input type="number" min="1" name="weight" class="" id="weight" required>
+
+
+              <div class="form-group clearfix">
+                <label for="weight" class="col-sm-2">Trọng số</label>
+                <div class="col-sm-10">
+                  <input type="number" min="1" name="weight" class="" id="weight" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="priority">Độ ưu tiên</label>
-                <input type="number" min="0" name="priority" class="" id="priority" required>
+              <div class="form-group clearfix">
+                <label for="priority" class="col-sm-2">Độ ưu tiên</label>
+                <div class="col-sm-10">
+                  <input type="number" min="0" name="priority" class="" id="priority" required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="group">Nhóm thiết bị</label>
+              <div class="form-group clearfix">
+                <label for="group" class="col-sm-2">Nhóm thiết bị</label>
+                <div class="col-sm-10">
                 <select name="group" class="" id="group">
                   <c:forEach var="item" items="${groupList}">
                     <option value="${item.id}">${item.name}</option>
                   </c:forEach>
                 </select>
+                  </div>
               </div>
 
               <div class="button-post">

@@ -244,7 +244,7 @@
                                         Tổng giá trị hợp đồng:
                                     </div>
 
-                                    <div name="totalContract" id="totalContract" class="col-sm-4">
+                                    <div name="totalContract" id="totalContract" style="font-weight: bold" class="col-sm-4">
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +305,7 @@
 
         var total = time * parseInt(fee) * parseFloat(area);
         var deposit = document.getElementById('depositValue').value != '' ? document.getElementById('depositValue').value : 0;
-        var contractTotal= total + parseFloat(deposit);
+        var contractTotal= total;
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('deposit').innerText);

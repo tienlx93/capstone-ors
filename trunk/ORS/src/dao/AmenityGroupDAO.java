@@ -17,11 +17,9 @@ public class AmenityGroupDAO extends BaseDAO<AmenityGroup, Integer> {
                 String sql = "from Amenity order by id";
                 Query query = session.createQuery(sql);
                 return query.list();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
-
             return null;
         }
     public boolean update(String name, AmenityGroup amenityGroup) {
@@ -39,7 +37,21 @@ public class AmenityGroupDAO extends BaseDAO<AmenityGroup, Integer> {
         }
         return false;
     }
+    public void updateN(int id, String name, String description) {
+        Transaction trans = session.beginTransaction();
+        try {
+            AmenityGroup amenityGroup = (AmenityGroup) session.get(AmenityGroup.class, id);
+            amenityGroup.setName(name);
+            amenityGroup.setDescription(description);
+            session.update(amenityGroup);
+            trans.commit();
 
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
     }
+}
 
 

@@ -45,14 +45,22 @@
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/groupAmenity" method="post">
-              <div class="form-group">
-                <label for="name">Tên nhóm tiện nghi</label>
-                <input type="text" name="name" class="" id="name" required>
+
+
+              <div class="form-group clearfix">
+                <label for="name" class="col-sm-2">Tên nhóm tiện nghi</label>
+                <div class="col-sm-10">
+                  <input type="text" name="name" class="" id="name"  required>
+                </div>
               </div>
 
-              <div class="form-group">
-                <label for="description">Mô tả</label>
-                <input type="text" name="description" class="" id="description">
+
+
+              <div class="form-group clearfix">
+                <label for="description" class="col-sm-2">Mô tả</label>
+                <div class="col-sm-10">
+                  <input type="text" name="description" class="" id="description"  required>
+                </div>
               </div>
 
               <div class="button-post">

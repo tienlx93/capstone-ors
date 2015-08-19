@@ -135,7 +135,7 @@
                                 <label class="col-sm-2 control-label">Mô tả yêu cầu</label>
 
                                 <div class="col-sm-4">
-                                    ${info.description}
+                                    ${info.description}<input type="hidden" name="description" value="${info.description}">
                                 </div>
                             </div>
 

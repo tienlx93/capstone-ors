@@ -808,13 +808,13 @@ public class ApiController extends HttpServlet {
         String contractId = request.getParameter("contractId");
         String amenities;
 
-        String tokenAmenity = request.getParameter("amenities");
-        if (tokenAmenity == null) {
+        String[] tokenAmenity = request.getParameterValues("amenities");
+        /*if (tokenAmenity == null) {
             amenities = null;
         } else {
             amenities = new String(tokenAmenity.getBytes(
                     "iso-8859-1"), "UTF-8");
-        }
+        }*/
 
         String description = new String(request.getParameter("description").getBytes(
                 "iso-8859-1"), "UTF-8");
@@ -829,19 +829,22 @@ public class ApiController extends HttpServlet {
 
             boolean result = dao.save(repair);
 
-            if (result && amenities != null) {
-                List<String> amenityList = splitAmenity(amenities);
-                AmenityDAO amenityDAO = new AmenityDAO();
-                List<Integer> amenityListInt = new ArrayList<>();
-                Amenity amenity;
-                for (String s : amenityList) {
-                    amenity = amenityDAO.searchAmenity(s);
-                    if (amenity != null) {
-                        amenityListInt.add(amenity.getId());
+            if (result) {
+                for (String tokenA : tokenAmenity) {
+                    amenities = new String(tokenA.getBytes("iso-8859-1"), "UTF-8");
+                    List<String> amenityList = splitAmenity(amenities);
+                    AmenityDAO amenityDAO = new AmenityDAO();
+                    List<Integer> amenityListInt = new ArrayList<>();
+                    Amenity amenity;
+                    for (String s : amenityList) {
+                        amenity = amenityDAO.searchAmenity(s);
+                        if (amenity != null) {
+                            amenityListInt.add(amenity.getId());
+                        }
                     }
+                    RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
+                    repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
                 }
-                RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
-                repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
                 out.print(gson.toJson("Success"));
             } else {
                 out.print(gson.toJson("Error2"));

@@ -964,7 +964,7 @@ public class ApiController extends HttpServlet {
         RentalItemDAO dao = new RentalItemDAO();
         for (RentalItem rentalItem : dao.findAll()) {
             list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl(), null, 0, null, null, null));
+                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl(), null, 0, null, null, null,  rentalItem.getOfficeType()));
         }
         out.print(gson.toJson(list));
     }
@@ -987,12 +987,12 @@ public class ApiController extends HttpServlet {
                         if (rental.getStatusId() == 1 || rental.getStatusId() == 2) {
                             list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rental.getDescription(),
                                     rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                    "Đang xử lý", 0, rental.getAssignedTime(), rental.getCreateTime(), contract.getOfficeByOfficeId().getName()));
+                                    "Đang xử lý", 0, rental.getAssignedTime(), rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), rentalItem.getOfficeType()));
                         } else if (rental.getStatusId() == 5) {
                             list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rental.getDescription(),
                                     rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
                                     rental.getRentalStatusByStatusId().getDescription(), 0, rental.getAssignedTime(),
-                                    rental.getCreateTime(), contract.getOfficeByOfficeId().getName()));
+                                    rental.getCreateTime(), contract.getOfficeByOfficeId().getName(),rentalItem.getOfficeType()));
                         }
                     }
                 }
@@ -1023,7 +1023,7 @@ public class ApiController extends HttpServlet {
                         double price = rentalDetail.getUnitPrice() * rentalDetail.getQuantity();
                         list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                                 rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                rental.getRentalStatusByStatusId().getDescription(), price, null, null, null));
+                                rental.getRentalStatusByStatusId().getDescription(), price, null, null, null,rentalItem.getOfficeType()));
                     }
                 }
             }

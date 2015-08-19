@@ -80,7 +80,11 @@ public class ContractController extends HttpServlet {
                     OfficeAmenityDAO dao = new OfficeAmenityDAO();
                     dao.saveOfficeAmenity(officeChildren.getId(), amenityListInt);
 
-                    officeDao.updateArea(officeParent.getId(), officeParent.getArea() - Double.parseDouble(area));
+                    officeParent.setArea(officeParent.getArea() - Double.parseDouble(area));
+                    if(officeParent.getArea() < officeParent.getMinArea()) {
+                        officeParent.setStatusId(2);
+                    }
+                    officeDao.update(officeParent.getId(),officeParent);
                     contract.setOfficeId(officeChildren.getId());
                 } else if (Integer.parseInt(request.getParameter("categoryId")) == 1) {
                     OfficeDAO officeDao = new OfficeDAO();
@@ -159,14 +163,13 @@ public class ContractController extends HttpServlet {
                 newContract.setPaymentTerm(contract.getPaymentTerm());
                 try {
                     String reformattedEnd = myFormat.format(fromUser.parse(endDate));
-//                    contract.setEndDate(Date.valueOf(reformattedEnd));
                     newContract.setEndDate(Date.valueOf(reformattedEnd));
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 switch (button) {
                     case "confirm":
-//                        dao.update(id, contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), contract.getPaymentTerm(), 1);
+                        dao.update(id, contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), contract.getPaymentTerm(), 1);
                         dao.save(newContract);
                         break;
                     case "cancel":

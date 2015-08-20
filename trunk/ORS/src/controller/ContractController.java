@@ -47,13 +47,11 @@ public class ContractController extends HttpServlet {
                     officeChildren.setCategoryId(officeParent.getCategoryId());
                     officeChildren.setDescription(officeParent.getDescription());
                     officeChildren.setCreateDate(new Timestamp((new java.util.Date()).getTime()));
-                    if (!officeChildren.equals("")) {
+                    if (officeParent.getPrice() != null) {
                         officeChildren.setPrice(officeParent.getPrice());
                     }
                     officeChildren.setPriceTerm(officeParent.getPriceTerm());
-                    if (!officeChildren.equals("")) {
-                        officeChildren.setFloorNumber(officeParent.getFloorNumber());
-                    }
+                    officeChildren.setFloorNumber(officeParent.getFloorNumber());
                     officeChildren.setArea(Double.parseDouble(area));
                     officeChildren.setImageUrls("");
                     officeChildren.setLatitude(officeParent.getLatitude());
@@ -81,10 +79,10 @@ public class ContractController extends HttpServlet {
                     dao.saveOfficeAmenity(officeChildren.getId(), amenityListInt);
 
                     officeParent.setArea(officeParent.getArea() - Double.parseDouble(area));
-                    if(officeParent.getArea() < officeParent.getMinArea()) {
+                    if (officeParent.getArea() < officeParent.getMinArea()) {
                         officeParent.setStatusId(2);
                     }
-                    officeDao.update(officeParent.getId(),officeParent);
+                    officeDao.update(officeParent.getId(), officeParent);
                     contract.setOfficeId(officeChildren.getId());
                 } else if (Integer.parseInt(request.getParameter("categoryId")) == 1) {
                     OfficeDAO officeDao = new OfficeDAO();
@@ -124,7 +122,7 @@ public class ContractController extends HttpServlet {
 
                 contract.setStatusId(1);
                 contract.setCustomerUsername(customerName);
-                if(Integer.parseInt(request.getParameter("categoryId")) == 1) {
+                if (Integer.parseInt(request.getParameter("categoryId")) == 1) {
                     contract.setOfficeId(Integer.parseInt(officeID));
                 }
                 contract.setPaymentFee(Integer.parseInt(paymentFee));
@@ -289,8 +287,13 @@ public class ContractController extends HttpServlet {
                         request.setAttribute("appointmentList", appointment);
 
                         OfficeDAO officeDao = new OfficeDAO();
-                        request.setAttribute("office", officeDao.get(appointment.getOfficeId()));
-
+                        Office office = officeDao.get(appointment.getOfficeId());
+                        Long price = office.getPrice();
+                        if (office.getCategoryId() == 1) {
+                            price = Math.round(office.getPrice() / office.getArea() / 1000) * 1000;
+                        }
+                        office.setPrice(price);
+                        request.setAttribute("office", office);
 
                         request.setAttribute("paymentTermList", paymentTermList);
 

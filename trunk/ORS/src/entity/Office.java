@@ -42,6 +42,7 @@ public class Office {
     private String ownerName;
     private String ownerPhone;
     private String ownerAddress;
+    private int percent;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -419,5 +420,15 @@ public class Office {
 
     public void setOwnerAddress(String ownerAddress) {
         this.ownerAddress = ownerAddress;
+    }
+
+    @Basic
+    @Column(name = "Percent", nullable = true, insertable = true, updatable = true)
+    public int getPercent() {
+        return percent;
+    }
+
+    public void setPercent(int percent) {
+        this.percent = percent;
     }
 }

@@ -257,10 +257,10 @@
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
                                         <button class="btn btn-primary" type="submit" name="button" value="update3">
-                                            Khách hàng đồng ý kí hợp đồng
+                                            Khách hàng muốn kí hợp đồng
                                         </button>
                                         <button class="btn btn-danger" type="button" onclick="inputComment()">
-                                            Khách hàng không đồng ý kí hợp đồng
+                                            Khách hàng không đồng ý
                                         </button>
                                     </c:when>
 

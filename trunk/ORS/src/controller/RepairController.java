@@ -52,14 +52,12 @@ public class RepairController extends HttpServlet {
                     break;
                 case "assign":
                     SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
-                    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    String reformatted = null;
+                    Date date = null;
                     try {
-                        reformatted = myFormat.format(fromUser.parse(assignedTime));
+                        date = fromUser.parse(assignedTime);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    Date date = java.sql.Date.valueOf(reformatted);
                     dao.update(id, contractId, assignedStaff, description, date, 2);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     sms.setMessage("Yeu cau sua chua cua ban da duoc chap nhan. Thoi gian du kien: " + df.format(date));

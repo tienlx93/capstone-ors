@@ -14,16 +14,18 @@ import java.io.IOException;
  * Created by ASUS on 7/16/2015.
  */
 public class EmailService {
-    public static final String CHARSET = "UTF-8";
-    private static final String FROM = "no-reply@tienlx.me";
-    private static final String access_key_id = "AKIAIGMXF2HQO6AULHYA",
-            secret_access_key = "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";
+    public final String CHARSET = "UTF-8";
+    private final String FROM = "no-reply@tienlx.me";
+    private String access_key_id, secret_access_key;
 
     private String receiver;
     private String subject;
     private String content;
 
     public EmailService() {
+        ConstantService service = new ConstantService();
+        access_key_id = service.readProperty("aws.access_key_id");
+        secret_access_key = service.readProperty("aws.secret_access_key");
     }
 
     public boolean sendEmail() {
@@ -48,22 +50,10 @@ public class EmailService {
 
             AWSCredentials credentials = null;
             try {
-                credentials = new ProfileCredentialsProvider().getCredentials();
+                credentials = new BasicAWSCredentials(access_key_id, secret_access_key);
             } catch (Exception e) {
-                try {
-                    credentials = new BasicAWSCredentials(access_key_id, secret_access_key);
-                } catch (Exception e1) {
-                    throw new AmazonClientException(
-                            "Cannot load the credentials from the credential profiles file. " +
-                                    "Please make sure that your credentials file is at the correct " +
-                                    "location (~/.aws/credentials), and is in valid format.",
-                            e);
-                }
-                /*throw new AmazonClientException(
-                        "Cannot load the credentials from the credential profiles file. " +
-                                "Please make sure that your credentials file is at the correct " +
-                                "location (~/.aws/credentials), and is in valid format.",
-                        e);*/
+                throw new AmazonClientException(
+                        "Cannot load the credentials", e);
             }
 
             AmazonSimpleEmailServiceClient client = new AmazonSimpleEmailServiceClient(credentials);

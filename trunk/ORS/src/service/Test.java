@@ -12,12 +12,12 @@ import java.util.Date;
  */
 public class Test {
     public static void main(final String[] args) {
-        ConstantService constant = new ConstantService();
+        /*ConstantService constant = new ConstantService();
         String s = constant.readProperty("sms.APIKey");
-        System.out.println(s);
-        /*ClusteringService service = new ClusteringService();
+        System.out.println(s);*/
+        ClusteringService service = new ClusteringService();
         int[] clustering = service.doCluster();
-        service.getkMeans().ShowClustered(clustering, 5, 4);*/
+        service.getkMeans().ShowClustered(clustering, 5, 4);
 
         /*MatchingService service = new MatchingService();
         OfficeDAO dao = new OfficeDAO();

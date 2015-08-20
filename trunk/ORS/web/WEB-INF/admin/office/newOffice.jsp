@@ -184,29 +184,37 @@
 
                             <div><h3>Điều khoản giá</h3></div>
                             <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2">Giá (VND) *</label>
+                                <label for="price" class="col-sm-3">Lợi nhuận theo hoa hồng</label>
 
-                                <div class="col-sm-10">
-                                    <input type="number" name="price" class="form-control" id="price"
-                                           value="${office.price}" step="1" title="Xin nhập giá hợp lệ">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="price" class="col-sm-3">Lợi nhuận theo hoa hồng (5%) *</label>
-
-                                <div class="col-sm-9">
+                                <div class="col-sm-3">
                                     <div class="onoffswitch" >
                                         <input type="checkbox" name="isPercent" class="onoffswitch-checkbox" id="isPercent" checked>
                                         <label class="onoffswitch-label" for="isPercent"></label>
                                     </div>
                                 </div>
+                                <div>
+                                    <label for="commission" class="col-sm-3">Tỉ lệ hoa hồng (%)</label>
+
+                                    <div class="col-sm-3">
+                                        <input type="number" name="commission" class="form-control" id="commission"
+                                               value="${office.commission}" step="1" title="Xin nhập tỉ lệ">
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-group clearfix collapse" >
-                                <label for="basePrice" class="col-sm-3" style="text-align: right;">Giá thuê gốc *</label>
+                            <div class="form-group clearfix" >
+                                <label for="basePrice" class="col-sm-2" style="text-align: right;">Giá thuê gốc *</label>
 
                                 <div class="col-sm-9">
                                     <input type="text" min="0" name="basePrice" class="form-control" id="basePrice"
                                            value="${office.basePrice}">
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2">Giá thuê (VND) *</label>
+
+                                <div class="col-sm-10">
+                                    <input type="number" name="price" class="form-control" id="price"
+                                           value="${office.price}" step="1" title="Xin nhập giá hợp lệ">
                                 </div>
                             </div>
 

@@ -12,8 +12,8 @@ import java.net.URL;
  * Created by Tuan on 7/21/2015.
  */
 public class SMSService {
-    final String APIKey="9FA68980299951A7F08EEED9E813D5";//Dang ky tai khoan tai esms.vn de lay Key
-    final String SecretKey="6980B3A2E203899567552DE2717FB5";
+    final String APIKey="FB672639435ACE7E71A7837181B036";//Dang ky tai khoan tai esms.vn de lay Key
+    final String SecretKey="3002C48FD08F82B42847F22CA88CE9";
     private String message;
     private String phone;
 

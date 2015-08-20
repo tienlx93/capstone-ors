@@ -388,19 +388,14 @@
                             </div>
                             <div class="row" style="margin: 20px auto; ">
                                 <div style="text-align:center; border-bottom:2px solid #000000"><h3>Hình ảnh văn bản
-                                    hợp
-                                    đồng</h3></div>
+                                    hợp đồng</h3></div>
                                 <div class="form-group clearfix">
                                     <div class="col-sm-2 control-label">Hình ảnh</div>
                                     <br>
                                     <input type="hidden" name="imageUrl" id="imageUrl" value="${contract.imageUrl}">
 
                                     <div class="images clearfix" id="images">
-                                        <div class="upload-img">
-                                            <div class="img"><img
-                                                    src="${contract.imageUrl!=null?contract.imageUrl:'/upload/placeholder.jpg'}">
-                                            </div>
-                                        </div>
+
                                     </div>
                                     <div class="clear-float"></div>
                                     <input type="file" id="file" name="file" accept="image/*"
@@ -425,149 +420,7 @@
 
 </div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        calculatePaymentFee();
-        imageUrls = $("#imageUrls").val();
-        console.log(imageUrls);
-        renderImg(imageUrls);
-
-        var nowTemp = new Date();
-        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-
-        var start = $('#startDate').datepicker({
-            format: 'dd-mm-yyyy',
-            onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
-            }
-        }).on('changeDate', function (ev) {
-            calculateEndDate();
-            calculatePaymentFee();
-        }).data('datepicker');
-
-//        document.getElementById('paymentFee').value = numberWithCommas(document.getElementById('paymentFee').value);
-    });
-
-    function calculatePaymentFee() {
-        var paymentTerm = document.getElementById('paymentTerm').value;
-        var officeArea = document.getElementById('officeArea').value;
-        var paymentFee = document.getElementById('paymentFee').value;
-        var contractTime = document.getElementById('time').value;
-        var deposit = document.getElementById('deposit').value;
-        var time;
-        switch (paymentTerm) {
-            case '1':
-                time = 1;
-                break;
-            case '2':
-                time = 3;
-                break;
-            case '3':
-                time = 6;
-                break;
-        }
-        if (paymentTerm != '' && officeArea != null && paymentFee != null) {
-            var total = numberWithCommas(parseInt(paymentFee) * officeArea * time);
-            var price = document.getElementById('price');
-            price.innerHTML = numberWithCommas(total);
-            document.getElementById('term').innerHTML = time + ' tháng';
-            var contractTotal = numberWithCommas((officeArea * contractTime * parseInt(paymentFee)));
-            document.getElementById('total').value = contractTotal;
-        }
-    }
-    ;
-
-    function calculateEndDate() {
-        var end = document.getElementById('endDate');
-        var start = document.getElementById('startDate').value.split("-");
-        var startTime = Date.parse(new Date(start[2], start[1] - 1, start[0]));
-        var endTime;
-        var time = document.getElementById('time').value;
-        endTime = startTime + (86400000 * time * 30);
-        end.value = formatTime(endTime) != undefined ? formatTime(endTime) : "";
-    }
-    ;
-    function formatTime(time) {
-        if (time) {
-            var formatTime = new Date(time);
-            var day = formatTime.getDate();
-            var month = formatTime.getMonth() + 1;
-            if (day < 10) {
-                day = '0' + day
-            }
-            if (month < 10) {
-                month = '0' + month
-            }
-            var year = formatTime.getFullYear();
-
-            return day + '-' + month + '-' + year;
-        }
-
-    }
-    ;
-    function validateArea() {
-        var parentArea = document.createContract.parentArea.value;
-        var minArea = document.createContract.minArea.value;
-        var area = document.createContract.officeArea.value;
-
-        if (parseFloat(area) > parseFloat(parentArea)) {
-            alert('Diện tích văn phòng con không được lớn hơn diện tích văn phòng cha!');
-            return false;
-        } else if (parseFloat(minArea) > parseFloat(area)) {
-            alert('Diện tích thuê không được nhỏ hơn diện tích tối thiểu');
-            return false;
-        }
-        return true;
-    }
-    ;
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-    ;
-    var renderImg = function () {
-        var list = imageUrls.split(",");
-        console.log(list);
-        for (var i = 0; i < list.length; i++) {
-            var img = list[i];
-            if (img) {
-                $('#imageOffice').append('<div class="upload-img">' +
-                '<div class="img"><img src="' + img + '"></div>' +
-                '</div>');
-            }
-        }
-    };
-    function daysInMonth(month, year) {
-        return new Date(year, month, 0).getDate();
-    }
-    ;
-    function formatDeposit() {
-        var deposit = document.getElementById('deposit').value;
-        document.getElementById('deposit').value = numberWithCommas(deposit);
-    }
-    ;
-    function validatePaymentTerm() {
-        var paymentTerm = document.getElementById('paymentTerm').value;
-        var contractTime = document.getElementById('time').value;
-
-        var time;
-        switch (paymentTerm) {
-            case '1':
-                time = 1;
-                break;
-            case '2':
-                time = 3;
-                break;
-            case '3':
-                time = 6;
-                break;
-        }
-        if (contractTime < time) {
-            alert('Thời gian thuê không được nhỏ hơn kỳ hạn thanh toán');
-            return false;
-        }
-        return true;
-    };
-</script>
-<script src="${pageContext.request.contextPath}/javascript/upload.js" rel="script"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/contract.js"></script>
 </body>
 </html>

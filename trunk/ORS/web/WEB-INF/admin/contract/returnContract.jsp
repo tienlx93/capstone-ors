@@ -162,20 +162,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <div class="form-group clearfix">
-                                            <div class="col-sm-4 control-label" style="text-align: right">Hình ảnh văn
-                                                phòng:
-                                            </div>
-                                            <br>
 
-                                            <div class="col-sm-8">
-                                                <div class="images clearfix" id="imageOffice">
-                                                </div>
-                                                <div class="clear-float"></div>
-                                                <input type="hidden" id="imageUrls" name="imageUrls"
-                                                       value="${office.imageUrls}">
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
@@ -271,18 +258,13 @@
                                     hợp
                                     đồng</h3></div>
                                 <div class="form-group clearfix">
-                                    <input type="hidden" name="imageUrl" id="imageUrl" value="${info.imageUrl}">
-
-                                    <div class="images clearfix" id="images">
-                                        <div class="upload-img">
-                                            <div class="img"><img width="100%"
-                                                    src="${info.imageUrl!=null?info.imageUrl:'/upload/placeholder.jpg'}">
-                                            </div>
+                                    <div class="col-sm-12">
+                                        <div class="images clearfix" id="imageContract">
                                         </div>
+                                        <div class="clear-float"></div>
+                                        <input type="hidden" id="imageUrls" name="imageUrls"
+                                               value="${office.imageUrls}">
                                     </div>
-                                    <div class="clear-float"></div>
-                                    <input type="file" id="file" name="file" accept="image/*"
-                                           title="Mời chọn hình ảnh">
                                 </div>
                             </div>
 
@@ -309,7 +291,22 @@
         calculateReturnMoney();
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('depositValue').value) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(document.getElementById('paymentFeeValue').value) + ' VNĐ';
+        var time = new Date().getTime();
+        imageUrls = $("#imageUrls").val();
+        renderImg()
     });
+    var renderImg = function() {
+        var list = imageUrls.split(",");
+        for (var i = 0; i < list.length; i++) {
+            var img = list[i];
+            if (img) {
+                $('#imageContract').append('<div class="upload-img">' +
+                '<div class="img"><img src="' + img + '"></div>' +
+                '</div>');
+            }
+        }
+    };
+
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }

@@ -42,11 +42,11 @@
                     <div class="panel-title">
                         Danh sách tài khoản
                     </div>
-                    <div><button class="btn-default">
-                        <a class="btn" href="${pageContext.request.contextPath}/admin/user?action=new">
-                            <span class="icon color5"><i class="fa fa-plus"></i></span>
-                            Thêm mới tài khoản
-                        </a></button>
+                    <div>
+                        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/user?action=new">
+                            <span class="icon color5"><i class="fa fa-plus"></i>
+                            Thêm mới tài khoản</span>
+                        </a>
                     </div>
                     <div>
                         <table class="table">

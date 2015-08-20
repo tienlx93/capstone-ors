@@ -328,20 +328,20 @@
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
                                                    onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee"
+                                                   name="paymentFee" step="any"
                                                    id="paymentFee" value="${office.price / office.area}"
                                                    required="true"/>
                                         </div>
                                     </c:if>
                                     <c:if test="${office.categoryId == 2}">
                                         <div for="paymentFee" class="col-sm-2 control-label">
-                                            Giá thuê/m<sup>2</sup>:
+                                                Giá thuê/m<sup>2</sup>:
                                         </div>
 
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
                                                    onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee"
+                                                   name="paymentFee" step="any"
                                                       id="paymentFee" value="${office.price}" required="true"/>
                                         </div>
 

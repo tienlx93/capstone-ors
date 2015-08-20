@@ -87,12 +87,14 @@ public class ScheduleCheckContract implements Job {
 
         URL gwtServlet = null;
         try {
+            ConstantService constantService = new ConstantService();
+            String host = constantService.readProperty("host");
             String query = String.format("id=%s&status=%s&email=%s",
                     URLEncoder.encode(param1, charset),
                     URLEncoder.encode(param2, charset),
                     URLEncoder.encode(param3, charset));
 
-            gwtServlet = new URL("http://localhost:8080/contractMail" + "?" + query);
+            gwtServlet = new URL(host + "/contractMail" + "?" + query);
             HttpURLConnection servletConnection = (HttpURLConnection) gwtServlet.openConnection();
             servletConnection.setRequestMethod("GET");
             servletConnection.setDoOutput(true);

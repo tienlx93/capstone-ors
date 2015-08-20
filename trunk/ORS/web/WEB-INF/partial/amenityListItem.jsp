@@ -7,16 +7,17 @@
     <td>${item.description}</td>
     <td>${item.weight}</td>
     <td>${item.priority}</td>
-    <td><form action="${pageContext.request.contextPath}/admin/amenity" method="post">
-      <button  type="submit" class="btn btn" name="action" value="delete" class="btn btn-icon btn-default"><i class="fa fa-trash-o color5"></i></button>
-      <input type="hidden" value="${item.id}" name="id">
-
-    </form></td>
     <td>
-      <a href="amenity?action=edit&id=${item.id}"
-         title="Cập nhật"
-         class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+      <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
+        <div class="btn-group" role="group">
+          <button  type="submit" name="action" value="delete" class="btn btn-icon btn-default"><i class="fa fa-trash-o color10"></i></button>
+          <input type="hidden" value="${item.id}" name="id">
 
+          <a href="amenity?action=edit&id=${item.id}"
+             title="Cập nhật"
+             class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+        </div>
+      </form>
     </td>
 
   </tr>

@@ -42,9 +42,9 @@
             Danh sách nhóm tiện nghi
           </div>
           <div>
-            <a class="btn" href="${pageContext.request.contextPath}/admin/groupAmenity?action=new">
-              <span class="icon color5"><i class="fa fa-plus"></i></span>
-              Thêm mới nhóm tiện nghi
+            <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/groupAmenity?action=new">
+              <span class="icon color5"><i class="fa fa-plus"></i>
+              Thêm mới nhóm tiện nghi</span>
             </a>
           </div>
           <div>

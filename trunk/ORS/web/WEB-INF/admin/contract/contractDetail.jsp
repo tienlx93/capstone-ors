@@ -167,22 +167,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <div class="form-group clearfix">
-                                            <div class="col-sm-4 control-label" style="text-align: right">Hình ảnh văn
-                                                phòng:
-                                            </div>
-                                            <br>
 
-                                            <div class="col-sm-8">
-                                                <div class="images clearfix" id="imageOffice">
-                                                </div>
-                                                <div class="clear-float"></div>
-                                                <input type="hidden" id="imageUrls" name="imageUrls"
-                                                       value="${office.imageUrls}">
-                                            </div>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):
@@ -254,20 +239,13 @@
                                     hợp
                                     đồng</h3></div>
                                 <div class="form-group clearfix">
-                                    <div class="col-sm-2 control-label">Hình ảnh</div>
-                                    <br>
-                                    <input type="hidden" name="imageUrl" id="imageUrl" value="${contract.imageUrl}">
-
-                                    <div class="images clearfix" id="images">
-                                        <div class="upload-img">
-                                            <div class="img"><img
-                                                    src="${contract.imageUrl!=null?contract.imageUrl:'/upload/placeholder.jpg'}">
-                                            </div>
+                                    <div class="col-sm-12">
+                                        <div class="images clearfix" id="imageContract">
                                         </div>
+                                        <div class="clear-float"></div>
+                                        <input type="hidden" id="imageUrls" name="imageUrls"
+                                               value="${office.imageUrls}">
                                     </div>
-                                    <div class="clear-float"></div>
-                                    <input type="file" id="file" name="file" accept="image/*"
-                                           title="Mời chọn hình ảnh">
                                 </div>
                             </div>
                             <div class="button-post">
@@ -326,7 +304,7 @@
         for (var i = 0; i < list.length; i++) {
             var img = list[i];
             if (img) {
-                $('#imageOffice').append('<div class="upload-img">' +
+                $('#imageContract').append('<div class="upload-img">' +
                 '<div class="img"><img src="' + img + '"></div>' +
                 '</div>');
             }

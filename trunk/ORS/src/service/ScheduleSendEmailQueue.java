@@ -39,11 +39,13 @@ public class ScheduleSendEmailQueue implements Job {
 
             URL gwtServlet = null;
             try {
+                ConstantService constantService = new ConstantService();
+                String host = constantService.readProperty("host");
                 String query = String.format("id=%s&email=%s",
                         URLEncoder.encode(param1, charset),
                         URLEncoder.encode(param2, charset));
 
-                gwtServlet = new URL("http://tienlx.me/sendMail" + "?" + query);
+                gwtServlet = new URL(host + "/sendMail" + "?" + query);
                 HttpURLConnection servletConnection = null;
 
                 servletConnection = (HttpURLConnection) gwtServlet.openConnection();

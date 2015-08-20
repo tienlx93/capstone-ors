@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import dao.*;
 import entity.*;
 import json.*;
+import service.ConstantService;
+import service.EmailService;
 import service.MatchingService;
 
 import javax.servlet.ServletException;
@@ -13,9 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.*;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
+import java.net.*;
 import java.sql.*;
 import java.text.ParseException;
 import java.util.*;
@@ -624,6 +624,32 @@ public class ApiController extends HttpServlet {
 
                 ProfileDAO profileDAO = new ProfileDAO();
                 boolean result2 = profileDAO.save(pf);
+                String charset = "UTF-8";
+                URL gwtServlet = null;
+                try {
+                    ConstantService constantService = new ConstantService();
+                    String host = constantService.readProperty("host");
+                    String query = String.format("email=%s",
+                            URLEncoder.encode(acc.getEmail(), charset));
+
+                    gwtServlet = new URL(host + "/welcome" + "?" + query);
+                    HttpURLConnection servletConnection = (HttpURLConnection) gwtServlet.openConnection();
+                    servletConnection.setRequestMethod("GET");
+                    servletConnection.setDoOutput(true);
+                    InputStream response = gwtServlet.openStream();
+
+                    ObjectOutputStream objOut = new ObjectOutputStream(servletConnection.getOutputStream());
+//            objOut.writeObject(p);
+                    objOut.flush();
+                    objOut.close();
+
+                } catch (MalformedURLException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
 
                 if (result && result2) {
                     out.print(gson.toJson("Success"));

@@ -42,11 +42,11 @@
                     <div class="panel-title">
                         Danh sách văn phòng
                     </div>
-                    <div><button class="btn btn-default">
-                        <a class="" href="${pageContext.request.contextPath}/admin/office?action=new">
-                            <span class="icon color5"><i class="fa fa-plus"></i></span>
-                            Thêm mới văn phòng
-                        </a></button>
+                    <div>
+                        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/office?action=new">
+                            <span class="icon color5"><i class="fa fa-plus"></i>
+                            Thêm mới văn phòng</span>
+                        </a>
                     </div>
                     <div>
                         <table class="table">

@@ -46,11 +46,11 @@
                     <div class="panel-title">
                         Danh sách thiết bị
                     </div>
-                    <div><button class="btn-default">
-                        <a class="btn" href="${pageContext.request.contextPath}/admin/rental?action=new">
-                            <span class="icon color5"><i class="fa fa-plus"></i></span>
-                            Thêm mới thiết bị
-                        </a></button>
+                    <div>
+                        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/rental?action=new">
+                            <span class="icon color5"><i class="fa fa-plus"></i>
+                            Thêm mới thiết bị</span>
+                        </a>
                     </div>
 
                     <div>

@@ -183,7 +183,7 @@
         <div class="info">
             <p>Điền thông tin văn phòng bạn muốn thuê vào các ô sau.</p>
 
-            <p>Chúng tôi sẽ báo với bạn trong thời gian sớm nhất qua tin nhắn.</p>
+            <p>Chúng tôi sẽ báo với bạn trong thời gian sớm nhất qua mail.</p>
         </div>
         <form name="requestOfficeForm">
             <div class="form-group">
@@ -196,7 +196,7 @@
 
             </div>
             <div class="form-group">
-                <label for="price">Giá (VNĐ)</label>
+                <label for="price">Giá thuê/m<sup>2</sup> (VNĐ)</label>
                 <input type="number" ng-model="reOffice.price" class="form-control" id="price" required name="price" min="0">
                 <span class="error" ng-show="requestOfficeForm.price.$dirty && requestOfficeForm.price.$invalid">
                     <span ng-show="requestOfficeForm.price.$error.required">Bắt buộc</span>

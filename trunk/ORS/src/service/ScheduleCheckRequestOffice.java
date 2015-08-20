@@ -105,7 +105,11 @@ public class ScheduleCheckRequestOffice implements Job {
 
         for (Office office : offices) {
             if (office.getPrice() != null) {
-                if (((office.getPrice() - (office.getPrice() / 5)) <= request.getPrice()) && ((office.getPrice() + (office.getPrice() / 5)) >= request.getPrice())) {
+                double price = office.getPrice();
+                if(office.getCategoryId() == 1){
+                    price = office.getPrice()/office.getArea();
+                }
+                if (((price - (price / 5)) <= request.getPrice()) && ((price + (price / 5)) >= request.getPrice())) {
                     officePrices.add(office);
                 }
             }

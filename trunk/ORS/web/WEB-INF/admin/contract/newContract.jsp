@@ -342,7 +342,7 @@
                                             <input style="display: inline-block" type='number'
                                                    onchange="calculatePaymentFee()" class="form-control"
                                                    name="paymentFee"
-                                                   id="paymentFee" value="${office.price}" required="true"/>
+                                                      id="paymentFee" value="${office.price}" required="true"/>
                                         </div>
 
                                     </c:if>

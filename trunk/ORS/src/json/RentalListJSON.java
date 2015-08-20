@@ -17,11 +17,12 @@ public class RentalListJSON {
     private Long assignedTime;
     private Long createTime;
     private String officeName;
+    private int officeType;
 
     public RentalListJSON() {
     }
 
-    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl, String status, double price, Date assignedTime, Date createTime, String officeName) {
+    public RentalListJSON(int rentalId, String name, String description, double unitPrice, int quantity, String imageUrl, String status, double price, Date assignedTime, Date createTime, String officeName, int officeType) {
         this.rentalId = rentalId;
         this.name = name;
         this.description = description;
@@ -33,6 +34,7 @@ public class RentalListJSON {
         this.assignedTime = assignedTime != null ? assignedTime.getTime() : 0;
         this.createTime = createTime != null ? createTime.getTime() : 0;
         this.officeName = officeName;
+        this.officeType = officeType;
     }
 
     public String getOfficeName() {
@@ -121,5 +123,17 @@ public class RentalListJSON {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public int getOfficeType() {
+        return officeType;
+    }
+
+    public void setOfficeType(int officeType) {
+        this.officeType = officeType;
     }
 }

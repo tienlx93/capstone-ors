@@ -27,6 +27,8 @@ public class ScheduleListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent sce) {
         //Creating scheduler factory and scheduler
         try {
+            ConstantService constant = new ConstantService();
+
             scheduler = factory.getScheduler();
 
             JobDetailImpl jobDetail1 = new JobDetailImpl();
@@ -37,7 +39,14 @@ public class ScheduleListener implements ServletContextListener {
             SimpleTriggerImpl simpleTrigger1 = new SimpleTriggerImpl();
             simpleTrigger1.setStartTime(new Date(System.currentTimeMillis() + 1000));
             simpleTrigger1.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-            Long duration1 = Duration.standardMinutes(1).getMillis();
+            String time = constant.readProperty("schedule.check_request_office");
+            int minute;
+            if (time.equals("error")) {
+                minute = Integer.parseInt(time);
+            } else {
+                minute = 1;
+            }
+            Long duration1 = Duration.standardMinutes(minute).getMillis();
             simpleTrigger1.setRepeatInterval(duration1);
             simpleTrigger1.setName("FirstTrigger");
 
@@ -50,7 +59,13 @@ public class ScheduleListener implements ServletContextListener {
             SimpleTriggerImpl simpleTrigger2 = new SimpleTriggerImpl();
             simpleTrigger2.setStartTime(new Date(System.currentTimeMillis() + 1000));
             simpleTrigger2.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-            Long duration2 = Duration.standardMinutes(1).getMillis();
+            time = constant.readProperty("schedule.check_contract");
+            if (time.equals("error")) {
+                minute = Integer.parseInt(time);
+            } else {
+                minute = 1;
+            }
+            Long duration2 = Duration.standardMinutes(minute).getMillis();
             simpleTrigger2.setRepeatInterval(duration2);
             simpleTrigger2.setName("SecondTrigger");
 
@@ -63,7 +78,13 @@ public class ScheduleListener implements ServletContextListener {
             SimpleTriggerImpl simpleTrigger3= new SimpleTriggerImpl();
             simpleTrigger3.setStartTime(new Date(System.currentTimeMillis() + 1000));
             simpleTrigger3.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-            Long duration3 = Duration.standardMinutes(1).getMillis();
+            time = constant.readProperty("schedule.check_email");
+            if (time.equals("error")) {
+                minute = Integer.parseInt(time);
+            } else {
+                minute = 1;
+            }
+            Long duration3 = Duration.standardMinutes(minute).getMillis();
             simpleTrigger3.setRepeatInterval(duration3);
             simpleTrigger3.setName("ThirdTrigger");
 

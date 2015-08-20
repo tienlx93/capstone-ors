@@ -306,6 +306,7 @@
 <script type="text/javascript">
     $(document).ready(function () {
         calculateTotalContract();
+        calculateReturnMoney();
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('depositValue').value) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(document.getElementById('paymentFeeValue').value) + ' VNĐ';
     });
@@ -336,14 +337,25 @@
         }
         var officeArea = document.getElementById('officeArea').innerText;
         var paymentFee = document.getElementById('paymentFeeValue').value;
-        var deposit = document.getElementById('depositValue').value != '' ? document.getElementById('depositValue').value : 0;
-        var returnMoney = document.getElementById('returnMoney').value != '' ? document.getElementById('returnMoney').value : 0;
 
         var total = paymentFee * parseInt(officeArea) * payment;
         var totalContract = paymentFee * parseInt(officeArea) * time;
 
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('totalContract').innerHTML = numberWithCommas(totalContract) + ' VNĐ';
+        document.getElementById('returnMoney').setAttribute('max', totalContract + '');
+    }
+    function calculateReturnMoney() {
+        var start = new Date();
+        var endDate = document.getElementById('endDateValue').value;
+        var end = new Date(endDate);
+        var time = Math.ceil((end.getTime() - start.getTime()) / 86400000);
+        var officeArea = document.getElementById('officeArea').innerText;
+        var paymentFee = document.getElementById('paymentFeeValue').value;
+
+        var returnMoney = parseInt(officeArea) * paymentFee * (time/30);
+        document.getElementById('returnMoney').value = Math.floor(returnMoney/100) * 100;
+
     }
 </script>
 </body>

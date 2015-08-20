@@ -193,7 +193,8 @@ public class ContractController extends HttpServlet {
                         // add cancel date when return
                         contract.setCancelDate(new Date((new java.util.Date()).getTime()));
                         contract.setStatusId(4);
-                        contract.setDeposit(contract.getDeposit() - Long.getLong((returnDeposit)));
+                        Long deposit = contract.getDeposit() - Long.parseLong((returnDeposit), 10);
+                        contract.setDeposit(deposit);
                         contract.setCancelFee(Long.getLong(returnMoney));
 
                         dao.updateContract(id, contract);

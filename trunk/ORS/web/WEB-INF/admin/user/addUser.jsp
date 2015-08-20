@@ -50,14 +50,18 @@
                             <div class="form-group clearfix">
                                 <label for="username" class="col-sm-2">Tên đăng nhập</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="username" class="" id="username" value="${account.password}" required>
+                                    <input type="text" name="username" class="" id="username" value="${account.password}" required
+                                           title="Tên đăng nhập (5-30 kí tự)"
+                                           pattern=".{5,30}">
                                 </div>
                             </div>
 
                             <div class="form-group ">
                                 <label for="password" class="col-sm-2">Mật khẩu</label>
                                 <div class="col-sm-10">
-                                    <input type="password" name="password" class="" id="password" value="${account.password}" required>
+                                    <input type="password" name="password" class="" id="password" value="${account.password}" required
+                                           title="Mật khẩu (8-32 kí tự)"
+                                           pattern=".{8,32}">
                                 </div>
                             </div>
                             <br/>

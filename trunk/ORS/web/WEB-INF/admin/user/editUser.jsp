@@ -45,7 +45,6 @@
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/user" method="post">
-
               <div class="form-group clearfix">
                 <label  class="col-sm-2">Tên đăng nhập</label>
 
@@ -59,7 +58,7 @@
               <div class="form-group clearfix">
                 <label for="password" class="col-sm-2">Mật khẩu</label>
                 <div class="col-sm-10">
-                  <input type="password" name="password" class="" id="password" value="${account.password}">
+                  <input type="password" name="password" class="" id="password" value="${account.password}" required>
                 </div>
               </div>
 
@@ -67,7 +66,7 @@
               <div class="form-group clearfix">
                 <label for="email" class="col-sm-2">Email</label>
                 <div class="col-sm-10">
-                  <input type="email" name="email" class="" id="email" value="${account.email}">
+                  <input type="email" name="email" class="" id="email" value="${account.email}" required>
                 </div>
               </div>
 

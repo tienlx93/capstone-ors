@@ -122,7 +122,7 @@
                                 <div class="clear-float" id="amenity-list">
 
                                 </div>
-                                <div class="col-sm-5">
+                                <div style="width: 0">
                                     <div class="input-group">
                                         <input type="text" class="form-control typeahead" autocomplete="off"
                                                id="amenity" style="width: 355px;">

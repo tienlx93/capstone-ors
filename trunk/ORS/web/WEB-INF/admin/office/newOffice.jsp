@@ -35,7 +35,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="page-header">Quản lí văn phòng</h1>
+        <h1 class="title">Quản lí văn phòng</h1>
     </div>
 
     <div class="container-padding">
@@ -43,7 +43,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Thêm mới văn phòng
+                        <h2 style="margin-top: 5px; text-align: center">Thêm mới văn phòng</h2>
                     </div>
                     <div>
                         <form action="office" method="post" id="form" onsubmit="return validateform()">
@@ -51,7 +51,7 @@
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2">Tên văn phòng *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="text" maxlength="100" name="name" class="form-control" id="name"
                                            value="${office.name}" required
                                            title="Tên văn phòng (5-150 kí tự)"
@@ -62,12 +62,12 @@
                             <div class="form-group clearfix">
                                 <label for="address" class="col-sm-2">Địa chỉ *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="text" name="address" class="form-control" id="address"
                                            onFocus="geolocate()"
                                            value="${office.address}" required>
                                 </div>
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <table id="autocomplete">
                                         <tr class="hidden">
                                             <td class="label">Địa chỉ</td>
@@ -84,7 +84,9 @@
                                                        disabled="true"></td>
                                         </tr>
                                         <tr>
-                                            <td class="label">Thành phố / Tỉnh</td>
+                                            <td class="label" style="padding-right: 15px;padding-top: 10px;">
+                                                Thành phố / Tỉnh
+                                            </td>
                                             <td class="wideField" colspan="3">
                                                 <input class="field" name="city"
                                                        id="administrative_area_level_1"
@@ -138,7 +140,7 @@
                             <div class="form-group clearfix">
                                 <label for="category" class="col-sm-2">Loại văn phòng *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <select name="category" class="form-control" id="category">
                                         <c:forEach var="item" items="${categoryList}">
                                             <option value="${item.id}"
@@ -151,16 +153,16 @@
                             <div class="form-group clearfix">
                                 <label for="floor" class="col-sm-2">Số tầng *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="number" name="floor" class="form-control" id="floor"
-                                           value="${office.floorNumber}" min="0"
+                                           value="${office.floorNumber}" min="1" step="1"
                                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
                                 <label for="area" class="col-sm-2">Diện tích (m<sup>2</sup>) *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="number" name="area" class="form-control" id="area"
                                            value="${office.area}" required min="0">
                                 </div>
@@ -168,15 +170,15 @@
                             <div class="form-group clearfix">
                                 <label for="minArea" class="col-sm-2">Diện tích thuê tối thiểu (m<sup>2</sup>) *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="number" name="minArea" class="form-control" id="minArea"
                                            value="${office.minArea}" required min="0" step="any">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="minTime" class="col-sm-2">Thời gian thuê tối thiểu *</label>
+                                <label for="minTime" class="col-sm-2">Thời gian thuê tối thiểu (Tháng) *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="number" name="minTime" class="form-control" id="minTime"
                                            value="${office.minTime}" required min="0" step="1">
                                 </div>
@@ -184,35 +186,38 @@
 
                             <div><h3>Điều khoản giá</h3></div>
                             <div class="form-group clearfix">
-                                <label for="price" class="col-sm-3">Lợi nhuận theo hoa hồng</label>
+                                <label for="price" style="float:left;margin-right:5px;">Lợi nhuận theo hoa hồng</label>
 
-                                <div class="col-sm-3">
+                                <div class="col-sm-2">
                                     <div class="onoffswitch" >
                                         <input type="checkbox" name="isPercent" class="onoffswitch-checkbox" id="isPercent" checked>
-                                        <label class="onoffswitch-label" for="isPercent"></label>
+                                        <label class="onoffswitch-label" for="isPercent">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
                                     </div>
                                 </div>
                                 <div>
-                                    <label for="commission" class="col-sm-3">Tỉ lệ hoa hồng (%)</label>
+                                    <label for="commission" class="col-sm-2">Tỉ lệ hoa hồng (%)</label>
 
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-2" style="margin-top: -5px;">
                                         <input type="number" name="commission" class="form-control" id="commission"
-                                               value="${office.commission}" step="1" title="Xin nhập tỉ lệ">
+                                               value="${office.commission}" step="1">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group clearfix" >
-                                <label for="basePrice" class="col-sm-2" style="text-align: right;">Giá thuê gốc *</label>
+                                <label for="basePrice" class="col-sm-2" >Giá thuê gốc (VND) *</label>
 
-                                <div class="col-sm-9">
+                                <div class="col-sm-8">
                                     <input type="text" min="0" name="basePrice" class="form-control" id="basePrice"
-                                           value="${office.basePrice}">
+                                           value="${office.basePrice}" onchange="onChangeBasePrice()">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2">Giá thuê (VND) *</label>
+                                <label for="price" class="col-sm-2">Giá thuê (VND)</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="number" name="price" class="form-control" id="price"
                                            value="${office.price}" step="1" title="Xin nhập giá hợp lệ">
                                 </div>
@@ -221,7 +226,7 @@
                             <div class="form-group clearfix">
                                 <label for="priceTerm" class="col-sm-2">Đơn vị giá *</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <select name="priceTerm" class="form-control" id="priceTerm" required>
                                         <c:forEach var="item" items="${priceTermList}">
                                             <option value="${item.id}"
@@ -235,7 +240,7 @@
                             <div><h3>Thông tin chủ văn phòng</h3></div>
                             <div class="form-group clearfix">
                                 <label for="ownerName" class="col-sm-2">Tên người đại diện *</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="text" name="ownerName" class="form-control" id="ownerName"
                                            value="${office.ownerName}" required
                                            title="Tên người đại diện (5-50 kí tự)"
@@ -244,7 +249,7 @@
                             </div>
                             <div class="form-group clearfix">
                                 <label for="ownerPhone" class="col-sm-2">Số điện thoại người đại diện *</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="text" name="ownerPhone" class="form-control" id="ownerPhone"
                                            value="${office.ownerPhone}" required
                                            title="Số điện thoại người đại diện (9-11 số)"
@@ -253,7 +258,7 @@
                             </div>
                             <div class="form-group clearfix">
                                 <label for="ownerAddress" class="col-sm-2">Địa chỉ người đại diện *</label>
-                                <div class="col-sm-10">
+                                <div class="col-sm-8">
                                     <input type="text" name="ownerAddress" class="form-control" id="ownerAddress"
                                            value="${office.ownerAddress}" required
                                            title="Địa chỉ người đại diện (5-150 kí tự)"

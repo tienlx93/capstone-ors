@@ -47,7 +47,7 @@ public class EmailQueueController extends HttpServlet {
             office.setImageUrls(image);
             officeList.add(office);
         }
-
+        request.setAttribute("fullName", emailQueue.getAccountByUsername().getProfileByUsername().getFullName());
         request.setAttribute("data", emailQueue);
         request.setAttribute("offices", officeList);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/email/emailDemo.jsp");
@@ -64,5 +64,6 @@ public class EmailQueueController extends HttpServlet {
             emailQueueDAO.remove(emailQueue);
             System.out.println("Remove queue");
         }
+        response.getWriter().print(res2.getOutput());
     }
 }

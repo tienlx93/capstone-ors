@@ -60,6 +60,7 @@ public class ContractController extends HttpServlet {
                     officeChildren.setCity(officeParent.getCity());
                     officeChildren.setMinTime(officeParent.getMinTime());
                     officeChildren.setMinArea(officeParent.getMinArea());
+                    officeChildren.setBasePrice(officeParent.getBasePrice());
                     officeChildren.setOwnerName(officeParent.getOwnerName());
                     officeChildren.setOwnerPhone(officeParent.getOwnerPhone());
                     officeChildren.setOwnerAddress(officeParent.getOwnerAddress());
@@ -106,6 +107,8 @@ public class ContractController extends HttpServlet {
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
                 String deposit = request.getParameter("deposit");
+                String imageUrl = request.getParameter("imageUrl");
+
                 if(deposit == "") {
                     deposit = "0";
                 }
@@ -131,7 +134,7 @@ public class ContractController extends HttpServlet {
                 contract.setPaymentFee(Integer.parseInt(paymentFee));
                 contract.setPaymentTerm(Integer.parseInt(paymentTerm));
                 contract.setDeposit(Long.parseLong(deposit));
-
+                contract.setImageUrl(imageUrl);
                 dao.save(contract);
                 response.sendRedirect("/admin/contract");
                 break;

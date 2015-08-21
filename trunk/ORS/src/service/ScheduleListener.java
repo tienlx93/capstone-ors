@@ -90,10 +90,10 @@ public class ScheduleListener implements ServletContextListener {
 
             //Start scheduler
 
-            scheduler.start();
-            scheduler.scheduleJob(jobDetail1, simpleTrigger1);
-            scheduler.scheduleJob(jobDetail2, simpleTrigger2);
-            scheduler.scheduleJob(jobDetail3, simpleTrigger3);
+            //scheduler.start();
+            //scheduler.scheduleJob(jobDetail1, simpleTrigger1);
+            //scheduler.scheduleJob(jobDetail2, simpleTrigger2);
+            //scheduler.scheduleJob(jobDetail3, simpleTrigger3);
             DateTime now = new DateTime();
             DateTime startSchedule;
             if (now.hourOfDay().get() > 17) {

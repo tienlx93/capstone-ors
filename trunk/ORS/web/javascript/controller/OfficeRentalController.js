@@ -36,7 +36,7 @@ controllers.controller('OfficeRentalController', ['$scope', '$location', 'Api', 
                         $scope.rentals = data;
                         $scope.itemList = [];
                         for (var i = 0; i < $scope.rentals.length; i++) {
-                            if($scope.rentals[i].officeType === $scope.category) {
+                            if($scope.rentals[i].officeType === $scope.category || $scope.rentals[i].officeType === 0) {
                                 $scope.rentals[i].number = 1;
                                 $scope.rentals[i].quantity = 1;
                                 $scope.itemList.push($scope.rentals[i]);

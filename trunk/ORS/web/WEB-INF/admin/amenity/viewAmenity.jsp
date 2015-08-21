@@ -52,9 +52,9 @@
               <thead>
               <tr>
                 <th>Tên tiện nghi</th>
-                <th>Mô tả</th>
                 <th>Trọng số</th>
                 <th>Độ ưu tiên</th>
+                <th>Nhóm tiện nghi</th>
                 <th></th>
               </tr>
               </thead>
@@ -62,9 +62,10 @@
               <c:forEach items="${data}" var="item">
                 <tr>
                   <td>${item.name}</td>
-                  <td>${item.description}</td>
+
                   <td>${item.weight}</td>
                   <td>${item.priority}</td>
+                  <td>${item.amenityGroupByAmenityGroupId.name}</td>
                   <td>
                     <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
                       <div class="btn-group" role="group">

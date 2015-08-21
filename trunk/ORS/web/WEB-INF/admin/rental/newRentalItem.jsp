@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Thành
@@ -66,16 +67,47 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Thêm mới thiết bị
+                        <h2 style="margin-top: 5px">Thêm mới thiết bị</h2>
                     </div>
                     <div>
                         <form action="rentalItem" method="post" name="myform" onsubmit="return validateform()">
                             <div class="form-group clearfix">
-                                <label for="name" class="col-sm-2 control-label">Tên thiết bị</label>
+                                <label for="name" class="col-sm-2 control-label">Mã thiết bị</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-4">
                                     <input type="text" name="name" class="form-control" id="name"
                                            value="${rentalItem.name}" required>
+                                </div>
+
+                                <label class="col-sm-2 control-label">Thiết bị dành cho</label>
+
+                                <div class="col-sm-4">
+                                    <select name="officeType" class="col-sm-12">
+                                        <option value="0" selected>Cả hai
+                                        </option>
+                                        <c:forEach var="item" items="${categoryList}">
+                                            <option value="${item.id}">
+                                                    ${item.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" name="price" class="form-control" id="price"
+                                           value="${rentalItem.price}" required>
+                                    <span style="color: red" id="priceValidate"></span>
+                                </div>
+
+                                <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" name="quantity" class="form-control" id="quantity"
+                                           value="${rentalItem.quantity}" required>
+                                    <span style="color: red" id="quantityValidate"></span>
                                 </div>
                             </div>
 
@@ -84,7 +116,7 @@
 
                                 <div class="col-sm-10">
                                 <textarea name="description" class="form-control" id="description"
-                                          required>${rentalItem.description}</textarea>
+                                          required rows="5">${rentalItem.description}</textarea>
                                 </div>
                             </div>
 
@@ -92,34 +124,16 @@
                                 <label class="col-sm-2 control-label">Hình ảnh</label><br>
                                 <input type="hidden" name="imageUrl" id="imageUrl" value="${rentalItem.imageUrl}">
 
-                                <div class="images clearfix" id="images">
-                                    <div class="upload-img">
-                                        <div class="img"><img
-                                                src="${rentalItem.imageUrl!=null?rentalItem.imageUrl:'/upload/placeholder.jpg'}">
+                                <div class="col-sm-10">
+                                    <div class="images clearfix" id="images">
+                                        <div class="upload-img">
+                                            <div class="img"><img
+                                                    src="${rentalItem.imageUrl!=null?rentalItem.imageUrl:'/upload/placeholder.jpg'}">
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="clear-float"></div>
-                                <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" name="price" class="form-control" id="price"
-                                           value="${rentalItem.price}" required>
-                                    <span style="color: red" id="priceValidate"></span>
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" name="quantity" class="form-control" id="quantity"
-                                           value="${rentalItem.quantity}" required>
-                                    <span style="color: red" id="quantityValidate"></span>
+                                    <div class="clear-float"></div>
+                                    <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
                                 </div>
                             </div>
 

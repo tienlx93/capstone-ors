@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%--
   Created by IntelliJ IDEA.
   User: Thành
@@ -51,20 +52,50 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="name" class="col-sm-2 control-label">Tên</label>
+                                <label for="name" class="col-sm-2 control-label">Mã thiết bị</label>
 
-                                <div class="col-sm-10">
+                                <div class="col-sm-4">
                                     <input type="text" name="name" class="form-control" id="name"
                                            value="${info.name}" required>
                                 </div>
+
+                                <label for="name" class="col-sm-2 control-label">Thiết bị dành cho</label>
+
+                                <div class="col-sm-4">
+                                    <select name="officeType" class="col-sm-12">
+                                        <option value="0">Cả hai
+                                        </option>
+                                        <c:forEach var="item" items="${categoryList}">
+                                            <option value="${item.id}"
+                                                <c:if test="${info.officeType==item.id}">selected</c:if>>${item.description}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="form-group clearfix">
+                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" name="price" class="form-control" id="price"
+                                           value="${info.price}">
+                                </div>
+
+                                <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
+
+                                <div class="col-sm-4">
+                                    <input type="text" name="quantity" class="form-control" id="quantity"
+                                           value="${info.quantity}">
+                                </div>
+                            </div>
+
 
                             <div class="form-group clearfix">
                                 <label for="description" class="col-sm-2 control-label">Mô tả</label>
 
                                 <div class="col-sm-10">
                                 <textarea name="description" class="form-control" id="description"
-                                          required>${info.description}</textarea>
+                                          rows="5" required>${info.description}</textarea>
                                 </div>
                             </div>
 
@@ -83,26 +114,9 @@
                                 <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
                             </div>
 
-                            <div class="form-group clearfix">
-                                <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" name="price" class="form-control" id="price"
-                                           value="${info.price}">
-                                </div>
-                            </div>
-
-                            <div class="form-group clearfix">
-                                <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
-
-                                <div class="col-sm-10">
-                                    <input type="text" name="quantity" class="form-control" id="quantity"
-                                           value="${info.quantity}">
-                                </div>
-                            </div>
 
                             <div class="button-post">
-                                <button type="submit" name="action" class="btn btn-default">Lưu</button>
+                                <button type="submit" name="action" class="btn btn-primary">Lưu</button>
                                 <a href="${pageContext.request.contextPath}/admin/rentalItem"
                                    class="btn btn-default">Quay về</a>
                             </div>

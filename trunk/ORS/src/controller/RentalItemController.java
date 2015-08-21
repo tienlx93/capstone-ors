@@ -1,7 +1,9 @@
 package controller;
 
+import dao.CategoryDAO;
 import dao.RentalItemDAO;
 import entity.Account;
+import entity.Category;
 import entity.RentalItem;
 import service.ConstantService;
 
@@ -30,7 +32,8 @@ public class RentalItemController extends HttpServlet {
                 RentalItemDAO dao = new RentalItemDAO();
                 dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("name"),
                         request.getParameter("description"), Double.parseDouble(request.getParameter("price")),
-                        Integer.parseInt(request.getParameter("quantity")), request.getParameter("imageUrl"));
+                        Integer.parseInt(request.getParameter("officeType")), Integer.parseInt(request.getParameter("quantity")),
+                        request.getParameter("imageUrl"));
                 response.sendRedirect("/admin/rentalItem");
             } else if (action.equals("save")) {
                 RentalItemDAO dao = new RentalItemDAO();
@@ -38,12 +41,18 @@ public class RentalItemController extends HttpServlet {
                 String name = request.getParameter("name");
                 String description = request.getParameter("description");
                 String price = request.getParameter("price");
+                String officeType = request.getParameter("officeType");
                 String quantity = request.getParameter("quantity");
                 String imageUrl = request.getParameter("imageUrl");
 
                 rtItem.setName(name);
                 rtItem.setDescription(description);
                 rtItem.setPrice(Double.parseDouble(price));
+                if (Integer.parseInt(officeType) != 0) {
+                    rtItem.setOfficeType(Integer.parseInt(officeType));
+                } else {
+                    rtItem.setOfficeType(0);
+                }
                 rtItem.setQuantity(Integer.parseInt(quantity));
                 rtItem.setImageUrl(imageUrl);
 
@@ -71,10 +80,19 @@ public class RentalItemController extends HttpServlet {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/rental/rentalItem.jsp");
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
+                CategoryDAO cDao = new CategoryDAO();
+                List<Category> categoryList = cDao.findAll();
+                request.setAttribute("categoryList", categoryList);
+
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
                 request.getRequestDispatcher("/WEB-INF/admin/rental/rentalItemDetail.jsp").forward(request, response);
 
             } else if (action.equals("new")) {
+
+                CategoryDAO cDao = new CategoryDAO();
+                List<Category> categoryList = cDao.findAll();
+                request.setAttribute("categoryList", categoryList);
+
                 RentalItem rtItem = new RentalItem();
                 request.setAttribute("rentalItem", rtItem);
                 request.getRequestDispatcher("/WEB-INF/admin/rental/newRentalItem.jsp").forward(request, response);

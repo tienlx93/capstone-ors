@@ -17,13 +17,14 @@ public class RentalItemDAO extends BaseDAO<RentalItem, Integer> {
         super(RentalItem.class);
     }
 
-    public void update(int id, String name, String description, double price, Integer quantity, String imageUrl) {
+    public void update(int id, String name, String description, double price, int officeType, Integer quantity, String imageUrl) {
         Transaction trans = session.beginTransaction();
         try {
             RentalItem rtItem = (RentalItem)session.get(RentalItem.class,id);
             rtItem.setName(name);
             rtItem.setDescription(description);
             rtItem.setPrice(price);
+            rtItem.setOfficeType(officeType);
             rtItem.setQuantity(quantity);
             rtItem.setImageUrl(imageUrl);
             session.update(rtItem);

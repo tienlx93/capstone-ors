@@ -47,7 +47,7 @@
                         Danh sách thiết bị
                     </div>
                     <div>
-                        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/rental?action=new">
+                        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/rentalItem?action=new">
                             <span class="icon color5"><i class="fa fa-plus"></i>
                             Thêm mới thiết bị</span>
                         </a>

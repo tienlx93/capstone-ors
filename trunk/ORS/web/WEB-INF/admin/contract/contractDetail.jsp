@@ -244,7 +244,7 @@
                                         </div>
                                         <div class="clear-float"></div>
                                         <input type="hidden" id="imageUrls" name="imageUrls"
-                                               value="${office.imageUrls}">
+                                               value="${contract.imageUrl}">
                                     </div>
                                 </div>
                             </div>
@@ -305,7 +305,7 @@
             var img = list[i];
             if (img) {
                 $('#imageContract').append('<div class="upload-img">' +
-                '<div class="img"><img src="' + img + '"></div>' +
+                '<div class="img" style="height: 400px"><img width="100%" src="' + img + '"></div>' +
                 '</div>');
             }
         }

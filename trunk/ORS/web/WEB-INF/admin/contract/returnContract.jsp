@@ -253,20 +253,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row" style="margin: 20px auto; ">
-                                <div style="text-align:center; border-bottom:2px solid #000000"><h3>Hình ảnh văn bản
-                                    hợp
-                                    đồng</h3></div>
-                                <div class="form-group clearfix">
-                                    <div class="col-sm-12">
-                                        <div class="images clearfix" id="imageContract">
-                                        </div>
-                                        <div class="clear-float"></div>
-                                        <input type="hidden" id="imageUrls" name="imageUrls"
-                                               value="${office.imageUrls}">
-                                    </div>
-                                </div>
-                            </div>
 
                             <div class="button-post">
                                 <button type="submit" value="confirm" name="button" class="btn btn-danger">Xác nhận

@@ -88,7 +88,7 @@ function calculatePaymentFee() {
             time = 6;
             break;
     }
-    if (paymentTerm != '' && officeArea != null && paymentFee != null) {
+    if (paymentTerm != '' && officeArea != null && paymentFee != '') {
         var total = numberWithCommas(parseInt(paymentFee) * officeArea * time);
         var price = document.getElementById('price');
         price.innerHTML = numberWithCommas(total);

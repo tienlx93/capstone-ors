@@ -222,7 +222,8 @@
                                 </div>
                             </c:if>
                             <div class="form-group clearfix">
-                                <label for="appointmentStatusId" class="col-sm-2 control-label">Trạng thái</label>
+                                <label for="appointmentStatusId" class="col-sm-2 control-label">Trạng thái lịch
+                                    hẹn</label>
 
                                 <div class="col-sm-10">
                                     ${info.appointmentStatusByStatusId.description}
@@ -230,7 +231,15 @@
                                            value="${info.appointmentStatusByStatusId.name}">
                                 </div>
                             </div>
+                            <c:if test="${info.officeByOfficeId.statusId == 2}">
+                                <div class="form-group clearfix">
+                                    <label class="col-sm-2 control-label">Tình trạng văn phòng</label>
 
+                                    <div class="col-sm-10">
+                                        Văn phòng đã được thuê
+                                    </div>
+                                </div>
+                            </c:if>
                             <div class="button-post clearfix">
 
                                 <c:choose>
@@ -249,8 +258,10 @@
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 3 && user.roleId == 2}">
-                                        <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
-                                           class="btn btn-primary">Tạo hợp đồng</a>
+                                        <c:if test="${info.officeByOfficeId.statusId != 2}">
+                                            <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
+                                               class="btn btn-primary">Tạo hợp đồng</a>
+                                        </c:if>
                                         <button class="btn btn-danger" type="button" onclick="inputComment()">
                                             Hủy kí hợp đồng
                                         </button>

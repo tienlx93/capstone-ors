@@ -46,7 +46,8 @@
                         <h2 style="margin-top: 5px">Tạo hợp đồng</h2>
                     </div>
                     <div>
-                        <form action="contract" method="post" name="createContract" onsubmit="return validatePaymentTerm()">
+                        <form action="contract" method="post" name="createContract"
+                              onsubmit="return validatePaymentTerm()">
                             <div class="form-group clearfix" hidden>
                                 <label for="appointmentID" class="col-sm-2 control-label">Id</label>
                                 ${appointmentList.id}<input type="hidden" name="appointmentID" id="appointmentID"
@@ -320,7 +321,22 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <c:if test="${office.categoryId == 1}">
+                                    <c:if test="${office.price != null}">
+
+                                    <div for="paymentFee" class="col-sm-2 control-label">
+                                        Giá thuê/m<sup>2</sup>:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number'
+                                               onchange="calculatePaymentFee()" class="form-control"
+                                               name="paymentFee" step="any" readonly min="0"
+                                               id="paymentFee" value="${office.price}"
+                                               required="true"/>
+                                    </div>
+                                    </c:if>
+                                    <c:if test="${office.price == null}">
+
                                         <div for="paymentFee" class="col-sm-2 control-label">
                                             Giá thuê/m<sup>2</sup>:
                                         </div>
@@ -328,23 +344,10 @@
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
                                                    onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee" step="any"
-                                                   id="paymentFee" value="${office.price / office.area}"
+                                                   name="paymentFee" step="any" min="0"
+                                                   id="paymentFee" value="${office.price}"
                                                    required="true"/>
                                         </div>
-                                    </c:if>
-                                    <c:if test="${office.categoryId == 2}">
-                                        <div for="paymentFee" class="col-sm-2 control-label">
-                                                Giá thuê/m<sup>2</sup>:
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <input style="display: inline-block" type='number'
-                                                   onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee" step="any"
-                                                      id="paymentFee" value="${office.price}" required="true"/>
-                                        </div>
-
                                     </c:if>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt
                                         cọc văn phòng(VNĐ):
@@ -360,11 +363,11 @@
                                 <div class="form-group clearfix">
                                     <div for="endDate" class="col-sm-2 control-label"> số tiền
                                         bên B phải thanh
-                                        toán theo mỗi kỳ (<span name="term" id="term" style="font-weight: bold"></span>):
+                                        toán theo mỗi kỳ (<span name="term" id="term" style="font-weight: bold"></span>)(VNĐ):
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <span name="price" id="price" style="font-weight: bold"></span> VNĐ
+                                        <span name="price" id="price" style="font-weight: bold"></span>
                                     </div>
                                     <div for="total" style="text-align: right" class="col-sm-2 control-label">Tổng
                                         giá

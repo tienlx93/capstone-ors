@@ -852,10 +852,8 @@ public class ApiController extends HttpServlet {
             repair.setCreateTime(new Timestamp((new Date()).getTime()));
             repair.setDescription(description);
 
-
-            boolean result = dao.save(repair);
-
-            if (result) {
+            dao.save(repair);
+            if (tokenAmenity != null) {
                 for (String tokenA : tokenAmenity) {
                     amenities = new String(tokenA.getBytes("iso-8859-1"), "UTF-8");
                     List<String> amenityList = splitAmenity(amenities);
@@ -871,10 +869,8 @@ public class ApiController extends HttpServlet {
                     RepairDetailDAO repairDetailDAO = new RepairDetailDAO();
                     repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
                 }
-                out.print(gson.toJson("Success"));
-            } else {
-                out.print(gson.toJson("Error2"));
             }
+            out.print(gson.toJson("Success"));
         } else {
             out.print(gson.toJson("Error"));
         }
@@ -993,7 +989,7 @@ public class ApiController extends HttpServlet {
         RentalItemDAO dao = new RentalItemDAO();
         for (RentalItem rentalItem : dao.findAll()) {
             list.add(new RentalListJSON(rentalItem.getId(), rentalItem.getName(), rentalItem.getDescription(),
-                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl(), null, 0, null, null, null,  rentalItem.getOfficeType()));
+                    rentalItem.getPrice(), rentalItem.getQuantity(), rentalItem.getImageUrl(), null, 0, null, null, null, rentalItem.getOfficeType()));
         }
         out.print(gson.toJson(list));
     }
@@ -1021,7 +1017,7 @@ public class ApiController extends HttpServlet {
                             list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rental.getDescription(),
                                     rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
                                     rental.getRentalStatusByStatusId().getDescription(), 0, rental.getAssignedTime(),
-                                    rental.getCreateTime(), contract.getOfficeByOfficeId().getName(),rentalItem.getOfficeType()));
+                                    rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), rentalItem.getOfficeType()));
                         }
                     }
                 }
@@ -1052,7 +1048,7 @@ public class ApiController extends HttpServlet {
                         double price = rentalDetail.getUnitPrice() * rentalDetail.getQuantity();
                         list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                                 rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                rental.getRentalStatusByStatusId().getDescription(), price, null, null, null,rentalItem.getOfficeType()));
+                                rental.getRentalStatusByStatusId().getDescription(), price, null, null, null, rentalItem.getOfficeType()));
                     }
                 }
             }

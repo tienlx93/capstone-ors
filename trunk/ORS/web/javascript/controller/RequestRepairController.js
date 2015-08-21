@@ -55,7 +55,8 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                     toastr.error('Có lỗi xảy ra, xin thử lại');
                     //    alert("Có lỗi xảy ra, xin thử lại");
                 } else {
-                    toastr.error('Vui lòng chọn ít nhất một tiện nghi để sửa');
+                    toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
+                    $location.path("/contractList");
                 }
             })
         };

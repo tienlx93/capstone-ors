@@ -150,9 +150,9 @@
                 </table>
             </div>
             <br>
-            <a ng-if="data.status == 1 || data.status == 2" href="#/rental/{{data.contractId}}" class="btn btn-green">
+            <a ng-if="data.status == 1" href="#/rental/{{data.contractId}}" class="btn btn-green">
                 Yêu cầu thuê thiết bị</a>
-            <a ng-if="data.status == 1 || data.status == 2" href="#/requestRepair/{{data.contractId}}"
+            <a ng-if="data.status == 1" href="#/requestRepair/{{data.contractId}}"
                class="btn btn-green">
                 Yêu cầu sửa chữa</a>
             <span ng-if="data.status == 1">

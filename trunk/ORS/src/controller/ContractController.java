@@ -106,6 +106,9 @@ public class ContractController extends HttpServlet {
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
                 String deposit = request.getParameter("deposit");
+                if(deposit == "") {
+                    deposit = "0";
+                }
 
                 SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
                 SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
@@ -289,7 +292,7 @@ public class ContractController extends HttpServlet {
                         OfficeDAO officeDao = new OfficeDAO();
                         Office office = officeDao.get(appointment.getOfficeId());
                         Long price = office.getPrice();
-                        if (office.getCategoryId() == 1) {
+                        if (price != null && office.getCategoryId() == 1) {
                             price = Math.round(office.getPrice() / office.getArea() / 1000) * 1000;
                         }
                         office.setPrice(price);

@@ -1,0 +1,53 @@
+﻿Sau đây tôi xin được demo quá trình gửi và quá trình xử lý yêu cầu sửa chữa của khách hàng.
+
+Để gửi yêu cầu sửa chữa, đầu tiên kh cần đăng nhập vào hệ thống, lựa chọn hợp đồng của vp cần sửa chữa và chọn yêu cầu sửa chữa. Hệ thống sẽ hiển thị thông tin cơ bản của vp và danh sách những thiết bị hoặc tiện nghi có thể sửa chữa. 
+
+Hệ thống sẽ lưu lại ngày tạo yêu cầu, mô tả yêu cầu và tiện nghi cần sửa chữa của vp. Lúc này, yêu cầu của khách hàng chưa được xử lý. Người quản lí sẽ đăng nhập vào hệ thống để tiến hành kiểm tra và giao viên cho nhân viên.
+
+Khi xử lý yêu cầu sửa chữa của khách hàng,  người quản lý có thể sẽ gặp rắc rối trong việc sắp xếp nhân viên và thời gian đến sửa chữa. Nhằm khắc phục vấn đề này, hệ thống của chúng tôi sẽ đề xuất cho người quản lý lựa chọn nhân viên và thời gian phù hợp nhất để giải quyết yêu cầu sửa chữa của khách hàng.
+
+Đối với các thiết bị hoặc tiện nghi có độ ưu tiên cao, thiết yếu cho vp như điện, nước, internet thì hệ thống sẽ sắp xếp ngày sửa chữa vào ngay sau ngày gửi yêu cầu của kh. Nếu ko thì hệ thống sẽ sắp xếp ngày sửa chữa vào cuối tuần kể từ ngày tạo yêu cầu. 
+
+Đối với việc lựa chọn nv thì hệ thống cũng đề xuất nv tương tư như việc sắp xếp lịch hẹn. Nếu tất cả nhân viên đều bận việc trong ngày đã đề xuất thì hệ thống sẽ tiếp tục tìm nv có thời gian trống (tức là số lượng công việc trong ngày < 4 việc) vào ngày tiếp theo.
+
+Người quản lý vẫn có thể vào xem chi tiết yêu cầu sửa chữa và từ chối nếu yêu cầu không hợp lý.
+
+Sau khi người quản lý giao việc cho nv, hệ thống sẽ tự động gửi tin nhắn cho kh để báo ngày nhân viên đến sửa chữa.
+
+Trước khi đến ngày sửa chữa, nv sẽ tới vp của kh và kiểm tra yêu cầu sửa chữa của họ	
+Trường hợp yêu cầu sửa chữa không hợp lý thì nv sẽ chọn không đồng ý sửa. Lúc này, người quản lý xem lại yêu cầu sửa chữa. 
+
+Sau khi giám sát nhân viên bên chủ sở hữu sửa chữa thiết bị hoặc tiện nghi xong, nv sẽ xác nhận lại với khách hàng. Trường hợp khách hàng không hài lòng thì người quản lý sẽ giao cho nv khác xử lý. 
+
+Vậy là tôi đã demo xong quá trình gửi và quá trình xử lý yêu cầu sửa chữa của khách hàng 
+
+Sau đây tôi xin trình bày về các ưu khuyết điểm của hệ thống ORS
++ Về ưu điểm:
+- Thứ 1: Cung cấp công cụ tìm kiếm theo các tiêu chí: giá cả, vị trí và các tiện nghi kèm theo văn phòng
+- Thứ 2: Cung cấp đầy đủ thông tin về văn phòng, hỗ trợ bản đồ cho kh để dễ tìm kiếm vp.
+- Thứ 3: Đặt lịch hẹn xem văn phòng 1 cách dễ dàng
+- Thứ 4: Kh Dễ quản lý hợp đồng
+- Thứ 5: Việc sắp xếp thời gian và nhân viên để thực hiện các yêu cầu của kh sẽ được hệ thống tự động gợi ý cho người quản lý
+- Cuối cùng: giúp nhân viên dễ dàng quản lý và cập nhật công việc của họ thông qua ứng dụng trên điện thoại
++ Về khuyết điểm:
+- Chủ văn phòng phải liên hệ với chúng tôi để đăng tải thông tin về văn phòng của họ
+- Chức năng thông báo của hệ thống vẫn còn hạn chế 
+- Hệ thống chỉ hỗ trợ tìm kiếm trong khu vực tp HCM
+
+Tiếp theo tôi xin trình bày về các phương án phát triển trong tương lai
+- Sẽ có thêm ứng dụng điện thoại cho kh
+- Chủ văn phòng sẽ được tạo và quản lý thông tin văn phòng của họ
+(- Hỗ trợ thêm chức năng thông báo cho người quản lý, nhân viên và chủ văn phòng)
+- Hệ thống sẽ hỗ trợ tìm kiếm tại nhiều khu vực khác nhau
+Chúng tôi đã trình bày xong nội dung đề tài, cảm ơn quý hội đồng, quý thầy cô và các bạn đã theo dõi. Sau đây là phần hỏi đáp và góp ý từ phía hội đồng.
+
+
+
+
+
+[Trường hợp khách hàng không hài lòng => làm sao người quản
+lý biết? (nên chuyển sang cột đã giao, lúc đó có nút giao
+việc lại)] 
+[Vp nên có các tiện nghi cơ bản (điện, wc,...)]
+[Sửa chữa nên chọn sửa 1 lần 1 tiện nghi] (staff có thể sắp
+xếp việc sửa chữa cho nv của vp) 

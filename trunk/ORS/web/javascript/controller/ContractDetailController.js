@@ -32,6 +32,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 $scope.WrongCus = false;
                 $scope.Expire = false;
                 $scope.isLogin = true;
+                $scope.today = new Date();
 
                 if (data.paymentTerm == "3 tháng") {
                     $scope.Term = 3;

@@ -41,7 +41,7 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-title">
-                        Xem chi tiết
+                        <h2 style="margin-top: 5px">Xem chi tiết thiết bị</h2>
                     </div>
                     <div>
                         <form action="rentalItem?action=editing" method="post">

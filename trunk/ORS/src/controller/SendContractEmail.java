@@ -33,19 +33,20 @@ public class SendContractEmail extends HttpServlet {
         String email = request.getParameter("email");
 
         Contract contract = contractDAO.get(id);
+        String fullName = contract.getAccountByCustomerUsername().getProfileByUsername().getFullName();
         switch (status){
             case 1:
-                request.setAttribute("content", "Hợp đồng của bạn sắp hết hạn");
-                request.setAttribute("contract", contract);
+                request.setAttribute("content", "sắp hết hạn");
+                request.setAttribute("contract", contract.getOfficeByOfficeId().getName());
                 break;
             case 4:
-                request.setAttribute("content", "Hợp đồng của bạn đã hết hạn");
-                request.setAttribute("contract", contract);
+                request.setAttribute("content", "đã hết hạn");
+                request.setAttribute("contract", contract.getOfficeByOfficeId().getName());
                 break;
             default:
                 break;
         }
-
+        request.setAttribute("fullName", fullName);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/email/contractEmail.jsp");
 
         EmailServletResponse res2 = new EmailServletResponse(response);
@@ -56,5 +57,6 @@ public class SendContractEmail extends HttpServlet {
         service.setSubject("Thông báo hợp đồng thuê văn phòng");
         service.setContent(res2.getOutput());
         service.sendEmail();
+        response.getWriter().print(res2.getOutput());
     }
 }

@@ -33,7 +33,8 @@ body {
 }
 
 .header-wrapper .logo-service img {
-    height: 30px;
+    height: 34px;
+    vertical-align: middle;
 }
 
 .header-wrapper .logo-service a {

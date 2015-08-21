@@ -629,8 +629,8 @@ public class ApiController extends HttpServlet {
                 try {
                     ConstantService constantService = new ConstantService();
                     String host = constantService.readProperty("host");
-                    String query = String.format("email=%s",
-                            URLEncoder.encode(acc.getEmail(), charset));
+                    String query = String.format("username=%s",
+                            URLEncoder.encode(acc.getUsername(), charset));
 
                     gwtServlet = new URL(host + "/welcome" + "?" + query);
                     HttpURLConnection servletConnection = (HttpURLConnection) gwtServlet.openConnection();

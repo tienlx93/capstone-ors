@@ -49,6 +49,7 @@ public class OfficeController extends HttpServlet {
         String ownerAddress = request.getParameter("ownerAddress");
         String isPercent = request.getParameter("isPercent");
         String basePrice = request.getParameter("basePrice");
+        String commission = request.getParameter("commission");
         if (action.equals("save")) {
             Office office = new Office();
 
@@ -68,10 +69,9 @@ public class OfficeController extends HttpServlet {
                     office.setBasePrice(Long.valueOf(basePrice));
                 }
             } else {
+                office.setBasePrice(Long.valueOf(basePrice));
                 if (isPercent != null) {
-                    office.setBasePrice(0L);
-                } else {
-                    office.setBasePrice(Long.valueOf(basePrice));
+                    office.setCommission(Integer.valueOf(commission));
                 }
             }
             office.setPriceTerm(Integer.parseInt(priceTerm));
@@ -225,10 +225,7 @@ public class OfficeController extends HttpServlet {
             } else if (action.equals("editing")) {
 
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-                /*OfficeAmenityDAO dao1 = new OfficeAmenityDAO();
-                List<OfficeAmenity> officeAmenities = dao1.findAll();
-                request.setAttribute("officeAmenity", officeAmenities);
-                AmenityDAO dao2 = new AmenityDAO();*/
+
                 List<String> amenities = new ArrayList<>();
 
                 Office office = dao.get(Integer.parseInt(request.getParameter("id")));
@@ -258,27 +255,6 @@ public class OfficeController extends HttpServlet {
 
                 request.getRequestDispatcher("/WEB-INF/admin/office/detailOffice.jsp").forward(request, response);
 
-                /*PriceTermDAO ptDao = new PriceTermDAO();
-                List<PriceTerm> priceTermList = ptDao.findAll();
-                request.setAttribute("priceTermList", priceTermList);
-
-                CategoryDAO cDao = new CategoryDAO();
-                List<Category> categoryList = cDao.findAll();
-                request.setAttribute("categoryList", categoryList);
-
-
-                int id = Integer.parseInt(request.getParameter("id"));
-                Office office = dao.get(id);
-                request.setAttribute("office", office);
-                List<String> amenityList = new ArrayList<>();
-                for (OfficeAmenity officeAmenity : office.getOfficeAmenitiesById()) {
-                    String name = officeAmenity.getAmenityByAmenityId().getName();
-                    amenityList.add(name);
-                }
-                request.setAttribute("amenityList", amenityList);
-
-                rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
-                rd.forward(request, response);*/
             } else if (action.equals("page")) {
                 String startPage = request.getParameter("startPage");
                 int page = Integer.parseInt(startPage);

@@ -1,5 +1,8 @@
 package controller;
 
+import dao.AccountDAO;
+import entity.Account;
+import org.joda.time.Duration;
 import service.EmailService;
 import service.EmailServletResponse;
 
@@ -21,20 +24,37 @@ public class WelcomeEmailController extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String action = request.getParameter("action");
+        String username = request.getParameter("username");
+        AccountDAO dao = new AccountDAO();
+        Account account = dao.get(username);
+        String email = account.getEmail();
+        String fullName = account.getProfileByUsername().getFullName();
 
-
+        request.setAttribute("fullName", fullName);
+        request.setAttribute("username", username);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/email/welcome.jsp");
-
+        Long duration = Duration.standardMinutes(1).getMillis();
         EmailServletResponse res2 = new EmailServletResponse(response);
         rd.forward(request, res2);
+
+
 
         EmailService service = new EmailService();
         service.setReceiver(email);
         service.setSubject("Office Rental Service");
         service.setContent(res2.getOutput());
-        service.sendEmail();
+        boolean canSend = false;
+        try {
+            do {
+                canSend = service.sendEmail();
+                if (!canSend) {
+                    Thread.sleep(duration);
+                }
+            } while (!canSend);
 
+            response.getWriter().print("Send success");
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

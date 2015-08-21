@@ -69,6 +69,7 @@ public class EmailService {
                 VerifyEmailIdentityRequest verifyEmail = new VerifyEmailIdentityRequest();
                 verifyEmail.setEmailAddress(this.receiver);
                 client.verifyEmailIdentity(verifyEmail);
+                System.out.println("Verify email sent");
                 return false;
             }
 

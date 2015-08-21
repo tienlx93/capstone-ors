@@ -60,7 +60,6 @@
       right: -38px;
       top: 0;
       content: "";
-      display: inline-block;
     }
     span {
       cursor: hand;
@@ -89,8 +88,9 @@
   margin: 0px;
   padding: 0px
 }
+
 .onoffswitch {
-  position: relative; width: 40px;
+  position: relative; width: 67px;
   -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
 }
 .onoffswitch-checkbox {
@@ -98,27 +98,40 @@
 }
 .onoffswitch-label {
   display: block; overflow: hidden; cursor: pointer;
-  height: 17px; padding: 0; line-height: 17px;
   border: 2px solid #999999; border-radius: 17px;
-  background-color: #EEEEEE;
-  transition: background-color 0.3s ease-in;
-  width: 100%;
 }
-.onoffswitch-label:before {
-  content: "";
-  display: block; width: 17px; margin: 0px;
+.onoffswitch-inner {
+  display: block; width: 200%; margin-left: -100%;
+  transition: margin 0.3s ease-in 0s;
+}
+.onoffswitch-inner:before, .onoffswitch-inner:after {
+  display: block; float: left; width: 50%; height: 18px; padding: 0; line-height: 18px;
+  font-size: 12px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+  box-sizing: border-box;
+}
+.onoffswitch-inner:before {
+  content: "Có";
+  padding-left: 8px;
+  background-color: #34A7C1; color: #FFFFFF;
+}
+.onoffswitch-inner:after {
+  content: "Không";
+  padding-right: 8px;
+  background-color: #EEEEEE; color: #999999;
+  text-align: right;
+}
+.onoffswitch-switch {
+  display: block; width: 12px; margin: 4px;
   background: #FFFFFF;
   position: absolute; top: 0; bottom: 0;
-  right: 21px;
+  right: 45px;
   border: 2px solid #999999; border-radius: 17px;
   transition: all 0.3s ease-in 0s;
 }
-.onoffswitch-checkbox:checked + .onoffswitch-label {
-  background-color: #34A7C1;
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+  margin-left: 0;
 }
-.onoffswitch-checkbox:checked + .onoffswitch-label, .onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  border-color: #34A7C1;
-}
-.onoffswitch-checkbox:checked + .onoffswitch-label:before {
+.onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
   right: 0px;
 }
+

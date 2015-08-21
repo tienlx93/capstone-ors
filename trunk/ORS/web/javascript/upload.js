@@ -11,6 +11,7 @@ var renderImg = function() {
                 '</div>');
         }
     }
+    $("#imageUrls").val(imageUrls);
 };
 var removeImg = function (img) {
     var location = imageUrls.lastIndexOf(img);
@@ -151,16 +152,41 @@ $("#category").change(function(){
         minArea.show();
     }
 });
-
-dropdown.change(function(){
+var price = $("#price");
+function changeDropdown() {
     if (dropdown[0].selectedIndex == 3) {
-        $("#price").val("");
-        $("#price")[0].disabled = true;
+        price.val("");
+        price[0].disabled = true;
     } else {
-        $("#price")[0].disabled = false;
+        price[0].disabled = false;
     }
+}
+changeDropdown();
+dropdown.change(function(){
+    changeDropdown();
+    onChangeBasePrice();
 });
-
-$("#isPercent").click( function(){
-    $('.collapse').collapse('toggle');
+var isPercent = $("#isPercent");
+var commission = $("#commission");
+isPercent.click( function(){
+    checkPercent();
 });
+function checkPercent() {
+    onChangeBasePrice();
+    if (isPercent[0].checked) {
+        commission[0].readOnly = false;
+        price[0].readOnly = true;
+    } else {
+        commission.val("");
+        commission[0].readOnly = true;
+        price[0].readOnly = false;
+    }
+}
+checkPercent();
+function onChangeBasePrice() {
+    var basePrice = $("#basePrice");
+    var price = $("#price");
+    if (isPercent[0].checked && dropdown[0].selectedIndex != 3) {
+        price.val(basePrice.val());
+    }
+}

@@ -313,7 +313,7 @@
                                                    onchange="calculatePaymentFee()" class="form-control"
                                                    name="paymentFee"
                                                    id="paymentFee"
-                                                   value="${contract.officeByOfficeId.price / contract.officeByOfficeId.area}"
+                                                   value="${contract.paymentFee}"
                                                    required="true"/>
                                         </div>
                                     </c:if>
@@ -348,23 +348,14 @@
                                         hợp
                                         đồng</h3></div>
                                     <div class="form-group clearfix">
-                                        <div class="col-sm-2 control-label">Hình ảnh</div>
-                                        <br>
-                                        <input type="hidden" name="imageUrl" id="imageUrl" value="${contract.imageUrl}">
-
                                         <div class="images clearfix" id="images">
-                                            <div class="upload-img">
-                                                <div class="img"><img
-                                                        src="${contract.imageUrl!=null?contract.imageUrl:'/upload/placeholder.jpg'}">
-                                                </div>
-                                            </div>
                                         </div>
                                         <div class="clear-float"></div>
-                                        <input type="file" id="file" name="file" accept="image/*"
-                                               title="Mời chọn hình ảnh">
+                                        <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
                                     </div>
                                 </div>
                                 <div class="button-post">
+                                    <input type="hidden" id="imageUrls" name="imageUrls" value="${contract.imageUrl}">
                                     <button type="submit" value="update" class="btn btn-primary" name="action">Cập
                                         nhật
                                     </button>
@@ -424,10 +415,14 @@
 
         var total = time * parseInt(fee) * parseFloat(area);
         var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
-        var contractTotal= total + parseFloat(deposit);
+        var contractTotal= total;
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
         document.getElementById('totalContract').innerHTML = numberWithCommas(contractTotal) + ' VNĐ';
+
+        var imageUrls = $("#imageUrl").val();
+        console.log(imageUrls);
+        renderImg(imageUrls);
     });
     function calculateEndDate() {
         var end = document.getElementById('endDate');
@@ -530,10 +525,24 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }
     ;
+    var renderImg = function () {
+        var list = imageUrls.split(",");
+        for (var i = 0; i < list.length; i++) {
+            var img = list[i];
+            if (img) {
+                $('#images').append('<div class="upload-img">' +
+                '<div class="img" style="height: 300px"><img src="' + img + '"></div>' +
+                '<div class="remove" onclick="removeImg(\'' + img + '\')">' +
+                '<i class="fa fa-minus-circle"></i>Xóa' +
+                '</div>' +
+                '</div>');
+            }
+        }
+    };
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/street.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
+
 
 </body>
 </html>

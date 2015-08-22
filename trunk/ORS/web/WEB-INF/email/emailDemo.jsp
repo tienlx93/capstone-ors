@@ -21,7 +21,7 @@
 <div style="text-align: center;"><h1>Thông báo văn phòng phù hợp</h1></div>
 <div>Xin chào, ${fullName}</div>
 <br>
-<div>Dưới đây là các văn phòng phù hợp với yêu cầu của bạn:</div>
+<div>Dưới đây là các văn phòng phù hợp với yêu cầu của Quý khách:</div>
 <table style="width: 600px">
   <c:forEach items="${offices}" var="item" varStatus="loopStatus" step="2">
     <tr>
@@ -46,10 +46,10 @@
   </c:forEach>
 </table>
 <br>
-<div>Bạn có thể quay lại website <a href="http://tienlx.me">Office Rental Service</a> để xem chi tiết hoặc hủy yêu cầu thông
+<div>Quý khách có thể quay lại website <a href="http://tienlx.me">Office Rental Service</a> để xem chi tiết hoặc hủy yêu cầu thông
   báo văn phòng phù hợp.</div>
 <br>
-<div>Chúc bạn sớm tìm được văn phòng phù hợp,</div>
+<div>Chúc Quý khách sớm tìm được văn phòng phù hợp,</div>
 <div>Đội ngũ phát triển Office Rental Service.</div>
 </body>
 </html>

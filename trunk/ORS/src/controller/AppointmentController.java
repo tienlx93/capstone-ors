@@ -43,7 +43,7 @@ public class AppointmentController extends HttpServlet {
                     dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"),
                             appointment.getTime(), 2);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy - hh:mm");
-                    sms.setMessage("Lich hen cua ban da duoc chap nhan. Hen ban vao thoi gian: "
+                    sms.setMessage("(ORS) Lich hen cua Quy khach da duoc chap nhan. Hen Quy khach vao thoi gian: "
                             + df.format(appointment.getTime()));
                     try {
                         sms.send();
@@ -56,7 +56,7 @@ public class AppointmentController extends HttpServlet {
                     if (comment!= null) {
                         dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, "");
                         String nonUTF8Comment = AccentRemover.removeAccent(comment);
-                        sms.setMessage("Lich hen cua ban khong duoc chap nhan. Ly do: " + nonUTF8Comment);
+                        sms.setMessage("(ORS) Lich hen cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
                         try {
                             sms.send();
                         } catch (IOException e) {

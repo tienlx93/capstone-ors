@@ -58,7 +58,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerName}
+                                            ${info.officeByOfficeId.ownerName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -67,7 +67,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerAddress}
+                                            ${info.officeByOfficeId.ownerAddress}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -76,7 +76,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerPhone}
+                                            ${info.officeByOfficeId.ownerPhone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -278,21 +278,8 @@
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('depositValue').value) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(document.getElementById('paymentFeeValue').value) + ' VNĐ';
         var time = new Date().getTime();
-        imageUrls = $("#imageUrls").val();
-        renderImg()
-    });
-    var renderImg = function() {
-        var list = imageUrls.split(",");
-        for (var i = 0; i < list.length; i++) {
-            var img = list[i];
-            if (img) {
-                $('#imageContract').append('<div class="upload-img">' +
-                '<div class="img"><img src="' + img + '"></div>' +
-                '</div>');
-            }
-        }
-    };
 
+    });
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     }

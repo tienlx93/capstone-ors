@@ -12,11 +12,16 @@ import java.net.URL;
  * Created by Tuan on 7/21/2015.
  */
 public class SMSService {
-    final String APIKey="FB672639435ACE7E71A7837181B036";//Dang ky tai khoan tai esms.vn de lay Key
-    final String SecretKey="3002C48FD08F82B42847F22CA88CE9";
+    String APIKey="FB672639435ACE7E71A7837181B036";//Dang ky tai khoan tai esms.vn de lay Key
+    String SecretKey="3002C48FD08F82B42847F22CA88CE9";
     private String message;
     private String phone;
 
+    public SMSService() {
+        ConstantService service = new ConstantService();
+        APIKey = service.readProperty("sms.APIKey");
+        SecretKey = service.readProperty("sms.SecretKey");
+    }
 
     public String getMessage() {
         return message;

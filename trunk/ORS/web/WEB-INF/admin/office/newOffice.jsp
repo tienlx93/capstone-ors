@@ -201,7 +201,7 @@
                                     <label for="commission" class="col-sm-2">Tỉ lệ hoa hồng (%)</label>
 
                                     <div class="col-sm-2" style="margin-top: -5px;">
-                                        <input type="number" name="commission" class="form-control" id="commission"
+                                        <input type="number" min="0" max="100" name="commission" class="form-control" id="commission"
                                                value="${office.commission}" step="1">
                                     </div>
                                 </div>
@@ -239,7 +239,7 @@
 
                             <div><h3>Thông tin chủ văn phòng</h3></div>
                             <div class="form-group clearfix">
-                                <label for="ownerName" class="col-sm-2">Tên người đại diện *</label>
+                                <label for="ownerName" class="col-sm-2">Tên chủ văn phòng *</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="ownerName" class="form-control" id="ownerName"
                                            value="${office.ownerName}" required
@@ -248,7 +248,7 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="ownerPhone" class="col-sm-2">Số điện thoại người đại diện *</label>
+                                <label for="ownerPhone" class="col-sm-2">Số điện thoại chủ văn phòng *</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="ownerPhone" class="form-control" id="ownerPhone"
                                            value="${office.ownerPhone}" required
@@ -257,7 +257,7 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label for="ownerAddress" class="col-sm-2">Địa chỉ người đại diện *</label>
+                                <label for="ownerAddress" class="col-sm-2">Địa chỉ chủ văn phòng *</label>
                                 <div class="col-sm-8">
                                     <input type="text" name="ownerAddress" class="form-control" id="ownerAddress"
                                            value="${office.ownerAddress}" required

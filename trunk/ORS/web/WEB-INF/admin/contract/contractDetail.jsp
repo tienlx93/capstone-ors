@@ -192,8 +192,8 @@
                                     <div name="startDate" id="startDate" class="col-sm-4">
                                         <fmt:formatDate value="${contract.startDate}"
                                                         pattern="dd-MM-yyyy"/>
-
                                     </div>
+                                    <input type="hidden" id="startValue" value="${contract.startDate}">
                                     <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết
                                         thúc:
                                     </div>
@@ -202,6 +202,7 @@
                                         <fmt:formatDate value="${contract.endDate}"
                                                         pattern="dd-MM-yyyy"/>
                                     </div>
+                                    <input type="hidden" id="endValue" value="${contract.endDate}">
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="paymentFee" class="col-sm-2 control-label">Giá thuê/m<sup>2</sup>:</div>
@@ -281,9 +282,16 @@
         var area = document.getElementById('officeArea').innerText;
         var fee = document.getElementById('paymentFee').innerText;
 
+        var startDate = document.getElementById('startValue').value;
+        var endDate = document.getElementById('endValue').value;
+        var start = new Date(startDate);
+        var end = new Date(endDate);
+
+        var contractTime = Math.ceil((end.getTime() - start.getTime()) / (86400000 * 30));
+
         var total = time * parseInt(fee) * parseFloat(area);
         var deposit = document.getElementById('depositValue').value != '' ? document.getElementById('depositValue').value : 0;
-        var contractTotal= total;
+        var contractTotal= contractTime * parseInt(fee) * parseFloat(area);
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('deposit').innerText);

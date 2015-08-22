@@ -33,28 +33,21 @@ public class WelcomeEmailController extends HttpServlet {
         request.setAttribute("fullName", fullName);
         request.setAttribute("username", username);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/email/welcome.jsp");
-        Long duration = Duration.standardMinutes(1).getMillis();
         EmailServletResponse res2 = new EmailServletResponse(response);
         rd.forward(request, res2);
-
-
 
         EmailService service = new EmailService();
         service.setReceiver(email);
         service.setSubject("Office Rental Service");
         service.setContent(res2.getOutput());
         boolean canSend = false;
-        try {
-            do {
-                canSend = service.sendEmail();
-                if (!canSend) {
-                    Thread.sleep(duration);
-                }
-            } while (!canSend);
 
-            response.getWriter().print("Send success");
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+        canSend = service.sendEmail();
+        if (canSend) {
+            account.setStatusId(1);
+            dao.update(username, account);
         }
+        response.getWriter().print("Send success");
+
     }
 }

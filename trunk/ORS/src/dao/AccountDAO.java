@@ -33,6 +33,19 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return null;
     }
 
+    public List<Account> getNotAccountList() {
+        try {
+            String sql = "from Account  where statusId = 3";
+            Query query = session.createQuery(sql);
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
     public Account loginByEmail(String email, String password) { //TESTED OK
         try {
             session.getTransaction().begin();

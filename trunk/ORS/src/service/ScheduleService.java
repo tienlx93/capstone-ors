@@ -9,6 +9,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.type.StandardBasicTypes;
+import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -117,7 +118,12 @@ public class ScheduleService {
             }
             //if priority 1, set job in today, else set in weekend
             if (priority == 1) {
-                assigned = begin;
+                DateTime now = new DateTime();
+                if (now.getHourOfDay() > 12) {
+                    assigned = addDays(begin, 1);
+                } else {
+                    assigned = begin;
+                }
             } else {
                 assigned = addDays(endDate, -2);
             }

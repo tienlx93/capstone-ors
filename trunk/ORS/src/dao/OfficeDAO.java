@@ -1,5 +1,6 @@
 package dao;
 
+import entity.Contract;
 import entity.Office;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
@@ -11,6 +12,7 @@ import org.hibernate.type.StandardBasicTypes;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by ASUS on 6/2/2015.
@@ -222,9 +224,34 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             query.setDate("endDate", endDate);
             query.setString("district", district);
             Object o = query.uniqueResult();
+            float percent;
             if (o != null) {
-                result = (Long) o;
+                percent = (Long) o * 5 /100;
             }
+
+            String sql2 = "from Contract where startDate < :endDate and endDate >= :startDate";
+            if (!district.equals("")) {
+                sql2 += " and officeByOfficeId.district = :district";
+            }
+            Query query2 = session.createQuery(sql2);
+            if (!district.equals("")) {
+                query2.setString("district", district);
+            }
+            query2.setDate("startDate", startDate);
+            query2.setDate("endDate", endDate);
+            List<Contract> list = query2.list();
+            float sum = 0;
+            Office office;
+            for (Contract contract : list) {
+                office = contract.getOfficeByOfficeId();
+                if (Objects.equals(office.getBasePrice(), office.getPrice())) {
+                    sum += contract.getPaymentFee() * office.getArea() * office.getCommission() / 100;
+                } else {
+                    sum += (contract.getPaymentFee() - office.getBasePrice()) * office.getArea();
+                }
+            }
+            result += Math.round(sum);
+
         } catch (Exception e) {
             e.printStackTrace();
         }

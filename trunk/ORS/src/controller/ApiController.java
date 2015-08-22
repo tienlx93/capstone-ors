@@ -4,8 +4,11 @@ import com.google.gson.Gson;
 import dao.*;
 import entity.*;
 import json.*;
+import org.quartz.*;
+import org.quartz.impl.JobDetailImpl;
+import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.triggers.SimpleTriggerImpl;
 import service.ConstantService;
-import service.EmailService;
 import service.MatchingService;
 
 import javax.servlet.ServletException;
@@ -553,7 +556,7 @@ public class ApiController extends HttpServlet {
     private void register(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException, ParseException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
-        String username = new String(request.getParameter("username").getBytes(
+        final String username = new String(request.getParameter("username").getBytes(
                 "iso-8859-1"), "UTF-8");
         String password = request.getParameter("password");
         String mail = request.getParameter("mail");
@@ -598,12 +601,12 @@ public class ApiController extends HttpServlet {
         }
 
         if (account == null && (captchaResult || captchaResult3)) {
-            Account acc = new Account();
+            final Account acc = new Account();
             acc.setUsername(username);
             acc.setPassword(password);
             acc.setEmail(mail);
             acc.setRoleId(4);
-            acc.setStatusId(1);
+            acc.setStatusId(3);
 
             if (birthday == null) {
                 out.print(gson.toJson("Error Date"));
@@ -624,32 +627,6 @@ public class ApiController extends HttpServlet {
 
                 ProfileDAO profileDAO = new ProfileDAO();
                 boolean result2 = profileDAO.save(pf);
-                String charset = "UTF-8";
-                URL gwtServlet = null;
-                try {
-                    ConstantService constantService = new ConstantService();
-                    String host = constantService.readProperty("host");
-                    String query = String.format("username=%s",
-                            URLEncoder.encode(acc.getUsername(), charset));
-
-                    gwtServlet = new URL(host + "/welcome" + "?" + query);
-                    HttpURLConnection servletConnection = (HttpURLConnection) gwtServlet.openConnection();
-                    servletConnection.setRequestMethod("GET");
-                    servletConnection.setDoOutput(true);
-                    InputStream response = gwtServlet.openStream();
-
-                    ObjectOutputStream objOut = new ObjectOutputStream(servletConnection.getOutputStream());
-//            objOut.writeObject(p);
-                    objOut.flush();
-                    objOut.close();
-
-                } catch (MalformedURLException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
 
                 if (result && result2) {
                     out.print(gson.toJson("Success"));
@@ -1330,5 +1307,3 @@ public class ApiController extends HttpServlet {
 
     }
 }
-
-

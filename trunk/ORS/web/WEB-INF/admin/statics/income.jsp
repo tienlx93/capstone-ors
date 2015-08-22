@@ -53,7 +53,7 @@
                     <div>
                         Năm
                         <select id="year">
-                            <c:forEach var="item" begin="2015" end="2020">
+                            <c:forEach var="item" items="${years}">
                                 <option>${item}</option>
                             </c:forEach>
                         </select>
@@ -61,7 +61,9 @@
                         <select id="district">
                             <option value="">Tất cả</option>
                             <c:forEach var="item" items="${districts}">
-                                <option>${item}</option>
+                                <c:if test="${item != null}">
+                                    <option>${item}</option>
+                                </c:if>
                             </c:forEach>
                         </select>
                         <button type="button" id="filter">Lọc</button>

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
@@ -89,7 +90,7 @@
                           ${info.priceTermByPriceTerm.description}
                       </c:when>
                       <c:otherwise>
-                          ${info.price} VNĐ (${info.priceTermByPriceTerm.description})
+                          <fmt:formatNumber type="number" value="${info.price}"/> VNĐ (${info.priceTermByPriceTerm.description})
                       </c:otherwise>
                   </c:choose>
                 </span>

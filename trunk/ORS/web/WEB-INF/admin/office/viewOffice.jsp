@@ -33,7 +33,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="page-header">Quản lí văn phòng</h1>
+        <h1 class="title">Quản lí văn phòng</h1>
     </div>
 
     <div class="container-padding">
@@ -92,8 +92,8 @@
                                     </a>
                                 </li>
                                 <c:forEach var="i" begin="1" end="${pageCount}">
-                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#"
-                                                                                                           onclick="goto(${i})">${i}</a>
+                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>">
+                                        <a href="#" onclick="goto(${i})">${i}</a>
                                     </li>
 
                                 </c:forEach>
@@ -119,24 +119,24 @@
     var pageCount = ${pageCount};
     var prev = function () {
         if (pageNumber > 1) {
-            pageNumber--;
+            pageNumber --;
             getPage(pageNumber);
         }
     };
     var next = function () {
         if (pageNumber < pageCount) {
-            pageNumber++;
+            pageNumber ++;
             getPage(pageNumber);
         }
     };
-    var goto = function (i) {
+    var goto = function(i) {
         pageNumber = i;
         getPage(pageNumber);
     };
-    var getPage = function (page) {
+    var getPage = function(page) {
         var selector = $(".items");
         selector.removeClass("active");
-        $(selector[page - 1]).addClass("active");
+        $(selector[page-1]).addClass("active");
         $("#next").removeClass("disabled");
         $("#prev").removeClass("disabled");
         if (page == pageCount) {

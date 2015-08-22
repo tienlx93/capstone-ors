@@ -18,7 +18,6 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
             'priceRange': getParameterValue(url, "priceRange")
         };
 
-
         function closest(num, arr) {
             var match = [];
             for (var i = 0; i < arr.length; i++) {
@@ -140,5 +139,21 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
             var end = begin + $scope.numPerPage;
             $scope.filteredOffices = $scope.filter.slice(begin, end);
         }
+
+        $scope.$watch('price', function(price) {
+            if (!price || price < 100000) {
+                $scope.searchTerm.priceRange = 0;
+            } else if (price < 200000) {
+                $scope.searchTerm.priceRange = 1;
+            } else if (price < 300000) {
+                $scope.searchTerm.priceRange = 2;
+            } else if (price < 400000) {
+                $scope.searchTerm.priceRange = 3;
+            } else if (price < 500000) {
+                $scope.searchTerm.priceRange = 4;
+            } else {
+                $scope.searchTerm.priceRange = 5;
+            }
+        })
 
     }]);

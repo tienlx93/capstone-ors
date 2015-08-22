@@ -135,7 +135,7 @@ dropdown.find("option[value=1]").show();
 dropdown.find("option[value=2]").hide();
 dropdown.find("option[value=3]").hide();
 dropdown.find("option[value=4]").show();
-$("#category").change(function(){
+function changeCategory() {
     if ($("#category").val() == 1) {
         dropdown[0].selectedIndex = 0;
         dropdown.find("option[value=1]").show();
@@ -151,7 +151,11 @@ $("#category").change(function(){
         dropdown.find("option[value=4]").show();
         minArea.show();
     }
+}
+$("#category").change(function(){
+    changeCategory();
 });
+changeCategory();
 var price = $("#price");
 function changeDropdown() {
     if (dropdown[0].selectedIndex == 3) {

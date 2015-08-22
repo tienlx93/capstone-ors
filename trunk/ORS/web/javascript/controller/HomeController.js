@@ -48,8 +48,10 @@ controllers.controller('HomeController', ['$scope', '$rootScope', '$location', '
             } else if (price < 200000) {
                 $scope.priceRange = 1;
             } else if (price < 300000) {
-                $scope.priceRange = 3;
+                $scope.priceRange = 2;
             } else if (price < 400000) {
+                $scope.priceRange = 3;
+            } else if (price < 500000) {
                 $scope.priceRange = 4;
             } else {
                 $scope.priceRange = 5;

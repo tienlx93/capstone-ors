@@ -40,7 +40,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="page-header">Quản lí lịch hẹn</h1>
+        <h1 class="title">Quản lí lịch hẹn</h1>
     </div>
     <div class="container-padding">
         <div class="row">
@@ -239,8 +239,7 @@
                                                                 <c:forEach items="${data}" var="item">
                                                                     <c:if test="${item.statusId == 2}">
                                                                         <tr>
-                                                                            <td><a class="btn"
-                                                                                   href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                                                            <td><a href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                             </td>
                                                                             <c:if test="${user.roleId == 2}">
                                                                                 <td>${item.accountByAssignedStaff.username}</td>
@@ -284,7 +283,7 @@
                                                                 <c:forEach items="${data}" var="item">
                                                                     <c:if test="${item.statusId == 2}">
                                                                         <tr>
-                                                                            <td><a class="btn"
+                                                                            <td><a
                                                                                    href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                             </td>
                                                                             <c:if test="${user.roleId == 2}">
@@ -329,7 +328,7 @@
                                                         <c:forEach items="${data}" var="item">
                                                             <c:if test="${item.statusId == 3}">
                                                                 <tr>
-                                                                    <td><a class="btn"
+                                                                    <td><a
                                                                            href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                     </td>
                                                                     <c:if test="${user.roleId == 2}">
@@ -380,7 +379,7 @@
                                                         <c:forEach items="${data}" var="item">
                                                             <c:if test="${item.appointmentStatusByStatusId.id == 4}">
                                                                 <tr>
-                                                                    <td><a class="btn"
+                                                                    <td><a
                                                                            href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                     </td>
                                                                     <c:if test="${user.roleId == 2}">
@@ -423,7 +422,7 @@
                                                         <c:forEach items="${data}" var="item">
                                                             <c:if test="${item.appointmentStatusByStatusId.id == 5}">
                                                                 <tr>
-                                                                    <td><a class="btn"
+                                                                    <td><a
                                                                            href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                     </td>
                                                                     <c:if test="${user.roleId == 2}">

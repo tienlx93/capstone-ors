@@ -934,7 +934,7 @@ public class ApiController extends HttpServlet {
                             contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                             paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
                             office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
-                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress()));
+                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress(), null));
                 }
             }
             if (list.size() > 0) {
@@ -1113,7 +1113,7 @@ public class ApiController extends HttpServlet {
                             contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                             paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
                             office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
-                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress());
+                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress(), contract.getImageUrl());
                     out.print(gson.toJson(json));
 
                 } else {

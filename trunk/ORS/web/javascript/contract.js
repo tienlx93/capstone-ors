@@ -153,7 +153,8 @@ function daysInMonth(month, year) {
 ;
 function formatDeposit() {
     var deposit = document.getElementById('deposit').value;
-    document.getElementById('deposit').value = numberWithCommas(deposit);
+    document.getElementById('depositValue').value = parseFloat(deposit.replace(/\./g,''));
+    document.getElementById('deposit').value = numberWithCommas(document.getElementById('depositValue').value);
 }
 ;
 function validatePaymentTerm() {

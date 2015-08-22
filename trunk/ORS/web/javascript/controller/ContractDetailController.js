@@ -34,6 +34,12 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 $scope.isLogin = true;
                 $scope.today = new Date();
 
+                var imgList = data.imgUrl;
+                if (imgList != undefined) {
+                    $scope.listImg = imgList.split(',');
+                    $scope.listImg.pop($scope.listImg.length - 1);
+                }
+
                 if (data.paymentTerm == "3 tháng") {
                     $scope.Term = 3;
                 } else if (data.paymentTerm == "6 tháng") {

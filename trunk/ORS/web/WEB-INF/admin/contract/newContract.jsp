@@ -35,7 +35,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="page-header">Quản lí hợp đồng</h1>
+        <h1 class="title">Quản lí hợp đồng</h1>
     </div>
 
     <div class="container-padding">
@@ -177,16 +177,7 @@
 
                                     <div class="col-sm-6">
                                         <div class="form-group clearfix">
-                                            <div class="col-sm-4 control-label">Hình ảnh văn phòng:</div>
-                                            <br>
 
-                                            <div class="col-sm-8">
-                                                <div class="images clearfix" id="imageOffice">
-                                                </div>
-                                                <div class="clear-float"></div>
-                                                <input type="hidden" id="imageUrls" name="imageUrls"
-                                                       value="${office.imageUrls}">
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -354,11 +345,11 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <input style="display: inline-block" type='number' class="form-control"
-                                               name="deposit" min="0" required="true"
+                                        <input style="display: inline-block" type='text' class="form-control"
+                                               name="deposit" min="0" required="true" onkeyup="formatDeposit()"
                                                id="deposit" value=""/>
                                     </div>
-
+                                    <input type="hidden" name="depositValue" id="depositValue" value=""/>
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="endDate" class="col-sm-2 control-label"> số tiền

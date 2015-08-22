@@ -75,9 +75,9 @@
                                         <tr class="hidden">
                                             <td class="label">Địa chỉ</td>
                                             <td class="slimField">
-                                                <input class="field" id="street_number" disabled="true"></td>
+                                                <input class="field" id="street_number" readonly></td>
                                             <td class="wideField" colspan="2">
-                                                <input class="field" id="route" disabled="true"></td>
+                                                <input class="field" id="route" readonly></td>
                                         </tr>
                                         <tr>
                                             <td class="label">Quận / Huyện</td>

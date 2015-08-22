@@ -29,27 +29,27 @@ public class ScheduleCheckContract implements Job {
         List<Contract> contractList = dao.getContractListAvailable();
 
         Date date = new Date();
-
+        long currentDate = date.getTime();
+        long endDate, dayTime;
         for (Contract contract : contractList) {
-            long currentDate = date.getTime();
-            long endDate = contract.getEndDate().getTime();
+            if (contract.getStatusId() == 1) {
+                endDate = contract.getEndDate().getTime();
+                dayTime = Math.round((endDate - currentDate) / (24 * 60 * 60 * 1000));
 
-            long dayTime = (endDate - currentDate) / (24 * 60 * 60 * 1000);
+                if (currentDate - endDate > 0) {
 
-            if (currentDate - endDate > 0){
-                if(contract.getStatusId() == 1) {
                     dao.changeStatus(contract.getId(), 4);
                     sendEmail(contract.getId(), contract.getStatusId(), contract.getCustomerUsername());
 
                     // Update area for office parent when contract expired
                     OfficeDAO officeDAO = new OfficeDAO();
                     Office office = officeDAO.get(contract.getOfficeId());
-                    if(office.getParentOfficeId() != null) {
+                    if (office.getParentOfficeId() != null) {
                         Office officeParent = officeDAO.get(office.getParentOfficeId());
                         officeDAO.updateArea(officeParent.getId(), officeParent.getArea() + office.getArea());
                     } else {
                         office.setStatusId(1);
-                        officeDAO.update(office.getId(),office);
+                        officeDAO.update(office.getId(), office);
                     }
 
                     // Update rental item when contract expired
@@ -58,7 +58,7 @@ public class ScheduleCheckContract implements Job {
 
                     RentalDetailDAO rentalDetailDAO = new RentalDetailDAO();
                     RentalItemDAO rentalItemDAO = new RentalItemDAO();
-                    if(rentals != null) {
+                    if (rentals != null) {
                         for (Rental rental : rentals) {
                             List<RentalDetail> rentalDetailList = rentalDetailDAO.getRentalDetailByRental(rental.getId());
                             for (RentalDetail rentalDetail : rentalDetailList) {
@@ -67,10 +67,11 @@ public class ScheduleCheckContract implements Job {
                             }
                         }
                     }
-                }
-            } else if (dayTime == 7) {
+
+                } else if (dayTime == 7) {
 //                System.out.println(contract.getId());
-                sendEmail(contract.getId(), contract.getStatusId(), contract.getCustomerUsername());
+                    sendEmail(contract.getId(), contract.getStatusId(), contract.getCustomerUsername());
+                }
             }
         }
 

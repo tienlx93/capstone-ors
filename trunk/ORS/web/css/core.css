@@ -157,3 +157,7 @@ input.ng-invalid.ng-dirty {
     border-color: #d44040;
     box-shadow: inset 0 1px 1px rgba(0,0,0,.075),0 0 8px rgba(233, 32, 38, 0.6);
 }
+
+.btn-group {
+    min-width: 70px;
+}

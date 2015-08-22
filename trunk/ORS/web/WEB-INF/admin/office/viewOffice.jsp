@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
@@ -32,7 +33,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="page-header">Quản lí văn phòng</h1>
+        <h1 class="title">Quản lí văn phòng</h1>
     </div>
 
     <div class="container-padding">
@@ -66,7 +67,7 @@
                                 <tr>
                                     <td>${item.name}</td>
                                     <td>${item.categoryByCategoryId.description}</td>
-                                    <td>${item.price}</td>
+                                    <td><fmt:formatNumber type="number" value="${item.price}" /></td>
                                     <td>${item.priceTermByPriceTerm.description}</td>
                                     <td>${item.area}</td>
                                     <td>${item.address}</td>
@@ -89,7 +90,9 @@
                                     </a>
                                 </li>
                                 <c:forEach var="i" begin="1" end="${pageCount}">
-                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>">
+                                        <a href="#" onclick="goto(${i})">${i}</a>
+                                    </li>
 
                                 </c:forEach>
                                 <li id="next">

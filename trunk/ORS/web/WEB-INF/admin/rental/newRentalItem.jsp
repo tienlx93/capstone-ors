@@ -83,7 +83,7 @@
 
                                 <div class="col-sm-4">
                                     <select name="officeType" class="col-sm-12">
-                                        <option value="0" selected>Cả hai
+                                        <option value="0" selected>Cả hai loại văn phòng
                                         </option>
                                         <c:forEach var="item" items="${categoryList}">
                                             <option value="${item.id}">

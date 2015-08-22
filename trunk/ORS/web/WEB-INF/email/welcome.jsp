@@ -13,10 +13,10 @@
 <body>
 <div style="text-align: center;"><h1>Chào mừng đến với Office Rental Service - Dịch vụ cho thuê văn phòng</h1></div>
 <div>Xin chào, ${fullName}</div>
-<div>Thông tin đăng nhập của bạn:</div>
+<div>Thông tin đăng nhập của Quý khách:</div>
 <div>Tên đăng nhập: ${username}</div>
 <br>
-<div>Chúc bạn sớm tìm được văn phòng phù hợp tại website <a href="http://tienlx.me">Office Rental Service</a>,</div>
+<div>Chúc Quý khách sớm tìm được văn phòng phù hợp tại website <a href="http://tienlx.me">Office Rental Service</a>,</div>
 <div>Đội ngũ phát triển Office Rental Service.</div>
 </body>
 </html>

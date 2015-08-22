@@ -47,7 +47,7 @@ public class RepairController extends HttpServlet {
             switch (button) {
                 case "reject":
                     dao.changeStatus(id, 4);
-                    sms.setMessage("Yeu cau sua chua cua ban khong duoc chap nhan.");
+                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan.");
                     sms.send();
                     break;
                 case "assign":
@@ -60,7 +60,7 @@ public class RepairController extends HttpServlet {
                     }
                     dao.update(id, contractId, assignedStaff, description, date, 2);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    sms.setMessage("Yeu cau sua chua cua ban se duoc nhan vien cua chung toi den kiem tra." +
+                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
                             " Thoi gian du kien: " + df.format(date));
                     sms.send();
                     break;

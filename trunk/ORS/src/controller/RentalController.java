@@ -54,7 +54,7 @@ public class RentalController extends HttpServlet {
                     for (RentalDetail rentalDetail : rentalDetailCollection) {
                         rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
                     }
-                    sms.setMessage("Yeu cau thue vat dung cua ban khong duoc chap nhan.");
+                    sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach khong duoc chap nhan.");
                     sms.send();
                     break;
                 case "assign":
@@ -69,7 +69,7 @@ public class RentalController extends HttpServlet {
                     Date date = java.sql.Date.valueOf(reformatted);
                     dao.update(id, contractId, assignStaff, 2, description, date);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    sms.setMessage("Yeu cau thue vat dung cua ban da duoc chap nhan. Thoi gian du kien: " + df.format(date));
+                    sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach da duoc chap nhan. Thoi gian du kien: " + df.format(date));
                     sms.send();
 
                     for (RentalDetail rentalDetail : rentalDetailCollection) {

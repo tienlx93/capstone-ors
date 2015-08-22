@@ -1,0 +1,4 @@
+﻿Thời gian thuê: 3
+Ngày bắt đầu: 24/8/2015
+Kỳ hạn thanh toán: 1
+Tiền đặt cọc văn phòng: 5000000

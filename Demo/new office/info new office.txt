@@ -1,0 +1,14 @@
+﻿Tên văn phòng: Cao Ốc Văn Phòng Phú Mã Dương 
+Địa chỉ: Hoàng Văn Thái, Quận 7
+Mô tả văn phòng: 
+Thiết kế tường kính tạo ánh sáng hài hòa cho phòng làm việc, phòng ốc sang trọng có chỗ để xe, bàn tiếp khách, đường lớn khu dân cư sầm uất, khu dân trí cao, đây là nơi lý tưởng cho việc gặp gỡ đối tác.
+Danh sách tiện nghi: Điện, phòng vệ sinh, Bãi đỗ xe, Khu tiếp tân
+Loại văn phòng: Tòa nhà văn phòng
+Số tầng: 7
+Diện tích: 7000
+Diện tích thuê tối thiểu: 100
+Thời gian thuê tối thiểu: 12
+Giá thuê gốc: 250000
+Tên chủ văn phòng: Thái
+Số điện thoại chủ văn phòng: 0938573275 
+Địa chỉ chủ văn phòng: 183 Hoàng Văn Thái

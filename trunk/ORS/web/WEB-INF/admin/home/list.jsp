@@ -31,6 +31,7 @@
     <script src='${pageContext.request.contextPath}/lib/fullcalendar-2.3.2/lib/moment.min.js'></script>
     <script src='${pageContext.request.contextPath}/lib/fullcalendar-2.3.2/fullcalendar.min.js'></script>
     <script src='${pageContext.request.contextPath}/lib/fullcalendar-2.3.2/lang/vi.js'></script>
+    <title>Office Rental Service</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/admin/top.jsp"/>

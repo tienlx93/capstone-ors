@@ -109,7 +109,7 @@ public class ContractController extends HttpServlet {
                 String deposit = request.getParameter("depositValue");
                 String imageUrl = request.getParameter("imageUrl");
 
-                if(deposit == "") {
+                if (deposit == "") {
                     deposit = "0";
                 }
 
@@ -288,7 +288,7 @@ public class ContractController extends HttpServlet {
         Account account = (Account) session.getAttribute("user");
         if (account != null && (account.getRoleId() == 2)) {
             if (action == null) {
-                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                int pageCount = (int) Math.ceil((double) dao.countContractByStatus(1) / ConstantService.PAGE_SIZE);
                 request.setAttribute("pageCount", pageCount);
                 List<Contract> list1 = dao.getContractByPage(0, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list1);
@@ -300,7 +300,7 @@ public class ContractController extends HttpServlet {
                 int startItem = (page - 1) * ConstantService.PAGE_SIZE;
                 List<Contract> list1 = dao.getContractByPage(startItem, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list1);
-                rd = request.getRequestDispatcher("/WEB-INF/partial/contractListItem.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/partial/amenityListItem.jsp");
                 rd.forward(request, response);
             } else {
                 switch (action) {

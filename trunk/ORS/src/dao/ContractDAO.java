@@ -7,8 +7,10 @@ import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.joda.time.DateTime;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -176,5 +178,22 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public List<Integer> getYear() {
+        ArrayList<Integer> years = new ArrayList<>();
+        try {
+            String sql = "select min(startDate), max(endDate) from Contract";
+            Query query = session.createQuery(sql);
+            Object[] o = (Object[]) query.uniqueResult();
+            DateTime start = new DateTime(o[0]);
+            DateTime end = new DateTime(o[1]);
+            for (int i = start.getYear(); i <= end.getYear(); i ++) {
+                years.add(i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return years;
     }
 }

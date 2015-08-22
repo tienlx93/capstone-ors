@@ -20,8 +20,8 @@ import java.util.Date;
  */
 @WebListener
 public class ScheduleListener implements ServletContextListener {
-    private SchedulerFactory factory = new StdSchedulerFactory();
-    private Scheduler scheduler = null;
+    private static SchedulerFactory factory = new StdSchedulerFactory();
+    private static Scheduler scheduler = null;
 
     @Override
     public void contextInitialized(ServletContextEvent sce) {
@@ -88,19 +88,34 @@ public class ScheduleListener implements ServletContextListener {
             simpleTrigger3.setRepeatInterval(duration3);
             simpleTrigger3.setName("ThirdTrigger");
 
+            //Creating Job and link to our Job class
+            JobDetailImpl jobDetail4 = new JobDetailImpl();
+            jobDetail4.setName("Forth Job");
+            jobDetail4.setJobClass(ScheduleSendWelcomeEmail.class);
+
+            //Creating schedule time with trigger
+            SimpleTriggerImpl simpleTrigger4 = new SimpleTriggerImpl();
+            simpleTrigger4.setStartTime(new Date(System.currentTimeMillis() + 1000));
+            simpleTrigger4.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+
+            Long duration4 = Duration.standardMinutes(1).getMillis();
+            simpleTrigger4.setRepeatInterval(duration4);
+            simpleTrigger4.setName("ForthTrigger");
+
             //Start scheduler
 
-            //scheduler.start();
-            //scheduler.scheduleJob(jobDetail1, simpleTrigger1);
-            //scheduler.scheduleJob(jobDetail2, simpleTrigger2);
-            //scheduler.scheduleJob(jobDetail3, simpleTrigger3);
-            DateTime now = new DateTime();
+            scheduler.start();
+            scheduler.scheduleJob(jobDetail1, simpleTrigger1);
+            scheduler.scheduleJob(jobDetail2, simpleTrigger2);
+            scheduler.scheduleJob(jobDetail3, simpleTrigger3);
+            scheduler.scheduleJob(jobDetail4, simpleTrigger4);
+            /*DateTime now = new DateTime();
             DateTime startSchedule;
             if (now.hourOfDay().get() > 17) {
                 startSchedule = now.withDayOfYear(now.getDayOfYear()+1).withHourOfDay(8).withMinuteOfHour(0);
             } else {
                 startSchedule = now.withHourOfDay(now.getHourOfDay() + 1).withMinuteOfHour(0);
-            }
+            }*/
         } catch (SchedulerException e) {
             e.printStackTrace();
         }
@@ -118,4 +133,7 @@ public class ScheduleListener implements ServletContextListener {
         }
     }
 
+    public static Scheduler getScheduler() {
+        return scheduler;
+    }
 }

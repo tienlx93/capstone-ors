@@ -96,7 +96,7 @@ var REPAIR_STATUS = [{}, {
     'id': 2,
     'name': 'Assigned',
     'description': 'Cần xác nhận'
-}, {}, {
+}, {
     'id': 3,
     'name': 'Done',
     'description': 'Hoàn thành'

@@ -1,6 +1,7 @@
 package controller;
 
 import com.google.gson.Gson;
+import dao.ContractDAO;
 import dao.OfficeDAO;
 import org.joda.time.DateTime;
 
@@ -51,7 +52,10 @@ public class IncomeStaticsController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         OfficeDAO dao = new OfficeDAO();
+        ContractDAO contractDAO = new ContractDAO();
         List<String> districts = dao.allDistrict();
+        List<Integer> year = contractDAO.getYear();
+        request.setAttribute("years", year);
         request.setAttribute("districts", districts);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/statics/income.jsp");
         rd.forward(request, response);

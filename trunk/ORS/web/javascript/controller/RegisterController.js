@@ -31,7 +31,7 @@ controllers.controller('RegisterController', ['$scope', '$location', 'Api', 'toa
                     } else if (data == "Error Date") {
                         toastr.error('Ngày sinh không hợp lệ');
                     } else if (data) {
-                        toastr.success('Mời đăng nhập và kiểm tra email để hoàn tất đăng kí', 'Đăng kí thành công');
+                        toastr.success('Mời kiểm tra email để kích hoạt tài khoản', 'Đăng kí thành công');
                         $modalInstance.close();
                     }
                 });

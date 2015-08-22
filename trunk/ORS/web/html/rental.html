@@ -37,7 +37,8 @@
                         </div>
                         <div class="quantity col-md-6">
                             <div style="font-weight: bold">Số lượng</div>
-                            <div><input class="form-control input" type="number" min="0" value="{{item.number}}"
+                            <div><input class="form-control input" type="number" min="0"
+                                        onkeyup="this.value=this.value.replace(/[^\d]/,'')"
                                         ng-model="item.number"></div>
                         </div>
                     </div>

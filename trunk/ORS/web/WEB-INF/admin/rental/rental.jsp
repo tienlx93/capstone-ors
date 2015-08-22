@@ -44,7 +44,7 @@
 
 <div class="content">
   <div class="page-header">
-    <h1 class="page-header">Quản lí yêu cầu thuê thiết bị</h1>
+    <h1 class="title">Quản lí yêu cầu thuê thiết bị</h1>
   </div>
   <% AccountDAO acc = new AccountDAO();
     List<Account> listAcc = acc.findStaff();%>

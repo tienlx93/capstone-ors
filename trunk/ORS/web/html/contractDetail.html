@@ -4,7 +4,7 @@
     <h2>Chi tiết hợp đồng</h2>
     <br>
 
-    <div class="form-group">
+    <div class="form-group row">
         <div class="left-img">
             <table style="width: 90%" border="1">
                 <tbody>
@@ -32,7 +32,11 @@
             <br>
             <h4>File hợp đồng</h4>
             <br>
-            <img src="/img/office.jpg">
+            <div class="row" style="margin:auto;">
+                <div class="col-sm-6" ng-repeat="img in listImg">
+                    <img width="100%" src="{{img}}">
+                </div>
+            </div>
         </div>
         <div class="right-info">
             <table style="width: 100%">
@@ -154,18 +158,20 @@
                     </tbody>
                 </table>
             </div>
-            <br>
-            <a ng-if="data.status == 1 && data.startDay < today" href="#/rental/{{data.contractId}}" class="btn btn-green">
-                Yêu cầu thuê thiết bị</a>
-            <a ng-if="data.status == 1 && data.startDay < today" href="#/requestRepair/{{data.contractId}}"
-               class="btn btn-green">
-                Yêu cầu sửa chữa</a>
+
+        </div>
+
+    </div>
+    <div class="row" style="margin: auto; text-align: right;">
+        <a ng-if="data.status == 1 && data.startDay < today" href="#/rental/{{data.contractId}}" class="btn btn-green">
+            Yêu cầu thuê thiết bị</a>
+        <a ng-if="data.status == 1 && data.startDay < today" href="#/requestRepair/{{data.contractId}}"
+           class="btn btn-green">
+            Yêu cầu sửa chữa</a>
             <span ng-if="data.status == 1 && data.startDay < today">
             <a ng-click="contractReturn()" class="btn btn-color9">Hủy hợp đồng trước hạn</a>
             <a ng-click="contractExtend()" class="btn btn-color7">Gia hạn hợp đồng</a>
             </span>
-
-        </div>
     </div>
 
     <!--<div class="form-group">

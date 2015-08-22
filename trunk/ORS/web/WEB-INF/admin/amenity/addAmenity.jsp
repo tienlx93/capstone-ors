@@ -41,7 +41,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            <h1 class="page-header">Thêm tiện nghi mới</h1>
+            <h1 class="title">Thêm tiện nghi mới</h1>
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/amenity" method="post">

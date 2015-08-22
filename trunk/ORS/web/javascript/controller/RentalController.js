@@ -31,5 +31,6 @@ controllers.controller('RentalController', ['$scope', '$location', '$routeParams
                 $scope.RightCus = true;
                 $scope.WrongCus = false;
             }
-        })
+        });
+
     }]);

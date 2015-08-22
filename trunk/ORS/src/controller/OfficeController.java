@@ -52,8 +52,8 @@ public class OfficeController extends HttpServlet {
         String commission = request.getParameter("commission");
         if (action.equals("save")) {
             Office office = new Office();
-
             office.setStatusId(1);
+
             office.setName(name);
             office.setMinArea(Double.valueOf(minArea));
             office.setMinTime(Integer.valueOf(minTime));
@@ -88,7 +88,6 @@ public class OfficeController extends HttpServlet {
             office.setOwnerAddress(ownerAddress);
             office.setOwnerPhone(ownerPhone);
 
-
             if (dao.save(office)) {
                 List<String> amenityList = saveAmenities(amenities);
                 AmenityDAO amenityDAO = new AmenityDAO();
@@ -109,26 +108,31 @@ public class OfficeController extends HttpServlet {
             }
         } else if (action.equals("update")) {
 
-
             String id = request.getParameter("id");
             Office office = dao.get(Integer.parseInt(id));
 
-            office.setStatusId(1);
             office.setName(name);
-            office.setAddress(address);
-            if (office.getCategoryId() == 2) {
-                office.setMinArea(Double.valueOf(minArea));
-            }
+            office.setMinArea(Double.valueOf(minArea));
             office.setMinTime(Integer.valueOf(minTime));
-
+            office.setAddress(address);
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
             office.setCreateDate(new Timestamp((new Date()).getTime()));
             if (price != null && !price.equals("")) {
                 office.setPrice(Long.valueOf(price));
+                if (isPercent != null) {
+                    office.setBasePrice(Long.valueOf(price));
+                } else {
+                    office.setBasePrice(Long.valueOf(basePrice));
+                }
+            } else {
+                office.setBasePrice(Long.valueOf(basePrice));
+                if (isPercent != null) {
+                    office.setCommission(Integer.valueOf(commission));
+                }
             }
             office.setPriceTerm(Integer.parseInt(priceTerm));
-            if (price != null && !floor.equals("")) {
+            if (floor != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
             office.setArea(Double.parseDouble(area));
@@ -138,8 +142,8 @@ public class OfficeController extends HttpServlet {
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
             office.setOwnerName(ownerName);
-            office.setOwnerPhone(ownerPhone);
             office.setOwnerAddress(ownerAddress);
+            office.setOwnerPhone(ownerPhone);
 
             if (dao.update(Integer.parseInt(id), office)) {
                 List<String> amenityList = saveAmenities(amenities);

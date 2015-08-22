@@ -41,7 +41,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-title">
-            <h1 class="page-header">Cập nhật tài khoản</h1>
+            <h1 class="title">Cập nhật tài khoản</h1>
           </div>
           <div>
             <form action="${pageContext.request.contextPath}/admin/user" method="post">

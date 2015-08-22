@@ -21,11 +21,12 @@ public class ContractJSON {
     private String ownerName;
     private String ownerPhone;
     private String ownerAddress;
+    private String imgUrl;
 
     public ContractJSON() {
     }
 
-    public ContractJSON(int contractId, int officeId, String officeName, Long startDay, Long endDay, double price, String paymentTerm, int status, String address, double area, Long deposit, String category, String ownerName, String ownerPhone, String ownerAddress) {
+    public ContractJSON(int contractId, int officeId, String officeName, Long startDay, Long endDay, double price, String paymentTerm, int status, String address, double area, Long deposit, String category, String ownerName, String ownerPhone, String ownerAddress, String imgUrl) {
         this.contractId = contractId;
         this.officeId = officeId;
         this.officeName = officeName;
@@ -41,6 +42,15 @@ public class ContractJSON {
         this.ownerName = ownerName;
         this.ownerPhone = ownerPhone;
         this.ownerAddress = ownerAddress;
+        this.imgUrl = imgUrl;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getOwnerName() {

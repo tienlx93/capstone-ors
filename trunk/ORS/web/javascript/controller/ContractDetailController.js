@@ -39,7 +39,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 } else if (data.paymentTerm == "6 tháng") {
                     $scope.Term = 6;
                 } else $scope.Term = 1;
-
+                $scope.totalPrice = Math.ceil((data.endDay - data.startDay)/ (86400000 * 30)) * $scope.data.area * $scope.data.price;
             }
         });
 

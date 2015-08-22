@@ -67,8 +67,10 @@
                                 <tr>
                                     <td>${item.name}</td>
                                     <td>${item.categoryByCategoryId.description}</td>
-                                    <td><fmt:formatNumber type="number" value="${item.price}" /></td>
-                                    <td>${item.priceTermByPriceTerm.description}</td>
+                                    <td>
+                                        <fmt:formatNumber type="number" value="${item.price}"/>
+                                    </td>
+                                    <td> ${item.priceTermByPriceTerm.description}</td>
                                     <td>${item.area}</td>
                                     <td>${item.address}</td>
                                     <td>

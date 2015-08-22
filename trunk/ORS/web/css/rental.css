@@ -34,7 +34,7 @@
 
 }
 
-.rental-wrapper .item .detail .title {
+.rental-wrapper .item .title {
     font-size: 20px;
     padding: 10px 0;
     font-weight: bold;
@@ -52,6 +52,6 @@
 .truncate-one-line-text {
     text-overflow: ellipsis;
     white-space: nowrap;
-    max-width: 100px;
+    max-width: 100%;
     overflow: hidden;
 }

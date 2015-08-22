@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jstl/fmt_rt" %>
 <%--
   Created by IntelliJ IDEA.
   User: ASUS
@@ -66,8 +67,10 @@
                                 <tr>
                                     <td>${item.name}</td>
                                     <td>${item.categoryByCategoryId.description}</td>
-                                    <td>${item.price}</td>
-                                    <td>${item.priceTermByPriceTerm.description}</td>
+                                    <td>
+                                        <fmt:formatNumber type="number" value="${item.price}"/>
+                                    </td>
+                                    <td> ${item.priceTermByPriceTerm.description}</td>
                                     <td>${item.area}</td>
                                     <td>${item.address}</td>
                                     <td>
@@ -89,7 +92,9 @@
                                     </a>
                                 </li>
                                 <c:forEach var="i" begin="1" end="${pageCount}">
-                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#"
+                                                                                                           onclick="goto(${i})">${i}</a>
+                                    </li>
 
                                 </c:forEach>
                                 <li id="next">
@@ -114,24 +119,24 @@
     var pageCount = ${pageCount};
     var prev = function () {
         if (pageNumber > 1) {
-            pageNumber --;
+            pageNumber--;
             getPage(pageNumber);
         }
     };
     var next = function () {
         if (pageNumber < pageCount) {
-            pageNumber ++;
+            pageNumber++;
             getPage(pageNumber);
         }
     };
-    var goto = function(i) {
+    var goto = function (i) {
         pageNumber = i;
         getPage(pageNumber);
     };
-    var getPage = function(page) {
+    var getPage = function (page) {
         var selector = $(".items");
         selector.removeClass("active");
-        $(selector[page-1]).addClass("active");
+        $(selector[page - 1]).addClass("active");
         $("#next").removeClass("disabled");
         $("#prev").removeClass("disabled");
         if (page == pageCount) {

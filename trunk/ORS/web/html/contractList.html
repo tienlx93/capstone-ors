@@ -9,7 +9,6 @@
             <th>Tên văn phòng</th>
             <th>Ngày bắt đầu</th>
             <th>Ngày kết thúc</th>
-            <th>Giá (VNĐ)</th>
             <th>Thời hạn thanh toán</th>
             <th></th>
 
@@ -22,7 +21,6 @@
                 <td>{{item.officeName}}</td>
                 <td>{{item.startDay | date:'dd-MM-yyyy'}}</td>
                 <td>{{item.endDay | date:'dd-MM-yyyy'}}</td>
-                <td>{{item.price | currency:'':0}}</td>
                 <td>{{item.paymentTerm}}</td>
                 <td><a class="btn btn-green" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
                 <td><a class="btn btn-green" href="#/repairList/{{item.contractId}}">Danh sách sửa chữa</a></td>

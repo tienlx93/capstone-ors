@@ -36,7 +36,7 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             var comment = "";
             var changeStatus = function() {
                 Api.changeStatus(type, id, status, function() {
-                    $location.path("/home/" + type);
+                    window.history.back();
                 }, comment);
             };
             if ((status == 5 || status == 3) && type == "appointment") {

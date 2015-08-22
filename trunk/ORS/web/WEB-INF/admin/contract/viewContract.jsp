@@ -57,7 +57,7 @@
                                 <th>Văn phòng</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
-                                <th>Giá thuê</th>
+                                <th>Giá thuê / m<sup>2</sup></th>
                                 <th>Kỳ thanh toán</th>
                                 <th></th>
                                 <th></th>

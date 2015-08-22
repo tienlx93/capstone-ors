@@ -76,7 +76,7 @@
                 </tr>
                 <tr>
                     <td class="textright">Giá thuê:</td>
-                    <td><span class="spanleft">{{data.price | currency:"vnd":0}} trên m<sup>2</sup>/tháng</span></td>
+                    <td><span class="spanleft">{{data.price | currency:"VNĐ":0}} trên m<sup>2</sup>/tháng</span></td>
                 </tr>
                 <tr>
                     <td class="textright">Ngày bắt đầu hợp đồng:</td>
@@ -92,7 +92,7 @@
                 </tr>
                 <tr>
                     <td class="textright">Số tiền đặt cọc:</td>
-                    <td><span class="spanleft">{{data.deposit | currency:"vnd":0}}</span></td>
+                    <td><span class="spanleft">{{data.deposit | currency:"VNĐ":0}}</span></td>
                 </tr>
                 <tr>
                     <td class="textright">Kỳ hạn thanh toán:</td>
@@ -100,7 +100,11 @@
                 </tr>
                 <tr>
                     <td class="textright">Số tiền thanh toán mỗi kỳ:</td>
-                    <td><span class="spanleft">{{data.price * data.area * Term | currency:"vnd":0}} </span></td>
+                    <td><span class="spanleft">{{data.price * data.area * Term | currency:"VNĐ":0}} </span></td>
+                </tr>
+                <tr>
+                    <td class="textright">Tổng giá trị hợp đồng:</td>
+                    <td><span class="spanleft">{{totalPrice | currency:"VNĐ":0}} </span></td>
                 </tr>
                 </tbody>
             </table>
@@ -139,13 +143,13 @@
                     <tr ng-repeat="item in rentalList">
                         <td>{{item.name}}</td>
                         <td>{{item.description}}</td>
-                        <td>{{item.unitPrice | currency:"vnd":0}}</td>
+                        <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
                         <td>{{item.quantity}}</td>
-                        <td>{{item.price | currency:"vnd":0}}</td>
+                        <td>{{item.price | currency:"VNĐ":0}}</td>
                     </tr>
                     <tr>
                         <td colspan="4" class="sum"><b>Tổng cộng</b></td>
-                        <td>{{total | currency:"vnd":0}}</td>
+                        <td>{{total | currency:"VNĐ":0}}</td>
                     </tr>
                     </tbody>
                 </table>

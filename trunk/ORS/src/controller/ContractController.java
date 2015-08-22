@@ -106,7 +106,7 @@ public class ContractController extends HttpServlet {
                 String endDateStr = request.getParameter("endDate");
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
-                String deposit = request.getParameter("deposit");
+                String deposit = request.getParameter("depositValue");
                 String imageUrl = request.getParameter("imageUrl");
 
                 if(deposit == "") {
@@ -243,7 +243,11 @@ public class ContractController extends HttpServlet {
                 String endDate = request.getParameter("endDate");
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
-
+                String officeArea = request.getParameter("officeArea");
+                String deposit = request.getParameter("depositValue");
+                if(deposit.equals("")) {
+                    deposit = "0";
+                }
                 ContractDAO contractDAO = new ContractDAO();
                 Contract contract = contractDAO.get(Integer.parseInt(id));
 
@@ -251,9 +255,22 @@ public class ContractController extends HttpServlet {
                 contract.setEndDate(Date.valueOf(endDate));
                 contract.setPaymentTerm(Integer.parseInt(paymentTerm));
                 contract.setPaymentFee(Integer.parseInt(paymentFee));
+                contract.setDeposit(Long.parseLong(deposit));
 
-                contractDAO.update(contract.getId(), contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(),
-                        contract.getPaymentFee(), contract.getPaymentTerm(), contract.getStatusId());
+//
+//                OfficeDAO officeDAO = new OfficeDAO();
+//                Office office = officeDAO.get(contract.getOfficeId());
+//
+//                Office officeParent = office.getOfficeByParentOfficeId();
+//                officeParent.setArea(officeParent.getArea() + office.getArea() - Double.parseDouble(officeArea));
+//
+//                if (officeParent.getArea() < officeParent.getMinArea()) {
+//                    officeParent.setStatusId(2);
+//                }
+//
+//                office.setArea(Double.parseDouble(officeArea));
+
+                contractDAO.updateContract(contract.getId(), contract);
                 response.sendRedirect("/admin/contract");
                 break;
         }

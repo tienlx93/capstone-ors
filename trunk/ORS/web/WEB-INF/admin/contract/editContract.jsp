@@ -63,7 +63,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerName}
+                                            ${contract.officeByOfficeId.ownerName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -72,7 +72,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerAddress}
+                                            ${contract.officeByOfficeId.ownerAddress}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -81,7 +81,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerPhone}
+                                            ${contract.officeByOfficeId.ownerPhone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -165,7 +165,7 @@
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
+                                            <input type="number" onkeydown="calculatePaymentFee()" id="officeArea" readonly
                                                    name="officeArea" min="${contract.officeByOfficeId.minArea}"
                                                    class="form-control"
                                                    value="${contract.officeByOfficeId.area}" required="true">
@@ -299,7 +299,7 @@
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
                                                    onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee"
+                                                   name="paymentFee" readonly
                                                    id="paymentFee" value="${contract.paymentFee}" required="true"/>
                                         </div>
                                     </c:if>
@@ -311,7 +311,7 @@
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='number'
                                                    onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee"
+                                                   name="paymentFee" readonly
                                                    id="paymentFee"
                                                    value="${contract.paymentFee}"
                                                    required="true"/>
@@ -320,10 +320,13 @@
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt cọc văn phòng:</div>
 
                                     <div class="col-sm-4">
-                                        <input style="display: inline-block" type='number' class="form-control"
-                                               name="deposit" onchange="calculatePaymentFee()"
+                                        <input style="display: inline-block" type='text' class="form-control"
+                                               name="deposit" onkeyup="formatDeposit()"
                                                id="deposit" value="${contract.deposit}"/>
                                     </div>
+                                    <input style="display: inline-block" type='hidden' class="form-control"
+                                           name="depositValue"
+                                           id="depositValue" value="${contract.deposit}"/>
 
                                 </div>
                                 <div class="form-group clearfix">
@@ -482,21 +485,12 @@
 
     }
     ;
-    function validateArea() {
-        var parentArea = document.createContract.parentArea.value;
-        var minArea = document.createContract.minArea, value;
-        var area = document.createContract.officeArea.value;
-
-        console.log(parentArea);
-        console.log(area);
-        if (parseFloat(area) > parseFloat(parentArea)) {
-            alert('Diện tích văn phòng con không được lớn hơn diện tích văn phòng cha!');
-            return false;
-        } else if (parseFloat(minArea) > parseFloat(area)) {
-            alert('Diện tích thuê không được nhỏ hơn diện tích tối thiểu');
-            return false;
+    function formatDeposit() {
+        var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
+        if (deposit != 0) {
+            document.getElementById('depositValue').value = parseFloat(deposit.replace(/\./g, ''));
+            document.getElementById('deposit').value = numberWithCommas(document.getElementById('depositValue').value);
         }
-        return true;
     }
     ;
     function validatePaymentTerm() {

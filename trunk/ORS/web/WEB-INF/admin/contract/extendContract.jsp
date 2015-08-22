@@ -60,7 +60,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerName}
+                                            ${info.officeByOfficeId.ownerName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -69,7 +69,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerAddress}
+                                            ${info.officeByOfficeId.ownerAddress}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -78,7 +78,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerPhone}
+                                            ${info.officeByOfficeId.ownerPhone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">

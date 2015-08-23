@@ -76,7 +76,7 @@
                 <div class="col-md-3 item-price">
                     <div class="item-category">{{office.category}}</div>
                     <div class="item-price-money" ng-if="office.priceTerm=='Nguyên căn'">{{office.price | currency:'VND':0}}
-                        <div class="price-detail">Trên tháng</div>
+                        <div class="item-price-term">Trên {{office.area}} m<sup>2</sup> / Tháng</div>
                     </div>
                     <div class="item-price-money" ng-if="office.priceTerm!='Nguyên căn'">
                         <span ng-if="office.price">{{office.price | currency:'VND':0}}</span>

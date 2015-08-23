@@ -19,6 +19,7 @@ public class OfficeListDetail {
     private Long price;
     private String priceTerm;
     private String address;
+    private double area;
     private List<String> images;
 
     public String getCategory() {
@@ -47,7 +48,7 @@ public class OfficeListDetail {
             amenityJSON.add(new AmenityJSON(name, weight!= null ? weight : -10, group!= null ? group : -10));
             amenityList.add(name);
         }
-
+        this.area = office.getArea();
         this.price = office.getPrice();
         this.priceTerm = office.getPriceTermByPriceTerm().getDescription();
         this.address = office.getAddress();
@@ -132,5 +133,13 @@ public class OfficeListDetail {
 
     public void setAmenityList(List<String> amenityList) {
         this.amenityList = amenityList;
+    }
+
+    public double getArea() {
+        return area;
+    }
+
+    public void setArea(double area) {
+        this.area = area;
     }
 }

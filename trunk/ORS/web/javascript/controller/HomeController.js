@@ -5,6 +5,7 @@ controllers.controller('HomeController', ['$scope', '$rootScope', '$location', '
         $scope.searchTerm = {};
         $scope.priceRange = 0;
         $scope.listNewOffice = [];
+        $rootScope.price;
         $rootScope.q = [];
         $rootScope.amenityWeight = [];
         $scope.isCollapsed = true;

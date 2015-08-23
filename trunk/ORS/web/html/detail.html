@@ -8,20 +8,22 @@
         </div>
         <div id="mid">
             <h4 style="padding-bottom: 10px">{{officeDetail.category}}</h4>
-            <div>Giá:
+            <div><label>Giá:</label>
                 <span ng-if="officeDetail.price">{{officeDetail.price | currency:'VND':0}}</span>
                 <span ng-bind-html="officeDetail.price ? officeDetail.priceTerm + ' / Tháng' : 'Liên hệ' | m2"></span>
             </div>
-            <div>Số tầng: {{officeDetail.floorNumber}}</div>
-            <div>Diện tích: {{officeDetail.area | number:0}} m<sup>2</sup></div>
-            <div>Diện tích thuê tối thiểu: {{officeDetail.minArea}}</div>
-            <div>Thời gian thuê tối thiểu: {{officeDetail.minTime}}</div>
-            <div>Địa chỉ: {{officeDetail.address}}</div>
+            <div><label>Số tầng:</label> {{officeDetail.floorNumber}}</div>
+            <div><label>Diện tích:</label> {{officeDetail.area | number:0}} m<sup>2</sup></div>
+            <div ng-hide="officeDetail.category=='Văn phòng nguyên căn'">
+                <label>Diện tích thuê tối thiểu:</label> {{officeDetail.minArea}} m<sup>2</sup>
+            </div>
+            <div><label>Thời gian thuê tối thiểu:</label> {{officeDetail.minTime}} tháng</div>
+            <div><label>Địa chỉ:</label> {{officeDetail.address}}</div>
 
             <hr class="line"/>
             <h4 style="padding-bottom: 10px">Tiện nghi</h4>
             <ul>
-                <li ng-repeat="amenity in officeDetail.amenities">+ {{amenity}}</li>
+                <li ng-repeat="amenity in officeDetail.amenities track by $index">+ {{amenity}}</li>
             </ul>
             <hr class="line"/>
         </div>

@@ -18,31 +18,7 @@ $(document).ready(function () {
     var time = new Date().getTime();
     imageUrls = $("#imageUrls").val();
     renderImg();
-    $('input[type="file"]').ajaxfileupload({
-        'action': '/upload',
-        'params': {
-            'office': time
-        },
-        'onComplete': function (response) {
 
-            if (imageUrls.lastIndexOf(response) < 0) {
-
-                imageUrls += response + ",";
-
-                $('#images').append('<div class="upload-img">' +
-                '<div class="img"><img src="' + response + '"></div>' +
-                '</div>');
-                $('#imageUrls').val(imageUrls);
-                $('#upload').hide();
-            } else {
-                alert("Hình ảnh này đã được upload, xin thử lại!");
-            }
-
-        },
-        'onStart': function () {
-            $('#upload').show();
-        }
-    });
 });
 
 

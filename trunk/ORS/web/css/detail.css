@@ -6,7 +6,7 @@ div.main {
 
 #left {
     /*background-color: rgba(255, 0, 0, 0.42);*/
-    width: 28%;
+    width: 35%;
     float: left;
     padding: 1%;
 }
@@ -36,7 +36,7 @@ div.main {
 }
 
 #right {
-    width: 68%;
+    width: 64%;
     height: auto;
     /*background-color: green;*/
     float: right;
@@ -102,7 +102,9 @@ hr.line {
     width: 80%;
     text-align: center;
 }
-
+hr {
+    border-top: 1px solid #A2A3A5;
+}
 
 .item{
     background: #333;

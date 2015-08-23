@@ -150,7 +150,7 @@
                         <c:forEach var="item" items="${data}">
                           <c:if test="${item.statusId == 1}">
                             <tr>
-                              <form action="rental" method="post">
+                              <form action="rental" method="post" class="assignForm">
                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                 <td><a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
                                     ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a></td>
@@ -185,10 +185,10 @@
                                 <td>
                                   <div class="btn-group" role="group">
                                     <input type="hidden" name="action" value="editing">
+                                    <input type="hidden" name="button" value="assign"/>
                                     <button class="btn btn-icon btn-default"
                                             id="assign" title="Giao việc"
-                                            type="submit" name="button"
-                                            value="assign"><i class="fa fa-share color7"></i></button>
+                                            type="submit"><i class="fa fa-share color7"></i></button>
                                     <a href="rental?action=edit&id=${item.id}"
                                        title="Chi tiết"
                                        class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
@@ -459,6 +459,30 @@
     var confirm = new List('confirm', options('confirm'));
     var done = new List('done', options('done'));
     var cancel = new List('cancel', options('cancel'));
+  });
+  $('.assignForm').submit(function () {
+    var currentForm = this;
+    event.preventDefault();
+    bootbox.dialog({
+      size: 'small',
+      message: "Bạn đồng ý giao việc cho nhân viên?",
+      buttons: {
+        cancel: {
+          label: "Quay lại",
+          className: "btn-default",
+          callback: function () {
+
+          }
+        }, ok: {
+          label: "Đồng ý",
+          className: "btn-primary",
+          callback: function () {
+            currentForm.submit();
+          }
+        }
+      }
+    });
+
   });
 </script>
 </html>

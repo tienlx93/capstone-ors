@@ -167,7 +167,7 @@
                                            value="${office.area}" required min="0">
                                 </div>
                             </div>
-                            <div class="form-group clearfix">
+                            <div class="form-group clearfix" id="divMinArea">
                                 <label for="minArea" class="col-sm-2">Diện tích thuê tối thiểu (m<sup>2</sup>) *</label>
 
                                 <div class="col-sm-8">

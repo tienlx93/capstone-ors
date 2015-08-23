@@ -46,7 +46,7 @@
                         <h2 style="margin-top: 5px">Tạo hợp đồng</h2>
                     </div>
                     <div>
-                        <form action="contract" method="post" name="createContract"
+                        <form action="contract" method="post" name="createContract" class="signForm"
                               onsubmit="return validatePaymentTerm()">
                             <div class="form-group clearfix" hidden>
                                 <label for="appointmentID" class="col-sm-2 control-label">Id</label>

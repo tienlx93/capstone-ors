@@ -29,6 +29,7 @@
           src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+  <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body>
@@ -155,6 +156,10 @@
                 <a class="btn btn-primary" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
                   chữa</a>
                 <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
+                <form action="office" method="post" class="form">
+                  <input type="hidden" name="id" value="${info.id}"/>
+                  <button type="submit" class="btn btn-danger" name="action" value="delete">Xóa văn phòng</button>
+                </form>
                 <a href="${pageContext.request.contextPath}/admin/office"
                    class="btn btn-default">Quay về</a>
               </div>
@@ -170,6 +175,30 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
+<script>
+  $('.form').submit(function () {
+    var currentForm = this;
+    event.preventDefault();
+    bootbox.dialog({
+      size: 'small',
+      message: "Bạn đồng ý xóa văn phòng này?",
+      buttons: {
+        cancel: {
+          label: "Quay lại",
+          className: "btn-default",
+          callback: function () {
 
+          }
+        }, ok: {
+          label: "Xóa",
+          className: "btn-danger",
+          callback: function () {
+            currentForm.submit();
+          }
+        }
+      }
+    });
+  });
+</script>
 </body>
 </html>

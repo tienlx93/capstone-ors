@@ -55,12 +55,26 @@ public class OfficeController extends HttpServlet {
             office.setStatusId(1);
 
             office.setName(name);
-            office.setMinArea(Double.valueOf(minArea));
             office.setMinTime(Integer.valueOf(minTime));
             office.setAddress(address);
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
             office.setCreateDate(new Timestamp((new Date()).getTime()));
+            office.setArea(Double.parseDouble(area));
+            office.setImageUrls(imageUrls);
+            office.setCity(city);
+            office.setDistrict(district);
+            office.setLatitude(Double.valueOf(latitude));
+            office.setLongitude(Double.valueOf(longitude));
+            office.setOwnerName(ownerName);
+            office.setOwnerAddress(ownerAddress);
+            office.setOwnerPhone(ownerPhone);
+            office.setPriceTerm(Integer.parseInt(priceTerm));
+            if (office.getCategoryId() == 2) {
+                office.setMinArea(Double.valueOf(minArea));
+            } else {
+                office.setMinArea(office.getArea());
+            }
             if (price != null && !price.equals("")) {
                 office.setPrice(Long.valueOf(price));
                 if (isPercent != null) {
@@ -74,19 +88,10 @@ public class OfficeController extends HttpServlet {
                     office.setCommission(Integer.valueOf(commission));
                 }
             }
-            office.setPriceTerm(Integer.parseInt(priceTerm));
             if (floor != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
-            office.setArea(Double.parseDouble(area));
-            office.setImageUrls(imageUrls);
-            office.setCity(city);
-            office.setDistrict(district);
-            office.setLatitude(Double.valueOf(latitude));
-            office.setLongitude(Double.valueOf(longitude));
-            office.setOwnerName(ownerName);
-            office.setOwnerAddress(ownerAddress);
-            office.setOwnerPhone(ownerPhone);
+
 
             if (dao.save(office)) {
                 List<String> amenityList = saveAmenities(amenities);
@@ -112,12 +117,26 @@ public class OfficeController extends HttpServlet {
             Office office = dao.get(Integer.parseInt(id));
 
             office.setName(name);
-            office.setMinArea(Double.valueOf(minArea));
             office.setMinTime(Integer.valueOf(minTime));
             office.setAddress(address);
             office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
             office.setCreateDate(new Timestamp((new Date()).getTime()));
+            office.setArea(Double.parseDouble(area));
+            office.setImageUrls(imageUrls);
+            office.setCity(city);
+            office.setDistrict(district);
+            office.setLatitude(Double.valueOf(latitude));
+            office.setLongitude(Double.valueOf(longitude));
+            office.setOwnerName(ownerName);
+            office.setOwnerAddress(ownerAddress);
+            office.setOwnerPhone(ownerPhone);
+            office.setPriceTerm(Integer.parseInt(priceTerm));
+            if (office.getCategoryId() == 2) {
+                office.setMinArea(Double.valueOf(minArea));
+            } else {
+                office.setMinArea(office.getArea());
+            }
             if (price != null && !price.equals("")) {
                 office.setPrice(Long.valueOf(price));
                 if (isPercent != null) {
@@ -131,19 +150,10 @@ public class OfficeController extends HttpServlet {
                     office.setCommission(Integer.valueOf(commission));
                 }
             }
-            office.setPriceTerm(Integer.parseInt(priceTerm));
             if (floor != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
-            office.setArea(Double.parseDouble(area));
-            office.setImageUrls(imageUrls);
-            office.setCity(city);
-            office.setDistrict(district);
-            office.setLatitude(Double.valueOf(latitude));
-            office.setLongitude(Double.valueOf(longitude));
-            office.setOwnerName(ownerName);
-            office.setOwnerAddress(ownerAddress);
-            office.setOwnerPhone(ownerPhone);
+
 
             if (dao.update(Integer.parseInt(id), office)) {
                 List<String> amenityList = saveAmenities(amenities);
@@ -164,6 +174,15 @@ public class OfficeController extends HttpServlet {
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
                 rd.forward(request, response);
+            }
+        } else if (action.equals("delete")) {
+            String id = request.getParameter("id");
+            Office office = dao.get(Integer.parseInt(id));
+            office.setStatusId(3);
+            if (dao.update(Integer.parseInt(id), office)) {
+                response.sendRedirect("/admin/office");
+            } else {
+                response.sendRedirect("/admin/office?action=editing&id=" + id);
             }
         }
     }

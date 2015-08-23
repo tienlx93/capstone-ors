@@ -84,7 +84,7 @@
                                             <td class="wideField" colspan="3">
                                                 <input class="field" name="district"
                                                        id="administrative_area_level_2"
-                                                       disabled="true" value="${office.district}"></td>
+                                                       readonly value="${office.district}"></td>
                                         </tr>
                                         <tr>
                                             <td class="label" style="padding-right: 15px;padding-top: 10px;">
@@ -93,7 +93,7 @@
                                             <td class="wideField" colspan="3" style="padding-top: 10px">
                                                 <input class="field" name="city"
                                                        id="administrative_area_level_1"
-                                                       disabled="true" value="${office.city}"></td>
+                                                       readonly value="${office.city}"></td>
                                             <input type="hidden" name="latitude" id="latitude"
                                                    value="${office.latitude}">
                                             <input type="hidden" name="longitude" id="longitude"

@@ -53,7 +53,10 @@ $(document).ready(function () {
             $('#upload').show();
         }
     });
-
+    var paymentFeeValue = document.getElementById('paymentFeeValue');
+    if(paymentFeeValue != null) {
+        paymentFeeValue.value = numberWithCommas(paymentFeeValue.value);
+    }
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
@@ -73,7 +76,7 @@ $(document).ready(function () {
         event.preventDefault();
         bootbox.dialog({
             size: 'small',
-            message: "Bạn đồng ý tạo hợp đồng với các điều khoản đã ghi nhận?",
+            message: "Bạn đồng ý tạo hợp đồng với các thông tin đã ghi nhận?",
             buttons: {
                 cancel: {
                     label: "Quay lại",
@@ -97,7 +100,11 @@ $(document).ready(function () {
 function calculatePaymentFee() {
     var paymentTerm = document.getElementById('paymentTerm').value;
     var officeArea = document.getElementById('officeArea').value;
-    var paymentFee = document.getElementById('paymentFee').value;
+    formatPaymentFee();
+    var paymentFee = document.getElementById('paymentFeeValue').value;
+    if(paymentFee != ''){
+        paymentFee = parseFloat(paymentFee.replace(/\./g, ''));
+    }
     var contractTime = document.getElementById('time').value;
     var deposit = document.getElementById('deposit').value;
     var time;
@@ -173,6 +180,14 @@ function numberWithCommas(x) {
 
 function daysInMonth(month, year) {
     return new Date(year, month, 0).getDate();
+}
+;
+function formatPaymentFee() {
+    var paymentFee = document.getElementById('paymentFeeValue').value != '' ? document.getElementById('paymentFeeValue').value : 0;
+    if (paymentFee != 0) {
+        document.getElementById('paymentFee').value = parseFloat(paymentFee.replace(/\./g, ''));
+        document.getElementById('paymentFeeValue').value = numberWithCommas(document.getElementById('paymentFee').value);
+    }
 }
 ;
 function formatDeposit() {

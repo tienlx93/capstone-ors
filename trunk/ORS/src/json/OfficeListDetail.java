@@ -20,6 +20,7 @@ public class OfficeListDetail {
     private String priceTerm;
     private String address;
     private List<String> images;
+    private Double area;
 
     public String getCategory() {
         return category;
@@ -60,6 +61,7 @@ public class OfficeListDetail {
             }
         }
         this.category = office.getCategoryByCategoryId().getDescription();
+        this.area = office.getArea();
     }
 
     public int getId() {
@@ -132,5 +134,13 @@ public class OfficeListDetail {
 
     public void setAmenityList(List<String> amenityList) {
         this.amenityList = amenityList;
+    }
+
+    public Double getArea() {
+        return area;
+    }
+
+    public void setArea(Double area) {
+        this.area = area;
     }
 }

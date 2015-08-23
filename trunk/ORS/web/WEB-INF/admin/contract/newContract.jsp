@@ -401,7 +401,8 @@
                                 </div>
                             </div>
                             <div class="button-post">
-                                <button type="submit" value="save" name="action" class="btn btn-primary">Tạo mới
+                                <input type="hidden" value="save" name="action" >
+                                <button type="submit" class="btn btn-primary">Tạo mới
                                 </button>
                                 <a href="/admin/appointment?action=edit&id=${appointmentList.id}"
                                    class="btn btn-default">Quay về</a>

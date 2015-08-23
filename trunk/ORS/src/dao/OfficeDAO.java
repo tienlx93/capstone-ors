@@ -6,6 +6,7 @@ import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.hibernate.type.StandardBasicTypes;
@@ -161,6 +162,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             Criteria criteria = session.createCriteria(Office.class);
             criteria.add(Restrictions.ne("statusId", 3));
             criteria.add(Restrictions.isNull("parentOfficeId"));
+            criteria.addOrder(Order.asc("id"));
             criteria.setFirstResult(firstResult);
             criteria.setMaxResults(pageSize);
             return criteria.list();

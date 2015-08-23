@@ -68,6 +68,30 @@ $(document).ready(function () {
     }).data('datepicker');
 
 //        document.getElementById('paymentFee').value = numberWithCommas(document.getElementById('paymentFee').value);
+    $('.signForm').submit(function () {
+        var currentForm = this;
+        event.preventDefault();
+        bootbox.dialog({
+            size: 'small',
+            message: "Bạn đồng ý tạo hợp đồng với các điều khoản đã ghi nhận?",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
+
+                    }
+                }, ok: {
+                    label: "Đồng ý",
+                    className: "btn-primary",
+                    callback: function () {
+                        currentForm.submit();
+                    }
+                }
+            }
+        });
+
+    });
 });
 
 function calculatePaymentFee() {

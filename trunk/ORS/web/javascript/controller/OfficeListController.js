@@ -119,7 +119,8 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
             $rootScope.amenityWeight = [];
             Api.amenityWeight(function (data) {
                 $rootScope.amenityWeight = data;
-                if ($rootScope.q.length == 0) {
+                if (!$rootScope.q || $rootScope.q.length == 0) {
+                    $rootScope.q = [];
                     for (var i = 0; i < data.length; i++) {
                         $rootScope.q.push(false);
                     }

@@ -26,6 +26,7 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -46,7 +47,7 @@
                         <h2 style="margin-top: 5px">Tạo hợp đồng</h2>
                     </div>
                     <div>
-                        <form action="contract" method="post" name="createContract"
+                        <form action="contract" method="post" name="createContract" class="signForm"
                               onsubmit="return validatePaymentTerm()">
                             <div class="form-group clearfix" hidden>
                                 <label for="appointmentID" class="col-sm-2 control-label">Id</label>
@@ -319,12 +320,13 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <input style="display: inline-block" type='number'
+                                        <input style="display: inline-block" type='text'
                                                onchange="calculatePaymentFee()" class="form-control"
-                                               name="paymentFee" step="any" readonly min="0"
-                                               id="paymentFee" value="${office.price}"
+                                               name="paymentFeeValue" step="any" readonly min="0"
+                                               id="paymentFeeValue" value="${office.price}"
                                                required="true"/>
                                     </div>
+                                        <input type="hidden" name="paymentFee" id="paymentFee" value="${office.price}"/>
                                     </c:if>
                                     <c:if test="${office.price == null}">
 
@@ -333,12 +335,14 @@
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <input style="display: inline-block" type='number'
-                                                   onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee" step="any" min="0"
-                                                   id="paymentFee" value="${office.price}"
+                                            <input style="display: inline-block" type='text'
+                                                   onchange="calculatePaymentFee()"class="form-control"
+                                                   name="paymentFeeValue" step="any" min="0"
+                                                   id="paymentFeeValue" value=""
                                                    required="true"/>
                                         </div>
+                                        <input type="hidden" name="paymentFee" id="paymentFee" value=""/>
+
                                     </c:if>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt
                                         cọc văn phòng(VNĐ):
@@ -397,7 +401,8 @@
                                 </div>
                             </div>
                             <div class="button-post">
-                                <button type="submit" value="save" name="action" class="btn btn-primary">Tạo mới
+                                <input type="hidden" value="save" name="action" >
+                                <button type="submit" class="btn btn-primary">Tạo mới
                                 </button>
                                 <a href="/admin/appointment?action=edit&id=${appointmentList.id}"
                                    class="btn btn-default">Quay về</a>

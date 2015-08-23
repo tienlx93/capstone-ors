@@ -29,6 +29,7 @@
           src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+  <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body>
@@ -46,7 +47,7 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div>
-            <form action="office?action=editing" method="post">
+            <form action="office" method="post" class="form">
 
               <div class="form-group clearfix">
                 <label class="col-sm-3">Tên văn phòng:</label>
@@ -90,7 +91,7 @@
                       ${info.priceTermByPriceTerm.description}
                     </c:when>
                     <c:otherwise>
-                      <fmt:formatNumber type="number" value="${info.price}" />
+                      <fmt:formatNumber type="number" value="${info.price}"/>
                       VNĐ (${info.priceTermByPriceTerm.description})
                     </c:otherwise>
                   </c:choose>
@@ -103,7 +104,7 @@
                   </c:when>
                   <c:otherwise>
                     <label class="col-sm-3">Giá gốc:</label>
-                    <span class="col-sm-3"><fmt:formatNumber type="number" value="${info.basePrice}" /> VND
+                    <span class="col-sm-3"><fmt:formatNumber type="number" value="${info.basePrice}"/> VND
                       <c:choose>
                         <c:when test="${info.categoryId == 1}">
                           (Nguyên căn)
@@ -155,6 +156,9 @@
                 <a class="btn btn-primary" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
                   chữa</a>
                 <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
+                <input type="hidden" name="id" value="${info.id}"/>
+                <input type="hidden" name="action" value="delete">
+                <button type="submit" class="btn btn-danger" >Xóa văn phòng</button>
                 <a href="${pageContext.request.contextPath}/admin/office"
                    class="btn btn-default">Quay về</a>
               </div>
@@ -170,6 +174,30 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
+<script>
+  $('.form').submit(function () {
+    var currentForm = this;
+    event.preventDefault();
+    bootbox.dialog({
+      size: 'small',
+      message: "Bạn đồng ý xóa văn phòng này?",
+      buttons: {
+        cancel: {
+          label: "Quay lại",
+          className: "btn-default",
+          callback: function () {
 
+          }
+        }, ok: {
+          label: "Xóa",
+          className: "btn-danger",
+          callback: function () {
+            currentForm.submit();
+          }
+        }
+      }
+    });
+  });
+</script>
 </body>
 </html>

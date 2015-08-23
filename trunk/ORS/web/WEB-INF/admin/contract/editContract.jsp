@@ -188,22 +188,17 @@
                                         <div hidden>
                                             <input name="minTime" value="${contract.officeByOfficeId.minTime}">
                                         </div>
-
-                                        <div class="col-sm-12" style="margin: auto">
-                                            <div class="col-sm-2" style="padding: 0"><h5>Lưu ý:</h5></div>
-                                            <div class="col-sm-10">
-                                                <h5 style=" color: red">Diện tích thuê tối thiểu là: <span
-                                                        style="font-weight: bold">${contract.officeByOfficeId.minArea} m<sup>2</sup></span>
-                                                    - Diện
-                                                    tích thuê tối đa là: <span
-                                                            style="font-weight: bold">${contract.officeByOfficeId.officeByParentOfficeId.area} m<sup>2</sup></span>
-                                                    - Thời gian thuê tối thiểu là: <span
-                                                            style="font-weight: bold">${contract.officeByOfficeId.minTime} tháng</span>
-
+                                        <div class="col-sm-12" style="margin: auto;">
+                                            <div class="col-sm-6"></div>
+                                            <div class="col-sm-2" style="padding: 0;text-align: right"><h5
+                                                    style=" color: red">Lưu ý:</h5>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <h5 style=" color: red">Thời gian thuê tối thiểu là: <span
+                                                        style="font-weight: bold">${contract.officeByOfficeId.minTime} tháng</span>
                                                 </h5>
                                             </div>
                                         </div>
-
                                     </div>
                                 </c:if>
                                 <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 1}">
@@ -351,14 +346,16 @@
                                         hợp
                                         đồng</h3></div>
                                     <div class="form-group clearfix">
-                                        <div class="images clearfix" id="images">
+                                        <div class="col-sm-12">
+                                            <div class="images clearfix" id="imageContract">
+                                            </div>
+                                            <div class="clear-float"></div>
+                                            <input type="hidden" id="imageUrls" name="imageUrls"
+                                                   value="${contract.imageUrl}">
                                         </div>
-                                        <div class="clear-float"></div>
-                                        <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
                                     </div>
                                 </div>
                                 <div class="button-post">
-                                    <input type="hidden" id="imageUrls" name="imageUrls" value="${contract.imageUrl}">
                                     <button type="submit" value="update" class="btn btn-primary" name="action">Cập
                                         nhật
                                     </button>
@@ -423,7 +420,7 @@
         document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
         document.getElementById('totalContract').innerHTML = numberWithCommas(contractTotal) + ' VNĐ';
 
-        var imageUrls = $("#imageUrl").val();
+        var imageUrls = $("#imageUrls").val();
         console.log(imageUrls);
         renderImg(imageUrls);
     });

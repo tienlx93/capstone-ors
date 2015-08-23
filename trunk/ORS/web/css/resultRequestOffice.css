@@ -16,13 +16,13 @@
 .result-request-office-wrapper .item {
     border: 1px solid;
     margin: 10px auto;
-    height: 200px;
+    min-height: 220px;
 }
 
 
 .result-request-office-wrapper .item .item-image{
     padding: 0;
-    height: 100%;
+    height: 220px;
     border-right: 1px solid;
 }
 
@@ -32,7 +32,7 @@
 
 .result-request-office-wrapper .item .item-price {
     background: #d0e9c6;
-    height: 100%;
+    height: 220px;
 }
 
 .result-request-office-wrapper .item .item-address {

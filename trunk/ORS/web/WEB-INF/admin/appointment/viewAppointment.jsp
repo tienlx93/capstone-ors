@@ -31,6 +31,7 @@
             src="${pageContext.request.contextPath}/lib/listjs/list.pagination.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -165,7 +166,7 @@
                                                                 <c:if test="${item.statusId == 1}">
                                                                     <tr>
                                                                         <form action="appointment?action=editing"
-                                                                              method="post">
+                                                                              method="post" class="assignForm">
                                                                             <td><a class="btn"
                                                                                    href="contract?action=viewProfile&username=${item.accountByCustomerUsername.username}">${item.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                             </td>
@@ -195,11 +196,12 @@
 
                                                                             <td>
                                                                                 <div class="btn-group" role="group">
+                                                                                    <input type="hidden" name="button"
+                                                                                           value="assign"/>
                                                                                     <button class="btn btn-icon btn-default"
                                                                                             id="assign"
                                                                                             title="Giao việc"
-                                                                                            type="submit" name="button"
-                                                                                            value="assign"><i
+                                                                                            type="submit"><i
                                                                                             class="fa fa-share color7"></i>
                                                                                     </button>
                                                                                     <a href="${pageContext.request.contextPath}/admin/appointment?action=edit&id=${item.id}"
@@ -503,7 +505,30 @@
     var done = new List('done', options('done'));
     var cancel = new List('cancel', options('cancel'));
 
+    $('.assignForm').submit(function () {
+        var currentForm = this;
+        event.preventDefault();
+        bootbox.dialog({
+            size: 'small',
+            message: "Bạn đồng ý giao việc cho nhân viên?",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
 
+                    }
+                }, ok: {
+                    label: "Đồng ý",
+                    className: "btn-primary",
+                    callback: function () {
+                        currentForm.submit();
+                    }
+                }
+            }
+        });
+
+    });
 </script>
 
 </body>

@@ -10,8 +10,8 @@
                 <thead>
                 <tr>
                     <th>Loại văn phòng</th>
-                    <th>Diện tích</th>
-                    <th>Giá</th>
+                    <th>Diện tích (m<sup>2</sup>)</th>
+                    <th>Giá (VNĐ)</th>
                     <th>Địa chỉ</th>
                     <th>Ngày tạo</th>
                     <th></th>
@@ -22,9 +22,9 @@
                     <td ng-if="request.categoryId === 1">Văn phòng nguyên căn</td>
                     <td ng-if="request.categoryId !== 1">Tòa nhà văn phòng</td>
                     <td>{{request.area}}</td>
-                    <td>{{request.price}}</td>
+                    <td>{{request.price | currency:"":0}}</td>
                     <td>{{request.district}}</td>
-                    <td>{{request.createDate}}</td>
+                    <td>{{request.createDate | date:'dd-MM-yyyy'}}</td>
                     <td><button class="btn btn-danger" ng-click="unsubscribeRequest(request.id)">Hủy yêu cầu</button></td>
                 </tr>
                 </tbody>

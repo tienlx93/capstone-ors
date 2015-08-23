@@ -51,7 +51,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         try {
 
             Criteria criteria = session.createCriteria(Contract.class);
-            criteria.add(Restrictions.eq("statusId", 1));
+            criteria.add(Restrictions.ne("statusId", 1));
             criteria.setFirstResult(firstResult);
             criteria.setMaxResults(pageSize);
             return criteria.list();

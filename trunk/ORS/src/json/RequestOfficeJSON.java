@@ -15,7 +15,7 @@ public class RequestOfficeJSON {
     private int price;
     private Double area;
     private String district;
-    private Date createDate;
+    private Long createDate;
     private boolean available;
 
     public RequestOfficeJSON() {
@@ -28,7 +28,7 @@ public class RequestOfficeJSON {
         this.price = price;
         this.area = area;
         this.district = district;
-        this.createDate = createDate;
+        this.createDate = createDate != null ? createDate.getTime() : 0;
         this.available = available;
     }
 
@@ -80,11 +80,11 @@ public class RequestOfficeJSON {
         this.district = district;
     }
 
-    public Date getCreateDate() {
+    public Long getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(Long createDate) {
         this.createDate = createDate;
     }
 

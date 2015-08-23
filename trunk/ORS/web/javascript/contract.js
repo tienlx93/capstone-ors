@@ -176,9 +176,11 @@ function daysInMonth(month, year) {
 }
 ;
 function formatDeposit() {
-    var deposit = document.getElementById('deposit').value;
-    document.getElementById('depositValue').value = parseFloat(deposit.replace(/\./g,''));
-    document.getElementById('deposit').value = numberWithCommas(document.getElementById('depositValue').value);
+    var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
+    if (deposit != 0) {
+        document.getElementById('depositValue').value = parseFloat(deposit.replace(/\./g, ''));
+        document.getElementById('deposit').value = numberWithCommas(document.getElementById('depositValue').value);
+    }
 }
 ;
 function validatePaymentTerm() {

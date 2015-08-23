@@ -106,10 +106,10 @@ public class ContractController extends HttpServlet {
                 String endDateStr = request.getParameter("endDate");
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
-                String deposit = request.getParameter("deposit");
+                String deposit = request.getParameter("depositValue");
                 String imageUrl = request.getParameter("imageUrl");
 
-                if(deposit == "") {
+                if (deposit == "") {
                     deposit = "0";
                 }
 
@@ -243,7 +243,11 @@ public class ContractController extends HttpServlet {
                 String endDate = request.getParameter("endDate");
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
-
+                String officeArea = request.getParameter("officeArea");
+                String deposit = request.getParameter("depositValue");
+                if(deposit.equals("")) {
+                    deposit = "0";
+                }
                 ContractDAO contractDAO = new ContractDAO();
                 Contract contract = contractDAO.get(Integer.parseInt(id));
 
@@ -251,9 +255,22 @@ public class ContractController extends HttpServlet {
                 contract.setEndDate(Date.valueOf(endDate));
                 contract.setPaymentTerm(Integer.parseInt(paymentTerm));
                 contract.setPaymentFee(Integer.parseInt(paymentFee));
+                contract.setDeposit(Long.parseLong(deposit));
 
-                contractDAO.update(contract.getId(), contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(),
-                        contract.getPaymentFee(), contract.getPaymentTerm(), contract.getStatusId());
+//
+//                OfficeDAO officeDAO = new OfficeDAO();
+//                Office office = officeDAO.get(contract.getOfficeId());
+//
+//                Office officeParent = office.getOfficeByParentOfficeId();
+//                officeParent.setArea(officeParent.getArea() + office.getArea() - Double.parseDouble(officeArea));
+//
+//                if (officeParent.getArea() < officeParent.getMinArea()) {
+//                    officeParent.setStatusId(2);
+//                }
+//
+//                office.setArea(Double.parseDouble(officeArea));
+
+                contractDAO.updateContract(contract.getId(), contract);
                 response.sendRedirect("/admin/contract");
                 break;
         }
@@ -271,7 +288,7 @@ public class ContractController extends HttpServlet {
         Account account = (Account) session.getAttribute("user");
         if (account != null && (account.getRoleId() == 2)) {
             if (action == null) {
-                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                int pageCount = (int) Math.ceil((double) dao.countContractByStatus(1) / ConstantService.PAGE_SIZE);
                 request.setAttribute("pageCount", pageCount);
                 List<Contract> list1 = dao.getContractByPage(0, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list1);
@@ -283,7 +300,7 @@ public class ContractController extends HttpServlet {
                 int startItem = (page - 1) * ConstantService.PAGE_SIZE;
                 List<Contract> list1 = dao.getContractByPage(startItem, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list1);
-                rd = request.getRequestDispatcher("/WEB-INF/partial/contractListItem.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/partial/amenityListItem.jsp");
                 rd.forward(request, response);
             } else {
                 switch (action) {

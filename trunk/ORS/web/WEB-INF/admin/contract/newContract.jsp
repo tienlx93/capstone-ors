@@ -319,12 +319,13 @@
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <input style="display: inline-block" type='number'
+                                        <input style="display: inline-block" type='text'
                                                onchange="calculatePaymentFee()" class="form-control"
-                                               name="paymentFee" step="any" readonly min="0"
-                                               id="paymentFee" value="${office.price}"
+                                               name="paymentFeeValue" step="any" readonly min="0"
+                                               id="paymentFeeValue" value="${office.price}"
                                                required="true"/>
                                     </div>
+                                        <input type="hidden" name="paymentFee" id="paymentFee" value="${office.price}"/>
                                     </c:if>
                                     <c:if test="${office.price == null}">
 
@@ -333,12 +334,14 @@
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <input style="display: inline-block" type='number'
-                                                   onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee" step="any" min="0"
-                                                   id="paymentFee" value="${office.price}"
+                                            <input style="display: inline-block" type='text'
+                                                   onchange="calculatePaymentFee()"class="form-control"
+                                                   name="paymentFeeValue" step="any" min="0"
+                                                   id="paymentFeeValue" value=""
                                                    required="true"/>
                                         </div>
+                                        <input type="hidden" name="paymentFee" id="paymentFee" value=""/>
+
                                     </c:if>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt
                                         cọc văn phòng(VNĐ):

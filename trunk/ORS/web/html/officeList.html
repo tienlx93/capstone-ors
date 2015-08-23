@@ -70,7 +70,7 @@
                     <div class="item-address">{{office.address}}</div>
                     <div>{{office.description}}</div>
                     <div class="row" style="margin: auto">
-                        <div class="col-md-6" ng-repeat="amenity in office.amenityList">{{amenity}}</div>
+                        <div class="col-md-6" ng-repeat="amenity in office.amenityList track by $index">{{amenity}}</div>
                     </div>
                 </div>
                 <div class="col-md-3 item-price">

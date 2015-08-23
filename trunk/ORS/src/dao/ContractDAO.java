@@ -5,6 +5,7 @@ import entity.Repair;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.joda.time.DateTime;
@@ -51,7 +52,8 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         try {
 
             Criteria criteria = session.createCriteria(Contract.class);
-            criteria.add(Restrictions.ne("statusId", 1));
+            criteria.add(Restrictions.eq("statusId", 1));
+            criteria.addOrder(Order.asc("id"));
             criteria.setFirstResult(firstResult);
             criteria.setMaxResults(pageSize);
             return criteria.list();

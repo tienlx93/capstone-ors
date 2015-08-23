@@ -1,9 +1,10 @@
-<div class="container" ng-show="RightCus">
+<div class="container" >
     <h1>Văn phòng: {{data[0].officeName}}</h1>
     <br>
     <h2>Danh sách sửa chữa </h2>
     <br>
-    <table class="table">
+    <div ng-show="RightCus">
+    <table class="table" >
         <thead>
         <tr>
             <th>Mô tả</th>
@@ -16,13 +17,14 @@
 
         <tr ng-repeat="item in data">
             <td>{{item.description}}</td>
-            <td>{{item.createTime | date:'dd-MM-yyyy'}}</td>
+            <td ng-if="!test">{{item.createTime | date:'dd-MM-yyyy'}}</td>
             <td>{{item.status}}</td>
             <td><span ng-show="item.assignedTime">{{item.assignedTime | date:'dd-MM-yyyy'}}</span></td>
         </tr>
 
         </tbody>
     </table>
+    </div>
     <a class="btn btn-green" href="#/repairHistory/{{id}}">Lịch sử sửa chữa</a>
 </div>
 

@@ -38,6 +38,7 @@ public class RepairController extends HttpServlet {
             String assignedStaff = request.getParameter("assignedStaff");
             String description = request.getParameter("description");
             String assignedTime = request.getParameter("assignedTime");
+            String endDate = request.getParameter("endDate");
 
             SMSService sms = new SMSService();
             ContractDAO contractDAO = new ContractDAO();
@@ -49,32 +50,45 @@ public class RepairController extends HttpServlet {
                     dao.changeStatus(id, 4);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan.");
                     sms.send();
+                    response.sendRedirect("/admin/repair");
                     break;
                 case "assign":
-                    SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
+                    SimpleDateFormat fromEnd = new SimpleDateFormat("yyyy-MM-dd");
+                    Date dateEnd = null;
                     try {
-                        date = fromUser.parse(assignedTime);
+                        date = fromAssign.parse(assignedTime);
+                        dateEnd = fromEnd.parse(endDate);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    dao.update(id, contractId, assignedStaff, description, date, 2);
-                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
-                            " Thoi gian du kien: " + df.format(date));
-                    sms.send();
+                    if (date.getTime() < dateEnd.getTime()) {
+                        dao.update(id, contractId, assignedStaff, description, date, 2);
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
+                                " Thoi gian du kien: " + df.format(date));
+                        sms.send();
+                        response.sendRedirect("/admin/repair");
+                    } else {
+                        request.setAttribute("error", "error");
+                        //lam sao quay ve trang
+                        response.sendRedirect("/admin/repair");
+                    }
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
+                    response.sendRedirect("/admin/repair");
                     break;
                 case "change3":
                     dao.changeStatus(id, 3);
+                    response.sendRedirect("/admin/repair");
                     break;
                 case "change5":
                     dao.changeStatus(id, 5);
+                    response.sendRedirect("/admin/repair");
                     break;
             }
-            response.sendRedirect("/admin/repair");
 
         }
 
@@ -99,6 +113,7 @@ public class RepairController extends HttpServlet {
                 ScheduleService service = new ScheduleService();
                 Map<Integer, Repair> suggestMap = service.makeRepairSchedule();
                 request.setAttribute("suggestMap", suggestMap);
+                request.setAttribute("error", "true");
                 rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
                 rd.forward(request, response);
             } else if (action.equals("filter")) {
@@ -134,6 +149,7 @@ public class RepairController extends HttpServlet {
                     list.add(amenity);
                 }
                 request.setAttribute("listAmenity", list);
+                request.setAttribute("error", "true");
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
             } else if (action.equals("viewProfile")) {
                 AccountDAO daoAcc = new AccountDAO();

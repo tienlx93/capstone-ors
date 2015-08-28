@@ -113,12 +113,21 @@
                                 <div class="col-sm-4">
                                     ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
                                 </div>
-                            </div>
-                            <div class="form-group clearfix">
+
                                 <label class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-4">
                                     ${info.contractByContractId.accountByCustomerUsername.profileByUsername.phone}
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Ngày kết thúc hợp đồng</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate
+                                            value="${info.contractByContractId.endDate}"
+                                            pattern="dd-MM-yyyy"/>
+                                    <input type="hidden" name="endDate" value="${info.contractByContractId.endDate}">
                                 </div>
                             </div>
 

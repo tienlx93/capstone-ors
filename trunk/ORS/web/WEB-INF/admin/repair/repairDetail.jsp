@@ -112,12 +112,21 @@
                                 <div class="col-sm-4">
                                     ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
                                 </div>
-                            </div>
-                            <div class="form-group clearfix">
+
                                 <label class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-4">
                                     ${info.contractByContractId.accountByCustomerUsername.profileByUsername.phone}
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Ngày kết thúc hợp đồng</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate
+                                            value="${info.contractByContractId.endDate}"
+                                            pattern="dd-MM-yyyy"/>
+                                    <input type="hidden" name="endDate" value="${info.contractByContractId.endDate}">
                                 </div>
                             </div>
 
@@ -135,7 +144,8 @@
                                 <label class="col-sm-2 control-label">Mô tả yêu cầu</label>
 
                                 <div class="col-sm-4">
-                                    ${info.description}<input type="hidden" name="description" value="${info.description}">
+                                    ${info.description}<input type="hidden" name="description"
+                                                              value="${info.description}">
                                 </div>
                             </div>
 
@@ -268,6 +278,7 @@
                                    class="btn btn-default">Quay về</a>
                             </div>
                         </form>
+
                     </div>
                 </div>
             </div>
@@ -277,13 +288,20 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+
+<%--<%
+    if (request.getAttribute("error").equals("error")) {%>
+<script type="text/javascript">alert("Vui lòng nhập lại thời gian sửa")</script>
+<%      }
+%>--%>
+
 <script type="text/javascript">
     $(document).ready(function () {
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
         $('#assignedTime').datepicker({
-            format: 'dd-MM-yyyy',
+            format: 'dd-mm-yyyy',
             onRender: function (date) {
                 return date.valueOf() < now.valueOf() ? 'disabled' : '';
             }

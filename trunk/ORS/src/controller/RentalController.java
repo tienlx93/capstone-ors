@@ -38,6 +38,7 @@ public class RentalController extends HttpServlet {
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignStaff = request.getParameter("assignStaff");
             String description = request.getParameter("description");
+            String endDate = request.getParameter("endDate");
             Rental rental = dao.get(id);
             Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
             RentalItemDAO rentalItemDAO = new RentalItemDAO();
@@ -58,7 +59,7 @@ public class RentalController extends HttpServlet {
                     sms.send();
                     break;
                 case "assign":
-                    SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                    /*SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
                     SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
                     String reformatted = null;
                     try {
@@ -66,16 +67,30 @@ public class RentalController extends HttpServlet {
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    Date date = java.sql.Date.valueOf(reformatted);
-                    dao.update(id, contractId, assignStaff, 2, description, date);
-                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach da duoc chap nhan. Thoi gian du kien: " + df.format(date));
-                    sms.send();
+                    Date date = java.sql.Date.valueOf(reformatted);*/
 
-                    for (RentalDetail rentalDetail : rentalDetailCollection) {
-                        rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
+                    SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
+                    Date date = null;
+                    SimpleDateFormat fromEnd = new SimpleDateFormat("yyyy-MM-dd");
+                    Date dateEnd = null;
+                    try {
+                        date = fromAssign.parse(assignedTime);
+                        dateEnd = fromEnd.parse(endDate);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
                     }
+                    if (date.getTime() < dateEnd.getTime()) {
+                        dao.update(id, contractId, assignStaff, 2, description, date);
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach da duoc chap nhan. Thoi gian du kien: " + df.format(date));
+                        sms.send();
 
+                        for (RentalDetail rentalDetail : rentalDetailCollection) {
+                            rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
+                        }
+                    } else {
+
+                    }
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);

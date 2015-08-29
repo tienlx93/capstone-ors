@@ -38,7 +38,7 @@ public class RentalController extends HttpServlet {
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignStaff = request.getParameter("assignStaff");
             String description = request.getParameter("description");
-            String endDate = request.getParameter("endDate");
+
             Rental rental = dao.get(id);
             Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
             RentalItemDAO rentalItemDAO = new RentalItemDAO();
@@ -71,15 +71,14 @@ public class RentalController extends HttpServlet {
 
                     SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
-                    SimpleDateFormat fromEnd = new SimpleDateFormat("yyyy-MM-dd");
-                    Date dateEnd = null;
+
                     try {
                         date = fromAssign.parse(assignedTime);
-                        dateEnd = fromEnd.parse(endDate);
+
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    if (date.getTime() < dateEnd.getTime()) {
+
                         dao.update(id, contractId, assignStaff, 2, description, date);
                         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                         sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach da duoc chap nhan. Thoi gian du kien: " + df.format(date));
@@ -88,9 +87,7 @@ public class RentalController extends HttpServlet {
                         for (RentalDetail rentalDetail : rentalDetailCollection) {
                             rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
                         }
-                    } else {
 
-                    }
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);

@@ -108,7 +108,7 @@ public class RepairController extends HttpServlet {
                 ScheduleService service = new ScheduleService();
                 Map<Integer, Repair> suggestMap = service.makeRepairSchedule();
                 request.setAttribute("suggestMap", suggestMap);
-                request.setAttribute("error", "true");
+
                 rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
                 rd.forward(request, response);
             } else if (action.equals("filter")) {

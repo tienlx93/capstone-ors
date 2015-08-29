@@ -184,7 +184,8 @@
                                                                     <input type="hidden" name="description"
                                                                            value="${item.description}">
                                                                     <input type="hidden" name="endDate"
-                                                                           value="${item.contractByContractId.endDate}">
+                                                                           value="${item.contractByContractId.endDate}"
+                                                                           id="endDate">
                                                                     <select name="assignedStaff"
                                                                             class="form-control">
                                                                         <option value="">(Không có đề xuất)</option>
@@ -450,11 +451,13 @@
     $(document).ready(function () {
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+        var endDate = document.getElementById('endDate').value;
+        var end = new Date(endDate);
 
         $('.datetime').datepicker({
             format: 'dd-mm-yyyy',
             onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                return (date.valueOf() < now.valueOf() || date.valueOf() > end.valueOf())  ? 'disabled' : '';
             }
         }).data('datepicker');
 

@@ -38,7 +38,7 @@ public class RepairController extends HttpServlet {
             String assignedStaff = request.getParameter("assignedStaff");
             String description = request.getParameter("description");
             String assignedTime = request.getParameter("assignedTime");
-            String endDate = request.getParameter("endDate");
+
 
             SMSService sms = new SMSService();
             ContractDAO contractDAO = new ContractDAO();
@@ -55,26 +55,21 @@ public class RepairController extends HttpServlet {
                 case "assign":
                     SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
-                    SimpleDateFormat fromEnd = new SimpleDateFormat("yyyy-MM-dd");
-                    Date dateEnd = null;
+
                     try {
                         date = fromAssign.parse(assignedTime);
-                        dateEnd = fromEnd.parse(endDate);
+
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    if (date.getTime() < dateEnd.getTime()) {
-                        dao.update(id, contractId, assignedStaff, description, date, 2);
-                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                        sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
-                                " Thoi gian du kien: " + df.format(date));
-                        sms.send();
-                        response.sendRedirect("/admin/repair");
-                    } else {
-                        request.setAttribute("error", "error");
-                        //lam sao quay ve trang
-                        response.sendRedirect("/admin/repair");
-                    }
+
+                    dao.update(id, contractId, assignedStaff, description, date, 2);
+                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
+                            " Thoi gian du kien: " + df.format(date));
+                    sms.send();
+                    response.sendRedirect("/admin/repair");
+
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
@@ -141,7 +136,7 @@ public class RepairController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-                Repair repair =  dao.get(Integer.parseInt(request.getParameter("id")));
+                Repair repair = dao.get(Integer.parseInt(request.getParameter("id")));
                 Collection<RepairDetail> repairDetails = repair.getRepairDetailsById();
                 List<Amenity> list = new ArrayList<>();
                 for (RepairDetail repairDetail : repairDetails) {
@@ -149,7 +144,7 @@ public class RepairController extends HttpServlet {
                     list.add(amenity);
                 }
                 request.setAttribute("listAmenity", list);
-                request.setAttribute("error", "true");
+
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
             } else if (action.equals("viewProfile")) {
                 AccountDAO daoAcc = new AccountDAO();

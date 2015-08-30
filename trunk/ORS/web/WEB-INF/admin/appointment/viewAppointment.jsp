@@ -179,7 +179,7 @@
                                                                                 <input type="hidden" name="id"
                                                                                        value="${item.id}">
                                                                                 <select name="assignedStaff"
-                                                                                        id="assignedStaff"
+                                                                                        id="assignedStaff" required
                                                                                         class="form-control">
                                                                                     <option value="">(Không có đề xuất)
                                                                                     </option>

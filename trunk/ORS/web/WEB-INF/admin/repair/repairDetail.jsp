@@ -120,13 +120,22 @@
                                 </div>
                             </div>
                             <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Ngày bắt đầu hợp đồng</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate
+                                            value="${info.contractByContractId.startDate}"
+                                            pattern="dd-MM-yyyy"/>
+                                    <input type="hidden" id="startDate" value="${info.contractByContractId.startDate}">
+                                </div>
+
                                 <label class="col-sm-2 control-label">Ngày kết thúc hợp đồng</label>
 
                                 <div class="col-sm-4">
                                     <fmt:formatDate
                                             value="${info.contractByContractId.endDate}"
                                             pattern="dd-MM-yyyy"/>
-                                    <input type="hidden" name="endDate" value="${info.contractByContractId.endDate}">
+                                    <input type="hidden" id="endDate" value="${info.contractByContractId.endDate}">
                                 </div>
                             </div>
 
@@ -164,20 +173,18 @@
                                 <c:choose>
                                     <c:when test="${user.roleId==2 && (info.repairStatusId == 1 || info.repairStatusId == 2)}">
                                         <div class="col-sm-4">
-                                                <%--<input type='text' class="form-control"--%>
-                                                <%--name="assignedTime"--%>
-                                                <%--id="assignedTime"--%>
-                                                <%--value="${info.assignedTime}"/>--%>
+
                                             <fmt:formatDate
                                                     value="${info.assignedTime}"
                                                     pattern="dd-MM-yyyy" var="newDate"/>
                                             <input type="text" name="assignedTime" id="assignedTime"
-                                                   class="form-control" value="${newDate}">
+                                                   class="form-control" value="${newDate}" required readonly>
                                         </div>
                                     </c:when>
                                     <c:otherwise>
                                         <div class="col-sm-4">
                                             <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
+                                            <input type="hidden" id="repairDate" value="${info.assignedTime}">
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
@@ -196,7 +203,8 @@
                                                        value="${info.assignedStaff}">
                                             </c:when>
                                             <c:otherwise>
-                                                <select name="assignedStaff" id="assignedStaff" class="form-control">
+                                                <select name="assignedStaff" id="assignedStaff" class="form-control"
+                                                        required>
                                                     <c:choose>
                                                         <c:when test="${info.repairStatusId == 1}">
                                                             <option value="" selected></option>
@@ -236,7 +244,8 @@
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
                                         <c:if test="${info.repairStatusId == 1}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary"
+                                                    onclick="return check()">
                                                 Giao việc
                                             </button>
                                             <button type="submit" value="reject" name="button" class="btn btn-danger">
@@ -253,7 +262,7 @@
                                         <c:choose>
                                             <c:when test="${info.repairStatusId == 2}">
                                                 <button type="submit" value="change5" name="button"
-                                                        class="btn btn-primary">
+                                                        class="btn btn-primary" id="agree" disabled>
                                                     Đồng ý sửa chữa
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
@@ -289,23 +298,40 @@
 
 </div>
 
-<%--<%
-    if (request.getAttribute("error").equals("error")) {%>
-<script type="text/javascript">alert("Vui lòng nhập lại thời gian sửa")</script>
-<%      }
-%>--%>
+<script type="text/javascript">
+    function check() {
+        var date = document.getElementById('assignedTime').value;
+        if (date.valueOf() == "") {
+            alert('Vui lòng nhập ngày sửa chữa');
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
 
 <script type="text/javascript">
     $(document).ready(function () {
+        var startDate = document.getElementById('startDate').value;
+        var start = new Date(startDate);
+        var endDate = document.getElementById('endDate').value;
+        var end = new Date(endDate);
+
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
         $('#assignedTime').datepicker({
             format: 'dd-mm-yyyy',
             onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf()) ? 'disabled' : '';
             }
         }).data('datepicker');
+
+        var repairDate = document.getElementById('repairDate').value;
+        var repair = new Date(repairDate);
+        if (now.valueOf() < repair.valueOf()) {
+            $("#agree").removeAttr("disabled");
+        }
 
     });
 

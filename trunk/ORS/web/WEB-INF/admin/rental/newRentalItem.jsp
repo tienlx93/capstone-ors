@@ -27,7 +27,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 
-    <script>
+    <%--<script>
         function validateform() {
             var price = document.myform.price.value;
             var quantity = document.myform.quantity.value;
@@ -48,7 +48,7 @@
                 return true;
             }
         }
-    </script>
+    </script>--%>
 
     <title>Office Rental Service</title>
 </head>
@@ -70,7 +70,8 @@
                         <h2 style="margin-top: 5px">Thêm mới thiết bị</h2>
                     </div>
                     <div>
-                        <form action="rentalItem" method="post" name="myform" onsubmit="return validateform()">
+                        <%--<form action="rentalItem" method="post" name="myform" onsubmit="return validateform()">--%>
+                        <form action="rentalItem" method="post" name="myform">
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2 control-label">Mã thiết bị</label>
 
@@ -97,16 +98,16 @@
                                 <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
 
                                 <div class="col-sm-4">
-                                    <input type="text" name="price" class="form-control" id="price"
-                                           value="${rentalItem.price}" required>
+                                    <input type="number" name="price" class="form-control" id="price"
+                                           value="${rentalItem.price}" required min="1">
                                     <span style="color: red" id="priceValidate"></span>
                                 </div>
 
                                 <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
 
                                 <div class="col-sm-4">
-                                    <input type="text" name="quantity" class="form-control" id="quantity"
-                                           value="${rentalItem.quantity}" required>
+                                    <input type="number" name="quantity" class="form-control" id="quantity"
+                                           value="${rentalItem.quantity}" required step="1" min="1">
                                     <span style="color: red" id="quantityValidate"></span>
                                 </div>
                             </div>
@@ -133,7 +134,7 @@
                                         </div>
                                     </div>
                                     <div class="clear-float"></div>
-                                    <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
+                                    <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh" required>
                                 </div>
                             </div>
 

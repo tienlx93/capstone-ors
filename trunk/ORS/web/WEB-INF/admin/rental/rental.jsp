@@ -18,7 +18,9 @@
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/font-awesome-4.3.0/css/font-awesome.min.css"
           type="text/css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+    <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
+          type="text/css">--%>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker3.css"
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
@@ -33,8 +35,10 @@
             src="${pageContext.request.contextPath}/lib/listjs/list.pagination.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <%--<script type="text/javascript"
+            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>--%>
     <script type="text/javascript"
-            src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+            src="${pageContext.request.contextPath}/lib/bootstrap-datepicker-1.4.0-dist/js/bootstrap-datepicker.js"></script>
     <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
@@ -166,10 +170,12 @@
                                                                            value="${item.contractId}">
                                                                     <input type="hidden" name="description"
                                                                            value="${item.description}">
-                                                                    <input type="hidden" name="endDate"
+                                                                    <input type="hidden" id="endDate" class="endDate"
                                                                            value="${item.contractByContractId.endDate}">
+                                                                    <input type="hidden" id="startDate" class="startDate"
+                                                                           value="${item.contractByContractId.startDate}">
                                                                     <select name="assignStaff"
-                                                                            class="form-control">
+                                                                            class="form-control" required>
                                                                         <option value="">(Không có đề xuất)</option>
                                                                         <c:forEach var="itemAcc"
                                                                                    items="<%= listAcc %>">
@@ -184,8 +190,8 @@
                                                                     <fmt:formatDate
                                                                             value="${suggestMap[item.id].assignedTime}"
                                                                             pattern="dd-MM-yyyy" var="newDate"/>
-                                                                    <input type="text" name="assignedTime"
-                                                                           class="datetime" value="${newDate}">
+                                                                    <input type="text" name="${item.contractId}"
+                                                                           class="datetime" value="${newDate}" readonly required>
                                                                 </td>
                                                                 <td>
                                                                     <div class="btn-group" role="group">
@@ -441,15 +447,37 @@
 </body>
 <script>
     $(document).ready(function () {
+        //var startDate = document.getElementById('startDate').value;
+        //var start = new Date(startDate);
+        //var endDate = document.getElementById('endDate').value;
+        //var end = new Date(endDate);
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-        $('.datetime').datepicker({
-            format: 'dd-mm-yyyy',
-            onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
-            }
-        }).data('datepicker');
+        var datepicker= $('.datetime ');
+        var endDate = $('.endDate');
+        var startDate = $('.startDate');
+
+        for (var i = 0; i < datepicker.length; i++) {
+            var end = new Date(endDate[i].value);
+            var start = new Date(startDate[i].value);
+            $(datepicker[i]).datepicker({
+                format: 'dd-mm-yyyy',
+                startDate: (now.valueOf() < start.valueOf()) ? start : now,
+                endDate: end
+            }).data('datepicker');
+        }
+
+
+        /*$('.datetime').each(function(){
+            $(this).datepicker({
+                format: 'dd-mm-yyyy',
+                onRender: function (date) {
+                    return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf())  ? 'disabled' : '';
+                }
+            }).data('datepicker');
+        });*/
+
 
         $.ajax({
             url: "/api?action=officeName", success: function (result) {

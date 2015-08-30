@@ -140,6 +140,7 @@
                                     <fmt:formatDate value="${info.time}"
                                                     pattern="dd-MM-YYYY"/>
                                 </div>
+                                <input type="hidden" id="meetDate" value="${info.time}">
 
                                 <label class="col-sm-2 control-label">Thời gian gặp</label>
 
@@ -157,15 +158,17 @@
                                         List<Account> listAcc = acc.findStaff();%>
                                     <div class="col-sm-4">
                                         <c:choose>
+
                                             <c:when test="${info.statusId == 5 || info.statusId == 4 || info.statusId == 3}">
                                                 ${info.assignedStaff}
                                                 <input type="hidden" name="assignedStaff" id="assignedStaff"
                                                        value="${info.assignedStaff}">
                                             </c:when>
                                             <c:otherwise>
-                                                <select name="assignedStaff" id="assignedStaff" class="form-control">
+                                                <select name="assignedStaff" id="assignedStaff" class="form-control" required>
                                                     <c:choose>
                                                         <c:when test="${info.statusId == 1}">
+
                                                             <option value="" selected></option>
                                                             <c:forEach var="itemAcc" items="<%= listAcc %>">
                                                                 <option value="${itemAcc.username}">${itemAcc.username}</option>
@@ -175,8 +178,7 @@
                                                             <option value=""></option>
                                                             <c:forEach var="itemAcc" items="<%= listAcc %>">
                                                                 <option value="${itemAcc.username}"
-                                                                        <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>
-                                                                        >${itemAcc.username}</option>
+                                                                        <c:if test="${info.assignedStaff==itemAcc.username}">selected</c:if>>${itemAcc.username}</option>
                                                             </c:forEach>
                                                         </c:otherwise>
                                                     </c:choose>
@@ -267,7 +269,7 @@
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
-                                        <button class="btn btn-primary" type="submit" name="button" value="update3">
+                                        <button class="btn btn-primary" type="submit" name="button" value="update3" disabled id="agree">
                                             Khách hàng muốn kí hợp đồng
                                         </button>
                                         <button class="btn btn-danger" type="button" onclick="inputComment()">
@@ -327,6 +329,7 @@
         $('#myModal').modal('show');
     }
 </script>
+
 <script type="text/javascript">
     $(document).ready(function () {
         var nowTemp = new Date();
@@ -339,6 +342,17 @@
             }
         }).data('datepicker');
 
+        var meetDate = document.getElementById('meetDate').value;
+        var meet = new Date(meetDate);
+        var afterMeet = new Date(meet);
+        afterMeet.setHours(meet.getHours() + 2);
+
+        var checkTime = nowTemp - meet;
+        var checkTime4 = afterMeet - meet;
+
+        if (checkTime.valueOf() < checkTime4.valueOf() && checkTime.valueOf > 0) {
+            $("#agree").removeAttr("disabled");
+        }
     });
 
 </script>

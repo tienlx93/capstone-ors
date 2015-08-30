@@ -27,6 +27,7 @@
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -47,7 +48,8 @@
                         Danh sách thiết bị
                     </div>
                     <div>
-                        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/rentalItem?action=new">
+                        <a class="btn btn-default"
+                           href="${pageContext.request.contextPath}/admin/rentalItem?action=new">
                             <span class="icon color5"><i class="fa fa-plus"></i>
                             Thêm mới thiết bị</span>
                         </a>
@@ -70,13 +72,23 @@
                                     <td>${item.name}</td>
                                     <td>${item.description}</td>
                                     <td><fmt:formatNumber type="number"
-                                                           value="${item.price}" />
+                                                          value="${item.price}"/>
                                     </td>
                                     <td>${item.quantity}</td>
-                                    <td><a href="rentalItem?action=edit&id=${item.id}"
-                                           title="Sửa"
-                                           class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
-                                      </td>
+                                    <td>
+                                        <form action="rentalItem"
+                                              method="post" class="rentalItemForm">
+                                            <input type="hidden" name="action" value="delete"/>
+                                            <input type="hidden" value="${item.id}" name="id">
+                                            <button type="submit"
+                                                    class="btn btn-icon btn-default">
+                                                <i class="fa fa-trash-o color10" title="Xóa"></i></button>
+
+                                            <a href="rentalItem?action=edit&id=${item.id}"
+                                               title="Sửa"
+                                               class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+                                        </form>
+                                    </td>
                                 </tr>
                             </c:forEach>
                             </tbody>
@@ -91,7 +103,9 @@
                                     </a>
                                 </li>
                                 <c:forEach var="i" begin="1" end="${pageCount}">
-                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#"
+                                                                                                           onclick="goto(${i})">${i}</a>
+                                    </li>
 
                                 </c:forEach>
                                 <li id="next">
@@ -115,24 +129,24 @@
     var pageCount = ${pageCount};
     var prev = function () {
         if (pageNumber > 1) {
-            pageNumber --;
+            pageNumber--;
             getPage(pageNumber);
         }
     };
     var next = function () {
         if (pageNumber < pageCount) {
-            pageNumber ++;
+            pageNumber++;
             getPage(pageNumber);
         }
     };
-    var goto = function(i) {
+    var goto = function (i) {
         pageNumber = i;
         getPage(pageNumber);
     };
-    var getPage = function(page) {
+    var getPage = function (page) {
         var selector = $(".items");
         selector.removeClass("active");
-        $(selector[page-1]).addClass("active");
+        $(selector[page - 1]).addClass("active");
         $("#next").removeClass("disabled");
         $("#prev").removeClass("disabled");
         if (page == pageCount) {
@@ -152,5 +166,38 @@
             $("#table-body").html(data);
         });
     };
+</script>
+
+<script type="text/javascript">
+
+    $('.rentalItemForm').submit(function () {
+        var currentForm = this;
+        event.preventDefault();
+        /*bootbox.confirm("Bạn đồng ý xóa thiết bị này?", function() {
+         currentForm.submit();
+         });*/
+        bootbox.dialog({
+            size: 'small',
+            message: "Bạn đồng ý xóa thiết bị này?",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
+
+                    }
+                }, ok: {
+                    label: "Đồng ý",
+                    className: "btn-primary",
+                    callback: function () {
+                        currentForm.submit();
+                    }
+                }
+            }
+        });
+
+    });
+
+
 </script>
 </html>

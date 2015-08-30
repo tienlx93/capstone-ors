@@ -39,6 +39,7 @@ public class RepairController extends HttpServlet {
             String description = request.getParameter("description");
             String assignedTime = request.getParameter("assignedTime");
 
+
             SMSService sms = new SMSService();
             ContractDAO contractDAO = new ContractDAO();
             Contract current = contractDAO.get(contractId);
@@ -49,32 +50,40 @@ public class RepairController extends HttpServlet {
                     dao.changeStatus(id, 4);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan.");
                     sms.send();
+                    response.sendRedirect("/admin/repair");
                     break;
                 case "assign":
-                    SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
+
                     try {
-                        date = fromUser.parse(assignedTime);
+                        date = fromAssign.parse(assignedTime);
+
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+
                     dao.update(id, contractId, assignedStaff, description, date, 2);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
                             " Thoi gian du kien: " + df.format(date));
                     sms.send();
+                    response.sendRedirect("/admin/repair");
+
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
+                    response.sendRedirect("/admin/repair");
                     break;
                 case "change3":
                     dao.changeStatus(id, 3);
+                    response.sendRedirect("/admin/repair");
                     break;
                 case "change5":
                     dao.changeStatus(id, 5);
+                    response.sendRedirect("/admin/repair");
                     break;
             }
-            response.sendRedirect("/admin/repair");
 
         }
 
@@ -99,6 +108,7 @@ public class RepairController extends HttpServlet {
                 ScheduleService service = new ScheduleService();
                 Map<Integer, Repair> suggestMap = service.makeRepairSchedule();
                 request.setAttribute("suggestMap", suggestMap);
+
                 rd = request.getRequestDispatcher("/WEB-INF/admin/repair/repair.jsp");
                 rd.forward(request, response);
             } else if (action.equals("filter")) {
@@ -126,7 +136,7 @@ public class RepairController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("edit")) {
                 request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
-                Repair repair =  dao.get(Integer.parseInt(request.getParameter("id")));
+                Repair repair = dao.get(Integer.parseInt(request.getParameter("id")));
                 Collection<RepairDetail> repairDetails = repair.getRepairDetailsById();
                 List<Amenity> list = new ArrayList<>();
                 for (RepairDetail repairDetail : repairDetails) {
@@ -134,6 +144,7 @@ public class RepairController extends HttpServlet {
                     list.add(amenity);
                 }
                 request.setAttribute("listAmenity", list);
+
                 request.getRequestDispatcher("/WEB-INF/admin/repair/repairDetail.jsp").forward(request, response);
             } else if (action.equals("viewProfile")) {
                 AccountDAO daoAcc = new AccountDAO();

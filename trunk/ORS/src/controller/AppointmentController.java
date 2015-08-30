@@ -1,9 +1,11 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.AccountDAO;
 import dao.AppointmentDAO;
 import entity.Account;
 import entity.Appointment;
+import json.AssignResultJSON;
 import service.SMSService;
 import service.ScheduleService;
 import util.AccentRemover;
@@ -16,10 +18,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by xps on 6/11/2015.
@@ -31,8 +33,10 @@ public class AppointmentController extends HttpServlet {
         String action = request.getParameter("action");
         String button = request.getParameter("button");
         String id = request.getParameter("id");
+        int appointmentId = Integer.parseInt(id);
         AppointmentDAO dao = new AppointmentDAO();
-        Appointment appointment = dao.get(Integer.valueOf(id));
+        Appointment appointment = dao.get(appointmentId);
+
         SMSService sms = new SMSService();
         String phone = appointment.getAccountByCustomerUsername().getProfileByUsername().getPhone();
         sms.setPhone(phone);
@@ -40,20 +44,31 @@ public class AppointmentController extends HttpServlet {
         if (action.equals("editing")) {
             switch (button) {
                 case "assign":
-                    dao.update(Integer.parseInt(request.getParameter("id")), request.getParameter("assignedStaff"),
-                            appointment.getTime(), 2);
-                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy - hh:mm");
-                    sms.setMessage("(ORS) Lich hen cua Quy khach da duoc chap nhan. Hen Quy khach vao thoi gian: "
-                            + df.format(appointment.getTime()));
-                    try {
-                        sms.send();
-                    } catch (IOException e) {
-                        System.out.println("Fail to send sms");
+                    PrintWriter out = response.getWriter();
+                    Gson gson = new Gson();
+                    ScheduleService service = new ScheduleService();
+                    String assignedStaff = request.getParameter("assignedStaff");
+                    //todo: check 4 job and no job in 2 hours
+                    AssignResultJSON staffAvailable = service.isStaffAvailable(appointment, assignedStaff);
+                    if (staffAvailable.status <= 0) {
+                        out.print(gson.toJson(staffAvailable));
+                    } else {
+                        dao.update(appointmentId, assignedStaff, appointment.getTime(), 2);
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy - hh:mm");
+                        sms.setMessage("(ORS) Lich hen cua Quy khach da duoc chap nhan. Hen Quy khach vao thoi gian: "
+                                + df.format(appointment.getTime()));
+                        try {
+                            sms.send();
+                        } catch (IOException e) {
+                            System.out.println("Fail to send sms");
+                        }
+
+                        out.print(gson.toJson("Success"));
                     }
                     break;
                 case "reject":
                     comment = request.getParameter("comment");
-                    if (comment!= null) {
+                    if (comment != null) {
                         dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, "");
                         String nonUTF8Comment = AccentRemover.removeAccent(comment);
                         sms.setMessage("(ORS) Lich hen cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
@@ -62,11 +77,11 @@ public class AppointmentController extends HttpServlet {
                         } catch (IOException e) {
                             System.out.println("Fail to send sms");
                         }
-                    } 
+                    }
                     break;
                 case "reject2":
                     comment = request.getParameter("comment");
-                    if (comment!= null) {
+                    if (comment != null) {
                         dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
                     }
                     break;
@@ -74,7 +89,9 @@ public class AppointmentController extends HttpServlet {
                     dao.updateStatus(Integer.parseInt(request.getParameter("id")), 3);
                     break;
             }
-            response.sendRedirect("/admin/appointment");
+            if (!button.equals("assign")) {
+                response.sendRedirect("/admin/appointment");
+            }
         }
     }
 
@@ -86,12 +103,22 @@ public class AppointmentController extends HttpServlet {
             String action = request.getParameter("action");
             RequestDispatcher rd;
             if (action == null) {
-                ScheduleService service = new ScheduleService();
-                Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
-                request.setAttribute("suggestMap", suggestMap);
                 List<Appointment> list;
                 if (account.getRoleId() == 2) {
                     list = dao.findAll();
+                    List<Appointment> unassignedList;
+                    unassignedList = dao.getAppointmentListByStatus(1);
+                    Collections.sort(unassignedList, new Comparator<Appointment>() {
+                        @Override
+                        public int compare(Appointment o1, Appointment o2) {
+                            return o1.getTime().compareTo(o2.getTime());
+                        }
+                    });
+
+                    ScheduleService service = new ScheduleService(unassignedList.get(0).getTime(),
+                            unassignedList.get(unassignedList.size() - 1).getTime());
+                    Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
+                    request.setAttribute("suggestMap", suggestMap);
                 } else {
                     list = dao.getAppointmentListByStaffAndOffice(account.getUsername(), "");
                 }

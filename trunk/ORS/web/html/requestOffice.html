@@ -211,7 +211,7 @@
             </div>
             <div class="form-group">
                 <label for="district">Quận</label>
-                <input type="text" ng-model="reOffice.district"
+                <input type="text" ng-model="reOffice.district" autocomplete="off"
                        typeahead="district for district in districts | filter:$viewValue"
                        class="form-control" id="district" required name="district">
                 <span class="error" ng-show="requestOfficeForm.district.$dirty && requestOfficeForm.district.$invalid">

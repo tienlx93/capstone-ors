@@ -5,6 +5,8 @@ import dao.AppointmentDAO;
 import dao.RentalDAO;
 import dao.RepairDAO;
 import entity.*;
+import json.AssignResultJSON;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -40,6 +42,19 @@ public class ScheduleService {
         Calendar calendar = Calendar.getInstance();
         startDate = getStartOfWeek(calendar);
         endDate = addDays(startDate, 7);
+
+        staffList = new AccountDAO().findStaff();
+        appointmentDAO = new AppointmentDAO();
+        rentalDAO = new RentalDAO();
+        repairDAO = new RepairDAO();
+        dayJobCount = new HashMap<>();
+        df = new SimpleDateFormat("yyyy-MM-dd");
+    }
+
+    public ScheduleService(Date start, Date end) {
+        session = util.HibernateUtil.getSession();
+        startDate = getStartOfDay(start);
+        endDate = addDays(getStartOfDay(end), 1);
 
         staffList = new AccountDAO().findStaff();
         appointmentDAO = new AppointmentDAO();
@@ -280,5 +295,71 @@ public class ScheduleService {
         calendar.set(Calendar.SECOND, 0);
         calendar.set(Calendar.MILLISECOND, 0);
         return calendar.getTime();
+    }
+
+    public AssignResultJSON isStaffAvailable(Appointment appointment, String staff) {
+        AssignResultJSON json = new AssignResultJSON();
+        json.status = AssignResultJSON.STATUS_UNAVAILABLE_ALL;
+        AccountDAO accountDAO = new AccountDAO();
+        Account assignedStaff = accountDAO.get(staff);
+        if (assignedStaff == null) {
+            return json;
+        }
+        Date appointmentDate = appointment.getTime();
+        Date startDate = getStartOfDay(appointmentDate);
+        Date endDate = addDays(startDate, 1);
+        try {
+            String sql = "exec GetDetailJob :startDate, :endDate, :staff";
+            SQLQuery query = session.createSQLQuery(sql)
+                    .addScalar("Id", StandardBasicTypes.INTEGER)
+                    .addScalar("Time", StandardBasicTypes.TIMESTAMP)
+                    .addScalar("Kind", StandardBasicTypes.INTEGER);
+            query.setString("startDate", df.format(startDate));
+            query.setString("endDate", df.format(endDate));
+            query.setString("staff", staff);
+
+            List<Object[]> rows = query.list();
+            json.jobCount = rows.size();
+            if (json.jobCount >= 6) {
+                json.status = AssignResultJSON.STATUS_UNAVAILABLE_JOBCOUNT;
+            } else if (json.jobCount >= 4) {
+                json.status = AssignResultJSON.STATUS_CONFIRM;
+            } else {
+                json.status = AssignResultJSON.STATUS_AVAILABLE;
+            }
+            Timestamp dateTime;
+            Date minDateTime = new Date();
+            Date jobTime = appointment.getTime();
+            long different;
+            long minDifferent = Long.MAX_VALUE;
+            for (Object[] row : rows) {
+                if (row[2] == 1) {
+                    dateTime = (Timestamp)row[1];
+                    different = Math.abs(dateTime.getTime() - jobTime.getTime());
+                    if (minDifferent > different) {
+                        minDifferent = different;
+                        minDateTime = dateTime;
+                    }
+                }
+            }
+            double hoursDiff = (double)minDifferent/ (3600* 1000);
+            if (hoursDiff <= 1) {
+                json.nearJob = minDateTime;
+                if (json.status >= 0) {
+                    json.status = AssignResultJSON.STATUS_UNAVAILABLE_NEARJOB;
+                } else {
+                    json.status = AssignResultJSON.STATUS_UNAVAILABLE_ALL;
+                }
+            } else if (hoursDiff <= 2){
+                json.nearJob = minDateTime;
+                if (json.status > 0) {
+                    json.status = AssignResultJSON.STATUS_CONFIRM;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return json;
     }
 }

@@ -226,10 +226,11 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             query.setDate("endDate", endDate);
             query.setString("district", district);
             Object o = query.uniqueResult();
-            float percent;
+            double percent = 0;
             if (o != null) {
                 percent = (Long) o * 5 /100;
             }
+            result += Math.round(percent);
 
             String sql2 = "from Contract where startDate < :endDate and endDate >= :startDate";
             if (!district.equals("")) {

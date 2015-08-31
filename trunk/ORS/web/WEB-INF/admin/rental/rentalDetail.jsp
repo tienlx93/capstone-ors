@@ -287,7 +287,7 @@
                                             </c:when>
                                             <c:when test="${info.statusId == 5}">
                                                 <button type="submit" value="change3" name="button"
-                                                        class="btn btn-primary">Khách
+                                                        class="btn btn-primary" disabled id="happy">Khách
                                                     hàng hài lòng
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
@@ -347,6 +347,9 @@
         var rental = new Date(rentalDate);
         if (now.valueOf() < rental.valueOf()) {
             $("#agree").removeAttr("disabled");
+        }
+        if (now.valueOf() > rental.valueOf()) {
+            $("#happy").removeAttr("disabled");
         }
     });
 

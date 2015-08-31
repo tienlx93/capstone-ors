@@ -65,3 +65,13 @@ input.ng-dirty.ng-invalid {
     padding-left: 50px;
     margin: 5px 0;
 }
+
+.amenity-item {
+    background-color: #B5D334;
+    padding: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}

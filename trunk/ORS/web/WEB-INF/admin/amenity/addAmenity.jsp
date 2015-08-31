@@ -62,7 +62,6 @@
               </div>
 
 
-
               <div class="form-group clearfix">
                 <label for="weight" class="col-sm-2">Trọng số</label>
                 <div class="col-sm-10">

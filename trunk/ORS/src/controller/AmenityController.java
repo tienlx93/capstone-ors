@@ -38,7 +38,7 @@ public class AmenityController extends HttpServlet {
             ame.setName(request.getParameter("name"));
             ame.setDescription(request.getParameter("description"));
             ame.setWeight(Integer.parseInt(request.getParameter("weight")));
-            ame.setWeight(Integer.parseInt(request.getParameter("priority")));
+            ame.setPriority(Integer.parseInt(request.getParameter("priority")));
             ame.setAmenityGroupId(Integer.parseInt(request.getParameter("group")));
             dao.save(ame);
         } else if (action.equals("delete")) {

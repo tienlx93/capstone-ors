@@ -21,6 +21,7 @@ import java.io.*;
 import java.net.*;
 import java.sql.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.Date;
 
@@ -42,7 +43,11 @@ public class ApiController extends HttpServlet {
         String action = request.getParameter("action");
         switch (action) {
             case "changeStatus":
-                changeStatus(request, out);
+                try {
+                    changeStatus(request, out);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 break;
             case "contractReturn":
                 contractReturn(request, out);
@@ -426,7 +431,7 @@ public class ApiController extends HttpServlet {
         }
     }
 
-    private void changeStatus(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+    private void changeStatus(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException, ParseException {
         String type = request.getParameter("type");
         String idString = request.getParameter("id");
         int id = Integer.parseInt(idString);
@@ -434,16 +439,26 @@ public class ApiController extends HttpServlet {
         String comment = request.getParameter("comment");
         int status = Integer.parseInt(statusString);
         boolean result = false;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date sysDate = new Date(System.currentTimeMillis());
+        Date today = sdf.parse(String.valueOf(sysDate));
         switch (type) {
             case "appointment": {
                 AppointmentDAO dao = new AppointmentDAO();
+                Appointment appointment = dao.get(id);
+                Date date = sdf.parse(String.valueOf(appointment.getTime()));
+                if (today.after(date) || today.equals(date)){
                 if (comment != null) {
                     comment = new String(comment.getBytes("iso-8859-1"), "UTF-8");
                     result = dao.updateComment(id, status, comment);
                 } else {
                     result = dao.updateStatus(id, status);
                 }
+                    out.print(gson.toJson("Success"));
                 break;
+                } else {
+                    out.print(gson.toJson("Wrong"));
+                }
             }
             case "rental": {
                 RentalDAO dao = new RentalDAO();

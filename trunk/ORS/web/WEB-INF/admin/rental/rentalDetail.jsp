@@ -113,12 +113,30 @@
                                 <div class="col-sm-4">
                                     ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
                                 </div>
-                            </div>
-                            <div class="form-group clearfix">
+
                                 <label class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-4">
                                     ${info.contractByContractId.accountByCustomerUsername.profileByUsername.phone}
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label class="col-sm-2 control-label">Ngày bắt đầu hợp đồng</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate
+                                            value="${info.contractByContractId.startDate}"
+                                            pattern="dd-MM-yyyy"/>
+                                    <input type="hidden" id="startDate" value="${info.contractByContractId.startDate}">
+                                </div>
+
+                                <label class="col-sm-2 control-label">Ngày kết thúc hợp đồng</label>
+
+                                <div class="col-sm-4">
+                                    <fmt:formatDate
+                                            value="${info.contractByContractId.endDate}"
+                                            pattern="dd-MM-yyyy"/>
+                                    <input type="hidden" id="endDate" value="${info.contractByContractId.endDate}">
                                 </div>
                             </div>
 
@@ -140,26 +158,27 @@
                                 </div>
                             </div>
 
-                            <c:if test="${user.roleId==2}">
-                                <div class="form-group clearfix">
-                                    <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
-                                    <c:choose>
-                                        <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                            <div class="col-sm-4">
-                                                <fmt:formatDate
-                                                        value="${info.assignedTime}"
-                                                        pattern="dd-MM-yyyy" var="newDate"/>
-                                                <input type="text" name="assignedTime" id="assignedTime"
-                                                       class="form-control" value="${newDate}">
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="col-sm-4">
-                                                <fmt:formatDate value="${info.assignedTime}" pattern="yyyy-MM-dd"/>
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
 
+                            <div class="form-group clearfix">
+                                <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
+                                <c:choose>
+                                    <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
+                                        <div class="col-sm-4">
+                                            <fmt:formatDate
+                                                    value="${info.assignedTime}"
+                                                    pattern="dd-MM-yyyy" var="newDate"/>
+                                            <input type="text" name="assignedTime" id="assignedTime"
+                                                   class="form-control" value="${newDate}" required readonly>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="col-sm-4">
+                                            <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
+                                            <input type="hidden" id="rentalDate" value="${info.assignedTime}">
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+                                <c:if test="${user.roleId==2}">
                                     <label for="assignStaff" class="col-sm-2 control-label">Nhân viên được giao</label>
 
                                     <% AccountDAO acc = new AccountDAO();
@@ -172,7 +191,8 @@
                                                        value="${info.assignStaff}">
                                             </c:when>
                                             <c:otherwise>
-                                                <select name="assignStaff" id="assignStaff" class="form-control">
+                                                <select name="assignStaff" id="assignStaff" class="form-control"
+                                                        required>
                                                     <c:choose>
                                                         <c:when test="${info.statusId == 1}">
                                                             <option value="" selected></option>
@@ -192,32 +212,13 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
+                                </c:if>
+                            </div>
 
-                                </div>
-                            </c:if>
-
-                            <%--<div class="form-group clearfix">
-                                <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
-                                <c:choose>
-                                    <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                        <div class="col-sm-4">
-                                            <input type='text' class="form-control"
-                                                   name="assignedTime"
-                                                   id="assignedTime"
-                                                   value="${info.assignedTime}"/>
-                                        </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <div class="col-sm-4">
-                                            <fmt:formatDate value="${info.assignedTime}" pattern="yyyy-MM-dd"/>
-                                        </div>
-                                    </c:otherwise>
-                                </c:choose>
-
-                            </div>--%>
 
                             <div class="form-group clearfix">
-                                <label for="list" class="col-sm-2 control-label clearfix">Thiết bị khách hàng yêu cầu</label>
+                                <label for="list" class="col-sm-2 control-label clearfix">Thiết bị khách hàng yêu
+                                    cầu</label>
 
                                 <div class="col-sm-10">
                                     <table class="table" id="list">
@@ -234,10 +235,10 @@
                                             <tr>
                                                 <td>${item.rentalItemByRentalItemId.name}</td>
                                                 <td><fmt:formatNumber type="number"
-                                                                      value="${item.unitPrice}" /></td>
+                                                                      value="${item.unitPrice}"/></td>
                                                 <td>${item.quantity} </td>
                                                 <td><fmt:formatNumber type="number"
-                                                                      value="${item.unitPrice * item.quantity}" /></td>
+                                                                      value="${item.unitPrice * item.quantity}"/></td>
                                             </tr>
                                         </c:forEach>
                                         </tbody>
@@ -259,7 +260,7 @@
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
                                         <c:if test="${info.statusId == 1}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary" onclick="return check()">
                                                 Giao việc
                                             </button>
                                             <button type="submit" value="reject" name="button" class="btn btn-danger">Từ
@@ -276,12 +277,12 @@
                                         <c:choose>
                                             <c:when test="${info.statusId == 2}">
                                                 <button type="submit" value="change5" name="button"
-                                                        class="btn btn-primary">Đồng ý
-                                                    thuê
+                                                        class="btn btn-primary" id="agree" disabled>Đồng ý
+                                                    giao hàng
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
                                                         class="btn btn-danger">Không
-                                                    đồng ý thuê
+                                                    đồng ý giao hàng
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.statusId == 5}">
@@ -312,18 +313,41 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
+
+<script type="text/javascript">
+    function check() {
+        var date = document.getElementById('assignedTime').value;
+        if (date.valueOf() == "") {
+            alert('Vui lòng nhập ngày giao thiết bị');
+            return false;
+        } else {
+            return true;
+        }
+    }
+</script>
+
 <script type="text/javascript">
     $(document).ready(function () {
+        var startDate = document.getElementById('startDate').value;
+        var start = new Date(startDate);
+        var endDate = document.getElementById('endDate').value;
+        var end = new Date(endDate);
+
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
         $('#assignedTime').datepicker({
             format: 'dd-mm-yyyy',
             onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+                return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf()) ? 'disabled' : '';
             }
         }).data('datepicker');
 
+        var rentalDate = document.getElementById('rentalDate').value;
+        var rental = new Date(rentalDate);
+        if (now.valueOf() < rental.valueOf()) {
+            $("#agree").removeAttr("disabled");
+        }
     });
 
 </script>

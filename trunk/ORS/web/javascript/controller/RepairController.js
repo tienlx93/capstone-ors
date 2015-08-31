@@ -8,6 +8,7 @@ controllers.controller('RepairController', ['$scope', '$location', '$routeParams
 
         //get data
         Api.getRepairList(id, function (data) {
+            $scope.id = id;
             if (data == "Error") {
                 $scope.WrongCus = true;
                 $scope.RightCus = false;
@@ -25,7 +26,9 @@ controllers.controller('RepairController', ['$scope', '$location', '$routeParams
                 $scope.WrongCus = false;
             } else {
                 $scope.data = data;
-                $scope.id = id;
+                /*if (data.createTime = 0) {
+                    $scope.time = data.createTime;
+                }*/
                 $scope.isLogin = true;
                 $scope.Repair = true;
                 $scope.RightCus = true;

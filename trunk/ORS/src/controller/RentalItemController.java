@@ -35,6 +35,11 @@ public class RentalItemController extends HttpServlet {
                         Integer.parseInt(request.getParameter("officeType")), Integer.parseInt(request.getParameter("quantity")),
                         request.getParameter("imageUrl"));
                 response.sendRedirect("/admin/rentalItem");
+            } else if (action.equals("delete")) {
+                RentalItemDAO rentalItemDAO = new RentalItemDAO();
+                int id = Integer.parseInt(request.getParameter("id"));
+                rentalItemDAO.removeItem(id);
+                response.sendRedirect("/admin/rentalItem");
             } else if (action.equals("save")) {
                 RentalItemDAO dao = new RentalItemDAO();
                 RentalItem rtItem = new RentalItem();

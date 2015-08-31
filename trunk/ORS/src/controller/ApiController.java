@@ -1053,7 +1053,10 @@ public class ApiController extends HttpServlet {
                         list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
                                 repair.getAssignedStaff(), repair.getAssignedTime(),
                                 repair.getRepairStatusByRepairStatusId().getDescription(), contract.getOfficeByOfficeId().getName()));
-                    } else list.add(new RepairListJSON(repair.getId(), null, null, null, null,
+                    }
+                }
+                if (list.size() == 0) {
+                    list.add(new RepairListJSON(0, null, null, null, null,
                             null, contract.getOfficeByOfficeId().getName()));
                 }
                 out.print(gson.toJson(list));

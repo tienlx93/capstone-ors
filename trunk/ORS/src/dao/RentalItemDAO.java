@@ -2,6 +2,7 @@ package dao;
 
 import entity.RentalItem;
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
@@ -82,5 +83,25 @@ public class RentalItemDAO extends BaseDAO<RentalItem, Integer> {
         }
 
         return 0;
+    }
+
+    public boolean removeItem(int id) {
+        try {
+            session.getTransaction().begin();
+
+            String sql3 = "delete from RentalItem where id = :rentalItemId";
+            Query query3 = session.createQuery(sql3);
+            query3.setInteger("rentalItemId", id);
+            query3.executeUpdate();
+
+            session.getTransaction().commit();
+            return true;
+        } catch (Exception e) {
+            if (session.getTransaction().isActive()) {
+                session.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        }
+        return false;
     }
 }

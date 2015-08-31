@@ -77,15 +77,15 @@
                                 <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
 
                                 <div class="col-sm-4">
-                                    <input type="text" name="price" class="form-control" id="price"
-                                           value="${info.price}">
+                                    <input type="number" name="price" class="form-control" id="price"
+                                           value="${info.price}" required min="1">
                                 </div>
 
                                 <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
 
                                 <div class="col-sm-4">
-                                    <input type="text" name="quantity" class="form-control" id="quantity"
-                                           value="${info.quantity}">
+                                    <input type="number" name="quantity" class="form-control" id="quantity"
+                                           value="${info.quantity}" required step="1" min="1">
                                 </div>
                             </div>
 
@@ -95,7 +95,7 @@
 
                                 <div class="col-sm-10">
                                 <textarea name="description" class="form-control" id="description"
-                                          rows="5" required>${info.description}</textarea>
+                                          required rows="5" required>${info.description}</textarea>
                                 </div>
                             </div>
 

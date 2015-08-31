@@ -6,12 +6,21 @@
         <td>${item.name}</td>
         <td>${item.description}</td>
         <td><fmt:formatNumber type="number"
-                              value="${item.price}" />
+                              value="${item.price}"/>
         </td>
         <td>${item.quantity}</td>
-        <td><a href="rentalItem?action=edit&id=${item.id}"
-               title="Sửa"
-               class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+        <td>
+            <form action="${pageContext.request.contextPath}/admin/rentalItem"
+                  method="post" class="rentalItemForm">
+                <button type="submit" name="action" value="delete"
+                        class="btn btn-icon btn-default">
+                    <i class="fa fa-trash-o color10" title="Xóa"></i></button>
+                <input type="hidden" value="${item.id}" name="id">
+
+                <a href="rentalItem?action=edit&id=${item.id}"
+                   title="Sửa"
+                   class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+            </form>
         </td>
     </tr>
 </c:forEach>

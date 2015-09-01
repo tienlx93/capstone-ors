@@ -23,6 +23,7 @@ public class Account {
     private AccountStatus accountStatusByStatusId;
     private Collection<Rental> rentalsByUsername;
     private Collection<EmailQueue> emailQueuesByUsername;
+    private Collection<Office> officesByUsername;
 
     @Id
     @Column(name = "Username", nullable = false, insertable = true, updatable = true)
@@ -188,5 +189,14 @@ public class Account {
 
     public void setEmailQueuesByUsername(Collection<EmailQueue> emailQueuesByUsername) {
         this.emailQueuesByUsername = emailQueuesByUsername;
+    }
+
+    @OneToMany(mappedBy = "accountByOwnerUsername")
+    public Collection<Office> getOfficesByUsername() {
+        return officesByUsername;
+    }
+
+    public void setOfficesByUsername(Collection<Office> officesByUsername) {
+        this.officesByUsername = officesByUsername;
     }
 }

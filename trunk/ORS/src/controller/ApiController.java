@@ -928,13 +928,15 @@ public class ApiController extends HttpServlet {
             List<ContractJSON> list = new ArrayList<>();
             for (Contract contract : dao.getContractListByCus(account.getUsername())) {
                 Office office = contract.getOfficeByOfficeId();
+                Profile owner = office.getAccountByOwnerUsername().getProfileByUsername();
                 PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
                 if (contract.getStatusId() != 4) {
+
                     list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
                             contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                             paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
                             office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
-                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress(), null));
+                            owner.getFullName(), owner.getPhone(), owner.getAddress(), null));
                 }
             }
             if (list.size() > 0) {
@@ -1112,12 +1114,12 @@ public class ApiController extends HttpServlet {
         if (account != null) {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
                 if (contract.getStatusId() != 4) {
-
+                    Profile owner = office.getAccountByOwnerUsername().getProfileByUsername();
                     ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
                             contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
                             paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
                             office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
-                            office.getOwnerName(), office.getOwnerPhone(), office.getOwnerAddress(), contract.getImageUrl());
+                            owner.getFullName(), owner.getPhone(), owner.getAddress(), contract.getImageUrl());
                     out.print(gson.toJson(json));
 
                 } else {

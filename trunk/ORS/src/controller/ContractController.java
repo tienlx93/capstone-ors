@@ -61,9 +61,9 @@ public class ContractController extends HttpServlet {
                     officeChildren.setMinTime(officeParent.getMinTime());
                     officeChildren.setMinArea(officeParent.getMinArea());
                     officeChildren.setBasePrice(officeParent.getBasePrice());
-                    officeChildren.setOwnerName(officeParent.getOwnerName());
+                    /*officeChildren.setOwnerName(officeParent.getOwnerName());
                     officeChildren.setOwnerPhone(officeParent.getOwnerPhone());
-                    officeChildren.setOwnerAddress(officeParent.getOwnerAddress());
+                    officeChildren.setOwnerAddress(officeParent.getOwnerAddress());*/
                     officeChildren.setImageUrls(officeParent.getImageUrls());
                     officeChildren.setParentOfficeId(officeParent.getId());
 

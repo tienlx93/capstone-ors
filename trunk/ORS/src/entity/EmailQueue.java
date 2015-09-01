@@ -78,7 +78,7 @@ public class EmailQueue {
     }
 
     @Basic
-    @Column(name = "Username")
+    @Column(name = "Username", nullable = false, insertable = true, updatable = true)
     public String getUsername() {
         return username;
     }

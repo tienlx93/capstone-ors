@@ -16,6 +16,8 @@ public class RentalItem {
     private Collection<RentalDetail> rentalDetailsById;
     private String imageUrl;
     private int officeType;
+    private Integer groupId;
+    private RentalItemGroup rentalItemGroupByGroupId;
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -121,5 +123,25 @@ public class RentalItem {
 
     public void setOfficeType(int officeType) {
         this.officeType = officeType;
+    }
+
+    @Basic
+    @Column(name = "GroupId", nullable = true, insertable = true, updatable = true)
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "GroupId", referencedColumnName = "Id", insertable = false, updatable = false)
+    public RentalItemGroup getRentalItemGroupByGroupId() {
+        return rentalItemGroupByGroupId;
+    }
+
+    public void setRentalItemGroupByGroupId(RentalItemGroup rentalItemGroupByGroupId) {
+        this.rentalItemGroupByGroupId = rentalItemGroupByGroupId;
     }
 }

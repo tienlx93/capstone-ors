@@ -2,6 +2,7 @@ package json;
 
 import entity.Office;
 import entity.OfficeAmenity;
+import entity.Profile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +51,10 @@ public class OfficeJSON {
         this.longitude = office.getLongitude();
         this.minArea = office.getMinArea();
         this.minTime = office.getMinTime();
-        this.ownerName = office.getOwnerName();
-        this.ownerAddress = office.getOwnerAddress();
-        this.ownerPhone = office.getOwnerPhone();
+        Profile owner = office.getAccountByOwnerUsername().getProfileByUsername();
+        this.ownerName = owner.getFullName();
+        this.ownerAddress = owner.getAddress();
+        this.ownerPhone = owner.getPhone();
         this.district = office.getDistrict();
         this.city = office.getCity();
         this.category = office.getCategoryByCategoryId().getDescription();

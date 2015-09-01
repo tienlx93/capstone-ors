@@ -39,10 +39,10 @@ public class Office {
     private Long basePrice;
     private Double minArea;
     private Integer minTime;
-    private String ownerName;
-    private String ownerPhone;
-    private String ownerAddress;
     private int commission;
+    private String ownerUsername;
+    private Account accountByOwnerUsername;
+
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
@@ -393,36 +393,6 @@ public class Office {
     }
 
     @Basic
-    @Column(name = "OwnerName", nullable = true, insertable = true, updatable = true)
-    public String getOwnerName() {
-        return ownerName;
-    }
-
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
-
-    @Basic
-    @Column(name = "OwnerPhone", nullable = true, insertable = true, updatable = true)
-    public String getOwnerPhone() {
-        return ownerPhone;
-    }
-
-    public void setOwnerPhone(String ownerPhone) {
-        this.ownerPhone = ownerPhone;
-    }
-
-    @Basic
-    @Column(name = "OwnerAddress", nullable = true, insertable = true, updatable = true)
-    public String getOwnerAddress() {
-        return ownerAddress;
-    }
-
-    public void setOwnerAddress(String ownerAddress) {
-        this.ownerAddress = ownerAddress;
-    }
-
-    @Basic
     @Column(name = "Commission", nullable = true, insertable = true, updatable = true)
     public int getCommission() {
         return commission;
@@ -430,5 +400,25 @@ public class Office {
 
     public void setCommission(int commission) {
         this.commission = commission;
+    }
+
+    @Basic
+    @Column(name = "OwnerUsername", nullable = true, insertable = true, updatable = true)
+    public String getOwnerUsername() {
+        return ownerUsername;
+    }
+
+    public void setOwnerUsername(String ownerUsername) {
+        this.ownerUsername = ownerUsername;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "OwnerUsername", referencedColumnName = "Username", insertable = false, updatable = false)
+    public Account getAccountByOwnerUsername() {
+        return accountByOwnerUsername;
+    }
+
+    public void setAccountByOwnerUsername(Account accountByOwnerUsername) {
+        this.accountByOwnerUsername = accountByOwnerUsername;
     }
 }

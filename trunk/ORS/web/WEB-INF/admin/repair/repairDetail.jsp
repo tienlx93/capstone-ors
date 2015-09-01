@@ -74,13 +74,13 @@
                                 <label class="col-sm-2 control-label">Chủ văn phòng</label>
 
                                 <div class="col-sm-4">
-                                    ${info.contractByContractId.officeByOfficeId.ownerName}
+                                    ${info.contractByContractId.officeByOfficeId.accountByOwnerUsername.profileByUsername.fullName}
                                 </div>
 
                                 <label class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-4">
-                                    ${info.contractByContractId.officeByOfficeId.ownerPhone}
+                                    ${info.contractByContractId.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}
                                 </div>
                             </div>
 

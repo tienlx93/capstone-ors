@@ -40,6 +40,7 @@
       <column name="Weight" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4" def="KCgwKSk="/>
       <column name="AmenityGroupId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="Priority" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="Repairable" sqlType="bit" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="PK_Amentity" columns="Id"/>
       <foreign-key name="FK_Amenity_AmenityGroup" columns="AmenityGroupId" ref-table="AmenityGroup" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <exported-key name="FK_OfficeAmenity_Amentity" table="OfficeAmenity" schema="dbo" catalog="ors" columns="AmenityId"/>

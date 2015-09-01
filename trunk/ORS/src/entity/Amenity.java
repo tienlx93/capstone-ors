@@ -18,6 +18,7 @@ public class Amenity {
     private Integer amenityGroupId;
     private AmenityGroup amenityGroupByAmenityGroupId;
     private Integer priority;
+    private Boolean repairable;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -139,5 +140,15 @@ public class Amenity {
 
     public void setPriority(Integer priority) {
         this.priority = priority;
+    }
+
+    @Basic
+    @Column(name = "Repairable", nullable = true, insertable = true, updatable = true)
+    public Boolean getRepairable() {
+        return repairable;
+    }
+
+    public void setRepairable(Boolean repairable) {
+        this.repairable = repairable;
     }
 }

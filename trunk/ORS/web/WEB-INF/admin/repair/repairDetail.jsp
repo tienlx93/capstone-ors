@@ -272,7 +272,7 @@
                                             </c:when>
                                             <c:when test="${info.repairStatusId == 5}">
                                                 <button type="submit" value="change3" name="button"
-                                                        class="btn btn-primary">
+                                                        class="btn btn-primary" id="happy" disabled>
                                                     Khách hàng hài lòng
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
@@ -332,7 +332,9 @@
         if (now.valueOf() < repair.valueOf()) {
             $("#agree").removeAttr("disabled");
         }
-
+        if (now.valueOf() > repair.valueOf()) {
+            $("#happy").removeAttr("disabled");
+        }
     });
 
 </script>

@@ -23,6 +23,7 @@
   <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
   <script type="text/javascript"
           src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body>
@@ -62,12 +63,11 @@
               <c:forEach items="${data}" var="item">
                 <tr>
                   <td>${item.name}</td>
-
                   <td>${item.weight}</td>
                   <td>${item.priority}</td>
                   <td>${item.amenityGroupByAmenityGroupId.name}</td>
                   <td>
-                    <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
+                    <form action="${pageContext.request.contextPath}/admin/amenity" method="post" class="amenityForm">
                       <div class="btn-group" role="group">
                         <button  type="submit" name="action" value="delete" class="btn btn-icon btn-default"><i class="fa fa-trash-o color10"></i></button>
                         <input type="hidden" value="${item.id}" name="id">
@@ -154,4 +154,35 @@
     });
   };
 </script>
+<%--<script type="text/javascript">
+
+  $('.amenityForm').submit(function () {
+    var currentForm =  $(this);
+    event.preventDefault();
+    /*bootbox.confirm("Bạn đồng ý xóa thiết bị này?", function() {
+     currentForm.submit();
+     });*/
+    bootbox.dialog({
+      size: 'small',
+      message: "Bạn đồng ý xóa thiết bị này?",
+      buttons: {
+        cancel: {
+          label: "Quay lại",
+          className: "btn-default",
+          callback: function () {
+
+          }
+        }, ok: {
+          label: "Đồng ý",
+          className: "btn-primary",
+          callback: function () {
+            currentForm.submit();
+            window.location.reload();
+          }
+        }
+      }
+    });
+
+  });
+</script>--%>
 </html>

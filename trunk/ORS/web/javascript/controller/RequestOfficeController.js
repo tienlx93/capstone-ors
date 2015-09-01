@@ -82,12 +82,33 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
 
         $scope.reOffice.amenityList = [];
 
-        $scope.add = function() {
-            $scope.reOffice.amenityList.push( $scope.amenityInput );
-            $scope.amenityInput = "";
+        $scope.add = function () {
+            var error = true;
+            for (var i = 0; i < $scope.amenities.length; i++) {
+                if ($scope.amenityInput === $scope.amenities[i]) {
+                    var duplicate = false;
+                    for(var j = 0; j < $scope.reOffice.amenityList.length; j++) {
+                        if($scope.amenityInput === $scope.reOffice.amenityList[j]){
+                            duplicate = true;
+                            error = false;
+                        }
+                    }
+                    if(duplicate == false) {
+                        $scope.reOffice.amenityList.push($scope.amenityInput);
+                        $scope.amenityInput = "";
+                        error = false;
+                    }
+                }
+            }
+            if(duplicate) {
+                toastr.error('Tiện nghi đã được thêm trước đó');
+            }
+            if(error) {
+                toastr.error('Tiện nghi chưa tồn tại');
+            }
         };
-        $scope.remove = function ( idx ) {
-            $scope.reOffice.amenityList.splice( idx, 1 );
+        $scope.remove = function (idx) {
+            $scope.reOffice.amenityList.splice(idx, 1);
         };
 
     }]);

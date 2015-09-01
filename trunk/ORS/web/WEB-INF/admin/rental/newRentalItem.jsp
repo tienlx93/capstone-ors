@@ -98,16 +98,17 @@
                                 <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
 
                                 <div class="col-sm-4">
-                                    <input type="number" name="price" class="form-control" id="price"
-                                           value="${rentalItem.price}" required min="1">
+                                    <input type="text" class="form-control" id="price"
+                                           value="" required min="1" onkeyup="formatPrice()">
                                     <span style="color: red" id="priceValidate"></span>
+                                    <input type="hidden" name="price" id="priceValue" value=""/>
                                 </div>
 
                                 <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
 
                                 <div class="col-sm-4">
                                     <input type="number" name="quantity" class="form-control" id="quantity"
-                                           value="${rentalItem.quantity}" required step="1" min="1">
+                                           value="" required step="1" min="1">
                                     <span style="color: red" id="quantityValidate"></span>
                                 </div>
                             </div>
@@ -134,7 +135,8 @@
                                         </div>
                                     </div>
                                     <div class="clear-float"></div>
-                                    <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh" required>
+                                    <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh"
+                                           required>
                                 </div>
                             </div>
 
@@ -157,6 +159,20 @@
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/uploadRental.js"></script>
 
+<script type="text/javascript">
+    function formatPrice() {
+        var price = document.getElementById('price').value != '' ? document.getElementById('price').value : 0;
+        if (price != 0) {
+            document.getElementById('priceValue').value = parseFloat(price.replace(/\./g, ''));
+            document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue').value);
+        }
+    }
+    ;
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    ;
+</script>
 
 </body>
 </html>

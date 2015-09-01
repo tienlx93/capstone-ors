@@ -350,7 +350,10 @@
         var checkTime = nowTemp - meet;
         var checkTime4 = afterMeet - meet;
 
-        if (checkTime.valueOf() < checkTime4.valueOf() && checkTime.valueOf > 0) {
+        /*if (checkTime.valueOf() < checkTime4.valueOf() && checkTime.valueOf > 0) {
+            $("#agree").removeAttr("disabled");
+        }*/
+        if (now.valueOf() > meet.valueOf()) {
             $("#agree").removeAttr("disabled");
         }
     });

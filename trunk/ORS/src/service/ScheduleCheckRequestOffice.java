@@ -10,6 +10,7 @@ import org.quartz.JobExecutionException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class ScheduleCheckRequestOffice implements Job {
@@ -25,6 +26,15 @@ public class ScheduleCheckRequestOffice implements Job {
         EmailQueueDAO emailDao = new EmailQueueDAO();
 
         for (RequestOffice request : requests) {
+
+            long createDate = request.getCreateDate().getTime();
+            Date date = new Date();
+            long currentDate = date.getTime();
+
+            if((currentDate - createDate) / (24 * 60 * 60 * 1000) >= 365){
+                dao.remove(request);
+                return;
+            }
 
             Collection<RequestAmenity> amenities = request.getRequestAmenitiesById();
 

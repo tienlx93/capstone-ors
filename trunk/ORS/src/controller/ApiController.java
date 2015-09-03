@@ -440,14 +440,13 @@ public class ApiController extends HttpServlet {
         String comment = request.getParameter("comment");
         int status = Integer.parseInt(statusString);
         boolean result = false;
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date sysDate = new Date(System.currentTimeMillis());
-        Date today = sdf.parse(String.valueOf(sysDate));
+        Date today = new Date(System.currentTimeMillis());
+
         switch (type) {
             case "appointment": {
                 AppointmentDAO dao = new AppointmentDAO();
                 Appointment appointment = dao.get(id);
-                Date date = sdf.parse(String.valueOf(appointment.getTime()));
+                Date date = appointment.getTime();
                 if (today.after(date) || today.equals(date)){
                 if (comment != null) {
                     comment = new String(comment.getBytes("iso-8859-1"), "UTF-8");
@@ -463,13 +462,28 @@ public class ApiController extends HttpServlet {
             }
             case "rental": {
                 RentalDAO dao = new RentalDAO();
-                result = dao.changeStatus(id, status);
-                break;
+                Rental rental = dao.get(id);
+                Date date = rental.getAssignedTime();
+                if(today.after(date) || today.equals(date)) {
+                    result = dao.changeStatus(id, status);
+                    out.print(gson.toJson("Success"));
+                    break;
+                } else {
+                    out.print(gson.toJson("Wrong"));
+                }
+
             }
             case "repair": {
                 RepairDAO dao = new RepairDAO();
-                result = dao.changeStatus(id, status);
-                break;
+                Repair repair = dao.get(id);
+                Date date = repair.getAssignedTime();
+                if(today.after(date) || today.equals(date)) {
+                    result = dao.changeStatus(id, status);
+                    out.print(gson.toJson("Success"));
+                    break;
+                } else {
+                    out.print(gson.toJson("Wrong"));
+                }
             }
         }
         if (result) {

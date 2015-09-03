@@ -94,7 +94,7 @@ public class RepairController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
         RequestDispatcher rd;
-        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
+        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3 || account.getRoleId() == 5)) {
             RepairDAO dao = new RepairDAO();
             String action = request.getParameter("action");
             if (action == null) {

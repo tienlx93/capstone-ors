@@ -20,6 +20,7 @@
       <exported-key name="FK_Appointment_Account1" table="Appointment" schema="dbo" catalog="ors" columns="AssignedStaff"/>
       <exported-key name="FK_Contract_Account" table="Contract" schema="dbo" catalog="ors" columns="CustomerUsername"/>
       <exported-key name="FK_EmailQueue_Account" table="EmailQueue" schema="dbo" catalog="ors" columns="Username"/>
+      <exported-key name="FK_Office_Account" table="Office" schema="dbo" catalog="ors" columns="OwnerUsername"/>
       <exported-key name="FK_Profile_Account" table="Profile" schema="dbo" catalog="ors" columns="Username"/>
       <exported-key name="FK_Rental_Account" table="Rental" schema="dbo" catalog="ors" columns="AssignStaff"/>
       <exported-key name="FK_Repair_Account" table="Repair" schema="dbo" catalog="ors" columns="AssignedStaff"/>
@@ -39,6 +40,7 @@
       <column name="Weight" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4" def="KCgwKSk="/>
       <column name="AmenityGroupId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="Priority" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="Repairable" sqlType="bit" precision="1" scale="0" nullable="true" jdbcType="-7"/>
       <primary-key name="PK_Amentity" columns="Id"/>
       <foreign-key name="FK_Amenity_AmenityGroup" columns="AmenityGroupId" ref-table="AmenityGroup" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <exported-key name="FK_OfficeAmenity_Amentity" table="OfficeAmenity" schema="dbo" catalog="ors" columns="AmenityId"/>
@@ -126,12 +128,10 @@
       <column name="CategoryId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="StatusId" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Description" sqlType="ntext" precision="1073741823" scale="0" nullable="false" jdbcType="-16"/>
-      <column name="BasePrice" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="Price" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
       <column name="PriceTerm" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="FloorNumber" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
       <column name="Area" sqlType="float" precision="53" scale="0" nullable="false" jdbcType="8"/>
-      <column name="MinArea" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
       <column name="ImageUrls" sqlType="text" precision="2147483647" scale="0" nullable="true" jdbcType="-1"/>
       <column name="Address" sqlType="nvarchar" precision="150" scale="0" nullable="false" jdbcType="-9"/>
       <column name="Latitude" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
@@ -141,12 +141,13 @@
       <column name="ParentOfficeId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="CreateDate" sqlType="datetime" precision="23" scale="3" nullable="false" jdbcType="93"/>
       <column name="ViewCount" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="BasePrice" sqlType="bigint" precision="19" scale="0" nullable="true" jdbcType="-5"/>
+      <column name="MinArea" sqlType="float" precision="53" scale="0" nullable="true" jdbcType="8"/>
       <column name="MinTime" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="OwnerName" sqlType="nvarchar" precision="150" scale="0" nullable="true" jdbcType="-9"/>
-      <column name="OwnerPhone" sqlType="nvarchar" precision="15" scale="0" nullable="true" jdbcType="-9"/>
-      <column name="OwnerAddress" sqlType="nvarchar" precision="150" scale="0" nullable="true" jdbcType="-9"/>
       <column name="Commission" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="OwnerUsername" sqlType="nvarchar" precision="50" scale="0" nullable="true" jdbcType="-9"/>
       <primary-key name="PK_Office" columns="Id"/>
+      <foreign-key name="FK_Office_Account" columns="OwnerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_Category" columns="CategoryId" ref-table="Category" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_Office" columns="ParentOfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Office_OfficeStatus" columns="StatusId" ref-table="OfficeStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
@@ -238,8 +239,17 @@
       <column name="Quantity" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="ImageUrl" sqlType="nvarchar" precision="250" scale="0" nullable="true" jdbcType="-9"/>
       <column name="OfficeType" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="GroupId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PK_RentalItem" columns="Id"/>
+      <foreign-key name="FK_RentalItem_RentalItemGroup" columns="GroupId" ref-table="RentalItemGroup" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <exported-key name="FK_RentalDetail_RentalItem" table="RentalDetail" schema="dbo" catalog="ors" columns="RentalItemId"/>
+    </table>
+    <table name="RentalItemGroup" schema="dbo" catalog="ors" type="TABLE">
+      <column name="Id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
+      <column name="Name" sqlType="nvarchar" precision="150" scale="0" nullable="false" jdbcType="-9"/>
+      <column name="Description" sqlType="nvarchar" precision="250" scale="0" nullable="true" jdbcType="-9"/>
+      <primary-key name="PK_RentalItemGroup" columns="Id"/>
+      <exported-key name="FK_RentalItem_RentalItemGroup" table="RentalItem" schema="dbo" catalog="ors" columns="GroupId"/>
     </table>
     <table name="RentalStatus" schema="dbo" catalog="ors" type="TABLE">
       <column name="Id" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4"/>
@@ -314,16 +324,9 @@
       <column name="diagram_id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="version" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="definition" sqlType="varbinary" precision="2147483647" scale="0" nullable="true" jdbcType="-3"/>
-      <primary-key name="PK__sysdiagr__C2B05B611CF15040" columns="diagram_id"/>
+      <primary-key name="PK__sysdiagr__C2B05B6159063A47" columns="diagram_id"/>
       <index name="UK_principal_name" unique="true" columns="principal_id,name"/>
     </table>
-    <procedure name="AppointmentCount" schema="dbo" catalog="ors" type="2">
-      <prototype>
-        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
-        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
-        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
-      </prototype>
-    </procedure>
     <procedure name="CalculateIncome" schema="dbo" catalog="ors" type="2">
       <prototype>
         <parameter name="@startDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
@@ -332,21 +335,15 @@
         <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
       </prototype>
     </procedure>
+    <procedure name="GetDetailJob" schema="dbo" catalog="ors" type="2">
+      <prototype>
+        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
+        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
+        <parameter name="@Staff" sqlType="nvarchar" precision="100" scale="0" nullable="true" jdbcType="-9" type="1" index="3"/>
+        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
+      </prototype>
+    </procedure>
     <procedure name="GetJobCount" schema="dbo" catalog="ors" type="2">
-      <prototype>
-        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
-        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
-        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
-      </prototype>
-    </procedure>
-    <procedure name="RentalCount" schema="dbo" catalog="ors" type="2">
-      <prototype>
-        <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
-        <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>
-        <parameter name="@RETURN_VALUE" sqlType="int" precision="10" scale="0" nullable="false" jdbcType="4" type="5" index="0"/>
-      </prototype>
-    </procedure>
-    <procedure name="RepairCount" schema="dbo" catalog="ors" type="2">
       <prototype>
         <parameter name="@StartDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="1"/>
         <parameter name="@EndDate" sqlType="datetime" precision="23" scale="3" nullable="true" jdbcType="93" type="1" index="2"/>

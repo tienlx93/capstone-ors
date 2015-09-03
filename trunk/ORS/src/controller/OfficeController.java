@@ -66,9 +66,9 @@ public class OfficeController extends HttpServlet {
             office.setDistrict(district);
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
-            office.setOwnerName(ownerName);
+            /*office.setOwnerName(ownerName);
             office.setOwnerAddress(ownerAddress);
-            office.setOwnerPhone(ownerPhone);
+            office.setOwnerPhone(ownerPhone);*/
             office.setPriceTerm(Integer.parseInt(priceTerm));
             if (office.getCategoryId() == 2) {
                 office.setMinArea(Double.valueOf(minArea));
@@ -128,9 +128,9 @@ public class OfficeController extends HttpServlet {
             office.setDistrict(district);
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
-            office.setOwnerName(ownerName);
+            /*office.setOwnerName(ownerName);
             office.setOwnerAddress(ownerAddress);
-            office.setOwnerPhone(ownerPhone);
+            office.setOwnerPhone(ownerPhone);*/
             office.setPriceTerm(Integer.parseInt(priceTerm));
             if (office.getCategoryId() == 2) {
                 office.setMinArea(Double.valueOf(minArea));

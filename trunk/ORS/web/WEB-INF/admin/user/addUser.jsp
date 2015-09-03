@@ -50,7 +50,7 @@
                             <div class="form-group clearfix">
                                 <label for="username" class="col-sm-2">Tên đăng nhập</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="username" class="" id="username" value="${account.password}" required
+                                    <input type="text" name="username" class="" id="username" required
                                            title="Tên đăng nhập (5-30 kí tự)"
                                            pattern=".{5,30}">
                                 </div>
@@ -59,7 +59,7 @@
                             <div class="form-group ">
                                 <label for="password" class="col-sm-2">Mật khẩu</label>
                                 <div class="col-sm-10">
-                                    <input type="password" name="password" class="" id="password" value="${account.password}" required
+                                    <input type="password" name="password" class="" id="password"  required
                                            title="Mật khẩu (8-32 kí tự)"
                                            pattern=".{8,32}">
                                 </div>
@@ -68,7 +68,7 @@
                             <div class="form-group clearfix">
                                 <label for="email" class="col-sm-2">Email</label>
                                 <div class="col-sm-10">
-                                    <input type="email" name="email" class="" id="email" value="${account.email}" required>
+                                    <input type="email" name="email" class="" id="email"  required>
                                 </div>
                             </div>
 
@@ -79,12 +79,46 @@
                                 <select name="role" class="" id="role">
                                     <div class="col-sm-10">
                                         <c:forEach var="item" items="${roleList}">
-
                                         <option value="${item.id}">${item.roleName}</option>
                                     </div>
                                     </c:forEach>
                                 </select>
                                     </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="" class="col-sm-2">Danh xưng</label>
+                                <div class="col-sm-10">
+                                    <select name="title"  id="title">
+                                        <option value=""></option>
+                                        <option value="Ông">Ông</option>
+                                        <option value="Bà">Bà</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group clearfix">
+                                <label for="email" class="col-sm-2">Tên đầy đủ</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="fullname" class="" id="fullname"  required>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="email" class="col-sm-2">Công ty</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="company" class="" id="company"  required>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="email" class="col-sm-2">Số điện thoại</label>
+                                <div class="col-sm-10">
+                                    <input type="number" name="phone" class="" id="phone"  required>
+                                </div>
+                            </div>
+                            <div class="form-group clearfix">
+                                <label for="email" class="col-sm-2">Ngày sinh</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="date" class="" id="date"  required>
+                                </div>
                             </div>
 
                             <div class="button-post">

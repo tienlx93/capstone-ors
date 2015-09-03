@@ -47,7 +47,8 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
         $scope.submit = function ($form) {
             var amenities = $scope.selection;
             var description = $scope.description;
-            Api.requestRepair(id, amenities, description, function (data) {
+            var phone = $scope.officeOwnerPhone;
+            Api.requestRepair(id, amenities, description, phone, function (data) {
                 if (data == "Success") {
                     toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
                     $location.path("/contractList");

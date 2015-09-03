@@ -10,6 +10,7 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.SimpleTriggerImpl;
 import service.ConstantService;
 import service.MatchingService;
+import service.SMSService;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -833,7 +834,7 @@ public class ApiController extends HttpServlet {
         }
     }
 
-    private void requestRepair(HttpServletRequest request, PrintWriter out) throws UnsupportedEncodingException {
+    private void requestRepair(HttpServletRequest request, PrintWriter out) throws IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
         //String time = request.getParameter("time");
@@ -847,7 +848,7 @@ public class ApiController extends HttpServlet {
             amenities = new String(tokenAmenity.getBytes(
                     "iso-8859-1"), "UTF-8");
         }*/
-
+        String phone = request.getParameter("phone");
         String description = new String(request.getParameter("description").getBytes(
                 "iso-8859-1"), "UTF-8");
         if (account != null) {
@@ -876,6 +877,10 @@ public class ApiController extends HttpServlet {
                     repairDetailDAO.saveRepairDetail(repair.getId(), amenityListInt);
                 }
             }
+            SMSService sms = new SMSService();
+            sms.setPhone(phone);
+            sms.setMessage("(ORS) Quy khach vua nhan duoc yeu cau sua chua. Hay dang nhap vao he thong va kiem tra");
+            sms.send();
             out.print(gson.toJson("Success"));
         } else {
             out.print(gson.toJson("Error"));

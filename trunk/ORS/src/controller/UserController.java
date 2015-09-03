@@ -3,6 +3,7 @@ package controller;
 import dao.AccountDAO;
 import dao.RoleDAO;
 import entity.Account;
+import entity.Profile;
 import entity.Role;
 import service.ConstantService;
 import dao.ProfileDAO;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -27,14 +29,26 @@ public class UserController extends HttpServlet {
         String action = request.getParameter("action");
         //String button = request.getParameter("button");
         AccountDAO dao = new AccountDAO();
+
         if (action.equals("save")) {
             Account acc = new Account();
+            Profile profile = new Profile();
             acc.setUsername(request.getParameter("username"));
             acc.setPassword(request.getParameter("password"));
             acc.setEmail(request.getParameter("email"));
             acc.setRoleId(Integer.parseInt(request.getParameter("role")));
             acc.setStatusId(1);
             dao.save(acc);
+            if (String.valueOf("role").equals("5")) {
+                ProfileDAO pfDao = new ProfileDAO();
+                profile.setUsername(request.getParameter("username"));
+                profile.setTitle(request.getParameter("title"));
+                profile.setFullName(request.getParameter("fullname"));
+                profile.setCompany(request.getParameter("company"));
+                profile.setPhone(request.getParameter("phone"));
+                profile.setBirthday(Timestamp.valueOf(request.getParameter("date")));
+                boolean result2 = pfDao.save(profile);
+            }
         } else if (action.equals("delete")) {
             String username = request.getParameter("username");
             dao.delete(username);
@@ -108,8 +122,7 @@ public class UserController extends HttpServlet {
                 rd.forward(request, response);
 
 
-            }
-            else if (action.equals("page")) {
+            } else if (action.equals("page")) {
                 String startPage = request.getParameter("startPage");
                 int page = Integer.parseInt(startPage);
                 int startItem = (page - 1) * ConstantService.PAGE_SIZE;
@@ -117,11 +130,11 @@ public class UserController extends HttpServlet {
                 request.setAttribute("data", list1);
                 rd = request.getRequestDispatcher("/WEB-INF/partial/userListItem.jsp");
                 rd.forward(request, response);
-            } else if(action.equals("editing")) {
+            } else if (action.equals("editing")) {
                 request.setAttribute("info", dao.get(request.getParameter("username")));
                 request.getRequestDispatcher("/WEB-INF/admin/user/viewUserProfile.jsp").forward(request, response);
             }
-        } else  {
+        } else {
             response.sendRedirect("/admin");
         }
     }

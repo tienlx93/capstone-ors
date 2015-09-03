@@ -50,10 +50,6 @@
                               <label for="id" class="col-sm-2 control-label">Id</label>
                               ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
                             </div>--%>
-                            <div class="form-group">
-                                <label>Họ và tên</label>
-                                <span>${info.profileByUsername.fullName}</span>
-                            </div>
 
                             <div class="form-group">
                                 <label>Họ và tên</label>

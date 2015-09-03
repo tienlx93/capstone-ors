@@ -58,7 +58,7 @@
                     <br>
                     <textarea style="width: 100%" rows="5" ng-model="description" required
                               name="description"></textarea>
-
+                    <input ng-model="phone" name="phone" value="{{officeOwnerPhone}}" hidden>
                     <div>
                     <span style="color: #ef4836; " ng-show="form.description.$dirty && form.description.$invalid">
                         <span ng-show="form.description.$error.required">Vui lòng điền mô tả </span>

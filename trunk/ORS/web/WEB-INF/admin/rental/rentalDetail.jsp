@@ -345,10 +345,10 @@
 
         var rentalDate = document.getElementById('rentalDate').value;
         var rental = new Date(rentalDate);
-        if (now.valueOf() < rental.valueOf()) {
+        if (now.valueOf() <= rental.valueOf()) {
             $("#agree").removeAttr("disabled");
         }
-        if (now.valueOf() > rental.valueOf()) {
+        if (now.valueOf() >= rental.valueOf()) {
             $("#happy").removeAttr("disabled");
         }
     });

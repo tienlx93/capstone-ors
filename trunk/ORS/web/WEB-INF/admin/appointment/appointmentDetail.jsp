@@ -353,7 +353,7 @@
         /*if (checkTime.valueOf() < checkTime4.valueOf() && checkTime.valueOf > 0) {
             $("#agree").removeAttr("disabled");
         }*/
-        if (now.valueOf() > meet.valueOf()) {
+        if (now.valueOf() >= meet.valueOf()) {
             $("#agree").removeAttr("disabled");
         }
     });

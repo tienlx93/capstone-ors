@@ -44,12 +44,17 @@ public class RepairController extends HttpServlet {
             ContractDAO contractDAO = new ContractDAO();
             Contract current = contractDAO.get(contractId);
             String phone = current.getAccountByCustomerUsername().getProfileByUsername().getPhone();
-            sms.setPhone(phone);
+
             switch (button) {
                 case "reject":
                     dao.changeStatus(id, 4);
+                    sms.setPhone(phone);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan.");
                     sms.send();
+                    response.sendRedirect("/admin/repair");
+                    break;
+                case "agree":
+                    dao.changeStatus(id, 2);
                     response.sendRedirect("/admin/repair");
                     break;
                 case "assign":
@@ -63,8 +68,9 @@ public class RepairController extends HttpServlet {
                         e.printStackTrace();
                     }
 
-                    dao.update(id, contractId, assignedStaff, description, date, 2);
+                    dao.update(id, contractId, assignedStaff, description, date, 5);
                     DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                    sms.setPhone(phone);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
                             " Thoi gian du kien: " + df.format(date));
                     sms.send();
@@ -73,6 +79,12 @@ public class RepairController extends HttpServlet {
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
+                    String phone1 = current.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getPhone();
+                    String cusName = current.getAccountByCustomerUsername().getProfileByUsername().getUsername();
+                    sms.setPhone(phone1);
+                    //sms.setMessage("(ORS) Yeu cau sua chua cua " + cusName + " khong thanh cong");
+                    sms.setMessage("(ORS) Yeu cau sua chua khong thanh cong");
+                    sms.send();
                     response.sendRedirect("/admin/repair");
                     break;
                 case "change3":
@@ -94,12 +106,12 @@ public class RepairController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
         RequestDispatcher rd;
-        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
+        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3 || account.getRoleId() == 5)) {
             RepairDAO dao = new RepairDAO();
             String action = request.getParameter("action");
             if (action == null) {
                 List<Repair> list;
-                if (account.getRoleId() == 2) {
+                if (account.getRoleId() == 2 || account.getRoleId() == 5) {
                     list = dao.findAll();
                 } else {
                     list = dao.getRepairListByStaff(account.getUsername());

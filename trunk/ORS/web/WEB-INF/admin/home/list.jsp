@@ -48,15 +48,20 @@
         </c:if>
 
         <c:if test="${user.roleId != 1}">
-
-            <h:panel badge="${numOffice}" name="Tổng văn phòng" url="${pageContext.request.contextPath}/admin/office"
-                     icon="fa-building-o" css="panel-primary"/>
-            <h:panel badge="${numAppointment}" name="Lịch hẹn mới" url="${pageContext.request.contextPath}/admin/appointment"
-                     icon="fa-calendar" css="panel-primary"/>
-
-
             <c:if test="${user.roleId != 3}">
-                <h:panel badge="${numContract}" name="Tổng hợp đồng" url="${pageContext.request.contextPath}/admin/contract"
+                <h:panel badge="${numOffice}" name="Tổng văn phòng"
+                         url="${pageContext.request.contextPath}/admin/office"
+                         icon="fa-building-o" css="panel-primary"/>
+            </c:if>
+            <c:if test="${user.roleId != 5}">
+                <h:panel badge="${numAppointment}" name="Lịch hẹn mới"
+                         url="${pageContext.request.contextPath}/admin/appointment"
+                         icon="fa-calendar" css="panel-primary"/>
+            </c:if>
+
+            <c:if test="${user.roleId != 3 && user.roleId != 5}">
+                <h:panel badge="${numContract}" name="Tổng hợp đồng"
+                         url="${pageContext.request.contextPath}/admin/contract"
                          icon="fa-file-text-o" css="panel-primary"/>
                 <h:panel badge="${numReturn}" name="Hủy trước hạn"
                          url="${pageContext.request.contextPath}/admin/contract?action=return"
@@ -67,10 +72,14 @@
             </c:if>
             <h:panel badge="${numRepair}" name="Sửa chữa mới" url="${pageContext.request.contextPath}/admin/repair"
                      icon="fa-wrench" css="panel-primary"/>
-            <h:panel badge="${numRental}" name="Thuê vật dụng mới" url="${pageContext.request.contextPath}/admin/rental"
-                     icon="fa-fax" css="panel-primary"/>
-            <h:panel badge="${numRentalItem}" name="Thiết bị cho thuê" url="${pageContext.request.contextPath}/admin/rentalItem"
-                     icon="fa-cubes" css="panel-primary"/>
+            <c:if test="${user.roleId != 5}">
+                <h:panel badge="${numRental}" name="Thuê vật dụng mới"
+                         url="${pageContext.request.contextPath}/admin/rental"
+                         icon="fa-fax" css="panel-primary"/>
+                <h:panel badge="${numRentalItem}" name="Thiết bị cho thuê"
+                         url="${pageContext.request.contextPath}/admin/rentalItem"
+                         icon="fa-cubes" css="panel-primary"/>
+            </c:if>
         </c:if>
     </div>
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>

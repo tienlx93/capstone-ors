@@ -459,7 +459,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.requestRepair = function (contractId, amenities, description, callback) {
+        services.requestRepair = function (contractId, amenities, description, phone, callback) {
             $http({
                 method: 'POST',
                 url: BACK_END_URL + '/api',
@@ -467,7 +467,8 @@ app.factory("Api", ['$http',
                     'action': 'requestRepair',
                     'contractId': contractId,
                     'amenities': amenities,
-                    'description': description
+                    'description': description,
+                    'phone': phone
                 }
             })
                 .success(function (data) {

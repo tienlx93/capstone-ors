@@ -25,7 +25,7 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             $scope.type = "thuê thiết bị";
         }
         $scope.title = "Chi tiết " + $scope.type;
-        $scope.encodeURI = function(data) {
+        $scope.encodeURI = function (data) {
             return encodeURI(data);
         };
 
@@ -34,11 +34,18 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
         $scope.change = function (status) {
 
             var comment = "";
-            var changeStatus = function() {
-                Api.changeStatus(type, id, status, function() {
+            var changeStatus = function () {
+                Api.changeStatus(type, id, status, function (data) {
+                    if (data == "Wrong") {
+                        alert("Thời gian thực hiện không hợp lệ.")
+                    }
+                    if (data == "Success"){
+                        alert("Cập nhật thành công.")
+                    }
                     window.history.back();
                 }, comment);
             };
+
             if ((status == 5 || status == 3) && type == "appointment") {
                 if (status == 5) {
                     comment = window.prompt("Nhập lí do hủy");
@@ -51,7 +58,6 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             } else {
                 changeStatus();
             }
-
 
         }
 

@@ -116,7 +116,7 @@ public class ScheduleService {
     public Map<Integer, Repair> makeRepairSchedule() {
         weekJobCount = getWeekJobCount(startDate, endDate);
         Map<Integer, Repair> result = new HashMap<>();
-        List<Repair> repairList = repairDAO.getRepairListByStatus(1);
+        List<Repair> repairList = repairDAO.getRepairListByStatus(2);
         Date begin = new Date();
         Date assigned;
         List<String> availableStaff;

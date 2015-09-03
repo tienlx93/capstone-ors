@@ -21,7 +21,8 @@
           type="text/css">
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
           type="text/css">--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker3.css"
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/lib/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker3.css"
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
@@ -108,10 +109,31 @@
                                                    role="tab" data-toggle="tab">Cần giao việc</a>
                                             </li>
 
-                                            <li role="presentation">
+                                            <%--<li role="presentation">
                                                 <a href="#assigned" aria-controls="assigned" role="tab"
                                                    data-toggle="tab">Đã giao</a>
+                                            </li>--%>
+                                            <li role="presentation">
+                                                <a href="#confirm" aria-controls="confirm" role="tab"
+                                                   data-toggle="tab">Chờ khách hàng xác nhận</a>
                                             </li>
+                                            <li role="presentation">
+                                                <a href="#done" aria-controls="done" role="tab"
+                                                   data-toggle="tab">Hoàn thành</a>
+                                            </li>
+                                            <li role="presentation">
+                                                <a href="#cancel" aria-controls="cancel" role="tab"
+                                                   data-toggle="tab">Hủy</a>
+                                            </li>
+                                        </c:when>
+                                        <c:when test="${user.roleId == 5}">
+
+                                            <li role="presentation" class="active">
+                                                <a href="#request"
+                                                   aria-controls="request"
+                                                   role="tab" data-toggle="tab">Cần xác nhận</a>
+                                            </li>
+
                                             <li role="presentation">
                                                 <a href="#confirm" aria-controls="confirm" role="tab"
                                                    data-toggle="tab">Chờ khách hàng xác nhận</a>
@@ -126,11 +148,11 @@
                                             </li>
                                         </c:when>
                                         <c:otherwise>
-                                            <li role="presentation" class="active">
+                                            <%--<li role="presentation" class="active">
                                                 <a href="#assigned" aria-controls="assigned" role="tab"
                                                    data-toggle="tab">Cần xác nhận</a>
-                                            </li>
-                                            <li role="presentation">
+                                            </li>--%>
+                                            <li role="presentation" class="active">
                                                 <a href="#confirm" aria-controls="confirm" role="tab"
                                                    data-toggle="tab">Việc của tôi</a>
                                             </li>
@@ -167,7 +189,7 @@
                                                 </thead>
                                                 <tbody class="list">
                                                 <c:forEach var="item" items="${list}" varStatus="index">
-                                                    <c:if test="${item.repairStatusId == 1}">
+                                                    <c:if test="${item.repairStatusId == 2}">
                                                         <tr>
                                                             <form action="repair?action=editing" method="post"
                                                                   class="assignForm">
@@ -190,7 +212,8 @@
 
                                                                     <input type="hidden" id="endDate" class="endDate"
                                                                            value="${item.contractByContractId.endDate}">
-                                                                    <input type="hidden" id="startDate" class="startDate"
+                                                                    <input type="hidden" id="startDate"
+                                                                           class="startDate"
                                                                            value="${item.contractByContractId.startDate}">
                                                                     <select name="assignedStaff"
                                                                             class="form-control" required>
@@ -207,7 +230,7 @@
                                                                 <td>
                                                                     <fmt:formatDate
                                                                             value="${suggestMap[item.id].assignedTime}"
-                                                                            pattern="dd-MM-yyyy" var="newDate" />
+                                                                            pattern="dd-MM-yyyy" var="newDate"/>
                                                                     <input required type="text" name="assignedTime"
                                                                            class="datetime" value="${newDate}" readonly>
                                                                 </td>
@@ -236,7 +259,48 @@
                                         </div>
                                     </c:if>
 
-                                    <c:choose>
+                                    <c:if test="${user.roleId == 5}">
+                                        <div role="tabpanel" class="tab-pane active" id="request">
+                                            <table class="table striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Tên văn phòng</th>
+                                                    <th>Khách hàng</th>
+                                                    <th>Ngày tạo yêu cầu</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="list">
+                                                <c:forEach var="item" items="${list}" varStatus="index">
+                                                    <c:if test="${item.repairStatusId == 1}">
+                                                        <tr>
+                                                            <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                            <td>
+                                                                <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                                                        ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                                            </td>
+                                                            <td>
+                                                                <fmt:formatDate value="${item.createTime}"
+                                                                                pattern="dd-MM-yyyy"/>
+                                                            </td>
+                                                            <td>
+                                                                <div class="btn-group" role="group">
+                                                                    <a href="repair?action=edit&id=${item.id}"
+                                                                       title="Chi tiết"
+                                                                       class="btn btn-icon btn-default"><i
+                                                                            class="fa fa-info color5"></i></a>
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </c:if>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                            <ul class="pagination pagination-request"></ul>
+                                        </div>
+                                    </c:if>
+
+                                    <%--<c:choose>
                                         <c:when test="${user.roleId == 3}">
                                             <div role="tabpanel" class="tab-pane active" id="assigned">
                                                 <table class="table striped">
@@ -245,7 +309,6 @@
                                                         <th>Tên văn phòng</th>
                                                         <th>Khách hàng</th>
                                                         <th>Ngày sửa chữa</th>
-
 
                                                         <th></th>
                                                     </tr>
@@ -316,47 +379,132 @@
                                                 <ul class="pagination pagination-assigned"></ul>
                                             </div>
                                         </c:otherwise>
-                                    </c:choose>
+                                    </c:choose>--%>
 
-                                    <div role="tabpanel" class="tab-pane" id="confirm">
-                                        <table class="table striped">
-                                            <thead>
-                                            <tr>
-                                                <th>Tên văn phòng</th>
-                                                <th>Khách hàng</th>
-                                                <c:if test="${user.roleId == 2}">
+                                    <c:if test="${user.roleId == 5}">
+                                        <div role="tabpanel" class="tab-pane" id="confirm">
+                                            <table class="table striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Tên văn phòng</th>
+                                                    <th>Khách hàng</th>
+                                                    <th>Ngày sửa chữa</th>
                                                     <th>Nhân viên được giao</th>
-                                                </c:if>
-
-                                                <th></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="list">
-                                            <c:forEach var="item" items="${list}">
-                                                <c:if test="${item.repairStatusId == 5}">
-                                                    <tr>
-                                                        <td>${item.contractByContractId.officeByOfficeId.name}</td>
-                                                        <td>
-                                                            <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
-                                                                    ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
-                                                        </td>
-                                                        <c:if test="${user.roleId == 2}">
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="list">
+                                                <c:forEach var="item" items="${list}">
+                                                    <c:if test="${item.repairStatusId == 5}">
+                                                        <tr>
+                                                            <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                            <td>
+                                                                <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                                                        ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                                            </td>
+                                                            <td><fmt:formatDate pattern="dd-MM-yyyy"
+                                                                                value="${item.assignedTime}"/></td>
                                                             <td>${item.assignedStaff}</td>
+
+                                                            <td>
+                                                                <a href="repair?action=edit&id=${item.id}"
+                                                                   title="Chi tiết"
+                                                                   class="btn btn-icon btn-default"><i
+                                                                        class="fa fa-info color5"></i></a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:if>
+                                                </c:forEach>
+                                                </tbody>
+                                            </table>
+                                            <ul class="pagination pagination-confirm"></ul>
+                                        </div>
+                                    </c:if>
+
+                                    <c:choose>
+                                        <c:when test="${user.roleId == 3}">
+                                            <div role="tabpanel" class="tab-pane active" id="confirm">
+                                                <table class="table striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Tên văn phòng</th>
+                                                        <th>Khách hàng</th>
+                                                        <c:if test="${user.roleId == 2}">
+                                                            <th>Nhân viên được giao</th>
                                                         </c:if>
 
-                                                        <td>
-                                                            <a href="repair?action=edit&id=${item.id}"
-                                                               title="Chi tiết"
-                                                               class="btn btn-icon btn-default"><i
-                                                                    class="fa fa-info color5"></i></a>
-                                                        </td>
+                                                        <th></th>
                                                     </tr>
-                                                </c:if>
-                                            </c:forEach>
-                                            </tbody>
-                                        </table>
-                                        <ul class="pagination pagination-confirm"></ul>
-                                    </div>
+                                                    </thead>
+                                                    <tbody class="list">
+                                                    <c:forEach var="item" items="${list}">
+                                                        <c:if test="${item.repairStatusId == 5}">
+                                                            <tr>
+                                                                <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                                <td>
+                                                                    <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                                                            ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                                                </td>
+                                                                <c:if test="${user.roleId == 2}">
+                                                                    <td>${item.assignedStaff}</td>
+                                                                </c:if>
+
+                                                                <td>
+                                                                    <a href="repair?action=edit&id=${item.id}"
+                                                                       title="Chi tiết"
+                                                                       class="btn btn-icon btn-default"><i
+                                                                            class="fa fa-info color5"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                                <ul class="pagination pagination-confirm"></ul>
+                                            </div>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <div role="tabpanel" class="tab-pane" id="confirm">
+                                                <table class="table striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Tên văn phòng</th>
+                                                        <th>Khách hàng</th>
+                                                        <c:if test="${user.roleId == 2}">
+                                                            <th>Nhân viên được giao</th>
+                                                        </c:if>
+
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="list">
+                                                    <c:forEach var="item" items="${list}">
+                                                        <c:if test="${item.repairStatusId == 5}">
+                                                            <tr>
+                                                                <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                                <td>
+                                                                    <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                                                            ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                                                </td>
+                                                                <c:if test="${user.roleId == 2}">
+                                                                    <td>${item.assignedStaff}</td>
+                                                                </c:if>
+
+                                                                <td>
+                                                                    <a href="repair?action=edit&id=${item.id}"
+                                                                       title="Chi tiết"
+                                                                       class="btn btn-icon btn-default"><i
+                                                                            class="fa fa-info color5"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                                <ul class="pagination pagination-confirm"></ul>
+                                            </div>
+                                        </c:otherwise>
+                                    </c:choose>
 
                                     <div role="tabpanel" class="tab-pane" id="done">
                                         <table class="table striped">
@@ -456,13 +604,13 @@
 <script type="text/javascript">
     $(document).ready(function () {
         /*var startDate = document.getElementById('startDate').value;
-        var start = new Date(startDate);
-        var endDate = document.getElementById('endDate').value;
-        var end = new Date(endDate);*/
+         var start = new Date(startDate);
+         var endDate = document.getElementById('endDate').value;
+         var end = new Date(endDate);*/
         var nowTemp = new Date();
         var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
-        var datepicker= $('.datetime ');
+        var datepicker = $('.datetime ');
         var endDate = $('.endDate');
         var startDate = $('.startDate');
 
@@ -477,27 +625,27 @@
         }
 
         /*$('.datetime').datepicker({
-            format: 'dd-mm-yyyy',
-            onRender: function (date) {
-                /!*if (now.valueOf() < end.valueOf() && now.valueOf() > start.valueOf()) {
-                    if (date.valueOf() < end.valueOf() && date.valueOf() > now.valueOf()) {
-                        return '';
-                    } else {
-                        return 'disabled';
-                    }
-                } else if (now.valueOf() < start.valueOf()) {
-                    if (date.valueOf() < end.valueOf() && date.valueOf() > start.valueOf()) {
-                        return '';
-                    } else {
-                        return 'disabled';
-                    }
-                } else {
-                    return 'disabled';
-                }*!/
+         format: 'dd-mm-yyyy',
+         onRender: function (date) {
+         /!*if (now.valueOf() < end.valueOf() && now.valueOf() > start.valueOf()) {
+         if (date.valueOf() < end.valueOf() && date.valueOf() > now.valueOf()) {
+         return '';
+         } else {
+         return 'disabled';
+         }
+         } else if (now.valueOf() < start.valueOf()) {
+         if (date.valueOf() < end.valueOf() && date.valueOf() > start.valueOf()) {
+         return '';
+         } else {
+         return 'disabled';
+         }
+         } else {
+         return 'disabled';
+         }*!/
 
-                return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf())  ? 'disabled' : '';
-            }
-        }).data('datepicker');*/
+         return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf())  ? 'disabled' : '';
+         }
+         }).data('datepicker');*/
 
         $.ajax({
             url: "/api?action=officeName", success: function (result) {

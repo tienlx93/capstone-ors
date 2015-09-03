@@ -43,12 +43,14 @@
                     <div class="panel-title">
                         Danh sách văn phòng
                     </div>
-                    <div>
-                        <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/office?action=new">
+                    <c:if test="${user.roleId==5}">
+                        <div>
+                            <a class="btn btn-default" href="${pageContext.request.contextPath}/admin/office?action=new">
                             <span class="icon color5"><i class="fa fa-plus"></i>
                             Thêm mới văn phòng</span>
-                        </a>
-                    </div>
+                            </a>
+                        </div>
+                    </c:if>
                     <div>
                         <table class="table">
                             <thead>

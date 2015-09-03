@@ -26,6 +26,8 @@ import java.util.StringTokenizer;
 public class OfficeController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
         String action = request.getParameter("action");
         OfficeDAO dao = new OfficeDAO();
         String name = request.getParameter("name");
@@ -44,9 +46,6 @@ public class OfficeController extends HttpServlet {
         String longitude = request.getParameter("longitude");
         String district = request.getParameter("district");
         String city = request.getParameter("city");
-        String ownerName = request.getParameter("ownerName");
-        String ownerPhone = request.getParameter("ownerPhone");
-        String ownerAddress = request.getParameter("ownerAddress");
         String isPercent = request.getParameter("isPercent");
         String basePrice = request.getParameter("basePrice");
         String commission = request.getParameter("commission");
@@ -66,9 +65,7 @@ public class OfficeController extends HttpServlet {
             office.setDistrict(district);
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
-            /*office.setOwnerName(ownerName);
-            office.setOwnerAddress(ownerAddress);
-            office.setOwnerPhone(ownerPhone);*/
+            office.setOwnerUsername(account.getUsername());
             office.setPriceTerm(Integer.parseInt(priceTerm));
             if (office.getCategoryId() == 2) {
                 office.setMinArea(Double.valueOf(minArea));
@@ -128,9 +125,6 @@ public class OfficeController extends HttpServlet {
             office.setDistrict(district);
             office.setLatitude(Double.valueOf(latitude));
             office.setLongitude(Double.valueOf(longitude));
-            /*office.setOwnerName(ownerName);
-            office.setOwnerAddress(ownerAddress);
-            office.setOwnerPhone(ownerPhone);*/
             office.setPriceTerm(Integer.parseInt(priceTerm));
             if (office.getCategoryId() == 2) {
                 office.setMinArea(Double.valueOf(minArea));
@@ -153,7 +147,6 @@ public class OfficeController extends HttpServlet {
             if (floor != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
-
 
             if (dao.update(Integer.parseInt(id), office)) {
                 List<String> amenityList = saveAmenities(amenities);
@@ -194,13 +187,18 @@ public class OfficeController extends HttpServlet {
 
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
-        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
-
+        if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3 || account.getRoleId() == 5)) {
             if (action == null) {
-                int pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                int pageCount;
+                List<Office> list;
+                if (account.getRoleId() == 5) {
+                    pageCount = dao.getPageCount(ConstantService.PAGE_SIZE, account.getUsername());
+                    list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE, account.getUsername());
+                } else {
+                    pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
+                    list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE);
+                }
                 request.setAttribute("pageCount", pageCount);
-
-                List<Office> list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/office/viewOffice.jsp");
                 rd.forward(request, response);
@@ -282,7 +280,12 @@ public class OfficeController extends HttpServlet {
                 String startPage = request.getParameter("startPage");
                 int page = Integer.parseInt(startPage);
                 int startItem = (page - 1) * ConstantService.PAGE_SIZE;
-                List<Office> list = dao.getOfficeByPage(startItem, ConstantService.PAGE_SIZE);
+                List<Office> list;
+                if (account.getRoleId() == 5) {
+                    list = dao.getOfficeByPage(startItem, ConstantService.PAGE_SIZE, account.getUsername());
+                } else {
+                    list = dao.getOfficeByPage(startItem, ConstantService.PAGE_SIZE);
+                }
                 request.setAttribute("data", list);
                 rd = request.getRequestDispatcher("/WEB-INF/partial/officeListItem.jsp");
                 rd.forward(request, response);

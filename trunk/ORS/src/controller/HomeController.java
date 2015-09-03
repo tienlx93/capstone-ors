@@ -36,7 +36,11 @@ public class HomeController extends HttpServlet {
                 request.setAttribute("numUser", count);
             } else {
                 OfficeDAO officeDAO = new OfficeDAO();
-                request.setAttribute("numOffice", officeDAO.getPageCount(1));
+                if (account.getRoleId() == 5) {
+                    request.setAttribute("numOffice", officeDAO.getPageCount(1, account.getUsername()));
+                } else {
+                    request.setAttribute("numOffice", officeDAO.getPageCount(1));
+                }
                 AppointmentDAO appointmentDAO = new AppointmentDAO();
                 ContractDAO contractDAO = new ContractDAO();
                 RentalItemDAO rentalItemDAO = new RentalItemDAO();

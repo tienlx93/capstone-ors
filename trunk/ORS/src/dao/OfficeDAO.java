@@ -156,9 +156,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
     }
 
     public List<Office> getOfficeByPage(int firstResult, int pageSize) {
-
         try {
-
             Criteria criteria = session.createCriteria(Office.class);
             criteria.add(Restrictions.ne("statusId", 3));
             criteria.add(Restrictions.isNull("parentOfficeId"));
@@ -166,24 +164,52 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             criteria.setFirstResult(firstResult);
             criteria.setMaxResults(pageSize);
             return criteria.list();
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
+    }
 
+    public List<Office> getOfficeByPage(int firstResult, int pageSize, String owner) {
+        try {
+            Criteria criteria = session.createCriteria(Office.class);
+            criteria.add(Restrictions.eq("ownerUsername", owner));
+            criteria.add(Restrictions.ne("statusId", 3));
+            criteria.add(Restrictions.isNull("parentOfficeId"));
+            criteria.addOrder(Order.asc("id"));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
     public int getPageCount(int pageSize) {
         try {
-
             Criteria criteriaCount = session.createCriteria(Office.class);
             criteriaCount.add(Restrictions.ne("statusId", 3));
             criteriaCount.add(Restrictions.isNull("parentOfficeId"));
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();
             return (int) Math.ceil((double)count / pageSize);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
+        return 0;
+    }
+
+    public int getPageCount(int pageSize, String owner) {
+        try {
+            Criteria criteriaCount = session.createCriteria(Office.class);
+            criteriaCount.add(Restrictions.eq("ownerUsername", owner));
+            criteriaCount.add(Restrictions.ne("statusId", 3));
+            criteriaCount.add(Restrictions.isNull("parentOfficeId"));
+            criteriaCount.setProjection(Projections.rowCount());
+            Long count = (Long) criteriaCount.uniqueResult();
+            return (int) Math.ceil((double)count / pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }

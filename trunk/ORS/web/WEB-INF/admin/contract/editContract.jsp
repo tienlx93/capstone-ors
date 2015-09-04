@@ -63,7 +63,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${contract.officeByOfficeId.ownerName}
+                                            ${contract.officeByOfficeId.accountByOwnerUsername.profileByUsername.fullName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -72,7 +72,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${contract.officeByOfficeId.ownerAddress}
+                                            ${contract.officeByOfficeId.accountByOwnerUsername.profileByUsername.address}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -81,7 +81,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${contract.officeByOfficeId.ownerPhone}
+                                            ${contract.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">

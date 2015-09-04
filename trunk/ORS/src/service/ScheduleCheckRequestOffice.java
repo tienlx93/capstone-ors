@@ -31,10 +31,7 @@ public class ScheduleCheckRequestOffice implements Job {
             Date date = new Date();
             long currentDate = date.getTime();
 
-            if((currentDate - createDate) / (24 * 60 * 60 * 1000) >= 365){
-                dao.remove(request);
-                return;
-            }
+
 
             Collection<RequestAmenity> amenities = request.getRequestAmenitiesById();
 
@@ -65,7 +62,9 @@ public class ScheduleCheckRequestOffice implements Job {
                 }
             }
             System.out.println("Check request office: " + emailQueue.getOfficeIds());
-
+            if((currentDate - createDate) / (24 * 60 * 60 * 1000) >= 365){
+                dao.remove(request);
+            }
         }
     }
 

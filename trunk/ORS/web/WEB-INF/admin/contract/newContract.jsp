@@ -64,7 +64,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerName}
+                                            ${office.accountByOwnerUsername.profileByUsername.fullName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -73,7 +73,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerAddress}
+                                            ${office.accountByOwnerUsername.profileByUsername.address}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -82,7 +82,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${office.ownerPhone}
+                                            ${office.accountByOwnerUsername.profileByUsername.phone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -180,6 +180,17 @@
                                         <div class="form-group clearfix">
 
                                         </div>
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="amenities" class="col-sm-2 control-label">
+                                        Các tiện ích theo văn phòng:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <c:forEach items="${office.officeAmenitiesById}" var="item">
+                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                        </c:forEach>
                                     </div>
                                 </div>
                                 <c:if test="${office.categoryId == 2}">
@@ -301,7 +312,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="paymentTerm" class="form-control"
-                                                onchange="calculatePaymentFee();"
+                                                onchange="calculatePaymentFee();changeDepositMonth();"
                                                 id="paymentTerm" required="true">
                                             <c:forEach var="item" items="${paymentTermList}">
                                                 <option value="${item.id}">
@@ -315,28 +326,28 @@
                                 <div class="form-group clearfix">
                                     <c:if test="${office.price != null}">
 
-                                    <div for="paymentFee" class="col-sm-2 control-label">
-                                        Giá thuê/m<sup>2</sup>:
-                                    </div>
+                                        <div for="paymentFee" class="col-sm-2 control-label">
+                                            Giá thuê/m<sup>2</sup>(VNĐ):
+                                        </div>
 
-                                    <div class="col-sm-4">
-                                        <input style="display: inline-block" type='text'
-                                               onchange="calculatePaymentFee()" class="form-control"
-                                               name="paymentFeeValue" step="any" readonly min="0"
-                                               id="paymentFeeValue" value="${office.price}"
-                                               required="true"/>
-                                    </div>
+                                        <div class="col-sm-4">
+                                            <input style="display: inline-block" type='text'
+                                                   onchange="calculatePaymentFee()" class="form-control"
+                                                   name="paymentFeeValue" step="any" readonly min="0"
+                                                   id="paymentFeeValue" value="${office.price}"
+                                                   required="true"/>
+                                        </div>
                                         <input type="hidden" name="paymentFee" id="paymentFee" value="${office.price}"/>
                                     </c:if>
                                     <c:if test="${office.price == null}">
 
                                         <div for="paymentFee" class="col-sm-2 control-label">
-                                            Giá thuê/m<sup>2</sup>:
+                                            Giá thuê/m<sup>2</sup>(VNĐ):
                                         </div>
 
                                         <div class="col-sm-4">
                                             <input style="display: inline-block" type='text'
-                                                   onchange="calculatePaymentFee()"class="form-control"
+                                                   onchange="calculatePaymentFee()" class="form-control"
                                                    name="paymentFeeValue" step="any" min="0"
                                                    id="paymentFeeValue" value=""
                                                    required="true"/>
@@ -344,19 +355,33 @@
                                         <input type="hidden" name="paymentFee" id="paymentFee" value=""/>
 
                                     </c:if>
+                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Số tháng
+                                        đặt
+                                        cọc:
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="depositMonth" name="depositMonth"
+                                                onchange="calculateDeposit(this)">
+                                            <option value="1">1 tháng</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div class="col-sm-6"></div>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt
                                         cọc văn phòng(VNĐ):
                                     </div>
 
                                     <div class="col-sm-4">
-                                        <input style="display: inline-block" type='text' class="form-control"
-                                               name="deposit" min="0" required="true" onkeyup="formatDeposit()"
+                                        <label id="depositLabel"></label>
+                                        <input style="display: inline-block" type='hidden' class="form-control"
+                                               name="deposit" required="true"
                                                id="deposit" value=""/>
                                     </div>
-                                    <input type="hidden" name="depositValue" id="depositValue" value=""/>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div for="endDate" class="col-sm-2 control-label"> số tiền
+                                    <div for="endDate" class="col-sm-2 control-label"> Số tiền
                                         bên B phải thanh
                                         toán theo mỗi kỳ (<span name="term" id="term" style="font-weight: bold"></span>)(VNĐ):
                                     </div>
@@ -401,7 +426,7 @@
                                 </div>
                             </div>
                             <div class="button-post">
-                                <input type="hidden" value="save" name="action" >
+                                <input type="hidden" value="save" name="action">
                                 <button type="submit" class="btn btn-primary">Tạo mới
                                 </button>
                                 <a href="/admin/appointment?action=edit&id=${appointmentList.id}"

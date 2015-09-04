@@ -189,7 +189,7 @@ public class ContractController extends HttpServlet {
                 switch (button) {
                     case "confirm":
 //                        dao.changeStatus(id, 4);
-                        String returnMoney = request.getParameter("returnMoney");
+//                        String returnMoney = request.getParameter("returnMoney");
                         String returnDeposit = request.getParameter("returnDeposit");
                         // Update area for office parent when contract has been confirmed to expire
                         Contract contract = dao.get(id);
@@ -199,7 +199,7 @@ public class ContractController extends HttpServlet {
                         contract.setStatusId(4);
                         Long deposit = contract.getDeposit() - Long.parseLong(returnDeposit);
                         contract.setDeposit(deposit);
-                        contract.setCancelFee(Long.getLong(returnMoney));
+//                        contract.setCancelFee(Long.getLong(returnMoney));
 
                         dao.updateContract(id, contract);
 
@@ -244,7 +244,7 @@ public class ContractController extends HttpServlet {
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
                 String officeArea = request.getParameter("officeArea");
-                String deposit = request.getParameter("depositValue");
+                String deposit = request.getParameter("deposit");
                 if(deposit.equals("")) {
                     deposit = "0";
                 }

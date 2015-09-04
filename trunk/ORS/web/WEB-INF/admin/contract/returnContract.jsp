@@ -58,7 +58,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${info.officeByOfficeId.ownerName}
+                                            ${info.officeByOfficeId.accountByOwnerUsername.profileByUsername.fullName}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -67,7 +67,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${info.officeByOfficeId.ownerAddress}
+                                            ${info.officeByOfficeId.accountByOwnerUsername.profileByUsername.address}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -76,7 +76,7 @@
                                         </div>
 
                                         <div class="col-sm-9">
-                                            ${info.officeByOfficeId.ownerPhone}
+                                            ${info.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}
                                         </div>
                                     </div>
                                     <div class="form-group clearfix">
@@ -186,20 +186,20 @@
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
                                     <div name="startDate" id="startDate" class="col-sm-4">
-                                            <fmt:formatDate value="${info.startDate}"
-                                                            pattern="dd-MM-yyyy"/>
-                                            <input type="hidden" id="startDateValue" name="startDateValue"
-                                                   value="${info.startDate}">
+                                        <fmt:formatDate value="${info.startDate}"
+                                                        pattern="dd-MM-yyyy"/>
+                                        <input type="hidden" id="startDateValue" name="startDateValue"
+                                               value="${info.startDate}">
                                     </div>
                                     <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết
                                         thúc:
                                     </div>
 
                                     <div name="endDate" id="endDate" class="col-sm-4">
-                                            <fmt:formatDate value="${info.endDate}"
-                                                            pattern="dd-MM-yyyy"/>
-                                            <input type="hidden" id="endDateValue" name="endDateValue"
-                                                   value="${info.endDate}">
+                                        <fmt:formatDate value="${info.endDate}"
+                                                        pattern="dd-MM-yyyy"/>
+                                        <input type="hidden" id="endDateValue" name="endDateValue"
+                                               value="${info.endDate}">
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
@@ -207,8 +207,8 @@
 
                                     <div name="paymentFee" id="paymentFee" class="col-sm-4">
                                         ${info.paymentFee} VNĐ
-                                            <input type="hidden" id="paymentFeeValue" name="paymentFeeValue"
-                                                   value="${info.paymentFee}">
+                                        <input type="hidden" id="paymentFeeValue" name="paymentFeeValue"
+                                               value="${info.paymentFee}">
                                     </div>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Số
                                         tiền đặt cọc:
@@ -216,6 +216,7 @@
 
                                     <input type="hidden" id="depositValue" name="depositValue"
                                            value="${info.deposit}">
+
                                     <div class="col-sm-4" id="deposit" name="deposit">
                                         ${info.deposit}
                                     </div>
@@ -231,26 +232,34 @@
                                         Tổng giá trị hợp đồng:
                                     </div>
 
-                                    <div name="totalContract" style="font-weight: bold" id="totalContract" class="col-sm-4">
+                                    <div name="totalContract" style="font-weight: bold" id="totalContract"
+                                         class="col-sm-4">
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div class="col-sm-2 control-label">Số tiền hoàn trả cho bên B(VNĐ):
-                                    </div>
+                                    <%--<div class="col-sm-2 control-label">Số tiền hoàn trả cho bên B(VNĐ):--%>
+                                    <%--</div>--%>
 
-                                    <div class="col-sm-4">
-                                        <input type="number" name="returnMoney" id="returnMoney" min="0"
-                                               style="width: 100%" onchange="calculateTotalContract()"
-                                               value="">
+                                    <%--<div class="col-sm-4">--%>
+                                    <%--<input type="number" name="returnMoney" id="returnMoney" min="0"--%>
+                                    <%--style="width: 100%" onchange="calculateTotalContract()"--%>
+                                    <%--value="">--%>
+                                    <%--</div>--%>
+                                    <div class="col-sm-2 control-label">Số tiền đặt cọc trả cho bên B(VNĐ):
                                     </div>
-                                    <div class="col-sm-2 control-label" style="text-align: right">Số tiền đặt cọc trả cho bên B(VNĐ):
-                                    </div>
-
                                     <div class="col-sm-4">
-                                        <input type="number" name="returnDeposit" id="returnDeposit" min="0" max="${info.deposit}"
+                                        <label><input onchange="checkReturnDeposit()" type="radio" name="money" style="vertical-align: middle;margin-right: 10px;" value="not_return" checked>Không hoàn trả</label>
+                                    </div>
+                                    <div class="col-sm-2" style="text-align: right">
+                                        <label><input onchange="checkReturnDeposit()" type="radio" name="money" style="vertical-align: middle;margin-right: 10px;" value="return">Hoàn trả</label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="number" name="returnDeposit" id="returnDeposit" min="0"
+                                               max="${info.deposit}"
                                                style="width: 100%"
                                                value="${info.deposit}">
                                     </div>
+                                    <input type="number"  style="display: none" id="valueDeposit" value="${info.deposit}">
                                 </div>
                             </div>
 
@@ -274,11 +283,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
         calculateTotalContract();
-        calculateReturnMoney();
+//        calculateReturnMoney();
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('depositValue').value) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(document.getElementById('paymentFeeValue').value) + ' VNĐ';
-        var time = new Date().getTime();
-
+//        var time = new Date().getTime();
+        checkReturnDeposit()
     });
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -313,19 +322,40 @@
 
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('totalContract').innerHTML = numberWithCommas(totalContract) + ' VNĐ';
-        document.getElementById('returnMoney').setAttribute('max', totalContract + '');
-    }
-    function calculateReturnMoney() {
-        var start = new Date();
-        var endDate = document.getElementById('endDateValue').value;
-        var end = new Date(endDate);
-        var time = Math.ceil((end.getTime() - start.getTime()) / 86400000);
-        var officeArea = document.getElementById('officeArea').innerText;
-        var paymentFee = document.getElementById('paymentFeeValue').value;
+//        document.getElementById('returnMoney').setAttribute('max', totalContract + '');
+    };
+    //    function calculateReturnMoney() {
+    //        var start = new Date();
+    //        var endDate = document.getElementById('endDateValue').value;
+    //        var end = new Date(endDate);
+    //        var time = Math.ceil((end.getTime() - start.getTime()) / 86400000);
+    //        var officeArea = document.getElementById('officeArea').innerText;
+    //        var paymentFee = document.getElementById('paymentFeeValue').value;
+    //
+    //        var returnMoney = parseInt(officeArea) * paymentFee * (time/30);
+    //        document.getElementById('returnMoney').value = Math.floor(returnMoney/100) * 100;
+    //
+    //    }
 
-        var returnMoney = parseInt(officeArea) * paymentFee * (time/30);
-        document.getElementById('returnMoney').value = Math.floor(returnMoney/100) * 100;
+    function checkReturnDeposit(){
+        var radios = document.getElementsByName('money');
 
+        for (var i = 0, length = radios.length; i < length; i++) {
+            if (radios[i].checked) {
+                // do whatever you want with the checked radio
+                var value = radios[i].value;
+
+                if(value == 'not_return') {
+                    document.getElementById('returnDeposit').value = 0;
+                    document.getElementById('returnDeposit').disabled = true;
+                } else {
+                    document.getElementById('returnDeposit').value = document.getElementById('valueDeposit').value ;
+                    document.getElementById('returnDeposit').disabled = false;
+                }
+                // only one radio can be logically checked, don't check the rest
+                break;
+            }
+        }
     }
 </script>
 </body>

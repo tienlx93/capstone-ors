@@ -3670,3 +3670,7 @@ Widgets
 .panel-title .tooltip {
     text-transform: none;
 }
+
+input[disabled] {
+    background-color: #BDC4C9;
+}

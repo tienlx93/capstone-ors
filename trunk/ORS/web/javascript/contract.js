@@ -95,6 +95,8 @@ $(document).ready(function () {
         });
 
     });
+
+    calculateDeposit(document.getElementById('depositMonth'));
 });
 
 function calculatePaymentFee() {
@@ -106,7 +108,6 @@ function calculatePaymentFee() {
         paymentFee = parseFloat(paymentFee.replace(/\./g, ''));
     }
     var contractTime = document.getElementById('time').value;
-    var deposit = document.getElementById('deposit').value;
     var time;
     switch (paymentTerm) {
         case '1':
@@ -190,14 +191,14 @@ function formatPaymentFee() {
     }
 }
 ;
-function formatDeposit() {
-    var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
-    if (deposit != 0) {
-        document.getElementById('depositValue').value = parseFloat(deposit.replace(/\./g, ''));
-        document.getElementById('deposit').value = numberWithCommas(document.getElementById('depositValue').value);
-    }
-}
-;
+//function formatDeposit() {
+//    var deposit = document.getElementById('deposit').value != '' ? document.getElementById('deposit').value : 0;
+//    if (deposit != 0) {
+//        document.getElementById('depositValue').value = parseFloat(deposit.replace(/\./g, ''));
+//        document.getElementById('deposit').value = numberWithCommas(document.getElementById('depositValue').value);
+//    }
+//}
+//;
 function validatePaymentTerm() {
     var paymentTerm = document.getElementById('paymentTerm').value;
     var contractTime = document.getElementById('time').value;
@@ -220,3 +221,76 @@ function validatePaymentTerm() {
     }
     return true;
 };
+
+var option_1 = [{
+    value: 1,
+    text: '1 tháng'
+}];
+var option_2 = [{
+    value: 1,
+    text: '1 tháng'
+},{
+    value: 2,
+    text: '2 tháng'
+}, {
+    value: 3,
+    text: '3 tháng'
+}];
+var option_3 = [{
+    value: 1,
+    text: '1 tháng'
+},{
+    value: 2,
+    text: '2 tháng'
+}, {
+    value: 3,
+    text: '3 tháng'
+},{
+    value: 4,
+    text: '4 tháng'
+},{
+    value: 5,
+    text: '5 tháng'
+}, {
+    value: 6,
+    text: '6 tháng'
+}];
+
+function changeDepositMonth(){
+    $('#depositMonth').empty();
+
+    var value = document.getElementById('paymentTerm').value;
+    switch (parseInt(value)) {
+        case 1:
+            changeSelectTag('#depositMonth', option_1);
+            break;
+        case 2:
+            changeSelectTag('#depositMonth', option_2);
+            break;
+        case 3:
+            changeSelectTag('#depositMonth', option_3);
+            break;
+        default:
+            break;
+    }
+};
+
+function changeSelectTag(tagID, arrays) {
+    $.each(arrays, function (i, array) {
+        $(tagID).append($('<option>', {
+            value: array.value,
+            text : array.text
+        }));
+    });
+};
+
+function calculateDeposit(element) {
+    var months = element.value;
+    var paymentFee = parseFloat(document.getElementById('paymentFee').value);
+    var officeArea = parseInt(document.getElementById('officeArea').value);
+
+    var deposit = months * paymentFee * officeArea;
+
+    document.getElementById('deposit').value = numberWithCommas(deposit);
+    document.getElementById('depositLabel').innerHTML = numberWithCommas(deposit);
+}

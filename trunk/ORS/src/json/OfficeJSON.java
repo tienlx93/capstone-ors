@@ -60,7 +60,7 @@ public class OfficeJSON {
         this.category = office.getCategoryByCategoryId().getDescription();
         this.amenities = new ArrayList<>();
         for (OfficeAmenity amenity : office.getOfficeAmenitiesById()) {
-            if (amenity.getAmenityByAmenityId().getAmenityGroupId() != 3) {
+            if (amenity.getAmenityByAmenityId().getRepairable() == true) {
                 this.amenities.add(amenity.getAmenityByAmenityId().getName());
             }
         }

@@ -165,7 +165,8 @@
                                                        value="${info.assignedStaff}">
                                             </c:when>
                                             <c:otherwise>
-                                                <select name="assignedStaff" id="assignedStaff" class="form-control" required>
+                                                <select name="assignedStaff" id="assignedStaff" class="form-control"
+                                                        required>
                                                     <c:choose>
                                                         <c:when test="${info.statusId == 1}">
 
@@ -247,32 +248,34 @@
                                 <c:choose>
                                     <c:when test="${info.statusId == 1 && user.roleId == 2}">
 
-                                        <button type="submit" name="button" value="assign" class="btn btn-primary">Giao
-                                            việc
+                                        <button type="submit" name="button" value="assign" class="btn btn-primary"
+                                                disabled id="assignTask">Giao việc
                                         </button>
                                         <button class="btn btn-danger" type="button" onclick="inputComment(true)">
                                             Hủy lịch hẹn
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 2}">
-                                        <button class="btn btn-primary" type="submit" name="button" value="assign">Giao
-                                            việc lại
+                                        <button class="btn btn-primary" type="submit" name="button" value="assign"
+                                                disabled id="assignAgain">Giao việc lại
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 3 && user.roleId == 2}">
                                         <c:if test="${info.officeByOfficeId.statusId != 2}">
                                             <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
-                                               class="btn btn-primary">Tạo hợp đồng</a>
+                                               class="btn btn-primary" disabled id="createContract">Tạo hợp đồng</a>
                                         </c:if>
-                                        <button class="btn btn-danger" type="button" onclick="inputComment()">
-                                            Hủy kí hợp đồng
+                                        <button class="btn btn-danger" type="button" onclick="inputComment()"
+                                                disabled id="cancelContract"> Hủy kí hợp đồng
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
-                                        <button class="btn btn-primary" type="submit" name="button" value="update3" disabled id="agree">
+                                        <button class="btn btn-primary" type="submit" name="button" value="update3"
+                                                disabled id="agree">
                                             Khách hàng muốn kí hợp đồng
                                         </button>
-                                        <button class="btn btn-danger" type="button" onclick="inputComment()" disabled id="disagree">
+                                        <button class="btn btn-danger" type="button" onclick="inputComment()" disabled
+                                                id="disagree">
                                             Khách hàng không đồng ý
                                         </button>
                                     </c:when>
@@ -351,11 +354,17 @@
         var checkTime4 = afterMeet - meet;
 
         /*if (checkTime.valueOf() < checkTime4.valueOf() && checkTime.valueOf > 0) {
-            $("#agree").removeAttr("disabled");
-        }*/
+         $("#agree").removeAttr("disabled");
+         }*/
         if (now.valueOf() >= meet.valueOf()) {
             $("#agree").removeAttr("disabled");
-			$("#disagree").removeAttr("disabled");
+            $("#disagree").removeAttr("disabled");
+            $("#createContract").removeAttr("disabled");
+            $("#cancelContract").removeAttr("disabled");
+        }
+        if (now.valueOf() < meet.valueOf()) {
+            $("#assignTask").removeAttr("disabled");
+            $("#assignAgain").removeAttr("disabled");
         }
     });
 

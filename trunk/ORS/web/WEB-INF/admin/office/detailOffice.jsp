@@ -116,11 +116,20 @@
                   </c:otherwise>
                 </c:choose>
               </div>
+              <c:if test="${user.roleId != 5}">
+                <h3>Thông tin chủ văn phòng</h3>
+                <div class="form-group clearfix">
+                  <label class="col-sm-3">Tên chủ sở hữu:</label>
+                  <span class="col-sm-7">${info.accountByOwnerUsername.profileByUsername.fullName}</span>
+                </div>
+                <div class="form-group clearfix">
+                  <label class="col-sm-3">Số điện thoại:</label>
+                  <span class="col-sm-3">${info.accountByOwnerUsername.profileByUsername.phone}</span>
+                  <label class="col-sm-3">Địa chỉ:</label>
+                  <span class="col-sm-3">${info.accountByOwnerUsername.profileByUsername.address} m<SUP>2</SUP></span>
+                </div>
+              </c:if>
 
-              <div class="form-group clearfix">
-                <label class="col-sm-3">Thông tin chủ văn phòng:</label>
-                <span class="col-sm-7">${info.ownerName} - ${info.ownerPhone} - ${info.ownerAddress}</span>
-              </div>
 
               <div class="form-group clearfix">
                 <label class="col-sm-3 control-label">Hình ảnh</label><br>
@@ -153,9 +162,11 @@
               </div>
 
               <div class="button-post">
-                <a class="btn btn-primary" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
+                <a class="btn btn-success" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
                   chữa</a>
-                <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
+                <c:if test="${user.roleId != 5}">
+                  <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
+                </c:if>
                 <input type="hidden" name="id" value="${info.id}"/>
                 <input type="hidden" name="action" value="delete">
                 <button type="submit" class="btn btn-danger" >Xóa văn phòng</button>

@@ -432,7 +432,7 @@
                                                         <c:if test="${user.roleId == 2}">
                                                             <th>Nhân viên được giao</th>
                                                         </c:if>
-
+                                                        <th>Ngày sửa chữa</th>
                                                         <th></th>
                                                     </tr>
                                                     </thead>
@@ -448,6 +448,9 @@
                                                                 <c:if test="${user.roleId == 2}">
                                                                     <td>${item.assignedStaff}</td>
                                                                 </c:if>
+
+                                                                <td><fmt:formatDate pattern="dd-MM-yyyy"
+                                                                                    value="${item.assignedTime}"/></td>
 
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"
@@ -473,7 +476,7 @@
                                                         <c:if test="${user.roleId == 2}">
                                                             <th>Nhân viên được giao</th>
                                                         </c:if>
-
+                                                        <th>Ngày sửa chữa</th>
                                                         <th></th>
                                                     </tr>
                                                     </thead>
@@ -489,7 +492,10 @@
                                                                 <c:if test="${user.roleId == 2}">
                                                                     <td>${item.assignedStaff}</td>
                                                                 </c:if>
-
+                                                                <c:if test="${user.roleId == 3}">
+                                                                    <td><fmt:formatDate pattern="dd-MM-yyyy"
+                                                                                        value="${item.assignedTime}"/></td>
+                                                                </c:if>
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"
                                                                        title="Chi tiết"
@@ -516,7 +522,6 @@
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
 
-
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -532,7 +537,6 @@
                                                         <c:if test="${user.roleId == 2}">
                                                             <td>${item.assignedStaff}</td>
                                                         </c:if>
-
                                                         <td>
                                                             <a href="repair?action=edit&id=${item.id}"
                                                                title="Chi tiết"

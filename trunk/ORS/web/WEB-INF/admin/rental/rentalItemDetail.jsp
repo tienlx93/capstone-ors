@@ -22,9 +22,10 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-
+    <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
+
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -44,7 +45,7 @@
                         <h2 style="margin-top: 5px">Xem chi tiết thiết bị</h2>
                     </div>
                     <div>
-                        <form action="rentalItem?action=editing" method="post">
+                        <form action="rentalItem?action=editing" method="post" id="myform">
                             <div class="form-group" hidden>
                                 <label for="id">Id</label>
 
@@ -67,7 +68,7 @@
                                         </option>
                                         <c:forEach var="item" items="${categoryList}">
                                             <option value="${item.id}"
-                                                <c:if test="${info.officeType==item.id}">selected</c:if>>${item.description}</option>
+                                                    <c:if test="${info.officeType==item.id}">selected</c:if>>${item.description}</option>
                                         </c:forEach>
                                     </select>
                                 </div>
@@ -77,10 +78,10 @@
                                 <label for="price" class="col-sm-2 control-label">Giá (VND)</label>
 
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" id="price"
+                                    <input type="text" class="form-control" id="price" name="price2"
                                            value="${info.price}" required min="1" onkeyup="formatPrice()"
                                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
-                                    <input type="hidden" name="price" id="priceValue" value=""/>
+                                    <input type="hidden" name="price" id="priceValue" value="${info.price}"/>
                                 </div>
 
                                 <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
@@ -136,19 +137,27 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/uploadRental.js"></script>
 
 <script type="text/javascript">
+    $(document).ready(function () {
+        formatPrice();
+    });
     function formatPrice() {
         var price = document.getElementById('price').value != '' ? document.getElementById('price').value : 0;
         if (price != 0) {
-            document.getElementById('priceValue').value = parseFloat(price.replace(/\./g, ''));
+            document.getElementById('priceValue').value = parseFloat(price.replace(/\.0/g, ''));
             document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue').value);
         }
-    }
-    ;
+    };
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-    ;
+    };
+    $("#myform").validate({
+        messages: {
+            price2: "Vui lòng nhập số lớn hơn không",
+            quantity: "Vui lòng nhập số lớn hơn không"
+        }
+    })
 </script>
+
 
 </body>
 </html>

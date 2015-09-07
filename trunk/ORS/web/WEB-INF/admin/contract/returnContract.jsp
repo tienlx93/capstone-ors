@@ -166,6 +166,16 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
+                                    <div for="amenities" class="col-sm-2 control-label">
+                                        Các tiện ích theo văn phòng:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <c:forEach items="${info.officeByOfficeId.officeAmenitiesById}" var="item">
+                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
                                     <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):
                                     </div>
 

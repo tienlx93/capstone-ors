@@ -64,13 +64,13 @@
                                 <label class="col-sm-2 control-label">Chủ văn phòng</label>
 
                                 <div class="col-sm-4">
-                                    ${info.officeByOfficeId.ownerName}
+                                    ${info.officeByOfficeId.accountByOwnerUsername.profileByUsername.fullName}
                                 </div>
 
                                 <label class="col-sm-2 control-label">Số điện thoại</label>
 
                                 <div class="col-sm-4">
-                                    ${info.officeByOfficeId.ownerPhone}
+                                    ${info.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}
                                 </div>
                             </div>
 

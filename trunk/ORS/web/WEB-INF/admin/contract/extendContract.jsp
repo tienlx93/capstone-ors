@@ -129,7 +129,6 @@
                                 </div>
                             </div>
 
-                            <
                             <div class="row" style="margin: 20px auto; ">
                                 <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
                                     <h3>Thông tin thuê văn phòng</h3></div>
@@ -159,7 +158,16 @@
                                         <input type="hidden" name="officeId" value="${info.officeId}">
                                     </div>
                                 </div>
-
+                                <div class="form-group clearfix">
+                                    <div for="amenities" class="col-sm-2 control-label">
+                                        Các tiện ích theo văn phòng:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <c:forEach items="${info.officeAmenitiesById}" var="item">
+                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                        </c:forEach>
+                                    </div>
+                                </div>
                                 <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):
                                     </div>

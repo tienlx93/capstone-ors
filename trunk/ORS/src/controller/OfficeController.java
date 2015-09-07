@@ -204,7 +204,7 @@ public class OfficeController extends HttpServlet {
                 rd.forward(request, response);
             } else if (action.equals("new")) {
                 Office office = new Office();
-                request.setAttribute("office", office);
+                //request.setAttribute("office", office);
 
                 PriceTermDAO ptDao = new PriceTermDAO();
                 List<PriceTerm> priceTermList = ptDao.findAll();

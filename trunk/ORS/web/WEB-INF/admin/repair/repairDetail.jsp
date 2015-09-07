@@ -444,7 +444,7 @@
                                                     Khách hàng hài lòng
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
-                                                        class="btn btn-danger">
+                                                        class="btn btn-danger" id="unhappy" disabled>
                                                     Khách hàng không hài lòng
                                                 </button>
                                             </c:when>
@@ -502,6 +502,7 @@
         }
         if (now.valueOf() >= repair.valueOf()) {
             $("#happy").removeAttr("disabled");
+            $("#unhappy").removeAttr("disabled");
         }
     });
 

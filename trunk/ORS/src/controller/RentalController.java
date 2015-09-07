@@ -1,7 +1,9 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.*;
 import entity.*;
+import json.AssignResultJSON;
 import service.ConstantService;
 import service.SMSService;
 import service.ScheduleService;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -57,28 +60,23 @@ public class RentalController extends HttpServlet {
                     }
                     sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach khong duoc chap nhan.");
                     sms.send();
+                    response.sendRedirect("/admin/rental");
                     break;
                 case "assign":
-                    /*SimpleDateFormat fromUser = new SimpleDateFormat("dd-MM-yyyy");
-                    SimpleDateFormat myFormat = new SimpleDateFormat("yyyy-MM-dd");
-                    String reformatted = null;
-                    try {
-                        reformatted = myFormat.format(fromUser.parse(assignedTime));
-                    } catch (ParseException e) {
-                        e.printStackTrace();
-                    }
-                    Date date = java.sql.Date.valueOf(reformatted);*/
-
+                    PrintWriter out = response.getWriter();
+                    Gson gson = new Gson();
                     SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
-
                     try {
                         date = fromAssign.parse(assignedTime);
-
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
+                    ScheduleService service = new ScheduleService();
+                    AssignResultJSON staffAvailable = service.isStaffAvailable(date, assignStaff);
+                    if (staffAvailable.status <= 0) {
+                        out.print(gson.toJson(staffAvailable));
+                    } else {
                         dao.update(id, contractId, assignStaff, 2, description, date);
                         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                         sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach da duoc chap nhan. Thoi gian du kien: " + df.format(date));
@@ -87,22 +85,25 @@ public class RentalController extends HttpServlet {
                         for (RentalDetail rentalDetail : rentalDetailCollection) {
                             rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
                         }
-
+                        out.print(gson.toJson("Success"));
+                    }
                     break;
                 case "change1":
                     dao.changeStatus(id, 1);
                     for (RentalDetail rentalDetail : rentalDetailCollection) {
                         rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
                     }
+                    response.sendRedirect("/admin/rental");
                     break;
                 case "change3":
                     dao.changeStatus(id, 3);
+                    response.sendRedirect("/admin/rental");
                     break;
                 case "change5":
                     dao.changeStatus(id, 5);
+                    response.sendRedirect("/admin/rental");
                     break;
             }
-            response.sendRedirect("/admin/rental");
 
         }
     }

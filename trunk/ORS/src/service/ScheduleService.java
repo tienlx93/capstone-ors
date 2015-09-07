@@ -305,9 +305,30 @@ public class ScheduleService {
         if (assignedStaff == null) {
             return json;
         }
-        Date appointmentDate = appointment.getTime();
-        Date startDate = getStartOfDay(appointmentDate);
+        Date jobTime = appointment.getTime();
+        Date startDate = getStartOfDay(jobTime);
         Date endDate = addDays(startDate, 1);
+        json = calculateJob(startDate, endDate, staff, jobTime);
+        return json;
+    }
+
+    public AssignResultJSON isStaffAvailable(Date jobTime, String staff) {
+        AssignResultJSON json = new AssignResultJSON();
+        json.status = AssignResultJSON.STATUS_UNAVAILABLE_ALL;
+        AccountDAO accountDAO = new AccountDAO();
+        Account assignedStaff = accountDAO.get(staff);
+        if (assignedStaff == null) {
+            return json;
+        }
+        Date startDate = getStartOfDay(jobTime);
+        Date endDate = addDays(startDate, 1);
+        json = calculateJob(startDate, endDate, staff, jobTime);
+        return json;
+    }
+
+    private AssignResultJSON calculateJob(Date startDate, Date endDate, String staff, Date jobTime) {
+        AssignResultJSON json = new AssignResultJSON();
+        json.status = AssignResultJSON.STATUS_UNAVAILABLE_ALL;
         try {
             String sql = "exec GetDetailJob :startDate, :endDate, :staff";
             SQLQuery query = session.createSQLQuery(sql)
@@ -327,36 +348,36 @@ public class ScheduleService {
             } else {
                 json.status = AssignResultJSON.STATUS_AVAILABLE;
             }
-            Timestamp dateTime;
-            Date minDateTime = new Date();
-            Date jobTime = appointment.getTime();
-            long different;
-            long minDifferent = Long.MAX_VALUE;
-            for (Object[] row : rows) {
-                if (row[2] == 1) {
-                    dateTime = (Timestamp)row[1];
-                    different = Math.abs(dateTime.getTime() - jobTime.getTime());
-                    if (minDifferent > different) {
-                        minDifferent = different;
-                        minDateTime = dateTime;
+            if (jobTime != null) {
+                Timestamp dateTime;
+                Date minDateTime = new Date();
+                long different;
+                long minDifferent = Long.MAX_VALUE;
+                for (Object[] row : rows) {
+                    if (row[2] == 1) {
+                        dateTime = (Timestamp) row[1];
+                        different = Math.abs(dateTime.getTime() - jobTime.getTime());
+                        if (minDifferent > different) {
+                            minDifferent = different;
+                            minDateTime = dateTime;
+                        }
+                    }
+                }
+                double hoursDiff = (double) minDifferent / (3600 * 1000);
+                if (hoursDiff <= 1) {
+                    json.nearJob = minDateTime;
+                    if (json.status >= 0) {
+                        json.status = AssignResultJSON.STATUS_UNAVAILABLE_NEARJOB;
+                    } else {
+                        json.status = AssignResultJSON.STATUS_UNAVAILABLE_ALL;
+                    }
+                } else if (hoursDiff <= 2) {
+                    json.nearJob = minDateTime;
+                    if (json.status > 0) {
+                        json.status = AssignResultJSON.STATUS_CONFIRM;
                     }
                 }
             }
-            double hoursDiff = (double)minDifferent/ (3600* 1000);
-            if (hoursDiff <= 1) {
-                json.nearJob = minDateTime;
-                if (json.status >= 0) {
-                    json.status = AssignResultJSON.STATUS_UNAVAILABLE_NEARJOB;
-                } else {
-                    json.status = AssignResultJSON.STATUS_UNAVAILABLE_ALL;
-                }
-            } else if (hoursDiff <= 2){
-                json.nearJob = minDateTime;
-                if (json.status > 0) {
-                    json.status = AssignResultJSON.STATUS_CONFIRM;
-                }
-            }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

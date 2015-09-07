@@ -1,7 +1,9 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.*;
 import entity.*;
+import json.AssignResultJSON;
 import service.ConstantService;
 import service.SMSService;
 import service.ScheduleService;
@@ -14,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,23 +61,28 @@ public class RepairController extends HttpServlet {
                     response.sendRedirect("/admin/repair");
                     break;
                 case "assign":
+                    PrintWriter out = response.getWriter();
+                    Gson gson = new Gson();
                     SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
-
+                    ScheduleService service = new ScheduleService();
                     try {
                         date = fromAssign.parse(assignedTime);
-
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-
-                    dao.update(id, contractId, assignedStaff, description, date, 5);
-                    DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-                    sms.setPhone(phone);
-                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach se duoc nhan vien cua chung toi den kiem tra." +
-                            " Thoi gian du kien: " + df.format(date));
-                    sms.send();
-                    response.sendRedirect("/admin/repair");
+                    AssignResultJSON staffAvailable = service.isStaffAvailable(date, assignedStaff);
+                    if (staffAvailable.status <= 0) {
+                        out.print(gson.toJson(staffAvailable));
+                    } else {
+                        dao.update(id, contractId, assignedStaff, description, date, 5);
+                        DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        sms.setPhone(phone);
+                        sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach da duoc chap nhan." +
+                                " Thoi gian du kien: " + df.format(date));
+                        sms.send();
+                        out.print(gson.toJson("Success"));
+                    }
 
                     break;
                 case "change1":

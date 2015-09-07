@@ -48,7 +48,7 @@ public class AppointmentController extends HttpServlet {
                     Gson gson = new Gson();
                     ScheduleService service = new ScheduleService();
                     String assignedStaff = request.getParameter("assignedStaff");
-                    //todo: check 4 job and no job in 2 hours
+                    //done: check 4 job and no job in 2 hours
                     AssignResultJSON staffAvailable = service.isStaffAvailable(appointment, assignedStaff);
                     if (staffAvailable.status <= 0) {
                         out.print(gson.toJson(staffAvailable));

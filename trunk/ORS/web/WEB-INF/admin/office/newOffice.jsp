@@ -271,8 +271,8 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/street.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/upload.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/street.js"></script>
 <script>
   $('form').stepy({
     backLabel: '< Quay lại',

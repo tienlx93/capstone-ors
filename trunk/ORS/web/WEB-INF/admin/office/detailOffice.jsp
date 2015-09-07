@@ -184,10 +184,10 @@
 
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/loadImg.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/loadImg.js" charset="UTF-8"></script>
 <script>
   $('.form').submit(function () {
-    var currentForm = this;
+    var currentForm = $(this);
     event.preventDefault();
     bootbox.dialog({
       size: 'small',
@@ -203,7 +203,23 @@
           label: "Xóa",
           className: "btn-danger",
           callback: function () {
-            currentForm.submit();
+            var url = currentForm.attr('action');
+            $.ajax({
+              type: "POST",
+              url: url,
+              data: currentForm.serialize(), // serializes the form's elements.
+              success: function (data) {
+                data = JSON.parse(data);
+                if (data == "Success") {
+                  bootbox.alert("Xóa văn phòng thành công", function(){
+                    window.location.href = "/admin/office";
+                  });
+                } else {
+                  bootbox.alert("Không thể xóa văn phòng do đang có hợp đồng với văn phòng này");
+
+                }
+              }
+            });
           }
         }
       }

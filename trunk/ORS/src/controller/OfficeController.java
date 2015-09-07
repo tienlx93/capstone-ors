@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.*;
 import entity.*;
 import service.ClusteringService;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -159,12 +161,22 @@ public class OfficeController extends HttpServlet {
         } else if (action.equals("delete")) {
             String id = request.getParameter("id");
             Office office = dao.get(Integer.parseInt(id));
-            office.setStatusId(3);
-            if (dao.update(Integer.parseInt(id), office)) {
-                response.sendRedirect("/admin/office");
-            } else {
-                response.sendRedirect("/admin/office?action=editing&id=" + id);
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            int numContract = 0;
+            for (Contract contract : office.getContractsById()) {
+                if (contract.getStatusId() == 1) {
+                    numContract++;
+                }
             }
+            if (numContract > 0) {
+                out.print(gson.toJson("Error"));
+            } else {
+                office.setStatusId(3);
+                dao.update(Integer.parseInt(id), office);
+                out.print(gson.toJson("Success"));
+            }
+
         }
     }
 

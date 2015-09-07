@@ -446,6 +446,6 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/contract.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/contract.js"></script>
 </body>
 </html>

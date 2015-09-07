@@ -157,7 +157,16 @@
                                         ${contract.officeByOfficeId.address}
                                     </div>
                                 </div>
-
+                                <div class="form-group clearfix">
+                                    <div for="amenities" class="col-sm-2 control-label">
+                                        Các tiện ích theo văn phòng:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <c:forEach items="${contract.officeByOfficeId.officeAmenitiesById}" var="item">
+                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                        </c:forEach>
+                                    </div>
+                                </div>
                                 <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 2}">
                                     <div class="form-group clearfix">
                                         <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê văn
@@ -271,7 +280,7 @@
 
                                     <div class="col-sm-4">
                                         <select name="paymentTerm" class="form-control"
-                                                onchange="calculatePaymentFee();"
+                                                onchange="calculatePaymentFee();changeDepositMonth();"
                                                 id="paymentTerm" required="true">
                                             <option value="">Xin chọn thời hạn thanh toán</option>
                                             <c:forEach var="item" items="${paymentTermList}">
@@ -285,44 +294,79 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 2}">
-
-                                        <div for="paymentFee" class="col-sm-2 control-label">
-                                            Giá thuê/m<sup>2</sup>:
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <input style="display: inline-block" type='number'
-                                                   onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee" readonly
-                                                   id="paymentFee" value="${contract.paymentFee}" required="true"/>
-                                        </div>
-                                    </c:if>
-                                    <c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 1}">
-                                        <div for="paymentFee"  class="col-sm-2 control-label">
-                                            Giá thuê/m<sup>2</sup>:
-                                        </div>
-
-                                        <div class="col-sm-4">
-                                            <input style="display: inline-block" type='number'
-                                                   onchange="calculatePaymentFee()" class="form-control"
-                                                   name="paymentFee" readonly
-                                                   id="paymentFee"
-                                                   value="${contract.paymentFee}"
-                                                   required="true"/>
-                                        </div>
-                                    </c:if>
-                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt cọc văn phòng:</div>
+                                    <div for="paymentFee" class="col-sm-2 control-label">
+                                        Giá thuê/m<sup>2</sup>(VNĐ):
+                                    </div>
 
                                     <div class="col-sm-4">
-                                        <input style="display: inline-block" type='text' class="form-control"
-                                               name="deposit" onkeyup="formatDeposit()"
-                                               id="deposit" value="${contract.deposit}"/>
+                                        <input style="display: inline-block" type='text'
+                                               onchange="calculatePaymentFee()" class="form-control"
+                                               name="paymentFeeValue" step="any" readonly min="0"
+                                               id="paymentFeeValue" value="${contract.paymentFee}"
+                                               required="true"/>
                                     </div>
-                                    <input style="display: inline-block" type='hidden' class="form-control"
-                                           name="depositValue"
-                                           id="depositValue" value="${contract.deposit}"/>
+                                    <input type="hidden" name="paymentFee" id="paymentFee" value="${contract.paymentFee}"/>
+                                    <%--<c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 2}">--%>
 
+                                        <%--<div for="paymentFee" class="col-sm-2 control-label">--%>
+                                            <%--Giá thuê/m<sup>2</sup>:--%>
+                                        <%--</div>--%>
+
+                                        <%--<div class="col-sm-4">--%>
+                                            <%--<input style="display: inline-block" type='number'--%>
+                                                   <%--onchange="calculatePaymentFee()" class="form-control"--%>
+                                                   <%--name="paymentFee" readonly--%>
+                                                   <%--id="paymentFee" value="${contract.paymentFee}" required="true"/>--%>
+                                        <%--</div>--%>
+                                    <%--</c:if>--%>
+                                    <%--<c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 1}">--%>
+                                        <%--<div for="paymentFee"  class="col-sm-2 control-label">--%>
+                                            <%--Giá thuê/m<sup>2</sup>:--%>
+                                        <%--</div>--%>
+
+                                        <%--<div class="col-sm-4">--%>
+                                            <%--<input style="display: inline-block" type='number'--%>
+                                                   <%--onchange="calculatePaymentFee()" class="form-control"--%>
+                                                   <%--name="paymentFee" readonly--%>
+                                                   <%--id="paymentFee"--%>
+                                                   <%--value="${contract.paymentFee}"--%>
+                                                   <%--required="true"/>--%>
+                                        <%--</div>--%>
+                                    <%--</c:if>--%>
+                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Số tháng
+                                        đặt
+                                        cọc:
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control" id="depositMonth" name="depositMonth"
+                                                onchange="calculateDeposit(this)">
+                                            <option value="1">1 tháng</option>
+                                        </select>
+                                    </div>
+                                    <%--<div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt cọc văn phòng:</div>--%>
+
+                                    <%--<div class="col-sm-4">--%>
+                                        <%--<input style="display: inline-block" type='text' class="form-control"--%>
+                                               <%--name="deposit" onkeyup="formatDeposit()"--%>
+                                               <%--id="deposit" value="${contract.deposit}"/>--%>
+                                    <%--</div>--%>
+                                    <%--<input style="display: inline-block" type='hidden' class="form-control"--%>
+                                           <%--name="depositValue"--%>
+                                           <%--id="depositValue" value="${contract.deposit}"/>--%>
+
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div class="col-sm-6"></div>
+                                    <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt
+                                        cọc văn phòng:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <label id="depositLabel">${contract.deposit}</label> (VNĐ)
+                                        <input style="display: inline-block" type='hidden' class="form-control"
+                                               name="deposit" required="true"
+                                               id="deposit" value=""/>
+                                    </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="total"  class="col-sm-2 control-label">Số tiền
@@ -421,8 +465,8 @@
         document.getElementById('totalContract').innerHTML = numberWithCommas(contractTotal) + ' VNĐ';
 
         var imageUrls = $("#imageUrls").val();
-        console.log(imageUrls);
         renderImg(imageUrls);
+        formatPaymentFee();
     });
     function calculateEndDate() {
         var end = document.getElementById('endDate');
@@ -490,6 +534,14 @@
         }
     }
     ;
+    function formatPaymentFee() {
+        var paymentFee = document.getElementById('paymentFeeValue').value != '' ? document.getElementById('paymentFeeValue').value : 0;
+        if (paymentFee != 0) {
+            document.getElementById('paymentFee').value = parseFloat(paymentFee.replace(/\./g, ''));
+            document.getElementById('paymentFeeValue').value = numberWithCommas(document.getElementById('paymentFee').value);
+        }
+    }
+    ;
     function validatePaymentTerm() {
         var paymentTerm = document.getElementById('paymentTerm').value;
         var contractTime = document.getElementById('time').value;
@@ -529,6 +581,77 @@
                 '</div>');
             }
         }
+    };
+    function calculateDeposit(element) {
+        var months = element.value;
+        var paymentFee = parseFloat(document.getElementById('paymentFee').value);
+        var officeArea = parseInt(document.getElementById('officeArea').value);
+
+        var deposit = months * paymentFee * officeArea;
+
+        document.getElementById('deposit').value = numberWithCommas(deposit);
+        document.getElementById('depositLabel').innerHTML = numberWithCommas(deposit);
+    };
+    var option_1 = [{
+        value: 1,
+        text: '1 tháng'
+    }];
+    var option_2 = [{
+        value: 1,
+        text: '1 tháng'
+    },{
+        value: 2,
+        text: '2 tháng'
+    }, {
+        value: 3,
+        text: '3 tháng'
+    }];
+    var option_3 = [{
+        value: 1,
+        text: '1 tháng'
+    },{
+        value: 2,
+        text: '2 tháng'
+    }, {
+        value: 3,
+        text: '3 tháng'
+    },{
+        value: 4,
+        text: '4 tháng'
+    },{
+        value: 5,
+        text: '5 tháng'
+    }, {
+        value: 6,
+        text: '6 tháng'
+    }];
+
+    function changeDepositMonth(){
+        $('#depositMonth').empty();
+
+        var value = document.getElementById('paymentTerm').value;
+        switch (parseInt(value)) {
+            case 1:
+                changeSelectTag('#depositMonth', option_1);
+                break;
+            case 2:
+                changeSelectTag('#depositMonth', option_2);
+                break;
+            case 3:
+                changeSelectTag('#depositMonth', option_3);
+                break;
+            default:
+                break;
+        }
+    };
+
+    function changeSelectTag(tagID, arrays) {
+        $.each(arrays, function (i, array) {
+            $(tagID).append($('<option>', {
+                value: array.value,
+                text : array.text
+            }));
+        });
     };
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>

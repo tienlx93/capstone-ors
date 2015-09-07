@@ -15,21 +15,17 @@
       </form>
     </td>
     </td>
-
     <td>
-
       <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}"
          title="Sửa"
          class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
-      <c:if test="${item.roleId ==4}">
+      <c:if test="${(item.roleId ==5)||(item.roleId==4)}">
         <a href="user?action=editing&username=${item.username}"
            title="Chi tiết"
            class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
       </c:if>
     </td>
     <td>
-
     </td>
-
   </tr>
 </c:forEach>

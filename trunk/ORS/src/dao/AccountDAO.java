@@ -120,6 +120,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
         return false;
     }
 
+
     public Account login(String username, String password) {
         try {
             session.getTransaction().begin();
@@ -184,6 +185,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
 
         return 0;
     }
+
     public Account findByUsername(String username) {
         try {
             String sql = "from Account where username = ?";

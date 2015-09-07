@@ -291,7 +291,7 @@
                                                     hàng hài lòng
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
-                                                        class="btn btn-danger">Khách
+                                                        class="btn btn-danger" disabled id="unhappy">Khách
                                                     hàng không hài lòng
                                                 </button>
                                             </c:when>
@@ -350,6 +350,7 @@
         }
         if (now.valueOf() >= rental.valueOf()) {
             $("#happy").removeAttr("disabled");
+            $("#unhappy").removeAttr("disabled");
         }
     });
 

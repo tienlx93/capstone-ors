@@ -170,6 +170,16 @@
 
                                 </div>
                                 <div class="form-group clearfix">
+                                    <div for="amenities" class="col-sm-2 control-label">
+                                        Các tiện ích theo văn phòng:
+                                    </div>
+                                    <div class="col-sm-10">
+                                        <c:forEach items="${contract.officeByOfficeId.officeAmenitiesById}" var="item">
+                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                        </c:forEach>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
                                     <div for="officeArea" class="col-sm-2 control-label">Diện tích thuê(m<sup>2</sup>):
                                     </div>
 
@@ -184,7 +194,6 @@
                                         <input type="hidden" name="paymentTerm" id="paymentTerm"
                                                value="${contract.paymentTerm}">
                                     </div>
-
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
@@ -253,6 +262,9 @@
                                 <a class="btn btn-primary" href="contract?action=edit&id=${contract.id}">Chỉnh
                                     sửa</a>
                                 <a href="/admin/contract" class="btn btn-default">Quay về</a>
+                                <%--<button type="submit" name="action" value="export" class="btn btn-primary">Export--%>
+                                <%--</button>--%>
+                                <a class="btn btn-info" href="contract?action=export&id=${contract.id}">Export</a>
                             </div>
                         </form>
                     </div>

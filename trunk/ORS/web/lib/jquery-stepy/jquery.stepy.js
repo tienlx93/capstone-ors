@@ -301,9 +301,9 @@
 
       // WIP...
         var stepsCount = steps.length;
-
+      if (isValid) {
         if (opt.transition == 'fade') {
-          steps.fadeOut(opt.duration, function() {
+          steps.fadeOut(opt.duration, function () {
             if (--stepsCount > 0) {
               return;
             }
@@ -311,7 +311,7 @@
             steps.eq(max).fadeIn(opt.duration);
           });
         } else if (opt.transition == 'slide') {
-          steps.slideUp(opt.duration, function() {
+          steps.slideUp(opt.duration, function () {
             if (--stepsCount > 0) {
               return;
             }
@@ -321,7 +321,7 @@
         } else {
           steps.hide(opt.duration).eq(max).show(opt.duration);
         }
-
+      }
       that[0].heads.removeClass('stepy-active').eq(max).addClass('stepy-active');
 
       if (that.is('form')) {

@@ -272,7 +272,7 @@
                                         <button class="btn btn-primary" type="submit" name="button" value="update3" disabled id="agree">
                                             Khách hàng muốn kí hợp đồng
                                         </button>
-                                        <button class="btn btn-danger" type="button" onclick="inputComment()">
+                                        <button class="btn btn-danger" type="button" onclick="inputComment()" disabled id="disagree">
                                             Khách hàng không đồng ý
                                         </button>
                                     </c:when>
@@ -355,6 +355,7 @@
         }*/
         if (now.valueOf() >= meet.valueOf()) {
             $("#agree").removeAttr("disabled");
+			$("#disagree").removeAttr("disabled");
         }
     });
 

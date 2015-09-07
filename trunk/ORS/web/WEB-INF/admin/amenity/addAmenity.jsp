@@ -57,7 +57,7 @@
               <div class="form-group clearfix">
                 <label for="description" class="col-sm-2">Mô tả</label>
                 <div class="col-sm-10">
-                  <input type="text" name="description" class="" id="description" required>
+                  <input type="text" name="description" class="" id="description" >
                 </div>
               </div>
 

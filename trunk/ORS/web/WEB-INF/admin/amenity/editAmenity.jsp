@@ -60,21 +60,21 @@
                                 <label for="description" class="col-sm-2">Mô tả</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="description" class="" id="description"
-                                           value="${amenity.description}" required>
+                                           value="${amenity.description}" >
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
                                 <label for="weight" class="col-sm-2">Trọng số</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="weight" class="" id="weight" value="${amenity.weight}" required>
+                                    <input type="number" min="1" name="weight" class="" id="weight" value="${amenity.weight}" required>
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
                                 <label for="priority" class="col-sm-2">Độ ưu tiên</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="priority" class="" id="priority" value="${amenity.priority}" required>
+                                    <input type="text" min="0" name="priority" class="" id="priority" value="${amenity.priority}" required>
                                 </div>
                             </div>
 

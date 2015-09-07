@@ -72,19 +72,7 @@ public class OfficeController extends HttpServlet {
             } else {
                 office.setMinArea(office.getArea());
             }
-            if (price != null && !price.equals("")) {
-                office.setPrice(Long.valueOf(price));
-                if (isPercent != null) {
-                    office.setBasePrice(Long.valueOf(price));
-                } else {
-                    office.setBasePrice(Long.valueOf(basePrice));
-                }
-            } else {
-                office.setBasePrice(Long.valueOf(basePrice));
-                if (isPercent != null) {
-                    office.setCommission(Integer.valueOf(commission));
-                }
-            }
+            office.setBasePrice(Long.valueOf(basePrice));
             if (floor != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
@@ -191,15 +179,19 @@ public class OfficeController extends HttpServlet {
             if (action == null) {
                 int pageCount;
                 List<Office> list;
+                List<Office> newList;
                 if (account.getRoleId() == 5) {
                     pageCount = dao.getPageCount(ConstantService.PAGE_SIZE, account.getUsername());
                     list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE, account.getUsername());
+                    newList = dao.getAllOfficeByStatus(4, account.getUsername());
                 } else {
                     pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
                     list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE);
+                    newList = dao.getAllOfficeByStatus(4);
                 }
                 request.setAttribute("pageCount", pageCount);
                 request.setAttribute("data", list);
+                request.setAttribute("newList", newList);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/office/viewOffice.jsp");
                 rd.forward(request, response);
             } else if (action.equals("new")) {

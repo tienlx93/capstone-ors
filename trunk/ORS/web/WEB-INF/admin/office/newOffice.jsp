@@ -30,6 +30,7 @@
   <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
   <script src="${pageContext.request.contextPath}/lib/jquery-stepy/jquery.stepy.js"></script>
   <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
+  <script src="${pageContext.request.contextPath}/lib/localization/messages_vi.js"></script>
   <title>Office Rental Service</title>
 </head>
 <body onload="initialize()">
@@ -197,7 +198,7 @@
 
               <fieldset title="Bước 3">
                 <legend>Điều khoản giá</legend>
-                <div class="form-group clearfix">
+                <div class="form-group clearfix hidden">
                   <label for="price" style="float:left;margin-right:5px;">Lợi nhuận theo hoa hồng</label>
 
                   <div class="col-sm-2">
@@ -226,7 +227,7 @@
                            value="${office.basePrice}" onchange="onChangeBasePrice()">
                   </div>
                 </div>
-                <div class="form-group clearfix">
+                <div class="form-group clearfix hidden">
                   <label for="price" class="col-sm-2">Giá thuê (VND)</label>
 
                   <div class="col-sm-8">
@@ -279,7 +280,7 @@
     transition: 'fade',
     duration: 400,
     validate: true,
-    block: true,
+    block: true
   });
   $("form").validate({
     rules: {
@@ -293,8 +294,8 @@
     }
   });
   jQuery.validator.addMethod("smaller", function(value, element, params) {
-    return this.optional(element) || value <= $(params[0]).val();
-  }, jQuery.validator.format("Sai so"));
+    return this.optional(element) || value <= $(params).val();
+  }, jQuery.validator.format("Diện tích thuê tối thiểu phải nhỏ hơn tổng diện tích"));
 
   $("#minArea").rules("add", {
     required: {

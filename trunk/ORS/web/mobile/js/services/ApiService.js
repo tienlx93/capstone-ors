@@ -88,11 +88,8 @@ app.factory("Api", ['$http',
                     'comment': comment
                 }
             })
-                .success(function () {
-                    callback("Success");
-                })
-                .error(function () {
-                    callback("Error");
+                .success(function (data) {
+                    callback(data);
                 })
         };
 

@@ -655,7 +655,7 @@
     };
 </script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/loadImg.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/loadImg.js" charset="UTF-8"></script>
 
 
 </body>

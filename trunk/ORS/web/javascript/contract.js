@@ -71,30 +71,6 @@ $(document).ready(function () {
     }).data('datepicker');
 
 //        document.getElementById('paymentFee').value = numberWithCommas(document.getElementById('paymentFee').value);
-    $('.signForm').submit(function () {
-        var currentForm = this;
-        event.preventDefault();
-        bootbox.dialog({
-            size: 'small',
-            message: "Bạn đồng ý tạo hợp đồng với các thông tin đã ghi nhận?",
-            buttons: {
-                cancel: {
-                    label: "Quay lại",
-                    className: "btn-default",
-                    callback: function () {
-
-                    }
-                }, ok: {
-                    label: "Đồng ý",
-                    className: "btn-primary",
-                    callback: function () {
-                        currentForm.submit();
-                    }
-                }
-            }
-        });
-
-    });
 
     calculateDeposit(document.getElementById('depositMonth'));
 });
@@ -219,6 +195,31 @@ function validatePaymentTerm() {
         alert('Thời gian thuê không được nhỏ hơn kỳ hạn thanh toán');
         return false;
     }
+    $('.signForm').submit(function () {
+        var currentForm = this;
+        event.preventDefault();
+        bootbox.dialog({
+            size: 'small',
+            message: "Bạn đồng ý tạo hợp đồng với các thông tin đã ghi nhận?",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
+
+                    }
+                }, ok: {
+                    label: "Đồng ý",
+                    className: "btn-primary",
+                    callback: function () {
+                        currentForm.submit();
+                    }
+                }
+            }
+        });
+
+    });
+
     return true;
 };
 
@@ -282,6 +283,7 @@ function changeSelectTag(tagID, arrays) {
             text : array.text
         }));
     });
+    calculateDeposit(document.getElementById('depositMonth'));
 };
 
 function calculateDeposit(element) {
@@ -291,6 +293,6 @@ function calculateDeposit(element) {
 
     var deposit = months * paymentFee * officeArea;
 
-    document.getElementById('deposit').value = numberWithCommas(deposit);
+    document.getElementById('deposit').value = deposit;
     document.getElementById('depositLabel').innerHTML = numberWithCommas(deposit);
 }

@@ -199,7 +199,7 @@ public class ContractController extends HttpServlet {
                     case "confirm":
 //                        dao.changeStatus(id, 4);
 //                        String returnMoney = request.getParameter("returnMoney");
-                        String returnDeposit = request.getParameter("returnDeposit");
+                        String returnDeposit = request.getParameter("returnDeposit") != null ? request.getParameter("returnDeposit") : "0";
                         // Update area for office parent when contract has been confirmed to expire
                         Contract contract = dao.get(id);
 

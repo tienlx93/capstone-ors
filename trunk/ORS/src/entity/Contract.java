@@ -28,6 +28,11 @@ public class Contract {
     private Date cancelDate;
     private String imageUrl;
     private Long cancelFee;
+    private Integer depositPaidDay;
+    private Integer firstPaymentPaidDay;
+    private Integer paymentPaidDay;
+    private Integer additionalCharge;
+    private Integer latePaidDay;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -249,5 +254,55 @@ public class Contract {
 
     public void setCancelFee(Long cancelFee) {
         this.cancelFee = cancelFee;
+    }
+
+    @Basic
+    @Column(name = "DepositPaidDay", nullable = true, insertable = true, updatable = true)
+    public Integer getDepositPaidDay() {
+        return depositPaidDay;
+    }
+
+    public void setDepositPaidDay(Integer depositPaidDay) {
+        this.depositPaidDay = depositPaidDay;
+    }
+
+    @Basic
+    @Column(name = "FirstPaymentPaidDay", nullable = true, insertable = true, updatable = true)
+    public Integer getFirstPaymentPaidDay() {
+        return firstPaymentPaidDay;
+    }
+
+    public void setFirstPaymentPaidDay(Integer firstPaymentPaidDay) {
+        this.firstPaymentPaidDay = firstPaymentPaidDay;
+    }
+
+    @Basic
+    @Column(name = "PaymentPaidDay", nullable = true, insertable = true, updatable = true)
+    public Integer getPaymentPaidDay() {
+        return paymentPaidDay;
+    }
+
+    public void setPaymentPaidDay(Integer paymentPaidDay) {
+        this.paymentPaidDay = paymentPaidDay;
+    }
+
+    @Basic
+    @Column(name = "AdditionalCharge", nullable = true, insertable = true, updatable = true)
+    public Integer getAdditionalCharge() {
+        return additionalCharge;
+    }
+
+    public void setAdditionalCharge(Integer additionalCharge) {
+        this.additionalCharge = additionalCharge;
+    }
+
+    @Basic
+    @Column(name = "LatePaidDay", nullable = true, insertable = true, updatable = true)
+    public Integer getLatePaidDay() {
+        return latePaidDay;
+    }
+
+    public void setLatePaidDay(Integer latePaidDay) {
+        this.latePaidDay = latePaidDay;
     }
 }

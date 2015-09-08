@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.*;
@@ -489,7 +490,7 @@ public class ContractController extends HttpServlet {
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 1 : ĐỐI TƯỢNG VÀ MỤC ĐÍCH CHO THUÊ", boldFont));
             document.add(new Paragraph("Bên A đồng ý cho bên Bên B thuê diện tích như sau:", font));
-            document.add(new Paragraph("1.1. Địa điểm và diện tích: " + contract.getOfficeByOfficeId().getAddress() + ", diện tích " + contract.getOfficeByOfficeId().getArea() + " mét vuông", font));
+            document.add(new Paragraph("1.1. Địa điểm và diện tích: ..." + contract.getOfficeByOfficeId().getAddress() + "..., diện tích ..." + contract.getOfficeByOfficeId().getArea() + "... mét vuông", font));
             document.add(new Paragraph("1.2 Mục đích sử dụng: Làm văn phòng", font));
             document.add(new Paragraph("1.3. Văn phòng, hệ thống cung cấp điện và nước được bàn giao cho Bên B phải trong tình trạng sử dụng tốt mà Bên B đã khảo sát và chấp nhận.", font));
 
@@ -498,13 +499,13 @@ public class ContractController extends HttpServlet {
             int time = (int) Math.ceil(longTime / (86400000L * 30L));
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 2 : THỜI GIAN THUÊ", boldFont));
-            document.add(new Paragraph("2.1. Thời hạn thuê văn phòng: " + String.valueOf(time) + " tháng", font));
+            document.add(new Paragraph("2.1. Thời hạn thuê văn phòng: ..." + String.valueOf(time) + " tháng", font));
             document.add(new Paragraph("2.2. Điều kiện gia hạn : Sau khi hết hợp đồng, bên B được quyền ưu tiên gia hạn hoặc kí kết hợp đồng mới, nhưng phải báo trước vấn đề cho bên A bằng văn bản ít nhất ….. tháng.", font));
 
 
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 3 : GIÁ THUÊ & CÁC CHI PHÍ KHÁC", boldFont));
-            document.add(new Paragraph("3.1. Giá thuê: " + String.valueOf(contract.getPaymentFee()) + " VNĐ/m2", font));
+            document.add(new Paragraph("3.1. Giá thuê: ..." + addDot(contract.getPaymentFee()) + " VNĐ/m2", font));
             document.add(new Paragraph("Giá thuê bao gồm thuế VAT 10% và tất cả các loại thuế có liên quan có thể phát sinh từ hợp đồng này; và không bao gồm tiền điện, điện thoại, fax, chi phí dịch vụ vệ sinh trong văn phòng và các chi phí khác do Bên B sử dụng.", font));
             document.add(new Paragraph("Giá thuê/cho thuê nói trên sẽ ổn định trong suốt thời gian thuê theo điều 2.1.", font));
             document.add(new Paragraph("3.2. Các chi phí khác:", font));
@@ -514,15 +515,16 @@ public class ContractController extends HttpServlet {
 
             int depositMonth = (int) Math.ceil(contract.getDeposit() / (contract.getPaymentFee() * contract.getOfficeByOfficeId().getArea()));
             int paymentTermPrice = (int) (contract.getPaymentFee() * contract.getPaymentTermByPaymentTerm().getPaymentTime() * contract.getOfficeByOfficeId().getArea());
+            int deposit = (int) (long) contract.getDeposit();
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 4 : THANH TOÁN", boldFont));
             document.add(new Paragraph("4.1. Đồng tiền tính toán:  VNĐ (Đồng Việt Nam)", font));
             document.add(new Paragraph("4.2. Đồng tiền thanh toán : Bằng VNĐ (Đồng Việt Nam) quy đồi theo tỷ giá bán ra USD/VNĐ của Ngân hàng Ngoại Thương Việt Nam tại ………………………………………….………. tại thời điểm thanh toán.", font));
-            document.add(new Paragraph("4.3. Thời hạn thanh toán tiền đặt cọc : Trong vòng …… (……..) ngày làm việc sau khi kí hợp đồng này, Bên B chuyển trước cho Bên A tiền đặt cọc tương đương với " + String.valueOf(depositMonth) + " tháng tiền thuê/cho thuê văn phòng là " + contract.getDeposit() + " VNĐ", font));
+            document.add(new Paragraph("4.3. Thời hạn thanh toán tiền đặt cọc : Trong vòng …… (……..) ngày làm việc sau khi kí hợp đồng này, Bên B chuyển trước cho Bên A tiền đặt cọc tương đương với ..." + String.valueOf(depositMonth) + "... tháng tiền thuê/cho thuê văn phòng là ..." + addDot(deposit) + " VNĐ.", font));
             document.add(new Paragraph("Khoản tiền đặt cọc này sau khi đã trừ đi các khoản chi phí điện thoại, điện, v.v… sẽ được hoàn lại cho Bên B trong vòng …… ngày làm việc sau khi kết thúc hợp đồng cùng với điều kiện Bên B phải hoàn tất mọi trách nhiệm nêu trong hợp đồng này.", font));
-            document.add(new Paragraph("4.4. Tiền thuê văn phòng: Bên B thanh toán cho Bên A tiền thuê văn phòng của mỗi kỳ " + contract.getPaymentTermByPaymentTerm().getDescription() + ", tương đương " + String.valueOf(paymentTermPrice) + " VNĐ", font));
+            document.add(new Paragraph("4.4. Tiền thuê văn phòng: Bên B thanh toán cho Bên A tiền thuê văn phòng của mỗi kỳ ..." + contract.getPaymentTermByPaymentTerm().getDescription() + "..., tương đương ..." + addDot(paymentTermPrice) + " VNĐ", font));
             document.add(new Paragraph("Kỳ đầu: Trong vòng ….. (……….) ngày làm việc sau khi kí hợp đồng này, Bên B thanh toán cho Bên A", font));
-            document.add(new Paragraph("Các kỳ tiếp theo: Trong vòng ….. (……….) ngày làm việc đầu tiền của mỗi kỳ " + String.valueOf(contract.getPaymentTermByPaymentTerm().getPaymentTime()) + " (" + paymentTerm.get(contract.getPaymentTermByPaymentTerm().getPaymentTime()) +") tháng, Bên B thanh toán cho Bên A số tiền " + String.valueOf(paymentTermPrice) + " VNĐ", font));
+            document.add(new Paragraph("Các kỳ tiếp theo: Trong vòng ….. (……….) ngày làm việc đầu tiền của mỗi kỳ ..." + String.valueOf(contract.getPaymentTermByPaymentTerm().getPaymentTime()) + " (" + paymentTerm.get(contract.getPaymentTermByPaymentTerm().getPaymentTime()) +"...) tháng, Bên B thanh toán cho Bên A số tiền ..." + addDot(paymentTermPrice) + " VNĐ.", font));
             document.add(new Paragraph("4.5. Trong trường hợp thanh toán chậm so với thời gian quy định nói trên, Bên B phải thanh  toán cho Bên A chi phí phụ trội bằng …… % ( …………………………….) cho mỗi ngày chậm thanh toán trên tổng số tiền chậm thanh toán. Nếu chậm thanh toán vượt quá …… (……………..) ngày, Bên A có quyền đơn phương chấm dứt hợp đồng này.", font));
             document.add(new Paragraph("4.6. Tiền sử dụng điện sinh hoạt : Bên B thanh toán cho Bên A tiền sử dụng điện sinh hoạt hằng tháng trong vòng ….. (……….) ngày đầu tiên của tháng tiếp theo.", font));
             document.add(new Paragraph("4.7. Phương thức thanh toán : ………………………………………..……………………………………….", font));
@@ -592,7 +594,7 @@ public class ContractController extends HttpServlet {
             document.add(new Paragraph("f) Chậm thanh toán theo quy định của Điều 4.", font));
             document.add(new Paragraph("g) Trong trường hợp này, Bên A sẽ không hoàn lại cho Bên B tiền đặt cọc.", font));
             document.add(new Paragraph("6.2. Chấm dứt hợp đồng trước thời hạn do thỏa thuận của các Bên:", font));
-            document.add(new Paragraph("a) Hợp đồng này không được đơn phương chấm dứt trước thời hạn bởi bên nào. Nếu một trong hai bên muốn chấm dứt hợp đồng trước thời hạn, phải thông báo trước cho bên kia bằng văn bản ít nhất là 1 (một) tháng và thời hạn thuê phải đạt được tối thiểu là " + String.valueOf(contract.getOfficeByOfficeId().getMinTime()) + " tháng. Trong trường hợp này, Bên A sẽ hoàn trả lại cho Bên B tiền đặt cọc và tiền thuê văn phòng còn thừa của Bên B (nếu có).", font));
+            document.add(new Paragraph("a) Hợp đồng này không được đơn phương chấm dứt trước thời hạn bởi bên nào. Nếu một trong hai bên muốn chấm dứt hợp đồng trước thời hạn, phải thông báo trước cho bên kia bằng văn bản ít nhất là 1 (một) tháng và thời hạn thuê phải đạt được tối thiểu là ..." + String.valueOf(contract.getOfficeByOfficeId().getMinTime()) + "... tháng. Trong trường hợp này, Bên A sẽ hoàn trả lại cho Bên B tiền đặt cọc và tiền thuê văn phòng còn thừa của Bên B (nếu có).", font));
             document.add(new Paragraph("b) Nếu Bên B chấm dứt hợp đồng này trước thời hạn mà không tuân thủ quy định nói trên, Bên B sẽ mất tiền đặt cọc.", font));
             document.add(new Paragraph("c) Nếu Bên A chấm dứt hợp đồng này trước thời hạn mà không tuân thủ quy định nói trên, Bên A phải hoàn trả lại cho Bên B tiền đặt cọc, tiền thuê còn thừa của Bên B (nếu có) và phải bồi thường cho Bên B số tiền tương đương với tiền đặt cọc.", font));
 
@@ -610,7 +612,7 @@ public class ContractController extends HttpServlet {
 
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 9: HIỆU LỰC CỦA HỢP ĐỒNG", boldFont));
-            document.add(new Paragraph("Hợp đồng này có hiệu lực pháp lý từ ngày " + String.valueOf(getDay(contract.getStartDate())) + " tháng " + String.valueOf(getMonth(contract.getStartDate())) + " năm " + String.valueOf(getYear(contract.getStartDate())) + ". Đến ngày " + String.valueOf(getDay(contract.getEndDate())) + " tháng " + String.valueOf(getMonth(contract.getEndDate())) + " năm " + String.valueOf(getYear(contract.getEndDate())), font));
+            document.add(new Paragraph("Hợp đồng này có hiệu lực pháp lý từ ngày ..." + String.valueOf(getDay(contract.getStartDate())) + "... tháng ..." + String.valueOf(getMonth(contract.getStartDate())) + "... năm ..." + String.valueOf(getYear(contract.getStartDate())) + ".... Đến ngày ..." + String.valueOf(getDay(contract.getEndDate())) + "... tháng " + String.valueOf(getMonth(contract.getEndDate())) + " năm ..." + String.valueOf(getYear(contract.getEndDate())), font));
             document.add(new Paragraph("Hợp đồng được lập thành 2 (hai) bản, mỗi bên giữ một bản và có giá trị như nhau.", font));
 
 
@@ -648,5 +650,12 @@ public class ContractController extends HttpServlet {
         Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(timeLong);
         return cal.get(Calendar.YEAR);
+    }
+
+    public String addDot(int number) {
+        DecimalFormat df = new DecimalFormat("#,###");
+        df.setDecimalFormatSymbols(new DecimalFormatSymbols(Locale.TAIWAN));
+        String formatNumber = df.format(new BigDecimal(number));
+        return formatNumber.replaceAll(",",".");
     }
 }

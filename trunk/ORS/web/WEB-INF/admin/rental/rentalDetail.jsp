@@ -162,7 +162,9 @@
                             <div class="form-group clearfix">
                                 <label for="assignedTime" class="col-sm-2 control-label">Ngày giao thiết bị</label>
                                 <c:choose>
-                                    <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
+                                    <%--<c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">--%>
+                                    <%--Chi giao viec lai cho staff--%>
+                                    <c:when test="${user.roleId==2 && info.statusId == 1}">
                                         <div class="col-sm-4">
                                             <fmt:formatDate
                                                     value="${info.assignedTime}"
@@ -260,16 +262,17 @@
                                 <c:choose>
                                     <c:when test="${user.roleId==2}">
                                         <c:if test="${info.statusId == 1}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary" onclick="return check()">
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary"
+                                                    onclick="return check()">
                                                 Giao việc
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn btn-danger">Từ
-                                                chối
+                                            <button type="submit" value="reject" name="button" class="btn btn-danger">
+                                                Từ chối
                                             </button>
                                         </c:if>
                                         <c:if test="${info.statusId == 2}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
-                                                Giao việc lại
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary"
+                                                    disabled id="assignTask"> Giao việc lại
                                             </button>
                                         </c:if>
                                     </c:when>
@@ -277,12 +280,11 @@
                                         <c:choose>
                                             <c:when test="${info.statusId == 2}">
                                                 <button type="submit" value="change5" name="button"
-                                                        class="btn btn-primary" id="agree" disabled>Đồng ý
-                                                    giao hàng
+                                                        class="btn btn-primary" id="agree" disabled>Đồng ý giao hàng
                                                 </button>
                                                 <button type="submit" value="change1" name="button"
-                                                        class="btn btn-danger">Không
-                                                    đồng ý giao hàng
+                                                        class="btn btn-danger" id="disagree" disabled>Không đồng ý giao
+                                                    hàng
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.statusId == 5}">
@@ -347,6 +349,8 @@
         var rental = new Date(rentalDate);
         if (now.valueOf() <= rental.valueOf()) {
             $("#agree").removeAttr("disabled");
+            $("#disagree").removeAttr("disabled");
+            $("#assignTask").removeAttr("disabled");
         }
         if (now.valueOf() >= rental.valueOf()) {
             $("#happy").removeAttr("disabled");

@@ -20,7 +20,14 @@ $(document).ready(function () {
     /*if (checkTime.valueOf() < checkTime4.valueOf() && checkTime.valueOf > 0) {
      $("#agree").removeAttr("disabled");
      }*/
-    if (now.valueOf() >= meet.valueOf()) {
+    if (nowTemp.valueOf() >= meet.valueOf()) {
         $("#agree").removeAttr("disabled");
+        $("#disagree").removeAttr("disabled");
+        $("#createContract").removeAttr("disabled");
+        $("#cancelContract").removeAttr("disabled");
+    }
+    if (nowTemp.valueOf() <= meet.valueOf()) {
+        $("#assignTask").removeAttr("disabled");
+        $("#assignAgain").removeAttr("disabled");
     }
 });

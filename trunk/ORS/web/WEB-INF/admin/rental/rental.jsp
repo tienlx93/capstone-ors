@@ -448,5 +448,5 @@
 
 </div>
 </body>
-<script type="javascript" src="${pageContext.request.contextPath}/javascript/admin/rental.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/rental.js"></script>
 </html>

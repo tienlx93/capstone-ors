@@ -54,7 +54,7 @@
 
                 </div>
                 <div class="descriptionRepair">
-                    <label>Mô tả yêu cầu sửa chữa:</label>
+                    <label>Mô tả yêu cầu sửa chữa/Yêu cầu sửa chữa khác: (*)</label>
                     <br>
                     <textarea style="width: 100%" rows="5" ng-model="description" required
                               name="description"></textarea>
@@ -69,8 +69,8 @@
             </form>
             <div class="descriptionRepair">
                 <div class="button-post">
-                    <a ng-click="submit(form)" ng-disabled="form.$invalid" class="btn btn-green">Gửi yêu cầu</a>
-                    <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
+                    <a ng-click="submit(form)" ng-disabled="form.$invalid" class="btn btn-green"
+                       ng-class="{'disabled':clicked==true}">Gửi yêu cầu</a>
                 </div>
             </div>
         </div>

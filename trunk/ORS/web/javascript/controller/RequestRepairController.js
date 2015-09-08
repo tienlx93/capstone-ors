@@ -48,6 +48,7 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
             var amenities = $scope.selection;
             var description = $scope.description;
             var phone = $scope.officeOwnerPhone;
+            $scope.clicked= true;
             Api.requestRepair(id, amenities, description, phone, function (data) {
                 if (data == "Success") {
                     toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');

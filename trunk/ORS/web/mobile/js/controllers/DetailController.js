@@ -46,11 +46,9 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
                 }, comment);
             };
 
-            if ((status == 5 || status == 3) && type == "appointment") {
+            if ((status == 5) && type == "appointment") {
                 if (status == 5) {
                     comment = window.prompt("Nhập lí do hủy");
-                } else {
-                    comment = window.prompt("Nhập ý kiến khách hàng");
                 }
                 if (comment) {
                     changeStatus();

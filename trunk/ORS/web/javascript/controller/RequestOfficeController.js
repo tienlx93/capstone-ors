@@ -58,7 +58,7 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
             }
         };
         $scope.requestOffice = function (form) {
-
+            $scope.clicked= true;
             if (form.$valid) {
 
                 Api.requestOffice($scope.reOffice, function (data) {

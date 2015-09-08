@@ -6,9 +6,8 @@
     <table class="table">
         <thead>
         <tr>
-
+            <th>Thiết bị</th>
             <th>Mô tả</th>
-            <th>Ngày tạo</th>
             <th>Trạng thái</th>
             <th>Ngày giao thiết bị</th>
         </tr>
@@ -18,7 +17,7 @@
         <tr ng-repeat="item in data">
 
             <td>{{item.description}}</td>
-            <td>{{item.createTime | date:'dd-MM-yyyy'}}</td>
+            <td>{{item.description}}</td>
             <td>{{item.status}}</td>
             <td><span ng-show="item.assignedTime">{{item.assignedTime | date:'dd-MM-yyyy'}}</span></td>
         </tr>

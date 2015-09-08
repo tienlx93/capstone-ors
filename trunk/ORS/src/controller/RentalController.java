@@ -59,7 +59,11 @@ public class RentalController extends HttpServlet {
                         rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
                     }
                     sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach khong duoc chap nhan.");
-                    sms.send();
+                    try {
+                        sms.send();
+                    } catch (IOException e) {
+                        System.out.println("Fail to send sms");
+                    }
                     response.sendRedirect("/admin/rental");
                     break;
                 case "assign":
@@ -80,8 +84,11 @@ public class RentalController extends HttpServlet {
                         dao.update(id, contractId, assignStaff, 2, description, date);
                         DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
                         sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach da duoc chap nhan. Thoi gian du kien: " + df.format(date));
-                        sms.send();
-
+                        try {
+                            sms.send();
+                        } catch (IOException e) {
+                            System.out.println("Fail to send sms");
+                        }
                         for (RentalDetail rentalDetail : rentalDetailCollection) {
                             rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() - rentalDetail.getQuantity());
                         }

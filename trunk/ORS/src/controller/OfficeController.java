@@ -1,5 +1,6 @@
 package controller;
 
+import com.google.gson.Gson;
 import dao.*;
 import entity.*;
 import service.ClusteringService;
@@ -13,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -72,19 +74,7 @@ public class OfficeController extends HttpServlet {
             } else {
                 office.setMinArea(office.getArea());
             }
-            if (price != null && !price.equals("")) {
-                office.setPrice(Long.valueOf(price));
-                if (isPercent != null) {
-                    office.setBasePrice(Long.valueOf(price));
-                } else {
-                    office.setBasePrice(Long.valueOf(basePrice));
-                }
-            } else {
-                office.setBasePrice(Long.valueOf(basePrice));
-                if (isPercent != null) {
-                    office.setCommission(Integer.valueOf(commission));
-                }
-            }
+            office.setBasePrice(Long.valueOf(basePrice));
             if (floor != null && !floor.equals("")) {
                 office.setFloorNumber(Integer.parseInt(floor));
             }
@@ -171,12 +161,22 @@ public class OfficeController extends HttpServlet {
         } else if (action.equals("delete")) {
             String id = request.getParameter("id");
             Office office = dao.get(Integer.parseInt(id));
-            office.setStatusId(3);
-            if (dao.update(Integer.parseInt(id), office)) {
-                response.sendRedirect("/admin/office");
-            } else {
-                response.sendRedirect("/admin/office?action=editing&id=" + id);
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            int numContract = 0;
+            for (Contract contract : office.getContractsById()) {
+                if (contract.getStatusId() == 1) {
+                    numContract++;
+                }
             }
+            if (numContract > 0) {
+                out.print(gson.toJson("Error"));
+            } else {
+                office.setStatusId(3);
+                dao.update(Integer.parseInt(id), office);
+                out.print(gson.toJson("Success"));
+            }
+
         }
     }
 
@@ -191,15 +191,19 @@ public class OfficeController extends HttpServlet {
             if (action == null) {
                 int pageCount;
                 List<Office> list;
+                List<Office> newList;
                 if (account.getRoleId() == 5) {
                     pageCount = dao.getPageCount(ConstantService.PAGE_SIZE, account.getUsername());
                     list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE, account.getUsername());
+                    newList = dao.getAllOfficeByStatus(4, account.getUsername());
                 } else {
                     pageCount = dao.getPageCount(ConstantService.PAGE_SIZE);
                     list = dao.getOfficeByPage(0, ConstantService.PAGE_SIZE);
+                    newList = dao.getAllOfficeByStatus(4);
                 }
                 request.setAttribute("pageCount", pageCount);
                 request.setAttribute("data", list);
+                request.setAttribute("newList", newList);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/office/viewOffice.jsp");
                 rd.forward(request, response);
             } else if (action.equals("new")) {

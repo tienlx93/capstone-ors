@@ -37,7 +37,7 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
             var changeStatus = function () {
                 Api.changeStatus(type, id, status, function (data) {
                     if (data == "Wrong") {
-                        alert("Thời gian thực hiện không hợp lệ.")
+                        alert("Chưa tới thời gian công việc. Cập nhật thất bại.")
                     }
                     if (data == "Success"){
                         alert("Cập nhật thành công.")

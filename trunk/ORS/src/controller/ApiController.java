@@ -281,7 +281,7 @@ public class ApiController extends HttpServlet {
                         office = rental.getContractByContractId().getOfficeByOfficeId();
                         if (rental.getStatusId() == 2 || rental.getStatusId() == 5) {
                             list.add(new MobileListJSON(rental.getId(), office.getName(), office.getAddress(),
-                                    rental.getDescription(), rental.getCreateTime().toString(), rental.getStatusId()));
+                                    rental.getDescription(), rental.getAssignedTime().toString(), rental.getStatusId()));
                         }
                     }
 
@@ -292,9 +292,9 @@ public class ApiController extends HttpServlet {
 
                     for (Repair repair : dao.getRepairListByStaff(username)) {
                         office = repair.getContractByContractId().getOfficeByOfficeId();
-                        if (repair.getRepairStatusId() == 2 || repair.getRepairStatusId() == 5) {
+                        if (repair.getRepairStatusId() == 5) {
                             list.add(new MobileListJSON(repair.getId(), office.getName(), office.getAddress(),
-                                    repair.getDescription(), repair.getCreateTime().toString(), repair.getRepairStatusId()));
+                                    repair.getDescription(), repair.getAssignedTime().toString(), repair.getRepairStatusId()));
                         }
                     }
                     break;
@@ -371,7 +371,7 @@ public class ApiController extends HttpServlet {
                     detail.setLongitude(office.getLongitude() != null ? office.getLongitude() : 0);
                     detail.setCustomerName(profile.getFullName());
                     detail.setDetail(rental.getDescription());
-                    detail.setDate(rental.getCreateTime().toString());
+                    detail.setDate(rental.getAssignedTime().toString());
                     detail.setStatus(rental.getStatusId());
 
                     List<String> list = new ArrayList<>();
@@ -400,7 +400,7 @@ public class ApiController extends HttpServlet {
                     detail.setLongitude(office.getLongitude() != null ? office.getLongitude() : 0);
                     detail.setCustomerName(profile.getFullName());
                     detail.setDetail(repair.getDescription());
-                    detail.setDate(repair.getCreateTime().toString());
+                    detail.setDate(repair.getAssignedTime().toString());
                     detail.setStatus(repair.getRepairStatusId());
 
                     List<String> list = new ArrayList<>();
@@ -424,7 +424,7 @@ public class ApiController extends HttpServlet {
             AppointmentDAO dao = new AppointmentDAO();
             int[] count = new int[3];
             count[0] = dao.countAppointment(2, staff);
-            count[1] = dao.countRepair(2, staff);
+            count[1] = dao.countRepair(5, staff);
             count[2] = dao.countRental(2, staff);
             out.print(gson.toJson(count));
         } else {
@@ -447,49 +447,46 @@ public class ApiController extends HttpServlet {
                 AppointmentDAO dao = new AppointmentDAO();
                 Appointment appointment = dao.get(id);
                 Date date = appointment.getTime();
-                if (today.after(date) || today.equals(date)){
-                if (comment != null) {
-                    comment = new String(comment.getBytes("iso-8859-1"), "UTF-8");
-                    result = dao.updateComment(id, status, comment);
-                } else {
-                    result = dao.updateStatus(id, status);
-                }
+                if (today.after(date) || today.equals(date)) {
+                    if (comment != null) {
+                        comment = new String(comment.getBytes("iso-8859-1"), "UTF-8");
+                        result = dao.updateComment(id, status, comment);
+                    } else {
+                        result = dao.updateStatus(id, status);
+                    }
                     out.print(gson.toJson("Success"));
-                break;
                 } else {
                     out.print(gson.toJson("Wrong"));
                 }
+                break;
             }
             case "rental": {
                 RentalDAO dao = new RentalDAO();
                 Rental rental = dao.get(id);
                 Date date = rental.getAssignedTime();
-                if(today.after(date) || today.equals(date)) {
+                if (rental.getStatusId() == 2) {
                     result = dao.changeStatus(id, status);
                     out.print(gson.toJson("Success"));
-                    break;
+                } else if (rental.getStatusId() == 5 && today.after(date) || today.equals(date)) {
+                    result = dao.changeStatus(id, status);
+                    out.print(gson.toJson("Success"));
                 } else {
                     out.print(gson.toJson("Wrong"));
                 }
-
+                break;
             }
             case "repair": {
                 RepairDAO dao = new RepairDAO();
                 Repair repair = dao.get(id);
                 Date date = repair.getAssignedTime();
-                if(today.after(date) || today.equals(date)) {
+                if (today.after(date) || today.equals(date)) {
                     result = dao.changeStatus(id, status);
                     out.print(gson.toJson("Success"));
-                    break;
                 } else {
                     out.print(gson.toJson("Wrong"));
                 }
+                break;
             }
-        }
-        if (result) {
-            out.print(gson.toJson("Success"));
-        } else {
-            out.print(gson.toJson("Error"));
         }
     }
 

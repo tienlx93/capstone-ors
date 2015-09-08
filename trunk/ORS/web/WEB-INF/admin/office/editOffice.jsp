@@ -261,35 +261,6 @@
                                 </div>
                             </div>
 
-                            <div><h3>Thông tin chủ văn phòng</h3></div>
-                            <div class="form-group clearfix">
-                                <label for="ownerName" class="col-sm-2">Tên người đại diện *</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="ownerName" class="form-control" id="ownerName"
-                                           value="${office.ownerName}" required
-                                           title="Tên người đại diện (5-50 kí tự)"
-                                           pattern=".{5,50}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="ownerPhone" class="col-sm-2">Số điện thoại người đại diện *</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="ownerPhone" class="form-control" id="ownerPhone"
-                                           value="${office.ownerPhone}" required
-                                           title="Số điện thoại người đại diện (9-11 số)"
-                                           pattern="[0-9]{9,11}">
-                                </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="ownerAddress" class="col-sm-2">Địa chỉ người đại diện *</label>
-                                <div class="col-sm-8">
-                                    <input type="text" name="ownerAddress" class="form-control" id="ownerAddress"
-                                           value="${office.ownerAddress}" required
-                                           title="Địa chỉ người đại diện (5-150 kí tự)"
-                                           pattern=".{5,150}">
-                                </div>
-                            </div>
-
                             <div class="button-post">
                                 <input type="hidden" id="imageUrls" name="imageUrls" value="${office.imageUrls}">
                                 <input type="hidden" id="amenityList" name="amenityList">
@@ -310,8 +281,8 @@
 </div>
 
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/upload.js" charset="UTF-8"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/street.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/upload.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/street.js"></script>
 
 </body>
 </html>

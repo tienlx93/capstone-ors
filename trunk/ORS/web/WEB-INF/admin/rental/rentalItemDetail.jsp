@@ -134,7 +134,7 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/uploadRental.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/uploadRental.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {

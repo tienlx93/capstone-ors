@@ -113,7 +113,6 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
     }
 
     public List<Office> getAllOffice() {
-
         try {
             String sql = "from Office where statusId = 1  and parentOfficeId = NULL";
             Query query = session.createQuery(sql);
@@ -122,7 +121,6 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -285,5 +283,29 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public List<Office> getAllOfficeByStatus(int status) {
+        try {
+            String sql = "from Office where statusId = :status  and parentOfficeId = NULL";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public List<Office> getAllOfficeByStatus(int status, String ownerUsername) {
+        try {
+            String sql = "from Office where statusId = :status  and parentOfficeId = NULL and ownerUsername = :owner";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+            query.setString("owner", ownerUsername);
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

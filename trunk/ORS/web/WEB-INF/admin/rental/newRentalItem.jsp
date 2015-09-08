@@ -157,7 +157,7 @@
 
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/uploadRental.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/WEB-INF/javascript/admin/uploadRental.js"></script>
 
 <script type="text/javascript">
     function formatPrice() {

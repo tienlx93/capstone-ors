@@ -1,3 +1,5 @@
+var amenityList = [];
+
 var renderImg = function() {
     var list = imageUrls.split(",");
     for (var i = 0; i < list.length; i++) {
@@ -24,6 +26,7 @@ $(document).ready(function () {
     var time = new Date().getTime();
     imageUrls = $("#imageUrls").val();
     renderImg();
+    //deleteAmenity();
     $('input[type="file"]').ajaxfileupload({
         'action': '/upload',
         'params': {
@@ -54,7 +57,6 @@ $(document).ready(function () {
     });
 });
 
-var amenityList = [];
 function deleteAmenity(amenity) {
     for (var i = 0; i < amenityList.length; i++) {
         if (amenityList[i] == amenity) {
@@ -130,24 +132,28 @@ $("#area, #floor, #minArea, #minTime, #price, #ownerPhone ").keydown(function (e
     }
 });
 var dropdown = $("#priceTerm");
+var priceTermName = $("#priceTermName");
 var minArea = $("#divMinArea");
 dropdown.find("option[value=1]").show();
 dropdown.find("option[value=2]").hide();
-dropdown.find("option[value=3]").hide();
 dropdown.find("option[value=4]").show();
 function changeCategory() {
     if ($("#category").val() == 1) {
         dropdown[0].selectedIndex = 0;
+        if (priceTermName.length >0) {
+            priceTermName[0].innerHTML = "Nguyên căn";
+        }
         dropdown.find("option[value=1]").show();
         dropdown.find("option[value=2]").hide();
-        dropdown.find("option[value=3]").hide();
         dropdown.find("option[value=4]").show();
         minArea.hide();
     } else {
         dropdown[0].selectedIndex = 1;
+        if (priceTermName.length >0) {
+            priceTermName[0].innerHTML = "Trên m<sup>2</sup>";
+        }
         dropdown.find("option[value=1]").hide();
         dropdown.find("option[value=2]").show();
-        dropdown.find("option[value=3]").show();
         dropdown.find("option[value=4]").show();
         minArea.show();
     }
@@ -158,7 +164,7 @@ $("#category").change(function(){
 changeCategory();
 var price = $("#price");
 function changeDropdown() {
-    if (dropdown[0].selectedIndex == 3) {
+    if (dropdown[0].selectedIndex == 2) {
         price.val("");
         price[0].disabled = true;
     } else {
@@ -190,7 +196,7 @@ checkPercent();
 function onChangeBasePrice() {
     var basePrice = $("#basePrice");
     var price = $("#price");
-    if (isPercent[0].checked && dropdown[0].selectedIndex != 3) {
+    if (isPercent[0].checked && dropdown[0].selectedIndex != 2) {
         price.val(basePrice.val());
     }
 }

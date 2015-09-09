@@ -29,6 +29,11 @@ function initialize() {
         map: map,
         anchorPoint: new google.maps.Point(0, -29)
     });
+    var lat = document.getElementById('latitude').value;
+    var lng = document.getElementById('longitude').value;
+    if (lat && lng) {
+        initMarker(lat, lng);
+    }
 }
 
 function fillInAddress() {
@@ -84,6 +89,20 @@ function fillInAddress() {
 
 }
 
+function initMarker(lat, lng) {
+    var myLatlng = new google.maps.LatLng(lat,lng);
+    var mapOptions = {
+        center: myLatlng,
+        zoom: 16
+    };
+    var map = new google.maps.Map(document.getElementById('map-canvas'),
+        mapOptions);
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map
+    });
+}
+
 // Bias the autocomplete object to the user's geographical location,
 // as supplied by the browser's 'navigator.geolocation' object.
 function geolocate() {
@@ -99,3 +118,4 @@ function geolocate() {
         });
     }
 }
+

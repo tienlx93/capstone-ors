@@ -72,7 +72,7 @@
                                            onFocus="geolocate()"
                                            value="${office.address}" required>
                                 </div>
-                                <div class="col-sm-8">
+                                <div class="col-sm-10">
                                     <table id="autocomplete">
                                         <tr class="hidden">
                                             <td class="label">Địa chỉ</td>
@@ -87,8 +87,7 @@
                                                 <input class="field" name="district"
                                                        id="administrative_area_level_2"
                                                        readonly value="${office.district}"></td>
-                                        </tr>
-                                        <tr>
+
                                             <td class="label" style="padding-right: 15px;padding-top: 10px;">
                                                 Thành phố / Tỉnh
                                             </td>
@@ -96,8 +95,9 @@
                                                 <input class="field" name="city"
                                                        id="administrative_area_level_1"
                                                        readonly value="${office.city}"></td>
-                                            <input type="hidden" name="latitude" id="latitude"
-                                                   value="${office.latitude}">
+                                            <input type="text" name="latitude" id="latitude" style="display:none;"
+                                                   value="${office.latitude}"
+                                                   title="Xin mời chọn địa chỉ từ danh sách gợi ý">
                                             <input type="hidden" name="longitude" id="longitude"
                                                    value="${office.longitude}">
 
@@ -123,20 +123,12 @@
                                 </div>
                                 <div class="clear-float"></div>
                                 <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
+                                <input type="hidden" id="imageUrls" name="imageUrls" value="${office.imageUrls}"
+                                       required style="display: none;" title="Mời chọn tối thiểu 1 hình ảnh">
                             </div>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Danh sách tiện nghi</label><br>
-
-                                <div class="clear-float" id="amenity-list">
-                                    <c:forEach var="item" items="${amenityList}">
-                                        <script>
-                                            amenityList.push(item);
-                                        </script>
-                                        <div>${item}<span class="color10 fa fa-remove"
-                                                          onclick="deleteAmenity('${item}')"></span></div>
-                                    </c:forEach>
-                                </div>
+                                <label class="col-sm-2 control-label">Danh sách tiện nghi</label>
                                 <div style="width: 0">
                                     <div class="input-group">
                                         <input type="text" class="form-control typeahead" autocomplete="off"
@@ -147,14 +139,22 @@
                                     </div>
                                     <!-- /input-group -->
                                 </div>
-                                <!-- /.col-lg-4 -->
+                                <br>
+
+                                <div class="clear-float" id="amenity-list">
+                                    <c:forEach var="item" items="${amenityList}">
+                                        <div>${item}<span class="color10 fa fa-remove"
+                                                          onclick="deleteAmenity('${item}')"></span></div>
+                                    </c:forEach>
+                                </div>
+
                             </div>
 
                             <div class="form-group clearfix">
                                 <label for="category" class="col-sm-2">Loại văn phòng *</label>
 
-                                <div class="col-sm-8">
-                                    <select name="category" class="form-control" id="category">
+                                <div class="col-sm-4">
+                                    <select name="category" class="form-control" id="category" disabled>
                                         <c:forEach var="item" items="${categoryList}">
                                             <option value="${item.id}"
                                                     <c:if test="${office.categoryId==item.id}">selected</c:if> >
@@ -166,48 +166,43 @@
                             <div class="form-group clearfix">
                                 <label for="floor" class="col-sm-2">Số tầng *</label>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-4">
                                     <input type="number" name="floor" class="form-control" id="floor"
                                            value="${office.floorNumber}" min="1" step="1"
                                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                                 </div>
-                            </div>
-                            <div class="form-group clearfix">
-                                <label for="area" class="col-sm-2">Diện tích (m<sup>2</sup>) *</label>
+                                <label for="area" class="col-sm-2" style="text-align: right">Diện tích (m<sup>2</sup>) *</label>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-4">
                                     <input type="number" name="area" class="form-control" id="area"
                                            value="${office.area}" required min="0">
                                 </div>
                             </div>
-                            <c:if test="${office.categoryId == 1}">
-                                <div class="form-group clearfix" id="divMinArea" hidden>
-                                    <label for="minArea" class="col-sm-2 control-label">Diện tích thuê tối thiểu (m<sup>2</sup>)</label>
 
-                                    <div class="col-sm-8">
-                                        <input type="text" name="minArea" class="form-control" id="minArea"
-                                               value="${office.minArea}">
-                                    </div>
-                                </div>
-                            </c:if>
-                            <c:if test="${office.categoryId == 2}">
-                                <div class="form-group clearfix" id="divMinArea">
-                                    <label for="minArea" class="col-sm-2 control-label">Diện tích thuê tối thiểu (m<sup>2</sup>)</label>
-
-                                    <div class="col-sm-8">
-                                        <input type="text" name="minArea" class="form-control" id="minArea"
-                                               value="${office.minArea}">
-                                    </div>
-                                </div>
-                            </c:if>
                             <div class="form-group clearfix">
                                 <label for="minTime" class="col-sm-2 control-label">Thời gian thuê tối thiểu
                                     (tháng)</label>
 
-                                <div class="col-sm-8">
+                                <div class="col-sm-4">
                                     <input type="number" name="minTime" class="form-control" id="minTime" step="1"
                                            value="${office.minTime}" required min="1">
                                 </div>
+                                <c:if test="${office.categoryId == 1}">
+                                    <input type="hidden" name="minArea" class="form-control"
+                                           value="${office.minArea}">
+
+                                </c:if>
+                                <c:if test="${office.categoryId == 2}">
+                                    <div id="divMinArea">
+                                        <label for="minArea" class="col-sm-2 control-label" style="text-align: right">
+                                            Diện tích thuê tối thiểu (m<sup>2</sup>)</label>
+
+                                        <div class="col-sm-4">
+                                            <input type="text" name="minArea" class="form-control" id="minArea"
+                                                   value="${office.minArea}">
+                                        </div>
+                                    </div>
+                                </c:if>
                             </div>
 
                             <div><h3>Điều khoản giá</h3></div>
@@ -237,15 +232,17 @@
                                 <label for="basePrice" class="col-sm-2" >Giá thuê gốc (VND) *</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" min="0" name="basePrice" class="form-control" id="basePrice"
-                                           value="${office.basePrice}" onchange="onChangeBasePrice()" readonly>
+                                    <input type="text" class="form-control" id="basePrice" readonly>
+                                    <input type="hidden" name="basePrice" id="priceValue" min="0"
+                                           value="${office.basePrice}">
                                 </div>
                             </div>
                             <div class="form-group clearfix">
                                 <label for="price" class="col-sm-2">Giá thuê (VND)</label>
 
                                 <div class="col-sm-8">
-                                    <input type="number" name="price" class="form-control" id="price"
+                                    <input type="text" class="form-control" id="price" onkeyup="formatPrice()">
+                                    <input type="hidden" name="price" id="priceValue2" min="0"
                                            value="${office.price}" step="1" title="Xin nhập giá hợp lệ">
                                 </div>
                             </div>
@@ -264,7 +261,6 @@
                             </div>
 
                             <div class="button-post">
-                                <input type="hidden" id="imageUrls" name="imageUrls" value="${office.imageUrls}">
                                 <input type="hidden" id="amenityList" name="amenityList">
                                 <c:if test="${info.statusId != 4}">
                                     <button type="submit" value="update" class="btn btn-primary" name="action">Cập nhật
@@ -291,6 +287,21 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/upload.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/street.js"></script>
-
+<script>
+    function formatPrice() {
+        var price = document.getElementById('price').value != '' ? document.getElementById('price').value : 0;
+        if (price != 0) {
+            document.getElementById('priceValue2').value = parseFloat(price.replace(/\./g, ''));
+            document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue2').value);
+        }
+    }
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    }
+    $(document).ready(function () {
+        document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue2').value);
+        document.getElementById('basePrice').value = numberWithCommas(document.getElementById('priceValue').value);
+    });
+</script>
 </body>
 </html>

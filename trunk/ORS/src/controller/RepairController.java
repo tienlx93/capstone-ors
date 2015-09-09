@@ -70,13 +70,14 @@ public class RepairController extends HttpServlet {
                     SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
                     ScheduleService service = new ScheduleService();
+                    String force = request.getParameter("force");
                     try {
                         date = fromAssign.parse(assignedTime);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
                     AssignResultJSON staffAvailable = service.isStaffAvailable(date, assignedStaff);
-                    if (staffAvailable.status <= 0) {
+                    if (staffAvailable.status <= 0 && (force == null || !force.equals("true"))) {
                         out.print(gson.toJson(staffAvailable));
                     } else {
                         dao.update(id, contractId, assignedStaff, description, date, 5);

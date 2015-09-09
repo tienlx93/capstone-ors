@@ -88,7 +88,7 @@ $('.assignForm').submit(function () {
                                         message = "Nhân viên đã có " + data.jobCount + " trong ngày.<br>";
                                     }
                                     message += "Bạn vẫn muốn giao việc cho nhân viên?";
-                                    currentForm.add("<input type='hidden' name='force' value='true'>");
+                                    currentForm.append("<input type='hidden' name='force' value='true'>");
                                     className = "btn-primary";
                                 } else {
                                     if (data.status == -1 || data.status == -3) {
@@ -117,7 +117,9 @@ $('.assignForm').submit(function () {
                                                         url: url,
                                                         data: currentForm.serialize(),
                                                         success: function (data) {
-                                                            window.location.reload();
+                                                            bootbox.alert("Giao việc thành công", function(){
+                                                                window.location.reload();
+                                                            });
                                                         }
                                                     });
                                                 }

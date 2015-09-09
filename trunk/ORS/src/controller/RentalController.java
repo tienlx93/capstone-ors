@@ -74,7 +74,8 @@ public class RentalController extends HttpServlet {
                     }
                     ScheduleService service = new ScheduleService();
                     AssignResultJSON staffAvailable = service.isStaffAvailable(date, assignStaff);
-                    if (staffAvailable.status <= 0) {
+                    String force = request.getParameter("force");
+                    if (staffAvailable.status <= 0 && (force == null || !force.equals("true"))) {
                         out.print(gson.toJson(staffAvailable));
                     } else {
                         dao.update(id, contractId, assignStaff, 2, description, date);

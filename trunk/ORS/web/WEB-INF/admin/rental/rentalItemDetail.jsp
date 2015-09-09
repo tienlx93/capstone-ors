@@ -25,7 +25,7 @@
     <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
-
+    <script src="${pageContext.request.contextPath}/lib/localization/messages_vi.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -79,16 +79,17 @@
 
                                 <div class="col-sm-4">
                                     <input type="text" class="form-control" id="price" name="price2"
-                                           value="${info.price}" required min="1" onkeyup="formatPrice()"
-                                           onkeyup="this.value=this.value.replace(/[^\d]/,'')">
-                                    <input type="hidden" name="price" id="priceValue" value="${info.price}"/>
+                                           value="${info.price}" required min="1" onkeyup="formatPrice()">
+                                    <input type="hidden" name="price1" id="priceValue" value="${info.price}"
+                                           title="Mời nhập số lớn hơn không"/>
                                 </div>
 
                                 <label for="quantity" class="col-sm-2 control-label">Số lượng (cái)</label>
 
                                 <div class="col-sm-4">
                                     <input type="number" name="quantity" class="form-control" id="quantity"
-                                           value="${info.quantity}" required step="1" min="1">
+                                           value="${info.quantity}" required step="1" min="1"
+                                           title="Mời nhập từ 1 trở lên">
                                 </div>
                             </div>
 
@@ -138,12 +139,13 @@
 
 <script type="text/javascript">
     $(document).ready(function () {
-        formatPrice();
+        var price = document.getElementById('price').value != '' ? document.getElementById('price').value : 0;
+        document.getElementById('price').value = numberWithCommas(parseInt(price));
     });
     function formatPrice() {
         var price = document.getElementById('price').value != '' ? document.getElementById('price').value : 0;
         if (price != 0) {
-            document.getElementById('priceValue').value = parseFloat(price.replace(/\.0/g, ''));
+            document.getElementById('priceValue').value = parseFloat(price.replace(/\./g, ''));
             document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue').value);
         }
     };
@@ -151,13 +153,29 @@
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     };
     $("#myform").validate({
-        messages: {
-            price2: "Vui lòng nhập số lớn hơn không",
-            quantity: "Vui lòng nhập số lớn hơn không"
-        }
-    })
-</script>
 
+    })
+
+    $("#price").keydown(function (e) {
+        // Allow: backspace, delete, tab, escape, enter and .
+        if ($.inArray(e.keyCode, [46, 8, 9, 27, 13, 110, 190]) !== -1 ||
+                    // Allow: Ctrl+A
+                (e.keyCode == 65 && e.ctrlKey === true) ||
+                    // Allow: Ctrl+C
+                (e.keyCode == 67 && e.ctrlKey === true) ||
+                    // Allow: Ctrl+X
+                (e.keyCode == 88 && e.ctrlKey === true) ||
+                    // Allow: home, end, left, right
+                (e.keyCode >= 35 && e.keyCode <= 39)) {
+            // let it happen, don't do anything
+            return;
+        }
+        // Ensure that it is a number and stop the keypress
+        if ((e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) && (e.keyCode < 96 || e.keyCode > 105)) {
+            e.preventDefault();
+        }
+    });
+</script>
 
 </body>
 </html>

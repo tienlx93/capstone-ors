@@ -892,7 +892,11 @@ public class ApiController extends HttpServlet {
             SMSService sms = new SMSService();
             sms.setPhone(phone);
             sms.setMessage("(ORS) Quy khach vua nhan duoc yeu cau sua chua. Hay dang nhap vao he thong va kiem tra");
-            sms.send();
+            try {
+                sms.send();
+            } catch (IOException e) {
+                System.out.println("Fail to send sms");
+            }
             out.print(gson.toJson("Success"));
         } else {
             out.print(gson.toJson("Error"));
@@ -1028,6 +1032,7 @@ public class ApiController extends HttpServlet {
             int id = Integer.parseInt(contractId);
             RentalDAO rentalDAO = new RentalDAO();
             List<RentalListJSON> list = new ArrayList<>();
+            List<RentalListJSON> list2 = new ArrayList<>();
             ContractDAO contractDAO = new ContractDAO();
             Contract contract = (Contract) contractDAO.getCusNameByIdContract(id);
             if (account.getUsername().equals(contract.getCustomerUsername())) {
@@ -1045,8 +1050,11 @@ public class ApiController extends HttpServlet {
                                     rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), rentalItem.getOfficeType()));
                         }
                     }
+                    list2.add(new RentalListJSON(rental.getId(), null, rental.getDescription(),
+                            0, 0, null, "Đang xử lý", 0, rental.getAssignedTime(),
+                            rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), 0));
                 }
-                out.print(gson.toJson(list));
+                out.print(gson.toJson(list2));
             } else {
                 out.print(gson.toJson("Error"));
             }

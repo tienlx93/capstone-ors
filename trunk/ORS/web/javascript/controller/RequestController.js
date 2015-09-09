@@ -60,6 +60,7 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
         $scope.request = function (form) {
             var txtTime = $('#date').val();
             var time = new Date(txtTime);
+            $scope.clicked= true;
             if (isNaN(time.getTime())) {
                 toastr.error('Thời gian hẹn không hợp lệ');
 

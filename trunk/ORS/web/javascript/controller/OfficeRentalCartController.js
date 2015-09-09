@@ -23,6 +23,7 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
                 rentalList.push(rentalItem);
             }
             var description = $scope.description;
+            $scope.clicked= true;
             Api.requestRental(id, rentalList, description, function(data){
                 if (data=="Success") {
                     toastr.success('Gửi yêu cầu thành công', 'Thành công');

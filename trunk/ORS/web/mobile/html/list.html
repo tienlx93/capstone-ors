@@ -14,16 +14,24 @@
             {{title}} rỗng
         </div>
         <div class="list-item" ng-click="direction();goto(item.id)" ng-repeat="item in data track by $index">
-            <div class="title">
-                {{item.officeName}} - <span class="address">{{item.address}}</span>
+            <div class="item-image">
+                <img src="{{item.images[0]}}" style="min-height: 100px" width="100%"/>
             </div>
-            <div class="detail">
-                {{item.detail}}
+            <div class="item-description">
+                <div class="title">
+                    {{item.officeName}}
+                </div>
+                <div class="address" style="padding: 5px 0;">
+                    {{item.address}}
+                </div>
+                <div class="detail" style="float: left;max-width: 120px">
+                    {{item.detail}}
+                </div>
+                <div class="date" style="float: right">
+                    {{item.date | toLocaleDate}}
+                </div>
+                <div class="status" ng-class="item.statusName"></div>
             </div>
-            <div class="date">
-                {{item.date | toLocaleDate}}
-            </div>
-            <div class="status" ng-class="item.statusName"></div>
         </div>
     </div>
 

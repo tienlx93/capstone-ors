@@ -21,7 +21,7 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
                     imageUrl: $scope.listItems[i].imageUrl
                 };
                 rentalList.push(rentalItem);
-            };
+            }
             var description = $scope.description;
             $scope.clicked= true;
             Api.requestRental(id, rentalList, description, function(data){
@@ -34,5 +34,12 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
                 }
             })
             $scope.clicked= false;
+        };
+        $scope.calculateTotal = function() {
+            var total = 0;
+            for(var i = 0; i < $scope.listItems.length; i++) {
+                total += $scope.listItems[i].quantity * $scope.listItems[i].unitPrice;
+            }
+            return total;
         };
     }]);

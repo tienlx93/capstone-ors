@@ -73,7 +73,7 @@ $('.assignForm').submit(function () {
                                             "lịch hẹn hiện tại ít hơn 2 tiếng.<br>";
                                     }
                                     message += "Bạn vẫn muốn giao việc cho nhân viên?";
-                                    currentForm.add("<input type='hidden' name='force' value='true'>");
+                                    currentForm.append("<input type='hidden' name='force' value='true'>");
                                     className = "btn-primary";
                                 } else {
                                     if (data.status == -1 || data.status == -3) {
@@ -105,8 +105,10 @@ $('.assignForm').submit(function () {
                                                         type: "POST",
                                                         url: url,
                                                         data: currentForm.serialize(),
-                                                        success: function (data) {
-                                                            window.location.reload();
+                                                        success: function () {
+                                                            bootbox.alert("Giao việc thành công", function(){
+                                                                window.location.reload();
+                                                            });
                                                         }
                                                     });
                                                 }

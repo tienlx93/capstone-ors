@@ -50,12 +50,16 @@ public class HomeController extends HttpServlet {
                     numContract = contractDAO.countContractByStatus(1);
                     numReturn = contractDAO.countContractByStatus(3);
                     numExtend = contractDAO.countContractByStatus(2);
-                    numRepair = appointmentDAO.countRepair(1, null);
+                    numRepair = appointmentDAO.countRepair(2, null);
                     numRental = appointmentDAO.countRental(1, null);
                     numRentalItem = rentalItemDAO.getPageCount(1);
+                } else if(account.getRoleId() == 5) {
+                    numRepair = appointmentDAO.countOwnerRepair(account.getUsername());
+                    numAppointment = 0;
+                    numRental = 0;
                 } else {
                     numAppointment = appointmentDAO.countAppointment(2, staff);
-                    numRepair = appointmentDAO.countRepair(2, staff);
+                    numRepair = appointmentDAO.countRepair(5, staff);
                     numRental = appointmentDAO.countRental(2, staff);
                 }
                 request.setAttribute("numAppointment", numAppointment);

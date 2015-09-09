@@ -1,10 +1,13 @@
 package json;
 
 import entity.Appointment;
+import entity.Office;
 import entity.Rental;
 import entity.Repair;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Created by ASUS on 6/14/2015.
@@ -20,11 +23,12 @@ public class MobileDetailJSON {
     private String date;
     private int status;
     private List<String> list;
+    private List<String> images;
 
     public MobileDetailJSON() {
     }
 
-    public MobileDetailJSON(int id, String officeName, String address, double latitude, double longitude, String customerName, String detail, String date, int status, List<String> list) {
+    public MobileDetailJSON(int id, String officeName, String address, double latitude, double longitude, String customerName, String detail, String date, int status, List<String> list, Office office) {
         this.id = id;
         this.officeName = officeName;
         this.address = address;
@@ -35,6 +39,14 @@ public class MobileDetailJSON {
         this.date = date;
         this.status = status;
         this.list = list;
+        this.images = new ArrayList<>();
+        StringTokenizer tokenizer = new StringTokenizer(office.getImageUrls(), ",");
+        while (tokenizer.hasMoreElements()) {
+            String img = (String) tokenizer.nextElement();
+            if (img != null && img != "") {
+                images.add(img);
+            }
+        }
     }
 
     public int getId() {
@@ -115,5 +127,13 @@ public class MobileDetailJSON {
 
     public void setList(List<String> list) {
         this.list = list;
+    }
+
+    public List<String> getImages() {
+        return images;
+    }
+
+    public void setImages(List<String> images) {
+        this.images = images;
     }
 }

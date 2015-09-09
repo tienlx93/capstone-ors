@@ -204,4 +204,20 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         }
         return 0;
     }
+
+    public int countOwnerRepair(String owner) {
+        try {
+            String sql = "SELECT COUNT(id) AS Quantity FROM Repair WHERE repairStatusId = :status " +
+                    "AND contractByContractId.officeByOfficeId.ownerUsername = :owner";
+
+            Query query = session.createQuery(sql);
+            query.setInteger("status", 1);
+            query.setString("owner", owner);
+
+            return (int) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }

@@ -48,9 +48,10 @@ public class AppointmentController extends HttpServlet {
                     Gson gson = new Gson();
                     ScheduleService service = new ScheduleService();
                     String assignedStaff = request.getParameter("assignedStaff");
+                    String force = request.getParameter("force");
                     //done: check 4 job and no job in 2 hours
                     AssignResultJSON staffAvailable = service.isStaffAvailable(appointment, assignedStaff);
-                    if (staffAvailable.status <= 0) {
+                    if (staffAvailable.status <= 0 && (force == null || !force.equals("true"))) {
                         out.print(gson.toJson(staffAvailable));
                     } else {
                         dao.update(appointmentId, assignedStaff, appointment.getTime(), 2);
@@ -114,11 +115,12 @@ public class AppointmentController extends HttpServlet {
                             return o1.getTime().compareTo(o2.getTime());
                         }
                     });
-
-                    ScheduleService service = new ScheduleService(unassignedList.get(0).getTime(),
-                            unassignedList.get(unassignedList.size() - 1).getTime());
-                    Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
-                    request.setAttribute("suggestMap", suggestMap);
+                    if (unassignedList.size() > 0) {
+                        ScheduleService service = new ScheduleService(unassignedList.get(0).getTime(),
+                                unassignedList.get(unassignedList.size() - 1).getTime());
+                        Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
+                        request.setAttribute("suggestMap", suggestMap);
+                    }
                 } else {
                     list = dao.getAppointmentListByStaffAndOffice(account.getUsername(), "");
                 }

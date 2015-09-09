@@ -180,14 +180,14 @@ label.small:hover {
   width: 100%;
   height: 46px;
   border-bottom: 1px solid #dcdcdc;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.15);
-  background: -webkit-gradient(linear,left top,left bottom,from(#f3f3f3),to(#e8e8e8));
-  background: -moz-linear-gradient(top,#f3f3f3,#e8e8e8);
-  background: -ms-linear-gradient(top,#f3f3f3,#e8e8e8);
-  background: -webkit-linear-gradient(top,#f3f3f3,#e8e8e8);
-  background: -o-linear-gradient(top,#f3f3f3,#e8e8e8);
-  background: linear-gradient(to bottom,#f3f3f3,#e8e8e8);
-  .logo-container{
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.15);
+  background: -webkit-gradient(linear, left top, left bottom, from(#f3f3f3), to(#e8e8e8));
+  background: -moz-linear-gradient(top, #f3f3f3, #e8e8e8);
+  background: -ms-linear-gradient(top, #f3f3f3, #e8e8e8);
+  background: -webkit-linear-gradient(top, #f3f3f3, #e8e8e8);
+  background: -o-linear-gradient(top, #f3f3f3, #e8e8e8);
+  background: linear-gradient(to bottom, #f3f3f3, #e8e8e8);
+  .logo-container {
     float: left;
     margin-right: 8px;
     .img {
@@ -289,15 +289,19 @@ label.small:hover {
 .Pending, .Requested {
   background-color: orange;
 }
+
 .Assigned {
   background-color: @red;
 }
+
 .Accepted, .WaitingConfirm {
   background-color: green;
 }
+
 .Canceled, .Rejected {
   background-color: darkgray;
 }
+
 .Done {
   background-color: blue;
 }
@@ -339,6 +343,7 @@ label.small:hover {
     height: 50px;
   }
 }
+
 .popup {
   position: fixed;
   right: 21px;
@@ -362,6 +367,7 @@ label.small:hover {
   }
 
 }
+
 .item {
   &.inline {
     display: inline-block;
@@ -378,6 +384,7 @@ label.small:hover {
     font-weight: normal;
   }
 }
+
 .item-detail {
   div {
     font-weight: bold;
@@ -454,4 +461,56 @@ label.small:hover {
 .slide-right .ng-leave.ng-leave-active {
   -webkit-transform: translateX(100%);
   transform: translateX(100%);
+}
+
+.item-image {
+  display: inline-block;
+  width: 25%;
+}
+
+.item-description {
+  display: inline-block;
+  width: 73%;
+  vertical-align: top;
+}
+
+.left-side {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.right-side {
+  font-size: 14px;
+  font-weight: normal !important;
+  padding: 5px 0 10px 10px !important;
+}
+
+.confirm-button {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 18px;
+  background: #2BBC8C;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border: none;
+  width: 47%;
+  margin: auto !important;
+}
+
+.reject-button {
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  font-family: Arial;
+  color: #ffffff;
+  font-size: 18px;
+  background: #d93434;
+  padding: 10px 20px 10px 20px;
+  text-decoration: none;
+  border: none;
+  width: 47%;
+  margin: auto !important;
 }

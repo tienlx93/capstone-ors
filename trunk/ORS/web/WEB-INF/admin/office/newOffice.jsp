@@ -73,7 +73,7 @@
                            onFocus="geolocate()"
                            value="${office.address}" required>
                   </div>
-                  <div class="col-sm-8">
+                  <div class="col-sm-10">
                     <table id="autocomplete">
                       <tr class="hidden">
                         <td class="label">Địa chỉ</td>
@@ -88,8 +88,7 @@
                           <input class="field" name="district"
                                  id="administrative_area_level_2"
                                  disabled="true"></td>
-                      </tr>
-                      <tr>
+
                         <td class="label" style="padding-right: 15px;padding-top: 10px;">
                           Thành phố / Tỉnh
                         </td>
@@ -127,14 +126,12 @@
                   </div>
                   <div class="clear-float"></div>
                   <input type="file" id="file" name="file" accept="image/*" title="Mời chọn hình ảnh">
+                  <input type="text" id="imageUrls" name="imageUrls" required style="display: none;"
+                         title="Mời chọn tối thiểu 1 hình ảnh">
                 </div>
 
                 <div class="form-group clearfix">
-                  <label class="col-sm-5">Danh sách tiện nghi</label><br>
-
-                  <div class="clear-float" id="amenity-list">
-
-                  </div>
+                  <label class="col-sm-3">Danh sách tiện nghi</label>
                   <div style="width: 0">
                     <div class="input-group">
                       <input type="text" class="form-control typeahead" autocomplete="off"
@@ -145,13 +142,16 @@
                     </div>
                     <!-- /input-group -->
                   </div>
-                  <!-- /.col-lg-4 -->
+                  <br>
+                  <div class="clear-float" id="amenity-list">
+                  </div>
                 </div>
 
                 <div class="form-group clearfix">
                   <label for="category" class="col-sm-2">Loại văn phòng *</label>
 
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
+                    <script>var amenityList = [];</script>
                     <select name="category" class="form-control" id="category">
                       <c:forEach var="item" items="${categoryList}">
                         <option value="${item.id}"
@@ -164,34 +164,34 @@
                 <div class="form-group clearfix">
                   <label for="floor" class="col-sm-2">Số tầng *</label>
 
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
                     <input type="number" name="floor" class="form-control" id="floor"
                            value="${office.floorNumber}" min="1" step="1"
                            onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                   </div>
-                </div>
-                <div class="form-group clearfix">
-                  <label for="area" class="col-sm-2">Diện tích (m<sup>2</sup>) *</label>
 
-                  <div class="col-sm-8">
+                  <label for="area" class="col-sm-2" style="text-align: right">Diện tích (m<sup>2</sup>) *</label>
+
+                  <div class="col-sm-4">
                     <input type="number" name="area" class="form-control" id="area"
                            value="${office.area}" required min="0">
-                  </div>
-                </div>
-                <div class="form-group clearfix" id="divMinArea">
-                  <label for="minArea" class="col-sm-2">Diện tích thuê tối thiểu (m<sup>2</sup>) *</label>
-
-                  <div class="col-sm-8">
-                    <input type="number" name="minArea" class="form-control" id="minArea"
-                           value="${office.minArea}" step="any">
                   </div>
                 </div>
                 <div class="form-group clearfix">
                   <label for="minTime" class="col-sm-2">Thời gian thuê tối thiểu (Tháng) *</label>
 
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
                     <input type="number" name="minTime" class="form-control" id="minTime"
                            value="${office.minTime}" required min="0" step="1">
+                  </div>
+                  <div id="divMinArea">
+                    <label for="minArea" class="col-sm-2" style="text-align: right">
+                      Diện tích thuê tối thiểu (m<sup>2</sup>) *</label>
+
+                    <div class="col-sm-4">
+                      <input type="number" name="minArea" class="form-control" id="minArea"
+                             value="${office.minArea}" step="any">
+                    </div>
                   </div>
                 </div>
               </fieldset>
@@ -220,23 +220,25 @@
                   </div>
                 </div>
                 <div class="form-group clearfix">
-                  <label for="basePrice" class="col-sm-2">Giá thuê gốc (VND) *</label>
+                  <label for="basePrice" class="col-sm-3">Giá thuê gốc (VND <span id="priceTermName"></span>) *</label>
 
                   <div class="col-sm-8">
-                    <input type="text" min="0" name="basePrice" class="form-control" id="basePrice"
-                           value="${office.basePrice}" onchange="onChangeBasePrice()">
+                    <input type="text" id="basePrice" onchange="onChangeBasePrice()" onkeyup="formatPrice()" required>
+                    <input type="hidden" name="basePrice" id="priceValue" min="0"
+                           value="${office.basePrice}">
+
                   </div>
                 </div>
                 <div class="form-group clearfix hidden">
                   <label for="price" class="col-sm-2">Giá thuê (VND)</label>
 
-                  <div class="col-sm-8">
+                  <div class="col-sm-4">
                     <input type="number" name="price" class="form-control" id="price"
                            value="${office.price}" step="1" title="Xin nhập giá hợp lệ">
                   </div>
                 </div>
 
-                <div class="form-group clearfix">
+                <div class="form-group clearfix hidden">
                   <label for="priceTerm" class="col-sm-2">Đơn vị giá *</label>
 
                   <div class="col-sm-8">
@@ -253,7 +255,6 @@
               <button type="submit" class="btn btn-primary stepy-finish">Tạo mới
               </button>
               <div class="button-post">
-                <input type="hidden" id="imageUrls" name="imageUrls">
                 <input type="hidden" id="amenityList" name="amenityList">
                 <input type="hidden" name="action" value="save">
                 <a href="/admin/office" class="btn btn-default">Hủy</a>
@@ -274,13 +275,24 @@
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/upload.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/street.js"></script>
 <script>
+  function formatPrice() {
+    var price = document.getElementById('basePrice').value != '' ? document.getElementById('basePrice').value : 0;
+    if (price != 0) {
+      document.getElementById('priceValue').value = parseFloat(price.replace(/\./g, ''));
+      document.getElementById('basePrice').value = numberWithCommas(document.getElementById('priceValue').value);
+    }
+  }
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
   $('form').stepy({
     backLabel: '< Quay lại',
     nextLabel: 'Tiếp tục >',
     transition: 'fade',
     duration: 400,
     validate: true,
-    block: true
+    block: true,
+    enter: false
   });
   $("form").validate({
     rules: {

@@ -189,7 +189,8 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <c:forEach items="${office.officeAmenitiesById}" var="item">
-                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                            <span style="padding: 0;margin-bottom: 10px"
+                                                  class="col-sm-2">${item.amenityByAmenityId.name}</span>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -201,7 +202,7 @@
 
                                         <div class="col-sm-4">
                                             <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
-                                                   name="officeArea" min="${office.minArea}" class="form-control"
+                                                   name="officeArea" min="${office.minArea}" max="${office.area}" class="form-control"
                                                    value="${office.minArea}" required="true">
                                         </div>
 
@@ -322,7 +323,34 @@
                                     </div>
 
                                 </div>
+                                <div class="form-group clearfix">
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu tròng vòng (ngày):
+                                    </div>
 
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="firstPaymentPaidDay" required="true"
+                                               id="firstPaymentPaidDay" value="1" min="0" max="30"/>
+                                    </div>
+                                    <div for="paymentPaidDay" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày)
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="paymentPaidDay" required="true"
+                                               id="paymentPaidDay" value="1" min="0" max="30"/>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="latePaidDay" class="col-sm-2 control-label">Số ngày trả chậm tối đa mỗi kỳ(ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="latePaidDay" required="true"
+                                               id="latePaidDay" value="1" min="0" max="30"/>
+                                    </div>
+                                </div>
                                 <div class="form-group clearfix">
                                     <c:if test="${office.price != null}">
 
@@ -368,7 +396,15 @@
 
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div class="col-sm-6"></div>
+                                    <div for="depositPaidDay" class="col-sm-2 control-label">Bên B thanh toán tiền đặt
+                                        cọc trong vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="depositPaidDay" required="true"
+                                               id="depositPaidDay" value="1" min="0" max="30"/>
+                                    </div>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt
                                         cọc văn phòng(VNĐ):
                                     </div>
@@ -379,6 +415,17 @@
                                                name="deposit" required="true"
                                                id="deposit" value=""/>
                                     </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="additionalCharge" class="col-sm-2 control-label">Chi phí phụ trội (%):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="additionalCharge" required="true"
+                                               id="additionalCharge" value="1" min="0" max="100"/>
+                                    </div>
+
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="endDate" class="col-sm-2 control-label"> Số tiền
@@ -401,13 +448,7 @@
                                                id="total" value=""/>
                                     </div>
                                 </div>
-                                <%--<div class="form-group clearfix">--%>
-                                <%--<div for="price" class="col-sm-12 control-label"><h4>Tổng số tiền bên B phải thanh--%>
-                                <%--toán cho bên A theo mỗi--%>
-                                <%--kỳ (<span name="term" id="term" style="font-weight: bold"></span>) là: <span--%>
-                                <%--name="price" id="price" style="font-weight: bold"></span> VNĐ</h4>--%>
-                                <%--</div>--%>
-                                <%--</div>--%>
+
                             </div>
                             <div class="row" style="margin: 20px auto; ">
                                 <div style="text-align:center; border-bottom:2px solid #000000"><h3>Hình ảnh văn bản

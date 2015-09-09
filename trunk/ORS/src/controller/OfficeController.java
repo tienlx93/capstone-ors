@@ -53,7 +53,7 @@ public class OfficeController extends HttpServlet {
         String commission = request.getParameter("commission");
         if (action.equals("save")) {
             Office office = new Office();
-            office.setStatusId(1);
+            office.setStatusId(4);
 
             office.setName(name);
             office.setMinTime(Integer.valueOf(minTime));
@@ -91,9 +91,9 @@ public class OfficeController extends HttpServlet {
                 }
                 OfficeAmenityDAO officeAmenityDAO = new OfficeAmenityDAO();
                 officeAmenityDAO.saveOfficeAmenity(office.getId(), amenityListInt);
-                ClusteringService service = new ClusteringService();
-                service.doCluster();
-                response.sendRedirect("/admin/office");
+                /*ClusteringService service = new ClusteringService();
+                service.doCluster();*/
+                response.sendRedirect("/admin/office?action=editing&id=" + office.getId());
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/office/newOffice.jsp");
                 rd.forward(request, response);
@@ -102,11 +102,12 @@ public class OfficeController extends HttpServlet {
 
             String id = request.getParameter("id");
             Office office = dao.get(Integer.parseInt(id));
-
+            if (office.getStatusId() == 4) {
+                office.setStatusId(1);
+            }
             office.setName(name);
             office.setMinTime(Integer.valueOf(minTime));
             office.setAddress(address);
-            office.setCategoryId(Integer.parseInt(category));
             office.setDescription(description);
             office.setCreateDate(new Timestamp((new Date()).getTime()));
             office.setArea(Double.parseDouble(area));
@@ -153,7 +154,7 @@ public class OfficeController extends HttpServlet {
                 ClusteringService service = new ClusteringService();
                 service.doCluster();
 
-                response.sendRedirect("/admin/office");
+                response.sendRedirect("/admin/office?action=editing&id=" + office.getId());
             } else {
                 RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/office/editOffice.jsp");
                 rd.forward(request, response);

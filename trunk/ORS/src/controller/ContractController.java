@@ -117,6 +117,12 @@ public class ContractController extends HttpServlet {
                 String paymentFee = request.getParameter("paymentFee");
                 String deposit = request.getParameter("deposit");
                 String imageUrl = request.getParameter("imageUrl");
+                String depositPaidDay = request.getParameter("depositPaidDay");
+                String firstPaymentPaidDay = request.getParameter("firstPaymentPaidDay");
+                String paymentPaidDay = request.getParameter("paymentPaidDay");
+                String additionalCharge = request.getParameter("additionalCharge");
+                String latePaidDay = request.getParameter("latePaidDay");
+
 
                 if (deposit.equals("")) {
                     deposit = "0";
@@ -135,6 +141,11 @@ public class ContractController extends HttpServlet {
                     e.printStackTrace();
                 }
 
+                contract.setDepositPaidDay(Integer.parseInt(depositPaidDay));
+                contract.setFirstPaymentPaidDay(Integer.parseInt(firstPaymentPaidDay));
+                contract.setPaymentPaidDay(Integer.parseInt(paymentPaidDay));
+                contract.setAdditionalCharge(Integer.parseInt(additionalCharge));
+                contract.setLatePaidDay(Integer.parseInt(latePaidDay));
                 contract.setStatusId(1);
                 contract.setCustomerUsername(customerName);
                 if (Integer.parseInt(request.getParameter("categoryId")) == 1) {
@@ -422,12 +433,38 @@ public class ContractController extends HttpServlet {
         Document document = new Document();
 
         HashMap<Integer, String> paymentTerm = new HashMap<Integer, String>();
+        paymentTerm.put(0, "không");
         paymentTerm.put(1, "một");
         paymentTerm.put(2, "hai");
         paymentTerm.put(3, "ba");
         paymentTerm.put(4, "bốn");
         paymentTerm.put(5, "năm");
         paymentTerm.put(6, "sáu");
+        paymentTerm.put(7, "bảy");
+        paymentTerm.put(8, "tám");
+        paymentTerm.put(9, "chín");
+        paymentTerm.put(10, "mười");
+        paymentTerm.put(11, "mười một");
+        paymentTerm.put(12, "mười hai");
+        paymentTerm.put(13, "mười ba");
+        paymentTerm.put(14, "mười bốn");
+        paymentTerm.put(15, "mười năm");
+        paymentTerm.put(16, "mười sáu");
+        paymentTerm.put(17, "mười bảy");
+        paymentTerm.put(18, "mười tám");
+        paymentTerm.put(19, "mười chín");
+        paymentTerm.put(20, "hai mươi");
+        paymentTerm.put(21, "hai mươi một");
+        paymentTerm.put(22, "hai mươi hai");
+        paymentTerm.put(23, "hai mươi ba");
+        paymentTerm.put(24, "hai mươi bốn");
+        paymentTerm.put(25, "hai mươi năm");
+        paymentTerm.put(26, "hai mươi sáu");
+        paymentTerm.put(27, "hai mươi bảy");
+        paymentTerm.put(28, "hai mươi tám");
+        paymentTerm.put(29, "hai mươi chín");
+        paymentTerm.put(30, "ba mươi");
+        paymentTerm.put(31, "ba mươi mốt");
 
 //        BaseFont base = BaseFont.createFont("/fonts/vuArial.ttf", BaseFont.WINANSI);
         BaseFont base = BaseFont.createFont("fonts/vuArial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
@@ -458,28 +495,29 @@ public class ContractController extends HttpServlet {
             document.add(title);
             document.add(new Paragraph("Hôm nay, ngày " + dayStr + " tháng " + monthStr + " năm " + yearStr + ", Tại " + contract.getOfficeByOfficeId().getAddress() + ". Chúng tôi gồm có:", italicFont));
 
+
             document.add(paragraphEmpty);
             document.add(new Paragraph("BÊN CHO THUÊ VĂN PHÒNG (BÊN A):", boldFont));
-            document.add(new Paragraph("Địa chỉ: " + contract.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getAddress(), font));
-            document.add(new Paragraph("Điện thoại: " + contract.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getPhone(), font));
-            document.add(new Paragraph("E-mail: " + contract.getOfficeByOfficeId().getAccountByOwnerUsername().getEmail(), font));
+            document.add(combineTwoParagraph("Địa chỉ: ", contract.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getAddress(), font, italicFont));
+            document.add(combineTwoParagraph("Điện thoại: ",contract.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getPhone(), font, italicFont));
+            document.add(combineTwoParagraph("E-mail: ", contract.getOfficeByOfficeId().getAccountByOwnerUsername().getEmail(), font, italicFont));
             document.add(new Paragraph("Giấy phép số: …………………………………………………………………………………………………………….", font));
             document.add(new Paragraph("Mã số thuế: ……………………………………………………………………………………………………………….", font));
             document.add(new Paragraph("Tài khoản số: …………………………………………………………………………………………………………….", font));
-            document.add(new Paragraph("Do ông (bà): " + contract.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getFullName(), font));
+            document.add(combineTwoParagraph("Do ông (bà): ", contract.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getFullName(), font, italicFont));
             document.add(new Paragraph("Chức vụ: ……………………………………………………………………………………………..làm đại diện.", font));
-            document.add(new Paragraph("Là chủ sở hữu của văn phòng cho thuê: " + contract.getOfficeByOfficeId().getName(), font));
+            document.add(combineTwoParagraph("Là chủ sở hữu của văn phòng cho thuê: ", contract.getOfficeByOfficeId().getName(), font, italicFont));
 
 
             document.add(paragraphEmpty);
             document.add(new Paragraph("BÊN THUÊ VĂN PHÒNG (BÊN B):", boldFont));
-            document.add(new Paragraph("Địa chỉ: " + contract.getAccountByCustomerUsername().getProfileByUsername().getAddress(), font));
-            document.add(new Paragraph("Điện thoại: " + contract.getAccountByCustomerUsername().getProfileByUsername().getPhone(), font));
-            document.add(new Paragraph("E-mail: " + contract.getAccountByCustomerUsername().getEmail(), font));
+            document.add(combineTwoParagraph("Địa chỉ: ", contract.getAccountByCustomerUsername().getProfileByUsername().getAddress(), font, italicFont));
+            document.add(combineTwoParagraph("Điện thoại: ", contract.getAccountByCustomerUsername().getProfileByUsername().getPhone(), font, italicFont));
+            document.add(combineTwoParagraph("E-mail: ", contract.getAccountByCustomerUsername().getEmail(), font, italicFont));
             document.add(new Paragraph("Giấy phép số: …………………………………………………………………………………………………………….", font));
             document.add(new Paragraph("Mã số thuế: ……………………………………………………………………………………………………………….", font));
             document.add(new Paragraph("Tài khoản số: …………………………………………………………………………………………………………….", font));
-            document.add(new Paragraph("Do ông (bà): " + contract.getAccountByCustomerUsername().getProfileByUsername().getFullName(), font));
+            document.add(combineTwoParagraph("Do ông (bà): ", contract.getAccountByCustomerUsername().getProfileByUsername().getFullName(), font, italicFont));
             document.add(new Paragraph("Chức vụ: …………………………………………………………………………………………………..làm đại diện.", font));
 
 
@@ -490,8 +528,12 @@ public class ContractController extends HttpServlet {
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 1 : ĐỐI TƯỢNG VÀ MỤC ĐÍCH CHO THUÊ", boldFont));
             document.add(new Paragraph("Bên A đồng ý cho bên Bên B thuê diện tích như sau:", font));
-            document.add(new Paragraph("1.1. Địa điểm và diện tích: ..." + contract.getOfficeByOfficeId().getAddress() + "..., diện tích ..." + contract.getOfficeByOfficeId().getArea() + "... mét vuông", font));
-            document.add(new Paragraph("1.2 Mục đích sử dụng: Làm văn phòng", font));
+            document.add(new Chunk("1.1. Địa điểm và diện tích: ", font));
+            document.add(new Chunk(contract.getOfficeByOfficeId().getAddress(), italicFont));
+            document.add(new Chunk(", diện tích", font));
+            document.add(new Chunk(String.valueOf(contract.getOfficeByOfficeId().getArea()), italicFont));
+            document.add(new Chunk(" mét vuông", font));
+            document.add(new Paragraph("1.2. Mục đích sử dụng: ………………………………………..………………………………………………………….", font));
             document.add(new Paragraph("1.3. Văn phòng, hệ thống cung cấp điện và nước được bàn giao cho Bên B phải trong tình trạng sử dụng tốt mà Bên B đã khảo sát và chấp nhận.", font));
 
 
@@ -499,13 +541,13 @@ public class ContractController extends HttpServlet {
             int time = (int) Math.ceil(longTime / (86400000L * 30L));
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 2 : THỜI GIAN THUÊ", boldFont));
-            document.add(new Paragraph("2.1. Thời hạn thuê văn phòng: ..." + String.valueOf(time) + " tháng", font));
+            document.add(combineTwoParagraph("2.1. Thời hạn thuê văn phòng: ", String.valueOf(time) + " tháng", font, italicFont));
             document.add(new Paragraph("2.2. Điều kiện gia hạn : Sau khi hết hợp đồng, bên B được quyền ưu tiên gia hạn hoặc kí kết hợp đồng mới, nhưng phải báo trước vấn đề cho bên A bằng văn bản ít nhất ….. tháng.", font));
 
 
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 3 : GIÁ THUÊ & CÁC CHI PHÍ KHÁC", boldFont));
-            document.add(new Paragraph("3.1. Giá thuê: ..." + addDot(contract.getPaymentFee()) + " VNĐ/m2", font));
+            document.add(combineTwoParagraph("3.1. Giá thuê: " , addDot(contract.getPaymentFee()) + " VNĐ/m2", font, italicFont));
             document.add(new Paragraph("Giá thuê bao gồm thuế VAT 10% và tất cả các loại thuế có liên quan có thể phát sinh từ hợp đồng này; và không bao gồm tiền điện, điện thoại, fax, chi phí dịch vụ vệ sinh trong văn phòng và các chi phí khác do Bên B sử dụng.", font));
             document.add(new Paragraph("Giá thuê/cho thuê nói trên sẽ ổn định trong suốt thời gian thuê theo điều 2.1.", font));
             document.add(new Paragraph("3.2. Các chi phí khác:", font));
@@ -520,12 +562,33 @@ public class ContractController extends HttpServlet {
             document.add(new Paragraph("ĐIỀU 4 : THANH TOÁN", boldFont));
             document.add(new Paragraph("4.1. Đồng tiền tính toán:  VNĐ (Đồng Việt Nam)", font));
             document.add(new Paragraph("4.2. Đồng tiền thanh toán : Bằng VNĐ (Đồng Việt Nam) quy đồi theo tỷ giá bán ra USD/VNĐ của Ngân hàng Ngoại Thương Việt Nam tại ………………………………………….………. tại thời điểm thanh toán.", font));
-            document.add(new Paragraph("4.3. Thời hạn thanh toán tiền đặt cọc : Trong vòng …… (……..) ngày làm việc sau khi kí hợp đồng này, Bên B chuyển trước cho Bên A tiền đặt cọc tương đương với ..." + String.valueOf(depositMonth) + "... tháng tiền thuê/cho thuê văn phòng là ..." + addDot(deposit) + " VNĐ.", font));
+            document.add(new Chunk("4.3. Thời hạn thanh toán tiền đặt cọc : Trong vòng ", font));
+            document.add(new Chunk(String.valueOf(contract.getDepositPaidDay()) + " (" + paymentTerm.get(contract.getDepositPaidDay()) + ")", italicFont));
+            document.add(new Chunk(" ngày làm việc sau khi kí hợp đồng này, Bên B chuyển trước cho Bên A tiền đặt cọc tương đương với ", font));
+            document.add(new Chunk(String.valueOf(depositMonth), italicFont));
+            document.add(new Chunk(" tháng tiền thuê/cho thuê văn phòng là ", font));
+            document.add(new Chunk(addDot(deposit) + " VNĐ.", italicFont));
             document.add(new Paragraph("Khoản tiền đặt cọc này sau khi đã trừ đi các khoản chi phí điện thoại, điện, v.v… sẽ được hoàn lại cho Bên B trong vòng …… ngày làm việc sau khi kết thúc hợp đồng cùng với điều kiện Bên B phải hoàn tất mọi trách nhiệm nêu trong hợp đồng này.", font));
-            document.add(new Paragraph("4.4. Tiền thuê văn phòng: Bên B thanh toán cho Bên A tiền thuê văn phòng của mỗi kỳ ..." + contract.getPaymentTermByPaymentTerm().getDescription() + "..., tương đương ..." + addDot(paymentTermPrice) + " VNĐ", font));
-            document.add(new Paragraph("Kỳ đầu: Trong vòng ….. (……….) ngày làm việc sau khi kí hợp đồng này, Bên B thanh toán cho Bên A", font));
-            document.add(new Paragraph("Các kỳ tiếp theo: Trong vòng ….. (……….) ngày làm việc đầu tiền của mỗi kỳ ..." + String.valueOf(contract.getPaymentTermByPaymentTerm().getPaymentTime()) + " (" + paymentTerm.get(contract.getPaymentTermByPaymentTerm().getPaymentTime()) +"...) tháng, Bên B thanh toán cho Bên A số tiền ..." + addDot(paymentTermPrice) + " VNĐ.", font));
-            document.add(new Paragraph("4.5. Trong trường hợp thanh toán chậm so với thời gian quy định nói trên, Bên B phải thanh  toán cho Bên A chi phí phụ trội bằng …… % ( …………………………….) cho mỗi ngày chậm thanh toán trên tổng số tiền chậm thanh toán. Nếu chậm thanh toán vượt quá …… (……………..) ngày, Bên A có quyền đơn phương chấm dứt hợp đồng này.", font));
+            document.add(new Chunk("4.4. Tiền thuê văn phòng: Bên B thanh toán cho Bên A tiền thuê văn phòng của mỗi kỳ ", font));
+            document.add(new Chunk(contract.getPaymentTermByPaymentTerm().getDescription(), italicFont));
+            document.add(new Chunk(", tương đương ", font));
+            document.add(new Chunk(addDot(paymentTermPrice) + " VNĐ.", italicFont));
+            document.add(new Paragraph());
+            document.add(new Chunk("Kỳ đầu: Trong vòng ", font));
+            document.add(new Chunk(String.valueOf(contract.getFirstPaymentPaidDay()) + " (" + paymentTerm.get(contract.getFirstPaymentPaidDay()) + ")", italicFont));
+            document.add(new Chunk(" ngày làm việc sau khi kí hợp đồng này, Bên B thanh toán cho Bên A.", font));
+            document.add(new Paragraph());
+            document.add(new Chunk("Các kỳ tiếp theo: Trong vòng ", font));
+            document.add(new Chunk(String.valueOf(contract.getPaymentPaidDay()) + " (" + paymentTerm.get(contract.getPaymentPaidDay()) + ")", italicFont));
+            document.add(new Chunk(" ngày làm việc đầu tiền của mỗi kỳ ", font));
+            document.add(new Chunk(String.valueOf(contract.getPaymentTermByPaymentTerm().getPaymentTime()) + " (" + paymentTerm.get(contract.getPaymentTermByPaymentTerm().getPaymentTime()) +")", italicFont));
+            document.add(new Chunk(" tháng, Bên B thanh toán cho Bên A số tiền ", font));
+            document.add(new Chunk(addDot(paymentTermPrice) + " VNĐ", italicFont));
+            document.add(new Paragraph());
+            document.add(new Chunk("4.5. Trong trường hợp thanh toán chậm so với thời gian quy định nói trên, Bên B phải thanh  toán cho Bên A chi phí phụ trội bằng ", font));
+            document.add(new Chunk(String.valueOf(contract.getAdditionalCharge()) + "%", italicFont));
+            document.add(new Chunk(" cho mỗi ngày chậm thanh toán trên tổng số tiền chậm thanh toán. Nếu chậm thanh toán vượt quá …… (……………..) ngày, Bên A có quyền đơn phương chấm dứt hợp đồng này.", font));
+            document.add(new Paragraph());
             document.add(new Paragraph("4.6. Tiền sử dụng điện sinh hoạt : Bên B thanh toán cho Bên A tiền sử dụng điện sinh hoạt hằng tháng trong vòng ….. (……….) ngày đầu tiên của tháng tiếp theo.", font));
             document.add(new Paragraph("4.7. Phương thức thanh toán : ………………………………………..……………………………………….", font));
             document.add(new Paragraph("Đơn vị thụ hưởng: ………………………………………..………………………………………………………….", font));
@@ -594,7 +657,9 @@ public class ContractController extends HttpServlet {
             document.add(new Paragraph("f) Chậm thanh toán theo quy định của Điều 4.", font));
             document.add(new Paragraph("g) Trong trường hợp này, Bên A sẽ không hoàn lại cho Bên B tiền đặt cọc.", font));
             document.add(new Paragraph("6.2. Chấm dứt hợp đồng trước thời hạn do thỏa thuận của các Bên:", font));
-            document.add(new Paragraph("a) Hợp đồng này không được đơn phương chấm dứt trước thời hạn bởi bên nào. Nếu một trong hai bên muốn chấm dứt hợp đồng trước thời hạn, phải thông báo trước cho bên kia bằng văn bản ít nhất là 1 (một) tháng và thời hạn thuê phải đạt được tối thiểu là ..." + String.valueOf(contract.getOfficeByOfficeId().getMinTime()) + "... tháng. Trong trường hợp này, Bên A sẽ hoàn trả lại cho Bên B tiền đặt cọc và tiền thuê văn phòng còn thừa của Bên B (nếu có).", font));
+            document.add(new Chunk("a) Hợp đồng này không được đơn phương chấm dứt trước thời hạn bởi bên nào. Nếu một trong hai bên muốn chấm dứt hợp đồng trước thời hạn, phải thông báo trước cho bên kia bằng văn bản ít nhất là 1 (một) tháng và thời hạn thuê phải đạt được tối thiểu là ", font));
+            document.add(new Chunk(String.valueOf(contract.getOfficeByOfficeId().getMinTime()), italicFont));
+            document.add(new Chunk(" tháng. Trong trường hợp này, Bên A sẽ hoàn trả lại cho Bên B tiền đặt cọc và tiền thuê văn phòng còn thừa của Bên B (nếu có).", font));
             document.add(new Paragraph("b) Nếu Bên B chấm dứt hợp đồng này trước thời hạn mà không tuân thủ quy định nói trên, Bên B sẽ mất tiền đặt cọc.", font));
             document.add(new Paragraph("c) Nếu Bên A chấm dứt hợp đồng này trước thời hạn mà không tuân thủ quy định nói trên, Bên A phải hoàn trả lại cho Bên B tiền đặt cọc, tiền thuê còn thừa của Bên B (nếu có) và phải bồi thường cho Bên B số tiền tương đương với tiền đặt cọc.", font));
 
@@ -612,7 +677,18 @@ public class ContractController extends HttpServlet {
 
             document.add(paragraphEmpty);
             document.add(new Paragraph("ĐIỀU 9: HIỆU LỰC CỦA HỢP ĐỒNG", boldFont));
-            document.add(new Paragraph("Hợp đồng này có hiệu lực pháp lý từ ngày ..." + String.valueOf(getDay(contract.getStartDate())) + "... tháng ..." + String.valueOf(getMonth(contract.getStartDate())) + "... năm ..." + String.valueOf(getYear(contract.getStartDate())) + ".... Đến ngày ..." + String.valueOf(getDay(contract.getEndDate())) + "... tháng " + String.valueOf(getMonth(contract.getEndDate())) + " năm ..." + String.valueOf(getYear(contract.getEndDate())), font));
+            document.add(new Chunk("Hợp đồng này có hiệu lực pháp lý từ ngày ", font));
+            document.add(new Chunk(String.valueOf(getDay(contract.getStartDate())), italicFont));
+            document.add(new Chunk(" tháng ", font));
+            document.add(new Chunk(String.valueOf(getMonth(contract.getStartDate())) , italicFont));
+            document.add(new Chunk(" năm ", font));
+            document.add(new Chunk(String.valueOf(getYear(contract.getStartDate())), italicFont));
+            document.add(new Chunk(". Đến ngày ", font));
+            document.add(new Chunk(String.valueOf(getDay(contract.getEndDate())), italicFont));
+            document.add(new Chunk(" tháng ", font));
+            document.add(new Chunk(String.valueOf(getMonth(contract.getEndDate())), italicFont));
+            document.add(new Chunk(" năm ", font));
+            document.add(new Chunk(String.valueOf(getYear(contract.getEndDate())), italicFont));
             document.add(new Paragraph("Hợp đồng được lập thành 2 (hai) bản, mỗi bên giữ một bản và có giá trị như nhau.", font));
 
 
@@ -658,4 +734,14 @@ public class ContractController extends HttpServlet {
         String formatNumber = df.format(new BigDecimal(number));
         return formatNumber.replaceAll(",",".");
     }
+
+    public Paragraph combineTwoParagraph(String text1, String text2, Font font1, Font font2){
+        Chunk param1 = new Chunk(text1,font1);
+        Chunk param2 = new Chunk(text2,font2);
+        Paragraph comb = new Paragraph();
+        comb.add(param1);
+        comb.add(param2);
+        return comb;
+    }
+
 }

@@ -31,6 +31,7 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/repairDetail.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -478,34 +479,5 @@
     }
 </script>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        var startDate = document.getElementById('startDate').value;
-        var start = new Date(startDate);
-        var endDate = document.getElementById('endDate').value;
-        var end = new Date(endDate);
-
-        var nowTemp = new Date();
-        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-
-        $('#assignedTime').datepicker({
-            format: 'dd-mm-yyyy',
-            onRender: function (date) {
-                return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf()) ? 'disabled' : '';
-            }
-        }).data('datepicker');
-
-        var repairDate = document.getElementById('repairDate').value;
-        var repair = new Date(repairDate);
-        if (now.valueOf() <= repair.valueOf()) {
-            $("#agree").removeAttr("disabled");
-        }
-        if (now.valueOf() >= repair.valueOf()) {
-            $("#happy").removeAttr("disabled");
-            $("#unhappy").removeAttr("disabled");
-        }
-    });
-
-</script>
 </body>
 </html>

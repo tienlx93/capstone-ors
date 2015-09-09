@@ -30,6 +30,7 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/appointmentDetail.js"></script>
     <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/localization/messages_vi.js"></script>
     <title>Office Rental Service</title>
@@ -297,29 +298,9 @@
     }).on('hide.bs.modal', function (e) {
         $("#assignedStaff").attr("required", true);
     });
-    $(document).ready(function () {
-        var now = new Date();
-
-        $('#time').datepicker({
-            format: 'yyyy-mm-dd',
-            onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
-            }
-        }).data('datepicker');
-
-        if (now.valueOf() >= meet.valueOf()) {
-            $("#agree").removeAttr("disabled");
-            $("#disagree").removeAttr("disabled");
-            $("#createContract").removeAttr("disabled");
-            $("#cancelContract").removeAttr("disabled");
-        }
-        if (now.valueOf() < meet.valueOf()) {
-            $("#assignTask").removeAttr("disabled");
-            $("#assignAgain").removeAttr("disabled");
-        }
-    });
     $("form").validate({
     });
 </script>
+
 </body>
 </html>

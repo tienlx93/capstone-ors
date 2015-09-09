@@ -247,11 +247,8 @@
                 </ul>
 
                 <button type="submit" ng-disabled="requestOfficeForm.$invalid" ng-click="requestOffice(requestOfficeForm)" class="btn btn-green" value="save"
-                        name="action">Đặt văn phòng
+                        name="action" ng-class="{'disabled':clicked==true}">Đặt văn phòng
                 </button>
-                <button type="reset" onclick="window.history.back()" class="btn" value="cancel" name="action">Hủy
-                </button>
-
             </div>
         </form>
     </div>

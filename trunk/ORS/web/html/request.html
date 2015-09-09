@@ -206,9 +206,8 @@
             </div>
             <div class="button-post">
                 <button type="submit" ng-click="request(requestTime)" class="btn btn-green" value="save"
-                        name="action">Đặt lịch hẹn
+                        name="action" ng-class="{'disabled':clicked==true}">Đặt lịch hẹn
                 </button>
-                <button type="button" onclick="window.history.back()" class="btn" value="cancel">Hủy</button>
             </div>
         </form>
 

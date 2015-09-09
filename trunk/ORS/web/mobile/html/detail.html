@@ -1,15 +1,36 @@
 <div ng-include="'html/header.html'"></div>
 <div class="content">
     <div class="item-detail">
-        <div>Tên văn phòng: <span>{{data.officeName}}</span></div>
-        <div>Địa chỉ: <span>{{data.address}}</span></div>
-        <a href="geo:{{data.latitude}},{{data.longitude}}?q={{data.latitude}},{{data.longitude}}({{data.address | encode}})">Mở trên ứng dụng bản đồ</a> <br>
-        <!--<a href="" onclick='window.open("https://www.google.com/maps/place/Tr%C6%B0%E1%BB%9Dng+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+C%C3%B4ng+ngh%E1%BB%87+TP.HCM/@10.8023066,106.7149526,17z" , "_system");'>Mở trên ứng dụng bản đồ</a> <br>-->
-        <div>Khách hàng: <span>{{data.customerName}}</span></div>
-        <div ng-show="type!='lịch hẹn'">Chi tiết {{type}}: <span>{{data.detail}}</span></div>
-        <div>Thời gian:
-            <span ng-show="type!='lịch hẹn'">{{data.date | toLocaleDate}}</span>
-            <span ng-show="type=='lịch hẹn'">{{data.date | toLocaleDateTime}}</span>
+        <div>
+            <img src="{{data.images[0]}}" width="100%" style="min-height: 120px;max-height: 200px">
+        </div>
+        <div>
+            <div class="left-side">Tên văn phòng:</div>
+            <div class="right-side">{{data.officeName}}</div>
+        </div>
+        <div>
+            <div class="left-side">Địa chỉ:</div>
+            <div class="right-side">{{data.address}}</div>
+        </div>
+        <div>
+            <a href="geo:{{data.latitude}},{{data.longitude}}?q={{data.latitude}},{{data.longitude}}({{data.address | encode}})">Mở
+                trên ứng dụng bản đồ</a>
+            <!--<a href="" onclick='window.open("https://www.google.com/maps/place/Tr%C6%B0%E1%BB%9Dng+%C4%90%E1%BA%A1i+h%E1%BB%8Dc+C%C3%B4ng+ngh%E1%BB%87+TP.HCM/@10.8023066,106.7149526,17z" , "_system");'>Mở trên ứng dụng bản đồ</a> <br>-->
+
+        </div>
+
+        <div>
+            <div class="left-side">Khách hàng:</div>
+            <div class="right-side">{{data.customerName}}</div>
+        </div>
+        <div ng-show="type!='lịch hẹn'">
+            <div class="left-side">Chi tiết {{type}}: </div>
+            <div class="right-side">{{data.detail}}</div>
+        </div>
+        <div>
+            <div class="left-side">Thời gian:</div>
+            <div ng-show="type!='lịch hẹn'" class="right-side">{{data.date | toLocaleDate}}</div>
+            <div ng-show="type=='lịch hẹn'" class="right-side">{{data.date | toLocaleDateTime}}</div>
         </div>
     </div>
     <div ng-show="type!='lịch hẹn'" class="item-detail">
@@ -20,7 +41,7 @@
             </li>
         </ul>
     </div>
-    <div class="item-detail" >
+    <div class="item-detail">
         <div>Trạng thái:
             <div class="item inline">
                 <div class="color" ng-class="data.statusClass"></div>
@@ -29,21 +50,25 @@
         </div>
         <div ng-show="type=='lịch hẹn'" class="appointment">
             <div ng-show="data.status==2">
-                <button class="Accepted" ng-click="change(3)">Khách hàng muốn ký hợp đồng</button>
-                <button class="Rejected" ng-click="change(5)">Khách hàng không đồng ý</button><br>
+                <button class="confirm-button" ng-click="change(3)"><i class="fa fa-check"></i>Đồng ý</button>
+                <button class="reject-button" ng-click="change(5)"><i class="fa fa-times"></i>Không đồng ý</button>
+                <br>
             </div>
         </div>
         <div ng-show="type!='lịch hẹn'" class="repair">
             <div ng-show="data.status==2 && type=='sửa chữa'">
-                <button class="WaitingConfirm" ng-click="change(5)">Đồng ý sửa chữa</button><br>
+                <button class="WaitingConfirm" ng-click="change(5)">Đồng ý sửa chữa</button>
+                <br>
                 <button class="Requested" ng-click="change(1)">Không đồng ý sửa chữa</button>
             </div>
             <div ng-show="data.status==2 && type!='sửa chữa'">
-                <button class="WaitingConfirm" ng-click="change(5)">Đồng ý giao hàng</button><br>
+                <button class="WaitingConfirm" ng-click="change(5)">Đồng ý giao hàng</button>
+                <br>
                 <button class="Requested" ng-click="change(1)">Không đồng ý</button>
             </div>
             <div ng-show="data.status==5">
-                <button class="Done" ng-click="change(3)">Khách hàng hài lòng</button><br>
+                <button class="Done" ng-click="change(3)">Khách hàng hài lòng</button>
+                <br>
                 <button class="Requested" ng-click="change(1)">Khách hàng không hài lòng</button>
             </div>
         </div>

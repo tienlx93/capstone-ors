@@ -1,14 +1,9 @@
 <link href="../css/rental.css" rel="stylesheet"/>
 <div class="rental-wrapper">
     <div class="container">
-        <div class="row" style="text-align: right; margin: auto">
-            <a href="#/rentalCart/{{contractID}}" class="btn btn-green">
-                <i class="fa fa-shopping-cart"></i>
-                Xem giỏ hàng
-            </a>
-        </div>
+
         <div class="row">
-            <div class="col-md-3" style="padding: 15px;border: 1px solid #b5d334;margin: 15px 0;">
+            <div class="col-md-3 fixed" style="padding: 15px;border: 1px solid #b5d334;margin: 15px 0;">
 
                 <div style="margin: 15px 0; font-size: 24px; color: #b5d334">Giỏ hàng</div>
 
@@ -21,9 +16,15 @@
                     <div style="text-align: left;display: inline-block">{{item.name}}</div>
                     <div style="float: right;display: inline-block">{{item.quantity}}</div>
                 </div>
+                <div class="row" style="text-align: right;margin: 10px 0">
+                    <a style="width: 100%" href="#/rentalCart/{{contractID}}" class="btn btn-green">
+                        <i class="fa fa-shopping-cart"></i>
+                        Xem giỏ hàng
+                    </a>
+                </div>
             </div>
 
-            <div class="col-md-9">
+            <div class="col-md-9 scrollit">
                 <div class="col-md-4 item" ng-repeat="item in itemList track by $index">
                     <div class="image" style="background-image: url({{item.imageUrl}})"></div>
                     <div class="row" style="margin: auto">
@@ -33,7 +34,7 @@
 
                         <div class="detail col-md-6">
                             <div style="font-weight: bold">Giá</div>
-                            <div class="price" style="font-size: 18px">{{item.unitPrice | currency:'VND':0}}</div>
+                            <div class="price" style="font-size: 18px">{{item.unitPrice | currency:"":0}}</div>
                         </div>
                         <div class="quantity col-md-6">
                             <div style="font-weight: bold">Số lượng</div>

@@ -101,7 +101,11 @@ public class RepairController extends HttpServlet {
                     sms.setPhone(phone1);
                     //sms.setMessage("(ORS) Yeu cau sua chua cua " + cusName + " khong thanh cong");
                     sms.setMessage("(ORS) Yeu cau sua chua khong thanh cong");
-                    sms.send();
+                    try {
+                        sms.send();
+                    } catch (IOException e) {
+                        System.out.println("Fail to send sms");
+                    }
                     response.sendRedirect("/admin/repair");
                     break;
                 case "change3":

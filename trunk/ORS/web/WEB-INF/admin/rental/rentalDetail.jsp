@@ -32,6 +32,7 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/rentalDetail.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -328,7 +329,7 @@
     }
 </script>
 
-<script type="text/javascript">
+<%--<script type="text/javascript">
     $(document).ready(function () {
         var startDate = document.getElementById('startDate').value;
         var start = new Date(startDate);
@@ -347,17 +348,17 @@
 
         var rentalDate = document.getElementById('rentalDate').value;
         var rental = new Date(rentalDate);
-        if (now.valueOf() <= rental.valueOf()) {
+        if (nowTemp.valueOf() <= rental.valueOf()) {
             $("#agree").removeAttr("disabled");
             $("#disagree").removeAttr("disabled");
             $("#assignTask").removeAttr("disabled");
         }
-        if (now.valueOf() >= rental.valueOf()) {
+        if (nowTemp.valueOf() >= rental.valueOf()) {
             $("#happy").removeAttr("disabled");
             $("#unhappy").removeAttr("disabled");
         }
     });
 
-</script>
+</script>--%>
 </body>
 </html>

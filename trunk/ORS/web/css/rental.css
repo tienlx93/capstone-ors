@@ -14,14 +14,10 @@
 }
 
 .rental-wrapper .item:hover .btn {
-    opacity: 1;
 }
 
 .rental-wrapper .item .btn {
-    opacity: 0;
-    transition: opacity 1s ease-out;
-    -webkit-transition: opacity 1s ease-out;
-    -moz-transition: opacity 1s ease-out    ;
+    opacity: 1;
 }
 
 .rental-wrapper .item .image {
@@ -54,4 +50,14 @@
     white-space: nowrap;
     max-width: 100%;
     overflow: hidden;
+}
+
+.fixed {
+    position: fixed;
+    width: 25%;
+}
+
+.scrollit {
+    float: right;
+    width: 75%
 }

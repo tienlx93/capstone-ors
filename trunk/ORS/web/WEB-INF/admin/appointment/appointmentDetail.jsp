@@ -30,6 +30,8 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/localization/messages_vi.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>
@@ -46,9 +48,6 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
-                    <%--<div class="panel-title">--%>
-                    <%--<h2 style="margin-top: 5px">Chi tiết lịch hẹn</h2>--%>
-                    <%--</div>--%>
                     <div>
                         <form action="appointment?action=editing" method="post" name="appointment">
                             <div class="form-group" hidden>
@@ -116,23 +115,6 @@
                             <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
                                 <h2>Chi tiết lịch hẹn</h2></div>
 
-
-                            <%--<c:choose>
-                                <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                    <div class="col-sm-3">
-                                        <input type='text' class="form-control"
-                                               name="time"
-                                               id="time"
-                                               value="${info.time}"/>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <div class="col-sm-3">
-                                            ${info.time}
-                                    </div>
-                                </c:otherwise>
-                            </c:choose>--%>
-
                             <div class="form-group clearfix">
                                 <label class="col-sm-2 control-label">Ngày gặp</label>
 
@@ -191,27 +173,6 @@
 
                             </c:if>
 
-
-                            <%--<div class="form-group clearfix">
-                                <label for="time" class="col-sm-2 control-label">Thời gian gặp</label>
-                                <c:choose>
-                                    <c:when test="${user.roleId==2 && (info.statusId == 1 || info.statusId == 2)}">
-                                        <div class="col-sm-4">
-                                            <input type='text' class="form-control"
-                                                   name="time"
-                                                   id="time"
-                                                   value="${info.time}"/>
-                                        </div>
-                                    </c:when>
-                                    <c:otherwise>
-                                        ${info.time}
-                                    </c:otherwise>
-                                </c:choose>
-
-                                &lt;%&ndash;<div class="col-sm-10">&ndash;%&gt;
-                                &lt;%&ndash;${info.time}&ndash;%&gt;
-                                &lt;%&ndash;</div>&ndash;%&gt;
-                            </div>--%>
                             <c:if test="${info.statusId != 1 && info.statusId != 2}">
                                 <div class="form-group clearfix">
                                     <label for="appointmentStatusId" class="col-sm-2 control-label">Ý kiến khách
@@ -296,7 +257,7 @@
                                             <h4 class="modal-title">Nhập lí do hủy</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <input class="form-control" name="comment" autocomplete="off" type="text">
+                                            <input class="form-control" name="comment" autocomplete="off" type="text" required>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Quay lại
@@ -331,12 +292,13 @@
         }
         $('#myModal').modal('show');
     }
-</script>
-
-<script type="text/javascript">
+    $('#myModal').on('show.bs.modal', function (e) {
+        $("#assignedStaff").removeAttr("required");
+    }).on('hide.bs.modal', function (e) {
+        $("#assignedStaff").attr("required", true);
+    });
     $(document).ready(function () {
-        var nowTemp = new Date();
-        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+        var now = new Date();
 
         $('#time').datepicker({
             format: 'yyyy-mm-dd',
@@ -345,17 +307,6 @@
             }
         }).data('datepicker');
 
-        var meetDate = document.getElementById('meetDate').value;
-        var meet = new Date(meetDate);
-        var afterMeet = new Date(meet);
-        afterMeet.setHours(meet.getHours() + 2);
-
-        var checkTime = nowTemp - meet;
-        var checkTime4 = afterMeet - meet;
-
-        /*if (checkTime.valueOf() < checkTime4.valueOf() && checkTime.valueOf > 0) {
-         $("#agree").removeAttr("disabled");
-         }*/
         if (now.valueOf() >= meet.valueOf()) {
             $("#agree").removeAttr("disabled");
             $("#disagree").removeAttr("disabled");
@@ -367,7 +318,8 @@
             $("#assignAgain").removeAttr("disabled");
         }
     });
-
+    $("form").validate({
+    });
 </script>
 </body>
 </html>

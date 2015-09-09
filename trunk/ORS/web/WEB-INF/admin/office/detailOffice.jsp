@@ -126,7 +126,7 @@
                   <label class="col-sm-3">Số điện thoại:</label>
                   <span class="col-sm-3">${info.accountByOwnerUsername.profileByUsername.phone}</span>
                   <label class="col-sm-3">Địa chỉ:</label>
-                  <span class="col-sm-3">${info.accountByOwnerUsername.profileByUsername.address} m<SUP>2</SUP></span>
+                  <span class="col-sm-3">${info.accountByOwnerUsername.profileByUsername.address}</span>
                 </div>
               </c:if>
 
@@ -162,8 +162,11 @@
               </div>
 
               <div class="button-post">
-                <a class="btn btn-success" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
-                  chữa</a>
+                <c:if test="${info.statusId != 4}">
+                  <a class="btn btn-success" href="repair?action=filter&officeId=${info.id}">Danh sách sửa
+                    chữa</a>
+                </c:if>
+
                 <c:if test="${user.roleId != 5}">
                   <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
                 </c:if>

@@ -26,6 +26,8 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/typeahead.bundle.js"></script>
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places"></script>
     <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/localization/messages_vi.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body onload="initialize()">
@@ -236,7 +238,7 @@
 
                                 <div class="col-sm-8">
                                     <input type="text" min="0" name="basePrice" class="form-control" id="basePrice"
-                                           value="${office.basePrice}" onchange="onChangeBasePrice()">
+                                           value="${office.basePrice}" onchange="onChangeBasePrice()" readonly>
                                 </div>
                             </div>
                             <div class="form-group clearfix">
@@ -264,8 +266,14 @@
                             <div class="button-post">
                                 <input type="hidden" id="imageUrls" name="imageUrls" value="${office.imageUrls}">
                                 <input type="hidden" id="amenityList" name="amenityList">
-                                <button type="submit" value="update" class="btn btn-primary" name="action">Cập nhật
-                                </button>
+                                <c:if test="${info.statusId != 4}">
+                                    <button type="submit" value="update" class="btn btn-primary" name="action">Cập nhật
+                                    </button>
+                                </c:if>
+                                <c:if test="${info.statusId == 4}">
+                                    <button type="submit" value="update" class="btn btn-primary" name="action">Xác nhận văn phòng
+                                    </button>
+                                </c:if>
                                 <a href="/admin/office" class="btn btn-default">Hủy</a>
                             </div>
                         </form>

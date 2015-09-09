@@ -157,6 +157,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         try {
             Criteria criteria = session.createCriteria(Office.class);
             criteria.add(Restrictions.ne("statusId", 3));
+            criteria.add(Restrictions.ne("statusId", 4));
             criteria.add(Restrictions.isNull("parentOfficeId"));
             criteria.addOrder(Order.asc("id"));
             criteria.setFirstResult(firstResult);
@@ -173,6 +174,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             Criteria criteria = session.createCriteria(Office.class);
             criteria.add(Restrictions.eq("ownerUsername", owner));
             criteria.add(Restrictions.ne("statusId", 3));
+            criteria.add(Restrictions.ne("statusId", 4));
             criteria.add(Restrictions.isNull("parentOfficeId"));
             criteria.addOrder(Order.asc("id"));
             criteria.setFirstResult(firstResult);
@@ -188,6 +190,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         try {
             Criteria criteriaCount = session.createCriteria(Office.class);
             criteriaCount.add(Restrictions.ne("statusId", 3));
+            criteriaCount.add(Restrictions.ne("statusId", 4));
             criteriaCount.add(Restrictions.isNull("parentOfficeId"));
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();
@@ -204,6 +207,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             Criteria criteriaCount = session.createCriteria(Office.class);
             criteriaCount.add(Restrictions.eq("ownerUsername", owner));
             criteriaCount.add(Restrictions.ne("statusId", 3));
+            criteriaCount.add(Restrictions.ne("statusId", 4));
             criteriaCount.add(Restrictions.isNull("parentOfficeId"));
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();

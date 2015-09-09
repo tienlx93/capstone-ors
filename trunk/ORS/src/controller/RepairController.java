@@ -53,7 +53,11 @@ public class RepairController extends HttpServlet {
                     dao.changeStatus(id, 4);
                     sms.setPhone(phone);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan.");
-                    sms.send();
+                    try {
+                        sms.send();
+                    } catch (IOException e) {
+                        System.out.println("Fail to send sms");
+                    }
                     response.sendRedirect("/admin/repair");
                     break;
                 case "agree":
@@ -80,7 +84,11 @@ public class RepairController extends HttpServlet {
                         sms.setPhone(phone);
                         sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach da duoc chap nhan." +
                                 " Thoi gian du kien: " + df.format(date));
-                        sms.send();
+                        try {
+                            sms.send();
+                        } catch (IOException e) {
+                            System.out.println("Fail to send sms");
+                        }
                         out.print(gson.toJson("Success"));
                     }
 

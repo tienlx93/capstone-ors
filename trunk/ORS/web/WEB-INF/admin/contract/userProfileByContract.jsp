@@ -47,73 +47,65 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div>
-                        <div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Họ tên khách hàng: </label>
+                            <span>${info.profileByUsername.fullName}</span>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2">Họ tên khách hàng: </label>
-                                <span>${info.profileByUsername.fullName}</span>
-                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Giới tính: </label>
+                            <c:if test="${fn:trim(info.profileByUsername.title) == 'Ông'}">
+                                <span>Nam</span>
+                            </c:if>
+                            <c:if test="${fn:trim(info.profileByUsername.title) == 'Bà'}">
+                                <span>Nữ</span>
+                            </c:if>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2">Giới tính: </label>
-                                <c:if test="${fn:trim(info.profileByUsername.title) == 'Ông'}">
-                                    <span>Nam</span>
-                                </c:if>
-                                <c:if test="${fn:trim(info.profileByUsername.title) == 'Bà'}">
-                                    <span>Nữ</span>
-                                </c:if>
-                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Số điện thoại: </label>
+                            <span>${info.profileByUsername.phone}</span>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2">Số điện thoại: </label>
-                                <span>${info.profileByUsername.phone}</span>
-                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Địa chỉ: </label>
+                            <c:if test="${not empty info.profileByUsername.address}">
+                                <span>${info.profileByUsername.address}</span>
+                            </c:if>
+                            <c:if test="${empty info.profileByUsername.address}">
+                                <span>Không có</span>
+                            </c:if>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2">Địa chỉ: </label>
-                                <c:if test="${not empty info.profileByUsername.address}">
-                                    <span>${info.profileByUsername.address}</span>
-                                </c:if>
-                                <c:if test="${empty info.profileByUsername.address}">
-                                    <span>Không có</span>
-                                </c:if>
-                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Email: </label>
+                            <span>${info.email}</span>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2">Email: </label>
-                                <span>${info.email}</span>
-                            </div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Công ty: </label>
+                            <c:if test="${not empty info.profileByUsername.company}">
+                                <span>${info.profileByUsername.company}</span>
+                            </c:if>
+                            <c:if test="${empty info.profileByUsername.company}">
+                                <span>Không có</span>
+                            </c:if>
+                        </div>
 
-                            <div class="form-group">
-                                <label class="col-sm-2">Công ty: </label>
-                                <c:if test="${not empty info.profileByUsername.company}">
-                                    <span>${info.profileByUsername.company}</span>
-                                </c:if>
-                                <c:if test="${empty info.profileByUsername.company}">
-                                    <span>Không có</span>
-                                </c:if>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="col-sm-2">Ngày sinh: </label>
+                        <div class="form-group">
+                            <label class="col-sm-2">Ngày sinh: </label>
                                         <span>
                                             <fmt:formatDate pattern="dd-MM-yyyy"
                                                             value="${info.profileByUsername.birthday}"/>
                                         </span>
-                            </div>
-
-                            <%--<div class="form-group">
-                                <label class="col-sm-2">Tình trạng: </label>
-                                <span>${info.accountStatusByStatusId.name}</span>
-                            </div>--%>
-
-
-                            <div class="button-post">
-
-                                <a onclick="window.history.back()" class="btn btn-default">Quay lại</a>
-                            </div>
-
                         </div>
+                        <%--<div class="form-group">
+                            <label class="col-sm-2">Tình trạng: </label>
+                            <span>${info.accountStatusByStatusId.name}</span>
+                        </div>--%>
+                        <%--<div class="button-post">
+                            <a onclick="window.history.back()" class="btn btn-default">Quay lại</a>
+                        </div>--%>
                     </div>
                 </div>
             </div>

@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -40,16 +43,25 @@ public class UserController extends HttpServlet {
             acc.setStatusId(1);
 
             dao.save(acc);
-            if (String.valueOf("role").equals("5")) {
-                ProfileDAO pfDao = new ProfileDAO();
-                profile.setUsername(request.getParameter("username"));
-                profile.setTitle(request.getParameter("title"));
-                profile.setFullName(request.getParameter("fullname"));
-                profile.setCompany(request.getParameter("company"));
-                profile.setPhone(request.getParameter("phone"));
-                profile.setBirthday(Timestamp.valueOf(request.getParameter("date")));
-                boolean result2 = pfDao.save(profile);
+
+            String birthday = request.getParameter("date");
+            SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
+            Date date = null;
+            try {
+                date = fromAssign.parse(birthday);
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
+
+            ProfileDAO pfDao = new ProfileDAO();
+            profile.setUsername(request.getParameter("username"));
+            profile.setTitle(request.getParameter("title"));
+            profile.setFullName(request.getParameter("fullname"));
+            profile.setCompany(request.getParameter("company"));
+            profile.setPhone(request.getParameter("phone"));
+            profile.setBirthday(new Timestamp(date.getTime()));
+            pfDao.save(profile);
+
         } else if (action.equals("delete")) {
             String username = request.getParameter("username");
             dao.delete(username);

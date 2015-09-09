@@ -60,6 +60,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/repairList.html',
                 controller: 'RepairController'
             }).
+            when('/rentalDetail/:id', {
+                templateUrl: 'html/rentalDetail.html',
+                controller: 'RentalDetailController'
+            }).
             when('/rentalList/:id', {
                 templateUrl: 'html/rentalList.html',
                 controller: 'RentalController'

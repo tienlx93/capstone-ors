@@ -137,6 +137,9 @@ public class ApiController extends HttpServlet {
             case "getRentalListDone":
                 getRentalListDone(request, out);
                 break;
+            case "getRentalDetail":
+                getRentalDetail(request, out);
+                break;
             case "getAmenityList":
                 getAmenityList(request, out);
                 break;
@@ -877,10 +880,12 @@ public class ApiController extends HttpServlet {
             SMSService sms = new SMSService();
             sms.setPhone(phone);
             sms.setMessage("(ORS) Quy khach vua nhan duoc yeu cau sua chua. Hay dang nhap vao he thong va kiem tra");
+
+
             try {
                 sms.send();
-            } catch (IOException e) {
-                System.out.println("Fail to send sms");
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
             }
             out.print(gson.toJson("Success"));
         } else {
@@ -1016,28 +1021,17 @@ public class ApiController extends HttpServlet {
             String contractId = request.getParameter("id");
             int id = Integer.parseInt(contractId);
             RentalDAO rentalDAO = new RentalDAO();
-            List<RentalListJSON> list = new ArrayList<>();
+
             List<RentalListJSON> list2 = new ArrayList<>();
             ContractDAO contractDAO = new ContractDAO();
             Contract contract = (Contract) contractDAO.getCusNameByIdContract(id);
             if (account.getUsername().equals(contract.getCustomerUsername())) {
                 for (Rental rental : rentalDAO.getRentalListByContract(id)) {
-                    for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
-                        RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
-                        if (rental.getStatusId() == 1 || rental.getStatusId() == 2) {
-                            list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rental.getDescription(),
-                                    rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                    "Đang xử lý", 0, rental.getAssignedTime(), rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), rentalItem.getOfficeType()));
-                        } else if (rental.getStatusId() == 5) {
-                            list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rental.getDescription(),
-                                    rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
-                                    rental.getRentalStatusByStatusId().getDescription(), 0, rental.getAssignedTime(),
-                                    rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), rentalItem.getOfficeType()));
-                        }
+                    if (rental.getStatusId() == 5 || rental.getStatusId() == 2 || rental.getStatusId() == 1) {
+                        list2.add(new RentalListJSON(rental.getId(), null, rental.getDescription(),
+                                0, 0, null, "Đang xử lý", 0, rental.getAssignedTime(),
+                                rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), 0));
                     }
-                    list2.add(new RentalListJSON(rental.getId(), null, rental.getDescription(),
-                            0, 0, null, "Đang xử lý", 0, rental.getAssignedTime(),
-                            rental.getCreateTime(), contract.getOfficeByOfficeId().getName(), 0));
                 }
                 out.print(gson.toJson(list2));
             } else {
@@ -1048,6 +1042,34 @@ public class ApiController extends HttpServlet {
 
         }
     }
+
+    private void getRentalDetail(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            String rentalId = request.getParameter("id");
+            int id = Integer.parseInt(rentalId);
+            RentalDAO rentalDAO = new RentalDAO();
+            List<RentalListJSON> list = new ArrayList<>();
+            Rental rental = rentalDAO.get(id);
+            for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
+                RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
+                if (rental.getStatusId() == 5 || rental.getStatusId() == 2 || rental.getStatusId() == 1) {
+                    double price = rentalDetail.getUnitPrice() * rentalDetail.getQuantity();
+                    list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
+                            rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
+                            rental.getRentalStatusByStatusId().getDescription(), price, null, null, null, rentalItem.getOfficeType()));
+                }
+            }
+
+
+            out.print(gson.toJson(list));
+        } else {
+            out.print(gson.toJson("Error"));
+        }
+    }
+
 
     private void getRentalListDone(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
@@ -1085,20 +1107,34 @@ public class ApiController extends HttpServlet {
             ContractDAO contractDAO = new ContractDAO();
             Contract contract = (Contract) contractDAO.getCusNameByIdContract(id);
 
+            /*Repair repair2 = dao.get(Integer.parseInt(request.getParameter("id")));
+            Collection<RepairDetail> repairDetails = repair2.getRepairDetailsById();
+            List<Amenity> listA = new ArrayList<>();
+            for (RepairDetail repairDetail : repairDetails) {
+                Amenity amenity = repairDetail.getAmenityByAmenityId();
+                listA.add(amenity);
+            }*/
+
             if (account.getUsername().equals(contract.getCustomerUsername())) {
                 for (Repair repair : dao.getRepairListByContract(id)) {
+                    Collection<RepairDetail> repairDetails = repair.getRepairDetailsById();
+                    List<String> listA = new ArrayList<>();
+                    for (RepairDetail repairDetail : repairDetails) {
+                        Amenity amenity = repairDetail.getAmenityByAmenityId();
+                        listA.add(amenity.getName());
+                    }
                     if (repair.getRepairStatusId() == 1 || repair.getRepairStatusId() == 2) {
                         list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
-                                repair.getAssignedStaff(), null, "Chờ xử lý", contract.getOfficeByOfficeId().getName()));
+                                repair.getAssignedStaff(), null, "Chờ xử lý", contract.getOfficeByOfficeId().getName(), listA));
                     } else if (repair.getRepairStatusId() == 5) {
                         list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
                                 repair.getAssignedStaff(), repair.getAssignedTime(),
-                                repair.getRepairStatusByRepairStatusId().getDescription(), contract.getOfficeByOfficeId().getName()));
+                                "Chờ xác nhận", contract.getOfficeByOfficeId().getName(), null));
                     }
                 }
                 if (list.size() == 0) {
                     list.add(new RepairListJSON(0, null, null, null, null,
-                            null, contract.getOfficeByOfficeId().getName()));
+                            null, contract.getOfficeByOfficeId().getName(), null));
                 }
                 out.print(gson.toJson(list));
             } else {
@@ -1124,7 +1160,7 @@ public class ApiController extends HttpServlet {
                     if (repair.getRepairStatusId() == 3 || repair.getRepairStatusId() == 4) {
                         list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
                                 repair.getAssignedStaff(), repair.getAssignedTime(),
-                                repair.getRepairStatusByRepairStatusId().getDescription(), contract.getOfficeByOfficeId().getName()));
+                                repair.getRepairStatusByRepairStatusId().getDescription(), contract.getOfficeByOfficeId().getName(), null));
                     }
                 }
                 out.print(gson.toJson(list));

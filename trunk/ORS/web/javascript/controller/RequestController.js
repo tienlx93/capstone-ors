@@ -75,5 +75,6 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
                     }
                 });
             }
+            $scope.clicked= false;
         }
     }]);

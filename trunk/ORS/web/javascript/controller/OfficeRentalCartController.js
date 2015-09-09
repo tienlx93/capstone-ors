@@ -33,5 +33,6 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
                     toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
                 }
             })
+            $scope.clicked= false;
         };
     }]);

@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3 class="modal-title">Thông tin thiết bị</h3>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Tên thiết bị</th>
+            <th>Mô tả</th>
+            <th>Giá thuê</th>
+            <th>Số lượng (cái)</th>
+            <th>Thành tiền</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="item in rentalList">
+            <td>{{item.name}}</td>
+            <td>{{item.description}}</td>
+            <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.price | currency:"VNĐ":0}}</td>
+        </tr>
+        <tr>
+            <td colspan="4" class="sum"><b>Tổng cộng</b></td>
+            <td>{{total | currency:"VNĐ":0}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

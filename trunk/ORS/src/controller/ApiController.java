@@ -268,7 +268,7 @@ public class ApiController extends HttpServlet {
                         profile = appointment.getAccountByCustomerUsername().getProfileByUsername();
                         if (appointment.getStatusId() == 2) {
                             list.add(new MobileListJSON(appointment.getId(), office.getName(), office.getAddress(),
-                                    profile.getFullName(), appointment.getTime().toString(), appointment.getStatusId()));
+                                    profile.getFullName(), appointment.getTime().toString(), appointment.getStatusId(), office));
                         }
                     }
 
@@ -281,7 +281,7 @@ public class ApiController extends HttpServlet {
                         office = rental.getContractByContractId().getOfficeByOfficeId();
                         if (rental.getStatusId() == 2 || rental.getStatusId() == 5) {
                             list.add(new MobileListJSON(rental.getId(), office.getName(), office.getAddress(),
-                                    rental.getDescription(), rental.getAssignedTime().toString(), rental.getStatusId()));
+                                    rental.getDescription(), rental.getAssignedTime().toString(), rental.getStatusId(), office));
                         }
                     }
 
@@ -294,7 +294,7 @@ public class ApiController extends HttpServlet {
                         office = repair.getContractByContractId().getOfficeByOfficeId();
                         if (repair.getRepairStatusId() == 5) {
                             list.add(new MobileListJSON(repair.getId(), office.getName(), office.getAddress(),
-                                    repair.getDescription(), repair.getAssignedTime().toString(), repair.getRepairStatusId()));
+                                    repair.getDescription(), repair.getAssignedTime().toString(), repair.getRepairStatusId(), office));
                         }
                     }
                     break;
@@ -351,6 +351,11 @@ public class ApiController extends HttpServlet {
                     detail.setDate(appointment.getTime().toString());
                     detail.setStatus(appointment.getStatusId());
                     detail.setList(new ArrayList<String>());
+                    String images = office.getImageUrls();
+                    detail.setImages(new ArrayList<String>());
+                    if(!images.equals("") || images != null){
+                        detail.setImages(Arrays.asList(images.split("\\s*,\\s*")));
+                    }
                 }
 
                 break;
@@ -380,6 +385,11 @@ public class ApiController extends HttpServlet {
                                 rentalDetail.getQuantity());
                     }
                     detail.setList(list);
+                    String images = office.getImageUrls();
+                    detail.setImages(new ArrayList<String>());
+                    if(!images.equals("") || images != null){
+                        detail.setImages(Arrays.asList(images.split("\\s*,\\s*")));
+                    }
                 }
 
                 break;
@@ -408,6 +418,11 @@ public class ApiController extends HttpServlet {
                         list.add(repairDetail.getAmenityByAmenityId().getName());
                     }
                     detail.setList(list);
+                    String images = office.getImageUrls();
+                    detail.setImages(new ArrayList<String>());
+                    if(!images.equals("") || images != null){
+                        detail.setImages(Arrays.asList(images.split("\\s*,\\s*")));
+                    }
                 }
                 break;
             }

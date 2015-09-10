@@ -292,7 +292,24 @@
                                     </div>
 
                                 </div>
+                                <div class="form-group clearfix">
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu tròng vòng (ngày):
+                                    </div>
 
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="firstPaymentPaidDay" required="true"
+                                               id="firstPaymentPaidDay" value="${contract.firstPaymentPaidDay}" min="0" max="30"/>
+                                    </div>
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="paymentPaidDay" required="true"
+                                               id="paymentPaidDay" value="${contract.paymentPaidDay}" min="0" max="30"/>
+                                    </div>
+                                </div>
                                 <div class="form-group clearfix">
                                     <div for="paymentFee" class="col-sm-2 control-label">
                                         Giá thuê/m<sup>2</sup>(VNĐ):
@@ -306,33 +323,7 @@
                                                required="true"/>
                                     </div>
                                     <input type="hidden" name="paymentFee" id="paymentFee" value="${contract.paymentFee}"/>
-                                    <%--<c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 2}">--%>
 
-                                        <%--<div for="paymentFee" class="col-sm-2 control-label">--%>
-                                            <%--Giá thuê/m<sup>2</sup>:--%>
-                                        <%--</div>--%>
-
-                                        <%--<div class="col-sm-4">--%>
-                                            <%--<input style="display: inline-block" type='number'--%>
-                                                   <%--onchange="calculatePaymentFee()" class="form-control"--%>
-                                                   <%--name="paymentFee" readonly--%>
-                                                   <%--id="paymentFee" value="${contract.paymentFee}" required="true"/>--%>
-                                        <%--</div>--%>
-                                    <%--</c:if>--%>
-                                    <%--<c:if test="${contract.officeByOfficeId.categoryByCategoryId.id == 1}">--%>
-                                        <%--<div for="paymentFee"  class="col-sm-2 control-label">--%>
-                                            <%--Giá thuê/m<sup>2</sup>:--%>
-                                        <%--</div>--%>
-
-                                        <%--<div class="col-sm-4">--%>
-                                            <%--<input style="display: inline-block" type='number'--%>
-                                                   <%--onchange="calculatePaymentFee()" class="form-control"--%>
-                                                   <%--name="paymentFee" readonly--%>
-                                                   <%--id="paymentFee"--%>
-                                                   <%--value="${contract.paymentFee}"--%>
-                                                   <%--required="true"/>--%>
-                                        <%--</div>--%>
-                                    <%--</c:if>--%>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Số tháng
                                         đặt
                                         cọc:
@@ -343,20 +334,18 @@
                                             <option value="1">1 tháng</option>
                                         </select>
                                     </div>
-                                    <%--<div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt cọc văn phòng:</div>--%>
-
-                                    <%--<div class="col-sm-4">--%>
-                                        <%--<input style="display: inline-block" type='text' class="form-control"--%>
-                                               <%--name="deposit" onkeyup="formatDeposit()"--%>
-                                               <%--id="deposit" value="${contract.deposit}"/>--%>
-                                    <%--</div>--%>
-                                    <%--<input style="display: inline-block" type='hidden' class="form-control"--%>
-                                           <%--name="depositValue"--%>
-                                           <%--id="depositValue" value="${contract.deposit}"/>--%>
 
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div class="col-sm-6"></div>
+                                    <div for="depositPaidDay" class="col-sm-2 control-label">Bên B thanh toán tiền đặt
+                                        cọc trong vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="depositPaidDay" required="true"
+                                               id="depositPaidDay" value="${contract.depositPaidDay}" min="0" max="30"/>
+                                    </div>
                                     <div for="deposit" style="text-align: right" class="col-sm-2 control-label">Tiền đặt
                                         cọc văn phòng:
                                     </div>
@@ -365,8 +354,19 @@
                                         <label id="depositLabel">${contract.deposit}</label> (VNĐ)
                                         <input style="display: inline-block" type='hidden' class="form-control"
                                                name="deposit" required="true"
-                                               id="deposit" value=""/>
+                                               id="deposit" value="${contract.deposit}"/>
                                     </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="additionalCharge" class="col-sm-2 control-label">Chi phí phụ trội (%):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        <input style="display: inline-block" type='number' class="form-control"
+                                               name="additionalCharge" required="true"
+                                               id="additionalCharge" value="${contract.additionalCharge}" min="0" max="100"/>
+                                    </div>
+
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="total"  class="col-sm-2 control-label">Số tiền
@@ -403,7 +403,6 @@
                                     <button type="submit" value="update" class="btn btn-primary" name="action">Cập
                                         nhật
                                     </button>
-                                    <a href="/admin/contract" class="btn btn-default">Hủy</a>
                                 </div>
                             </div>
 
@@ -463,10 +462,12 @@
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
         document.getElementById('totalContract').innerHTML = numberWithCommas(contractTotal) + ' VNĐ';
+        document.getElementById('depositLabel').innerHTML = numberWithCommas(document.getElementById('depositLabel').innerText);
 
         var imageUrls = $("#imageUrls").val();
         renderImg(imageUrls);
         formatPaymentFee();
+        changeDepositMonth();
     });
     function calculateEndDate() {
         var end = document.getElementById('endDate');
@@ -521,7 +522,7 @@
             }
             var year = formatTime.getFullYear();
 
-            return day + '-' + month + '-' + year;
+            return year + '-' + month + '-' + day;
         }
 
     }
@@ -589,7 +590,7 @@
 
         var deposit = months * paymentFee * officeArea;
 
-        document.getElementById('deposit').value = numberWithCommas(deposit);
+        document.getElementById('deposit').value = deposit;
         document.getElementById('depositLabel').innerHTML = numberWithCommas(deposit);
     };
     var option_1 = [{

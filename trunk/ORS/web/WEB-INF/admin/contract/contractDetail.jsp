@@ -210,14 +210,6 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div for="latePaidDay" class="col-sm-2 control-label">Số ngày trả chậm tối đa mỗi kỳ:
-                                    </div>
-
-                                    <div class="col-sm-4">
-                                        ${contract.latePaidDay} ngày
-                                    </div>
-                                </div>
-                                <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
                                     <div name="startDate" id="startDate" class="col-sm-4">
@@ -252,7 +244,14 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div for="additionalCharge" class="col-sm-2 control-label">Chi phí phụ trội:
+                                    <div for="depositPaidDay" class="col-sm-2 control-label">Bên B thanh toán tiền đặt
+                                        cọc trong vòng:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${contract.depositPaidDay} ngày
+                                    </div>
+                                    <div for="additionalCharge" style="text-align: right" class="col-sm-2 control-label">Chi phí phụ trội:
                                     </div>
 
                                     <div class="col-sm-4">

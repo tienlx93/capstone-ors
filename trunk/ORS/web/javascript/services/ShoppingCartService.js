@@ -27,10 +27,14 @@ app.service('ShoppingCartService', function() {
           }
       }
     };
+    var resetProductList = function() {
+        productList = [];
+    };
     return {
         addProduct: addProduct,
         getProducts: getProducts,
-        removeProduct: removeProduct
+        removeProduct: removeProduct,
+        resetProductList: resetProductList
     };
 
 });

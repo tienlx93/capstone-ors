@@ -59,7 +59,7 @@
                                 <th>Văn phòng</th>
                                 <th>Ngày bắt đầu</th>
                                 <th>Ngày kết thúc</th>
-                                <th>Giá thuê</th>
+                                <th>Giá thuê (VNĐ)</th>
                                 <th>Kỳ hạn thanh toán</th>
                                 <th></th>
                             </tr>
@@ -77,7 +77,8 @@
                                                                 pattern="dd-MM-yyyy"/></td>
                                             <td><fmt:formatDate value="${item.endDate}"
                                                                 pattern="dd-MM-yyyy"/></td>
-                                            <td>${item.paymentFee}</td>
+                                            <td><fmt:formatNumber type="number"
+                                                                  value="${item.paymentFee}" /></td>
                                             <td>${item.paymentTermByPaymentTerm.description}</td>
 
                                             <td>
@@ -99,7 +100,8 @@
                                             <td><fmt:formatDate value="${item.endDate}"
                                                                 pattern="dd-MM-yyyy"/></td>
 
-                                            <td>${item.paymentFee}</td>
+                                            <td><fmt:formatNumber type="number"
+                                                                  value="${item.paymentFee}" /></td>
                                             <td>${item.paymentTermByPaymentTerm.description}</td>
 
                                             <td>
@@ -124,6 +126,5 @@
 
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
-
 </body>
 </html>

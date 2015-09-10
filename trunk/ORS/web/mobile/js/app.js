@@ -74,7 +74,7 @@ angular.module('filters', []).filter('encode', function () {
 }).filter('toLocaleDateTime', function () {
     return function (input) {
         var date = new Date(input);
-        return date.getHours() + ":" + date.getMinutes() + " - " + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
+        return date.getHours() + ":" + date.getMinutes() + " ngày " + date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear();
     };
 });
 
@@ -96,18 +96,19 @@ var REPAIR_STATUS = [{}, {
     'id': 2,
     'name': 'Assigned',
     'description': 'Cần xác nhận'
-}, {
-    'id': 3,
-    'name': 'Done',
-    'description': 'Hoàn thành'
-}, {
-    'id': 4,
-    'name': 'Canceled',
-    'description': 'Hủy'
-}, {
+},{},{}, {
     'id': 5,
     'name': 'WaitingConfirm',
     'description': 'Việc của tôi'
+}];
+var DEFAULT_STATUS = [{}, {
+    'id': 1,
+    'name': 'Assigned',
+    'description': 'Việc hôm nay'
+}, {
+    'id': 2,
+    'name': 'Rejected',
+    'description': 'Việc sắp tới'
 }];
 var url = "";
 controllers.controller('MainController', ['$scope', '$location', '$rootScope',

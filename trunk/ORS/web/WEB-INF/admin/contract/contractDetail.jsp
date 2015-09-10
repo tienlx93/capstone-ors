@@ -196,6 +196,28 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu tròng vòng:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${contract.firstPaymentPaidDay} ngày
+                                    </div>
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${contract.paymentPaidDay} ngày
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="latePaidDay" class="col-sm-2 control-label">Số ngày trả chậm tối đa mỗi kỳ:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${contract.latePaidDay} ngày
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
                                     <div name="startDate" id="startDate" class="col-sm-4">
@@ -230,6 +252,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
+                                    <div for="additionalCharge" class="col-sm-2 control-label">Chi phí phụ trội:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${contract.additionalCharge}%
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix">
                                     <div for="total" class="col-sm-2 control-label">Tổng số tiền thanh toán mỗi kỳ:
                                     </div>
 
@@ -261,10 +292,11 @@
                             <div class="button-post">
                                 <a class="btn btn-primary" href="contract?action=edit&id=${contract.id}">Chỉnh
                                     sửa</a>
-                                <a href="/admin/contract" class="btn btn-default">Quay về</a>
                                 <%--<button type="submit" name="action" value="export" class="btn btn-primary">Export--%>
                                 <%--</button>--%>
                                 <a class="btn btn-info" href="contract?action=export&id=${contract.id}">Export</a>
+                                <a href="/admin/contract" class="btn btn-default">Quay về</a>
+
                             </div>
                         </form>
                     </div>

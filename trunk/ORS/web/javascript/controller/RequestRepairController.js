@@ -61,6 +61,7 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                     $location.path("/contractList");
                 }
             })
+            $scope.clicked= false;
         };
 
 

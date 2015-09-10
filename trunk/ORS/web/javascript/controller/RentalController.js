@@ -2,8 +2,8 @@
  * Created by Thành on 19/06/2015.
  */
 
-controllers.controller('RentalController', ['$scope', '$location', '$routeParams', '$route', 'Api',
-    function ($scope, $location, $routeParams, $route, Api) {
+controllers.controller('RentalController', ['$scope', '$location', '$routeParams', '$route', 'Api', '$modal',
+    function ($scope, $location, $routeParams, $route, Api, $modal) {
         var id = $routeParams.id;
         $scope.data = {};
 
@@ -32,5 +32,18 @@ controllers.controller('RentalController', ['$scope', '$location', '$routeParams
                 $scope.WrongCus = false;
             }
         });
+
+        $scope.rentalDetail = function (id) {
+            $modal.open({
+                animation: true,
+                templateUrl: 'html/rentalDetail.html',
+                controller: 'RentalDetailController',
+                resolve: {
+                    id: function () {
+                        return id;
+                    }
+                }
+            });
+        };
 
     }]);

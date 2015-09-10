@@ -15,11 +15,13 @@
           type="text/css">
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
+    <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
@@ -52,46 +54,53 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <td>Tên đăng nhập</td>
-                                <td>Email</td>
-                                <td>Chức vụ</td>
-                                <td>Tình trạng</td>
-                                <td></td>
-                                <td></td>
+                                <th>Tên đăng nhập</th>
+                                <th>Email</th>
+                                <th>Chức vụ</th>
+                                <th>Tình trạng</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody id="table-body">
                             <c:forEach var="item" items="${data}">
-                                <tr>
-                                    <td>${item.username}</td>
-                                    <td>${item.email}</td>
-                                    <td>${item.roleByRoleId.roleName}</td>
-                                    <td>${item.accountStatusByStatusId.name}</td>
-                                    <td>
-                                        <form action="${pageContext.request.contextPath}/admin/user" method="post">
-                                            <input type="hidden" value="${item.username}" name="username">
-
-                                            <button  type="submit" class="btn btn" name="action" value="delete" class="btn btn-icon btn-default"><i class="fa fa-trash-o color5"></i></button>
-                                        </form>
-                                    </td>
-                                    </td>
-
-                                    <td>
-
-                                        <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}"
-                                           title="Sửa"
-                                           class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
-                                        <c:if test="${(item.roleId ==5)||(item.roleId==4)}">
-                                            <a href="user?action=editing&username=${item.username}"
-                                               title="Chi tiết"
-                                               class="btn btn-icon btn-default"><i class="fa fa-info color5"></i></a>
-                                        </c:if>
-                                    </td>
+                                <c:if test="${item.username != 'admin'}">
+                                    <tr>
+                                        <td>${item.username}</td>
+                                        <td>${item.email}</td>
                                         <td>
-
+                                            <c:if test="${item.roleByRoleId.roleName == 'Owner'}">
+                                                Chủ văn phòng
+                                            </c:if>
+                                            <c:if test="${item.roleByRoleId.roleName == 'Manager'}">
+                                                Người quản lý
+                                            </c:if>
+                                            <c:if test="${item.roleByRoleId.roleName == 'Staff'}">
+                                                Nhân viên
+                                            </c:if>
+                                            <c:if test="${item.roleByRoleId.roleName == 'Customer'}">
+                                                Khách hàng
+                                            </c:if>
+                                        </td>
+                                        <td>${item.accountStatusByStatusId.description}</td>
+                                        <td>
+                                            <form action="user" method="post" class="userForm">
+                                                <input type="hidden" value="${item.username}" name="username">
+                                                <input type="hidden" name="action" value="delete">
+                                                <button type="submit"
+                                                        class="btn btn-icon btn-default"><i
+                                                        class="fa fa-trash-o color10"></i></button>
+                                                <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}"
+                                                   title="Sửa"
+                                                   class="btn btn-icon btn-default"><i class="fa fa-wrench color5"></i></a>
+                                                <a href="user?action=editing&username=${item.username}"
+                                                   title="Chi tiết"
+                                                   class="btn btn-icon btn-default"><i
+                                                        class="fa fa-info color5"></i></a>
+                                            </form>
                                         </td>
 
-                                </tr>
+                                    </tr>
+                                </c:if>
                             </c:forEach>
                             </tbody>
                         </table>
@@ -105,7 +114,9 @@
                                     </a>
                                 </li>
                                 <c:forEach var="i" begin="1" end="${pageCount}">
-                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#" onclick="goto(${i})">${i}</a></li>
+                                    <li id="item-${i}" class="items <c:if test="${i==1}">active</c:if>"><a href="#"
+                                                                                                           onclick="goto(${i})">${i}</a>
+                                    </li>
 
                                 </c:forEach>
                                 <li id="next">
@@ -129,24 +140,24 @@
     var pageCount = ${pageCount};
     var prev = function () {
         if (pageNumber > 1) {
-            pageNumber --;
+            pageNumber--;
             getPage(pageNumber);
         }
     };
     var next = function () {
         if (pageNumber < pageCount) {
-            pageNumber ++;
+            pageNumber++;
             getPage(pageNumber);
         }
     };
-    var goto = function(i) {
+    var goto = function (i) {
         pageNumber = i;
         getPage(pageNumber);
     };
-    var getPage = function(page) {
+    var getPage = function (page) {
         var selector = $(".items");
         selector.removeClass("active");
-        $(selector[page-1]).addClass("active");
+        $(selector[page - 1]).addClass("active");
         $("#next").removeClass("disabled");
         $("#prev").removeClass("disabled");
         if (page == pageCount) {
@@ -166,5 +177,33 @@
             $("#table-body").html(data);
         });
     };
+
+    $('.userForm').submit(function () {
+        var currentForm = this;
+        event.preventDefault();
+        /*bootbox.confirm("Bạn đồng ý xóa thiết bị này?", function() {
+         currentForm.submit();
+         });*/
+        bootbox.dialog({
+            size: 'small',
+            message: "Bạn đồng ý xóa tài khoản này?",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
+
+                    }
+                }, ok: {
+                    label: "Đồng ý",
+                    className: "btn-primary",
+                    callback: function () {
+                        currentForm.submit();
+                    }
+                }
+            }
+        });
+
+    });
 </script>
 </html>

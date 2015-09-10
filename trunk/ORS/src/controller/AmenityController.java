@@ -34,13 +34,19 @@ public class AmenityController extends HttpServlet {
         String action = request.getParameter("action");
         AmenityDAO dao = new AmenityDAO();
         if (action.equals("save")) {
-            Amenity ame = new Amenity();
-            ame.setName(request.getParameter("name"));
-            ame.setDescription(request.getParameter("description"));
-            ame.setWeight(Integer.parseInt(request.getParameter("weight")));
-            ame.setPriority(Integer.parseInt(request.getParameter("priority")));
-            ame.setAmenityGroupId(Integer.parseInt(request.getParameter("group")));
-            dao.save(ame);
+            Amenity amenity = new Amenity();
+            amenity.setName(request.getParameter("name"));
+            amenity.setDescription(request.getParameter("description"));
+            amenity.setWeight(Integer.parseInt(request.getParameter("weight")));
+            amenity.setPriority(Integer.parseInt(request.getParameter("priority")));
+            amenity.setAmenityGroupId(Integer.parseInt(request.getParameter("group")));
+            String repairable = request.getParameter("repairable");
+            if (repairable == null) {
+                amenity.setRepairable(false);
+            } else if (repairable.equals("True")) {
+                amenity.setRepairable(true);
+            }
+            dao.save(amenity);
         } else if (action.equals("delete")) {
             AmenityDAO accDAO = new AmenityDAO();
             int id = Integer.parseInt(request.getParameter("id"));
@@ -54,8 +60,8 @@ public class AmenityController extends HttpServlet {
             Integer weight = Integer.parseInt(request.getParameter("weight"));
             Integer amenityGroupId = Integer.parseInt(request.getParameter("group"));
             Integer priority = Integer.parseInt(request.getParameter("priority"));
-
-            accDAO.updateN(id, name, description, weight, amenityGroupId, priority);
+            String repairable = request.getParameter("repairable");
+            accDAO.update(id, name, description, weight, amenityGroupId, priority, repairable);
         }
         response.sendRedirect("/admin/amenity");
     }
@@ -90,6 +96,9 @@ public class AmenityController extends HttpServlet {
                 int id = Integer.parseInt(request.getParameter("id"));
                 Amenity amenity = dao.get(id);
                 request.setAttribute("amenity", amenity);
+                AmenityGroupDAO groupDAO = new AmenityGroupDAO();
+                List<AmenityGroup> groupList = groupDAO.findAll();
+                request.setAttribute("groupList", groupList);
                 rd = request.getRequestDispatcher("/WEB-INF/admin/amenity/editAmenity.jsp");
                 rd.forward(request, response);
             } else if (action.equals("page")) {

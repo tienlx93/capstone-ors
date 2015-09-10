@@ -33,7 +33,7 @@
 
 <div class="content">
     <div class="page-header">
-        <h1 class="title"></h1>
+        <h1 class="title">Quản lí tiện nghi</h1>
     </div>
 
     <div class="container-padding">
@@ -46,46 +46,100 @@
                     <div>
                         <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
 
-
                             <div class="form-group clearfix">
                                 <label for="name" class="col-sm-2">Tên tiện nghi</label>
 
                                 <div class="col-sm-10">
                                     <span>${amenity.name}</span>
-                                    <input type="hidden" name="name" class="" value="${amenity.name}" id="name" required>
+                                    <input type="hidden" name="name" class="" value="${amenity.name}" id="name"
+                                           required>
                                 </div>
                             </div>
 
-                            <div class="form-group clearfix">
+                            <%--<div class="form-group clearfix">
                                 <label for="description" class="col-sm-2">Mô tả</label>
                                 <div class="col-sm-10">
                                     <input type="text" name="description" class="" id="description"
                                            value="${amenity.description}" >
                                 </div>
-                            </div>
+                            </div>--%>
 
                             <div class="form-group clearfix">
                                 <label for="weight" class="col-sm-2">Trọng số</label>
+
                                 <div class="col-sm-10">
-                                    <input type="number" min="1" name="weight" class="" id="weight" value="${amenity.weight}" required>
+                                    <input type="number" min="1" name="weight" class="" id="weight"
+                                           value="${amenity.weight}" required>
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
                                 <label for="priority" class="col-sm-2">Độ ưu tiên</label>
+
                                 <div class="col-sm-10">
-                                    <input type="text" min="0" name="priority" class="" id="priority" value="${amenity.priority}" required>
+                                    <select name="priority" id="priority" required>
+                                        <option></option>
+                                        <c:choose>
+                                            <c:when test="${amenity.priority == 1}">
+                                                <option value="1" selected>Cao</option>
+                                                <option value="0">Thấp</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="1">Cao</option>
+                                                <option value="0" selected>Thấp</option>
+                                            </c:otherwise>
+                                        </c:choose>
+                                        <%--<c:choose>
+                                            <c:when test="${amenity.priority == 0}">
+                                                <option value="0" selected>Thấp</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="0">Thấp</option>
+                                            </c:otherwise>
+                                        </c:choose>--%>
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group clearfix">
-                                <input type="hidden" name="id" class="" value="${amenity.id}">
-                                <input type="hidden" name="group" class="" value="${amenity.amenityGroupId}">
+                                <label for="group" class="col-sm-2">Nhóm thiết bị</label>
+
+                                <div class="col-sm-10">
+                                    <select name="group" class="" id="group" required>
+                                        <option></option>
+                                        <c:forEach var="item" items="${groupList}">
+                                            <option value="${item.id}"
+                                                    <c:if test="${item.id == amenity.amenityGroupId}">selected</c:if>
+                                                    >${item.name}</option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
                             </div>
+
+                            <div class="form-group clearfix">
+                                <label for="weight" class="col-sm-2">Có thể sửa chữa</label>
+
+                                <div class="col-sm-10">
+                                    <input type="checkbox" value="True" name="repairable" class="checkbox"
+                                    <c:if test="${amenity.repairable == true}"> checked </c:if>>
+                                </div>
+                            </div>
+
+                            <%--<div class="form-group clearfix">
+                                <label for="priority" class="col-sm-2">Độ ưu tiên</label>
+
+                                <div class="col-sm-10">
+                                    <input type="text" min="0" name="priority" class="" id="priority"
+                                           value="${amenity.priority}" required>
+                                </div>
+                            </div>--%>
+
+                            <input type="hidden" name="id" class="" value="${amenity.id}">
+                            <input type="hidden" name="group" class="" value="${amenity.amenityGroupId}">
+
                             <div class="button-post clearfix">
                                 <button class="btn btn-primary" type="submit" value="update" name="action">Cập nhật
                                 </button>
-                                <a onclick="window.history.back()" class="btn btn-default">Hủy</a>
                             </div>
                         </form>
                     </div>
@@ -96,6 +150,7 @@
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/upload.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/upload.js"
+        charset="UTF-8"></script>
 </body>
 </html>

@@ -1,7 +1,11 @@
 package json;
 
+import entity.Amenity;
+
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Thành on 19/06/2015.
@@ -14,8 +18,9 @@ public class RepairListJSON {
     private Long assignedTime;
     private String status;
     private String officeName;
+    private List<String> list;
 
-    public RepairListJSON(int repairId, String description, Date createTime, String assignStaff, Date assignedTime, String status, String officeName) {
+    public RepairListJSON(int repairId, String description, Date createTime, String assignStaff, Date assignedTime, String status, String officeName, List<String> list) {
         this.repairId = repairId;
         this.description = description;
         this.createTime = createTime != null ? createTime.getTime() : 0;
@@ -23,6 +28,15 @@ public class RepairListJSON {
         this.assignedTime = assignedTime != null ? assignedTime.getTime() : 0;
         this.status = status;
         this.officeName = officeName;
+        this.list = list;
+    }
+
+    public List<String> getList() {
+        return list;
+    }
+
+    public void setList(List<String> list) {
+        this.list = list;
     }
 
     public String getOfficeName() {

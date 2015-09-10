@@ -70,6 +70,7 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                     }
                 });
             }
+            $scope.clicked= false;
         };
 
         Api.getAmenityList(function (data) {

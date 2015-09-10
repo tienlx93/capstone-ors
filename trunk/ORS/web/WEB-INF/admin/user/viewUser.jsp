@@ -21,6 +21,7 @@
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/plugin.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
 
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
@@ -82,9 +83,10 @@
                                         </td>
                                         <td>${item.accountStatusByStatusId.description}</td>
                                         <td>
-                                            <form action="${pageContext.request.contextPath}/admin/user" method="post">
+                                            <form action="user" method="post" class="userForm">
                                                 <input type="hidden" value="${item.username}" name="username">
-                                                <button type="submit" name="action" value="delete"
+                                                <input type="hidden" name="action" value="delete">
+                                                <button type="submit"
                                                         class="btn btn-icon btn-default"><i
                                                         class="fa fa-trash-o color10"></i></button>
                                                 <a href="${pageContext.request.contextPath}/admin/user?action=edit&username=${item.username}"
@@ -175,5 +177,33 @@
             $("#table-body").html(data);
         });
     };
+
+    $('.userForm').submit(function () {
+        var currentForm = this;
+        event.preventDefault();
+        /*bootbox.confirm("Bạn đồng ý xóa thiết bị này?", function() {
+         currentForm.submit();
+         });*/
+        bootbox.dialog({
+            size: 'small',
+            message: "Bạn đồng ý xóa tài khoản này?",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
+
+                    }
+                }, ok: {
+                    label: "Đồng ý",
+                    className: "btn-primary",
+                    callback: function () {
+                        currentForm.submit();
+                    }
+                }
+            }
+        });
+
+    });
 </script>
 </html>

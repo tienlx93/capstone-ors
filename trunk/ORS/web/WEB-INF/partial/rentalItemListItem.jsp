@@ -11,12 +11,13 @@
         </td>
         <td>${item.quantity}</td>
         <td>
-            <form action="${pageContext.request.contextPath}/admin/rentalItem"
+            <form action="rentalItem"
                   method="post" class="rentalItemForm">
-                <button type="submit" name="action" value="delete"
+                <input type="hidden" name="action" value="delete"/>
+                <input type="hidden" value="${item.id}" name="id">
+                <button type="submit"
                         class="btn btn-icon btn-default">
                     <i class="fa fa-trash-o color10" title="Xóa"></i></button>
-                <input type="hidden" value="${item.id}" name="id">
 
                 <a href="rentalItem?action=edit&id=${item.id}"
                    title="Sửa"
@@ -25,3 +26,34 @@
         </td>
     </tr>
 </c:forEach>
+
+<script type="text/javascript">
+
+    $('.rentalItemForm').submit(function () {
+        var currentForm = this;
+        event.preventDefault();
+        /*bootbox.confirm("Bạn đồng ý xóa thiết bị này?", function() {
+         currentForm.submit();
+         });*/
+        bootbox.dialog({
+            size: 'small',
+            message: "Bạn đồng ý xóa thiết bị này?",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
+
+                    }
+                }, ok: {
+                    label: "Đồng ý",
+                    className: "btn-primary",
+                    callback: function () {
+                        currentForm.submit();
+                    }
+                }
+            }
+        });
+
+    });
+</script>

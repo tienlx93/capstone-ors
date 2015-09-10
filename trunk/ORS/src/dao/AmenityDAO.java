@@ -97,7 +97,7 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
 
         return 0;
     }
-    public boolean update(String name, Amenity newAmenity) {
+    /*public boolean update(String name, Amenity newAmenity) {
         Transaction trans = session.beginTransaction();
         try {
             Amenity amenity = (Amenity) session.get(Amenity.class, name);
@@ -116,9 +116,9 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
             }
         }
         return false;
-    }
+    }*/
 
-    public void updateN(int id, String name, String description, Integer weight, Integer amenityGroupId, Integer priority) {
+    public void update(int id, String name, String description, Integer weight, Integer amenityGroupId, Integer priority, String repairable) {
         Transaction trans = session.beginTransaction();
         try {
             Amenity amenity = (Amenity) session.get(Amenity.class, id);
@@ -127,6 +127,11 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
             amenity.setWeight(weight);
             amenity.setPriority(priority);
             amenity.setAmenityGroupId(amenityGroupId);
+            if (repairable == null) {
+                amenity.setRepairable(false);
+            } else if (repairable.equals("True")) {
+                amenity.setRepairable(true);
+            }
             session.update(amenity);
             trans.commit();
 

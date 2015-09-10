@@ -322,7 +322,7 @@ public class ContractController extends HttpServlet {
                 int startItem = (page - 1) * ConstantService.PAGE_SIZE;
                 List<Contract> list1 = dao.getContractByPage(startItem, ConstantService.PAGE_SIZE);
                 request.setAttribute("data", list1);
-                rd = request.getRequestDispatcher("/WEB-INF/partial/amenityListItem.jsp");
+                rd = request.getRequestDispatcher("/WEB-INF/partial/contractListItem.jsp");
                 rd.forward(request, response);
             } else {
                 switch (action) {

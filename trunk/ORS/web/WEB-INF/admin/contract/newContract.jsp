@@ -332,7 +332,7 @@
                                                name="firstPaymentPaidDay" required="true"
                                                id="firstPaymentPaidDay" value="1" min="0" max="30"/>
                                     </div>
-                                    <div for="paymentPaidDay" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày)
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">

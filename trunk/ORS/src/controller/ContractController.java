@@ -401,15 +401,15 @@ public class ContractController extends HttpServlet {
                         try {
                             ExportPDF(contract);
 
-                            String pdfFile = "E:/HelloWorld.pdf";
-                            File file = new File(pdfFile);
-                            if (pdfFile.toString().endsWith(".pdf")) {
-                                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + pdfFile);
-                            } else {
-                                //For cross platform use
-                                Desktop desktop = Desktop.getDesktop();
-                                desktop.open(file);
-                            }
+//                            String pdfFile = "E:/HelloWorld.pdf";
+//                            File file = new File(pdfFile);
+//                            if (pdfFile.toString().endsWith(".pdf")) {
+//                                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + pdfFile);
+//                            } else {
+//                                //For cross platform use
+//                                Desktop desktop = Desktop.getDesktop();
+//                                desktop.open(file);
+//                            }
 
                             response.sendRedirect("/admin/contract");
                         } catch (DocumentException e) {
@@ -478,7 +478,7 @@ public class ContractController extends HttpServlet {
         String yearStr = String.valueOf(year);
         try {
             PdfWriter.getInstance(document,
-                    new FileOutputStream("E:/HelloWorld.pdf"));
+                    new FileOutputStream("E:/Hopdong" + contract.getId() + ".pdf"));
 
             document.open();
             Paragraph paragraphEmpty = new Paragraph();
@@ -694,6 +694,16 @@ public class ContractController extends HttpServlet {
             document.add(new Paragraph("              (Ký tên đóng dấu)                                                                       (Ký tên đóng dấu)", font));
 
             document.close(); // no need to close PDFwriter?
+
+            String pdfFile = "E:/Hopdong" + contract.getId() + ".pdf";
+            File file = new File(pdfFile);
+            if (pdfFile.toString().endsWith(".pdf")) {
+                Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + pdfFile);
+            } else {
+                //For cross platform use
+                Desktop desktop = Desktop.getDesktop();
+                desktop.open(file);
+            }
 
         } catch (DocumentException e) {
             e.printStackTrace();

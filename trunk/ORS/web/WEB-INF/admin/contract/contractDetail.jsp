@@ -196,13 +196,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu tròng vòng:
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau khi kí hợp đồng này tròng vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">
                                         ${contract.firstPaymentPaidDay} ngày
                                     </div>
-                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng:
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">
@@ -245,7 +245,7 @@
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="depositPaidDay" class="col-sm-2 control-label">Bên B thanh toán tiền đặt
-                                        cọc trong vòng:
+                                        cọc sau khi kí hợp đồng này trong vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">

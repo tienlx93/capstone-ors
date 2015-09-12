@@ -55,6 +55,7 @@ public class HomeController extends HttpServlet {
                     numRentalItem = rentalItemDAO.getPageCount(1);
                 } else if(account.getRoleId() == 5) {
                     numRepair = appointmentDAO.countOwnerRepair(account.getUsername());
+                    numContract = contractDAO.countContractByOfficeOwner(account.getUsername());
                     numAppointment = 0;
                     numRental = 0;
                 } else {

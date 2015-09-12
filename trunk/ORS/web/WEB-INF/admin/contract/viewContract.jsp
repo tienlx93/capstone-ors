@@ -78,7 +78,7 @@
                                             <fmt:formatNumber type="number"
                                                               value="${item.paymentFee}" /></td>
                                         <td>${item.paymentTermByPaymentTerm.description}</td>
-                                        <c:if test="${user.roleId == 2}">
+                                        <c:if test="${user.roleId != 3}">
                                             <td>
                                                 <a href="${pageContext.request.contextPath}/admin/contract?action=editing&id=${item.id}"
                                                    title="Chi tiết" class="btn btn-icon btn-default">

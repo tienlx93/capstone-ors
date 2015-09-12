@@ -52,6 +52,9 @@
                 <h:panel badge="${numOffice}" name="Tổng văn phòng"
                          url="${pageContext.request.contextPath}/admin/office"
                          icon="fa-building-o" css="panel-primary"/>
+                <h:panel badge="${numContract}" name="Tổng hợp đồng"
+                         url="${pageContext.request.contextPath}/admin/contract"
+                         icon="fa-file-text-o" css="panel-primary"/>
             </c:if>
             <c:if test="${user.roleId != 5}">
                 <h:panel badge="${numAppointment}" name="Lịch hẹn mới"
@@ -60,9 +63,7 @@
             </c:if>
 
             <c:if test="${user.roleId != 3 && user.roleId != 5}">
-                <h:panel badge="${numContract}" name="Tổng hợp đồng"
-                         url="${pageContext.request.contextPath}/admin/contract"
-                         icon="fa-file-text-o" css="panel-primary"/>
+
                 <h:panel badge="${numReturn}" name="Hủy trước hạn"
                          url="${pageContext.request.contextPath}/admin/contract?action=return"
                          icon="fa-file-text-o" css="panel-primary"/>

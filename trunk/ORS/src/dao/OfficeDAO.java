@@ -74,6 +74,8 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         try {
             Office office = (Office) session.get(Office.class, id);
             office.setName(newOffice.getName());
+            office.setCategoryId(newOffice.getCategoryId());
+            office.setStatusId(newOffice.getStatusId());
             office.setAddress(newOffice.getAddress());
             office.setDescription(newOffice.getDescription());
             office.setPrice(newOffice.getPrice());
@@ -86,7 +88,14 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             office.setDistrict(newOffice.getDistrict());
             office.setLongitude(newOffice.getLongitude());
             office.setLatitude(newOffice.getLatitude());
-
+            office.setParentOfficeId(newOffice.getParentOfficeId());
+            office.setCreateDate(newOffice.getCreateDate());
+            office.setViewCount(newOffice.getViewCount());
+            office.setBasePrice(newOffice.getBasePrice());
+            office.setMinArea(newOffice.getMinArea());
+            office.setMinTime(newOffice.getMinTime());
+            office.setCommission(newOffice.getCommission());
+            office.setOwnerUsername(newOffice.getOwnerUsername());
 
             session.update(office);
             trans.commit();

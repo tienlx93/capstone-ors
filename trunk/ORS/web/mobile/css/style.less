@@ -231,10 +231,10 @@ label.small:hover {
 }
 
 .content {
-  padding: 56px 10px 10px 10px;
+  padding: 48px 0 0 0;
   .home-btn {
     background: @white;
-    margin-top: 10%;
+    margin: 10% 10px 0;
     padding: 20px 10px;
     border-radius: 5px;
     -webkit-box-shadow: 0 0 10px -1px @black;
@@ -250,7 +250,7 @@ label.small:hover {
   }
   .list-item {
     background: @white;
-    margin-bottom: 10px;
+    margin: 8px 10px 10px;
     padding: 5px;
     border-radius: 3px;
     border: 1px solid #dcdcdc;
@@ -386,11 +386,12 @@ label.small:hover {
 }
 
 .item-detail {
-  div {
-    font-weight: bold;
-    padding: 8px 0 0 0;
-    span {
-      font-weight: normal;
+  .line {
+    border-top: #b2b2b2 1px solid;
+    padding: 5px 10px 0;
+    &.bold {
+      font-weight: bold;
+      margin-bottom: 10px;
     }
   }
   li {
@@ -475,42 +476,54 @@ label.small:hover {
 }
 
 .left-side {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
 
 .right-side {
-  font-size: 14px;
+  font-size: 16px;
   font-weight: normal !important;
   padding: 5px 0 10px 10px !important;
 }
 
-.confirm-button {
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  border-radius: 10px;
-  font-family: Arial;
-  color: #ffffff;
-  font-size: 18px;
-  background: #2BBC8C;
-  padding: 10px 20px 10px 20px;
-  text-decoration: none;
-  border: none;
-  width: 47%;
-  margin: auto !important;
+.right-link {
+  font-size: 14px;
+  font-weight: bold !important;
+  padding: 0 0 10px 10px !important;
 }
 
-.reject-button {
+.detail-button {
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   border-radius: 10px;
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   color: #ffffff;
-  font-size: 18px;
-  background: #d93434;
-  padding: 10px 20px 10px 20px;
+  background: #2BBC8C;
   text-decoration: none;
   border: none;
-  width: 47%;
+  width: 48%;
   margin: auto !important;
+  height: 40px;
+  vertical-align: middle;
+  span {
+    vertical-align: middle;
+    display: table;
+    span {
+      display: table-cell;
+    }
+  }
+  &.confirm {
+    background: #2BBC8C;
+  }
+  &.reject {
+    background: #d93434;
+  }
+  i {
+    float: left;
+  }
+}
+
+.buttons {
+  padding: 0 10px;
+  margin-bottom: 10px;
 }

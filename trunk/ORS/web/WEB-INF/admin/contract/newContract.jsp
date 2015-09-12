@@ -201,7 +201,7 @@
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
+                                            <input type="number" onkeydown="calculatePaymentFee()" onchange="calculatePaymentFee()" id="officeArea"
                                                    name="officeArea" min="${office.minArea}" max="${office.area}" class="form-control"
                                                    value="${office.minArea}" required="true">
                                         </div>
@@ -288,7 +288,7 @@
                                     <div class="col-sm-4">
                                         <input type='text' class="form-control"
                                                name="startDate"
-                                               id="startDate"
+                                               id="startDate" required="true"
                                                value="${contract.startDate}"/>
                                     </div>
 

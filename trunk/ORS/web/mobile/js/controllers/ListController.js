@@ -13,10 +13,10 @@ controllers.controller('ListController', ['$scope', '$location', '$routeParams',
         };
         if (type == 'appointment') {
             $scope.title = "Danh sách lịch hẹn";
-            $scope.legends = APPOINTMENT_STATUS;
+            $scope.legends = DEFAULT_STATUS;
         } else if (type == 'repair') {
             $scope.title = "Danh sách sửa chữa";
-            $scope.legends = REPAIR_STATUS;
+            $scope.legends = DEFAULT_STATUS;
         } else if (type == 'rental') {
             $scope.title = "Danh sách thuê thiết bị";
             $scope.legends = REPAIR_STATUS;

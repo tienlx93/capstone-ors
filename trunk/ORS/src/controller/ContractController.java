@@ -121,7 +121,6 @@ public class ContractController extends HttpServlet {
                 String firstPaymentPaidDay = request.getParameter("firstPaymentPaidDay");
                 String paymentPaidDay = request.getParameter("paymentPaidDay");
                 String additionalCharge = request.getParameter("additionalCharge");
-                String latePaidDay = request.getParameter("latePaidDay");
 
 
                 if (deposit.equals("")) {
@@ -145,7 +144,6 @@ public class ContractController extends HttpServlet {
                 contract.setFirstPaymentPaidDay(Integer.parseInt(firstPaymentPaidDay));
                 contract.setPaymentPaidDay(Integer.parseInt(paymentPaidDay));
                 contract.setAdditionalCharge(Integer.parseInt(additionalCharge));
-                contract.setLatePaidDay(Integer.parseInt(latePaidDay));
                 contract.setStatusId(1);
                 contract.setCustomerUsername(customerName);
                 if (Integer.parseInt(request.getParameter("categoryId")) == 1) {
@@ -185,6 +183,10 @@ public class ContractController extends HttpServlet {
                 newContract.setCustomerUsername(contract.getCustomerUsername());
                 newContract.setPaymentFee(contract.getPaymentFee());
                 newContract.setPaymentTerm(contract.getPaymentTerm());
+                newContract.setFirstPaymentPaidDay(contract.getFirstPaymentPaidDay());
+                newContract.setPaymentPaidDay(contract.getPaymentPaidDay());
+                newContract.setDepositPaidDay(contract.getDepositPaidDay());
+                newContract.setAdditionalCharge(contract.getAdditionalCharge());
                 try {
                     String reformattedEnd = myFormat.format(fromUser.parse(endDate));
                     newContract.setEndDate(Date.valueOf(reformattedEnd));
@@ -193,7 +195,7 @@ public class ContractController extends HttpServlet {
                 }
                 switch (button) {
                     case "confirm":
-                        dao.update(id, contract.getCustomerUsername(), contract.getOfficeId(), contract.getStartDate(), contract.getEndDate(), contract.getPaymentFee(), contract.getPaymentTerm(), 1);
+                        dao.updateContract(id, contract);
                         dao.save(newContract);
                         break;
                     case "cancel":
@@ -263,35 +265,29 @@ public class ContractController extends HttpServlet {
                 String endDate = request.getParameter("endDate");
                 String paymentTerm = request.getParameter("paymentTerm");
                 String paymentFee = request.getParameter("paymentFee");
-                String officeArea = request.getParameter("officeArea");
                 String deposit = request.getParameter("deposit");
+                String depositPaidDay = request.getParameter("depositPaidDay");
+                String firstPaymentPaidDay = request.getParameter("firstPaymentPaidDay");
+                String paymentPaidDay = request.getParameter("paymentPaidDay");
+                String additionalCharge = request.getParameter("additionalCharge");
+
                 if (deposit.equals("")) {
                     deposit = "0";
                 }
                 ContractDAO contractDAO = new ContractDAO();
                 Contract contract = contractDAO.get(Integer.parseInt(id));
-
                 contract.setStartDate(Date.valueOf(startDate));
                 contract.setEndDate(Date.valueOf(endDate));
                 contract.setPaymentTerm(Integer.parseInt(paymentTerm));
                 contract.setPaymentFee(Integer.parseInt(paymentFee));
                 contract.setDeposit(Long.parseLong(deposit));
-
-//
-//                OfficeDAO officeDAO = new OfficeDAO();
-//                Office office = officeDAO.get(contract.getOfficeId());
-//
-//                Office officeParent = office.getOfficeByParentOfficeId();
-//                officeParent.setArea(officeParent.getArea() + office.getArea() - Double.parseDouble(officeArea));
-//
-//                if (officeParent.getArea() < officeParent.getMinArea()) {
-//                    officeParent.setStatusId(2);
-//                }
-//
-//                office.setArea(Double.parseDouble(officeArea));
+                contract.setDepositPaidDay(Integer.parseInt(depositPaidDay));
+                contract.setFirstPaymentPaidDay(Integer.parseInt(firstPaymentPaidDay));
+                contract.setPaymentPaidDay(Integer.parseInt(paymentPaidDay));
+                contract.setAdditionalCharge(Integer.parseInt(additionalCharge));
 
                 contractDAO.updateContract(contract.getId(), contract);
-                response.sendRedirect("/admin/contract");
+                response.sendRedirect("/admin/contract?action=editing&id=" + id);
                 break;
             }
 

@@ -190,7 +190,7 @@
                                                                     <fmt:formatDate
                                                                             value="${suggestMap[item.id].assignedTime}"
                                                                             pattern="dd-MM-yyyy" var="newDate"/>
-                                                                    <input type="text" name="${item.contractId}"
+                                                                    <input type="text" name="assignedTime"
                                                                            class="datetime" value="${newDate}" readonly required>
                                                                 </td>
                                                                 <td>

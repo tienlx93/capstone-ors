@@ -32,6 +32,7 @@
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/repairDetail.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>

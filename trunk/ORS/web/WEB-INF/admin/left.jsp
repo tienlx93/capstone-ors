@@ -27,6 +27,12 @@
                 <span class="icon color6"><i class="fa fa-building-o"></i></span>
                 Văn phòng</a>
             </li>
+            <li><a href="${pageContext.request.contextPath}/admin/contract">
+                <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
+                Hợp đồng
+                    <%--TODO: số lượng hợp đồng chưa xử lí--%>
+                <span class="label label-default"></span></a>
+            </li>
         </c:if>
         <c:if test="${user.roleId != 5 && user.roleId != 1}">
             <li><a href="${pageContext.request.contextPath}/admin/appointment">
@@ -37,12 +43,7 @@
             </li>
         </c:if>
         <c:if test="${user.roleId != 3 && user.roleId != 5 && user.roleId != 1}">
-            <li><a href="${pageContext.request.contextPath}/admin/contract">
-                <span class="icon color6"><i class="fa fa-file-text-o"></i></span>
-                Hợp đồng
-                    <%--TODO: số lượng hợp đồng chưa xử lí--%>
-                <span class="label label-default"></span></a>
-            </li>
+
             <li>
                 <a href="#">
                     <span class="icon color6"><i class="fa fa-file-text-o"></i></span>

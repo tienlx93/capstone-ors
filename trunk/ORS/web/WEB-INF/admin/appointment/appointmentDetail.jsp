@@ -30,7 +30,8 @@
             src="${pageContext.request.contextPath}/lib/bootstrap-3.3.4-dist/js/bootstrap.min.js"></script>
     <script type="text/javascript"
             src="${pageContext.request.contextPath}/lib/datepicker/js/bootstrap-datepicker.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/appointmentDetail.js"></script>
+    <script type="text/javascript"
+            src="${pageContext.request.contextPath}/javascript/admin/appointmentDetail.js"></script>
     <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/localization/messages_vi.js"></script>
     <title>Office Rental Service</title>
@@ -61,13 +62,13 @@
                             <h3>Chủ sở hữu</h3>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Chủ văn phòng</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Chủ văn phòng:</label>
 
                                 <div class="col-sm-4">
                                     ${info.officeByOfficeId.accountByOwnerUsername.profileByUsername.fullName}
                                 </div>
 
-                                <label class="col-sm-2 control-label">Số điện thoại</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Số điện thoại:</label>
 
                                 <div class="col-sm-4">
                                     ${info.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}
@@ -75,13 +76,14 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Tên văn phòng</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Tên văn phòng:</label>
 
                                 <div class="col-sm-4">
                                     ${info.officeByOfficeId.name}
                                 </div>
 
-                                <label class="col-sm-2 control-label">Địa chỉ văn phòng</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Địa chỉ văn
+                                    phòng:</label>
 
                                 <div class="col-sm-4">
                                     ${info.officeByOfficeId.address}
@@ -89,7 +91,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Loại văn phòng</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Loại văn phòng:</label>
 
                                 <div class="col-sm-4">
                                     ${info.officeByOfficeId.categoryByCategoryId.description}
@@ -99,14 +101,14 @@
                             <h3>Khách hàng</h3>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Tên khách hàng</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Tên khách hàng:</label>
 
                                 <div class="col-sm-4">
                                     ${info.accountByCustomerUsername.profileByUsername.fullName}
                                 </div>
                             </div>
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Số điện thoại</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Số điện thoại:</label>
 
                                 <div class="col-sm-4">
                                     ${info.accountByCustomerUsername.profileByUsername.phone}
@@ -117,7 +119,7 @@
                                 <h2>Chi tiết lịch hẹn</h2></div>
 
                             <div class="form-group clearfix">
-                                <label class="col-sm-2 control-label">Ngày gặp</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Ngày gặp:</label>
 
                                 <div class="col-sm-4">
                                     <fmt:formatDate value="${info.time}"
@@ -125,7 +127,7 @@
                                 </div>
                                 <input type="hidden" id="meetDate" value="${info.time}">
 
-                                <label class="col-sm-2 control-label">Thời gian gặp</label>
+                                <label class="col-sm-2 control-label" style="text-align: right">Thời gian gặp:</label>
 
                                 <div class="col-sm-4">
                                     <fmt:formatDate value="${info.time}"
@@ -133,15 +135,14 @@
                                 </div>
                             </div>
 
-                            <c:if test="${user.roleId==2}">
+                            <c:if test="${user.roleId==2 && info.statusId != 5}">
                                 <div class="form-group clearfix">
-                                    <label for="assignedStaff" class="col-sm-2 control-label">Nhân viên được
-                                        giao</label>
+                                    <label for="assignedStaff" class="col-sm-2 control-label" style="text-align: right">
+                                        Nhân viên được giao:</label>
                                     <% AccountDAO acc = new AccountDAO();
                                         List<Account> listAcc = acc.findStaff();%>
                                     <div class="col-sm-4">
                                         <c:choose>
-
                                             <c:when test="${info.statusId == 5 || info.statusId == 4 || info.statusId == 3}">
                                                 ${info.assignedStaff}
                                                 <input type="hidden" name="assignedStaff" id="assignedStaff"
@@ -171,13 +172,13 @@
                                         </c:choose>
                                     </div>
                                 </div>
-
                             </c:if>
 
-                            <c:if test="${info.statusId != 1 && info.statusId != 2}">
+                            <c:if test="${info.statusId == 5}">
                                 <div class="form-group clearfix">
-                                    <label for="appointmentStatusId" class="col-sm-2 control-label">Ý kiến khách
-                                        hàng</label>
+                                    <label for="appointmentStatusId" class="col-sm-2 control-label"
+                                           style="text-align: right">
+                                        Ý kiến khách hàng:</label>
 
                                     <div class="col-sm-10">
                                             ${info.comment}
@@ -187,8 +188,9 @@
                                 </div>
                             </c:if>
                             <div class="form-group clearfix">
-                                <label for="appointmentStatusId" class="col-sm-2 control-label">Trạng thái lịch
-                                    hẹn</label>
+                                <label for="appointmentStatusId" class="col-sm-2 control-label"
+                                       style="text-align: right">
+                                    Trạng thái lịch hẹn:</label>
 
                                 <div class="col-sm-10">
                                     ${info.appointmentStatusByStatusId.description}
@@ -198,7 +200,8 @@
                             </div>
                             <c:if test="${info.officeByOfficeId.statusId == 2}">
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Tình trạng văn phòng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Tình trạng văn
+                                        phòng:</label>
 
                                     <div class="col-sm-10">
                                         Văn phòng đã được thuê
@@ -206,13 +209,13 @@
                                 </div>
                             </c:if>
                             <div class="button-post clearfix">
-
                                 <c:choose>
-                                    <c:when test="${info.statusId == 1 && user.roleId == 2}">
-
-                                        <button type="submit" name="button" value="assign" class="btn btn-primary"
-                                                disabled id="assignTask">Giao việc
-                                        </button>
+                                    <c:when test="${user.roleId == 2 && info.statusId == 1}">
+                                        <c:if test="${info.officeByOfficeId.statusId == 1}">
+                                            <button type="submit" name="button" value="assign" class="btn btn-primary"
+                                                    disabled id="assignTask">Giao việc
+                                            </button>
+                                        </c:if>
                                         <button class="btn btn-danger" type="button" onclick="inputComment(true)">
                                             Hủy lịch hẹn
                                         </button>
@@ -241,12 +244,7 @@
                                             Khách hàng không đồng ý
                                         </button>
                                     </c:when>
-
                                 </c:choose>
-
-                                <a href="${urlBack}"
-                                   class="btn btn-default">Quay về</a>
-
                             </div>
 
                             <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
@@ -258,7 +256,8 @@
                                             <h4 class="modal-title">Nhập lí do hủy</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <input class="form-control" name="comment" autocomplete="off" type="text" required>
+                                            <input class="form-control" name="comment" autocomplete="off" type="text"
+                                                   required>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Quay lại
@@ -274,9 +273,7 @@
                             </div>
                             <!-- /.modal -->
                         </form>
-
                     </div>
-
                 </div>
             </div>
         </div>
@@ -298,8 +295,7 @@
     }).on('hide.bs.modal', function (e) {
         $("#assignedStaff").attr("required", true);
     });
-    $("form").validate({
-    });
+    $("form").validate({});
 </script>
 
 </body>

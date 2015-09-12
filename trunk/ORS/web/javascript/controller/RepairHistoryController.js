@@ -6,6 +6,11 @@ controllers.controller('RepairHistoryController', ['$scope', '$location', '$rout
     function ($scope, $location, $routeParams, $route, Api) {
         var id = $routeParams.id;
         $scope.data = {};
+        $scope.officeName = {};
+
+        Api.getOnlyOfficeName(id, function (office) {
+            $scope.officeName = office;
+        });
 
         //get data
         Api.getRepairHistoryList(id, function (data) {

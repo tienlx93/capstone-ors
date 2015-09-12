@@ -1,12 +1,13 @@
 <div class="container" ng-show="RightCus">
-    <h1>Văn phòng: {{data[0].officeName}}</h1>
+    <h1>Văn phòng: {{officeName}}</h1>
     <br>
     <h2>Lịch sử sửa chữa </h2>
     <br>
     <table class="table">
         <thead>
         <tr>
-            <th>Mô tả</th>
+            <th>Yêu cầu sửa</th>
+            <th>Mô tả yêu cầu</th>
             <th>Ngày tạo</th>
             <th>Tình trạng</th>
         </tr>
@@ -14,6 +15,11 @@
         <tbody>
 
         <tr ng-repeat="item in data">
+            <td style="max-width: 100%">
+                <span ng-repeat="amenity in item.list track by $index">{{amenity}}<span ng-if="$index < item.list.length - 1">,</span> </span>
+                <span ng-if="item.list == null">Yêu cầu khác</span>
+                <span ng-if="item.list.length == 0">Yêu cầu khác</span>
+            </td>
             <td>{{item.description}}</td>
             <td>{{item.createTime | date:'dd-MM-yyyy'}}</td>
             <td>{{item.status}}</td>

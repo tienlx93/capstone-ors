@@ -20,6 +20,11 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
                 }
             }
         });
+
+        Api.getAmenityByOfficeId(id, function (amenity) {
+            $scope.amenities = amenity;
+        });
+
         function initialize(lat, lng) {
             var myLatlng = new google.maps.LatLng(lat,lng);
             var mapOptions = {

@@ -123,6 +123,14 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
             contract.setPaymentTerm(newContract.getPaymentTerm());
             contract.setStatusId(newContract.getStatusId());
             contract.setCancelDate(newContract.getCancelDate());
+            contract.setImageUrl(newContract.getImageUrl());
+            contract.setDeposit(newContract.getDeposit());
+            contract.setCancelDate(newContract.getCancelDate());
+            contract.setDepositPaidDay(newContract.getDepositPaidDay());
+            contract.setFirstPaymentPaidDay(newContract.getFirstPaymentPaidDay());
+            contract.setPaymentPaidDay(newContract.getFirstPaymentPaidDay());
+            contract.setAdditionalCharge(newContract.getAdditionalCharge());
+
             session.update(contract);
             trans.commit();
             return true;

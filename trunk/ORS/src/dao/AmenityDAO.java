@@ -3,6 +3,7 @@ package dao;
 import entity.Account;
 import entity.Amenity;
 import entity.AmenityGroup;
+import entity.OfficeAmenity;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Transaction;
@@ -66,6 +67,21 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
         }
         return null;
     }
+
+    public List<OfficeAmenity> getAmenityByOfficeId(int id) {
+        try {
+            String sql = "from OfficeAmenity where officeId = :officeId";
+            Query query = session.createQuery(sql);
+            query.setInteger("officeId", id);
+
+            return query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public List<Amenity> getAmenityByPage(int firstResult, int pageSize) {
 
         try {
@@ -97,26 +113,6 @@ public class AmenityDAO extends BaseDAO<Amenity, Integer> {
 
         return 0;
     }
-    /*public boolean update(String name, Amenity newAmenity) {
-        Transaction trans = session.beginTransaction();
-        try {
-            Amenity amenity = (Amenity) session.get(Amenity.class, name);
-            amenity.setId(newAmenity.getId());
-            amenity.setWeight(newAmenity.getWeight());
-            amenity.setDescription(newAmenity.getDescription());
-            amenity.setPriority(newAmenity.getPriority());
-            amenity.setAmenityGroupId(newAmenity.getAmenityGroupId());
-
-            session.update(amenity);
-            trans.commit();
-            return true;
-        } catch (Exception e) {
-            if (trans.isActive()) {
-                trans.rollback();
-            }
-        }
-        return false;
-    }*/
 
     public void update(int id, String name, String description, Integer weight, Integer amenityGroupId, Integer priority, String repairable) {
         Transaction trans = session.beginTransaction();

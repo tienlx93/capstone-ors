@@ -51,19 +51,8 @@
 
                     <div>
                         <form action="repair?action=editing" method="post">
-                            <div class="form-group clearfix" hidden>
-                                <label for="id" class="col-sm-2 control-label">Id</label>
-                                ${info.id}<input type="hidden" name="id" id="id" value="${info.id}">
-                            </div>
-
-                            <div class="form-group clearfix" hidden>
-                                <label for="contractId" class="col-sm-2 control-label">Hợp đồng</label>
-
-                                <div class="col-sm-10">
-                                    ${info.contractId}<input type="hidden" name="contractId" id="contractId"
-                                                             value="${info.contractId}">
-                                </div>
-                            </div>
+                            <input type="hidden" name="id" id="id" value="${info.id}">
+                            <input type="hidden" name="contractId" id="contractId" value="${info.contractId}">
 
                             <c:if test="${user.roleId!=5}">
                                 <div style="text-align: center;border-bottom:2px solid #000000; margin-bottom: 20px">
@@ -71,13 +60,15 @@
                                 <h3>Chủ sở hữu</h3>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Chủ văn phòng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Chủ văn
+                                        phòng:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.accountByOwnerUsername.profileByUsername.fullName}
                                     </div>
 
-                                    <label class="col-sm-2 control-label">Số điện thoại</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Số điện
+                                        thoại:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}
@@ -85,12 +76,14 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Tên văn phòng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Tên văn
+                                        phòng:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.name}
                                     </div>
-                                    <label class="col-sm-2 control-label">Địa chỉ văn phòng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Địa chỉ văn
+                                        phòng:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.address}
@@ -98,7 +91,8 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Loại văn phòng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Loại văn
+                                        phòng:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.categoryByCategoryId.description}
@@ -107,20 +101,23 @@
                                 <h3>Khách hàng</h3>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Tên khách hàng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Tên khách
+                                        hàng:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
                                     </div>
 
-                                    <label class="col-sm-2 control-label">Số điện thoại</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Số điện
+                                        thoại:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.accountByCustomerUsername.profileByUsername.phone}
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Ngày bắt đầu hợp đồng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Ngày bắt đầu hợp
+                                        đồng:</label>
 
                                     <div class="col-sm-4">
                                         <fmt:formatDate
@@ -130,7 +127,8 @@
                                                value="${info.contractByContractId.startDate}">
                                     </div>
 
-                                    <label class="col-sm-2 control-label">Ngày kết thúc hợp đồng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Ngày kết thúc hợp
+                                        đồng:</label>
 
                                     <div class="col-sm-4">
                                         <fmt:formatDate
@@ -144,14 +142,16 @@
                                     <h2>Chi tiết yêu cầu sửa chữa</h2></div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Ngày tạo yêu cầu</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Ngày tạo yêu
+                                        cầu:</label>
 
                                     <div class="col-sm-4">
                                         <fmt:formatDate value="${info.createTime}"
                                                         pattern="dd-MM-yyyy"/>
 
                                     </div>
-                                    <label class="col-sm-2 control-label">Mô tả yêu cầu</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Mô tả yêu
+                                        cầu:</label>
 
                                     <div class="col-sm-4">
                                             ${info.description}<input type="hidden" name="description"
@@ -160,7 +160,8 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Cần sửa chữa</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Cần sửa
+                                        chữa:</label>
 
                                     <div class="col-sm-10 row" style="margin: auto">
                                         <c:forEach var="item" items="${listAmenity}">
@@ -170,14 +171,13 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label for="assignedTime" class="col-sm-2 control-label">Ngày sửa chữa</label>
+                                    <label for="assignedTime" class="col-sm-2 control-label" style="text-align: right">Ngày
+                                        sửa chữa:</label>
                                     <c:choose>
                                         <c:when test="${user.roleId==2 && (info.repairStatusId == 1 || info.repairStatusId == 2)}">
                                             <div class="col-sm-4">
-
-                                                <fmt:formatDate
-                                                        value="${info.assignedTime}"
-                                                        pattern="dd-MM-yyyy" var="newDate"/>
+                                                <fmt:formatDate value="${info.assignedTime}"
+                                                                pattern="dd-MM-yyyy" var="newDate"/>
                                                 <input type="text" name="assignedTime" id="assignedTime"
                                                        class="form-control" value="${newDate}" required readonly>
                                             </div>
@@ -192,8 +192,8 @@
 
                                     <c:if test="${user.roleId==2}">
 
-                                        <label for="assignedStaff" class="col-sm-2 control-label">Nhân viên được
-                                            giao</label>
+                                        <label for="assignedStaff" class="col-sm-2 control-label"
+                                               style="text-align: right">Nhân viên được giao:</label>
                                         <% AccountDAO acc = new AccountDAO();
                                             List<Account> listAcc = acc.findStaff();%>
                                         <div class="col-sm-4">
@@ -232,7 +232,8 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label for="repairStatusId" class="col-sm-2 control-label">Trạng thái</label>
+                                    <label for="repairStatusId" class="col-sm-2 control-label"
+                                           style="text-align: right">Tình trạng:</label>
 
                                     <div class="col-sm-10">
                                             ${info.repairStatusByRepairStatusId.description}
@@ -247,13 +248,15 @@
                                     <h2>Thông tin khách hàng</h2></div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Tên khách hàng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Tên khách
+                                        hàng:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}
                                     </div>
 
-                                    <label class="col-sm-2 control-label">Số điện thoại</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Số điện
+                                        thoại:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.accountByCustomerUsername.profileByUsername.phone}
@@ -261,12 +264,14 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Văn phòng đang thuê</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Văn phòng đang
+                                        thuê:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.name}
                                     </div>
-                                    <label class="col-sm-2 control-label">Địa chỉ văn phòng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Địa chỉ văn
+                                        phòng:</label>
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.address}
@@ -274,7 +279,8 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Ngày bắt đầu hợp đồng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Ngày bắt đầu hợp
+                                        đồng:</label>
 
                                     <div class="col-sm-4">
                                         <fmt:formatDate
@@ -284,7 +290,8 @@
                                                value="${info.contractByContractId.startDate}">
                                     </div>
 
-                                    <label class="col-sm-2 control-label">Ngày kết thúc hợp đồng</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Ngày kết thúc hợp
+                                        đồng:</label>
 
                                     <div class="col-sm-4">
                                         <fmt:formatDate
@@ -298,14 +305,16 @@
                                     <h2>Chi tiết yêu cầu sửa chữa</h2></div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Ngày tạo yêu cầu</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Ngày tạo yêu
+                                        cầu:</label>
 
                                     <div class="col-sm-4">
                                         <fmt:formatDate value="${info.createTime}"
                                                         pattern="dd-MM-yyyy"/>
 
                                     </div>
-                                    <label class="col-sm-2 control-label">Mô tả yêu cầu</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Mô tả yêu
+                                        cầu:</label>
 
                                     <div class="col-sm-4">
                                             ${info.description}<input type="hidden" name="description"
@@ -314,7 +323,8 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label class="col-sm-2 control-label">Cần sửa chữa</label>
+                                    <label class="col-sm-2 control-label" style="text-align: right">Cần sửa
+                                        chữa:</label>
 
                                     <div class="col-sm-10 row" style="margin: auto">
                                         <c:forEach var="item" items="${listAmenity}">
@@ -325,7 +335,8 @@
 
                                 <c:if test="${info.repairStatusId != 1}">
                                     <div class="form-group clearfix">
-                                        <label for="assignedTime" class="col-sm-2 control-label">Ngày sửa chữa</label>
+                                        <label for="assignedTime" class="col-sm-2 control-label"
+                                               style="text-align: right">Ngày sửa chữa:</label>
                                         <c:choose>
                                             <c:when test="${user.roleId==2 && (info.repairStatusId == 1 || info.repairStatusId == 2)}">
                                                 <div class="col-sm-4">
@@ -347,8 +358,8 @@
 
                                         <c:if test="${user.roleId==2 || user.roleId==5}">
 
-                                            <label for="assignedStaff" class="col-sm-2 control-label">Nhân viên được
-                                                giao</label>
+                                            <label for="assignedStaff" class="col-sm-2 control-label"
+                                                   style="text-align: right">Nhân viên được giao:</label>
                                             <% AccountDAO acc = new AccountDAO();
                                                 List<Account> listAcc = acc.findStaff();%>
                                             <div class="col-sm-4">
@@ -387,7 +398,8 @@
                                 </c:if>
 
                                 <div class="form-group clearfix">
-                                    <label for="repairStatusId" class="col-sm-2 control-label">Trạng thái</label>
+                                    <label for="repairStatusId" class="col-sm-2 control-label"
+                                           style="text-align: right">Tình trạng:</label>
 
                                     <div class="col-sm-10">
                                             ${info.repairStatusByRepairStatusId.description}
@@ -452,8 +464,6 @@
                                         </c:choose>
                                     </c:otherwise>
                                 </c:choose>
-                                <a onclick="window.history.back()"
-                                   class="btn btn-default">Quay về</a>
                             </div>
                         </form>
 

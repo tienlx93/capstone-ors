@@ -72,9 +72,9 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
                         $location.path("/detail");
                     } else {
                         toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+                        $scope.clicked= false;
                     }
                 });
             }
-            $scope.clicked= false;
         }
     }]);

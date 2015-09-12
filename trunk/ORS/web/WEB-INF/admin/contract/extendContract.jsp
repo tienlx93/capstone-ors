@@ -163,7 +163,7 @@
                                         Các tiện ích theo văn phòng:
                                     </div>
                                     <div class="col-sm-10">
-                                        <c:forEach items="${info.officeAmenitiesById}" var="item">
+                                        <c:forEach items="${info.officeByOfficeId.officeAmenitiesById}" var="item">
                                             <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
                                         </c:forEach>
                                     </div>
@@ -185,6 +185,20 @@
                                     </div>
 
 
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau khi kí hợp đồng này tròng vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.firstPaymentPaidDay} ngày
+                                    </div>
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.paymentPaidDay} ngày
+                                    </div>
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu</div>
@@ -222,6 +236,22 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
+                                    <div for="depositPaidDay" class="col-sm-2 control-label">Bên B thanh toán tiền đặt
+                                        cọc sau khi kí hợp đồng này trong vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.depositPaidDay} ngày
+                                    </div>
+                                    <div for="additionalCharge" style="text-align: right" class="col-sm-2 control-label">Chi phí phụ trội:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.additionalCharge}%
+                                    </div>
+
+                                </div>
+                                <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Thời gian gia hạn(tháng):</div>
 
                                     <div class="col-sm-4">
@@ -238,8 +268,8 @@
                                 </button>
                                 <button type="submit" value="cancel" name="button" class="btn btn-success">Hủy yêu cầu
                                 </button>
-                                <a href="${pageContext.request.contextPath}/admin/contract?action=return"
-                                   class="btn btn-default">Quay về</a>
+                                <%--<a href="${pageContext.request.contextPath}/admin/contract?action=return"--%>
+                                   <%--class="btn btn-default">Quay về</a>--%>
                             </div>
                         </form>
                     </div>

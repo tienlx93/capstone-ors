@@ -193,6 +193,20 @@
 
                                 </div>
                                 <div class="form-group clearfix">
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau khi kí hợp đồng này tròng vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.firstPaymentPaidDay} ngày
+                                    </div>
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.paymentPaidDay} ngày
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix">
                                     <div for="startDate" class="col-sm-2 control-label">Ngày bắt đầu:</div>
 
                                     <div name="startDate" id="startDate" class="col-sm-4">
@@ -230,6 +244,22 @@
                                     <div class="col-sm-4" id="deposit" name="deposit">
                                         ${info.deposit}
                                     </div>
+                                </div>
+                                <div class="form-group clearfix">
+                                    <div for="depositPaidDay" class="col-sm-2 control-label">Bên B thanh toán tiền đặt
+                                        cọc sau khi kí hợp đồng này trong vòng (ngày):
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.depositPaidDay} ngày
+                                    </div>
+                                    <div for="additionalCharge" style="text-align: right" class="col-sm-2 control-label">Chi phí phụ trội:
+                                    </div>
+
+                                    <div class="col-sm-4">
+                                        ${info.additionalCharge}%
+                                    </div>
+
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="total" class="col-sm-2 control-label">Tổng số tiền thanh toán mỗi kỳ:

@@ -64,13 +64,13 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                 Api.requestOffice($scope.reOffice, function (data) {
                     if (data == "Error") {
                         $scope.error = "Có lỗi xảy ra. Xin thử lại";
+                        $scope.clicked= false;
                     } else if (data) {
                         $location.path("#/home");
                         toastr.success('Đặt yêu cầu thành công');
                     }
                 });
             }
-            $scope.clicked= false;
         };
 
         Api.getAmenityList(function (data) {

@@ -5,7 +5,7 @@ app.factory("Api", ['$http',
     function ($http) {
         var services = {};
 
-        services.updateAccount = function() {
+        services.updateAccount = function () {
 
         };
         services.account = {};
@@ -102,6 +102,23 @@ app.factory("Api", ['$http',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'getRentalDetail',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getOnlyOfficeName = function (id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getOnlyOfficeName',
                     'id': id
                 }
             })
@@ -240,7 +257,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.requestAppointment = function(time, officeId, callback) {
+        services.requestAppointment = function (time, officeId, callback) {
             $http({
                 method: 'POST',
                 url: BACK_END_URL + '/api',
@@ -258,7 +275,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getContractList = function(callback) {
+        services.getContractList = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -274,7 +291,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getProfile = function(callback) {
+        services.getProfile = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -290,7 +307,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getAmenityList = function(callback) {
+        services.getAmenityList = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -306,7 +323,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getRepairList = function(id, callback) {
+        services.getRepairList = function (id, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -323,7 +340,24 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getRepairHistoryList = function(id, callback) {
+        services.getAmenityByOfficeId = function (id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getAmenityByOfficeId',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
+
+        services.getRepairHistoryList = function (id, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -340,7 +374,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getAllOfficeRentalList = function(callback) {
+        services.getAllOfficeRentalList = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -356,7 +390,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getRentalList = function(id, callback) {
+        services.getRentalList = function (id, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -373,7 +407,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getRentalListDone = function(id, callback) {
+        services.getRentalListDone = function (id, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -390,7 +424,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.searchOfficeByAddress = function(address, callback) {
+        services.searchOfficeByAddress = function (address, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -407,7 +441,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getNewOffice = function(callback) {
+        services.getNewOffice = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -423,7 +457,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getContractById = function(id, callback) {
+        services.getContractById = function (id, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -439,7 +473,7 @@ app.factory("Api", ['$http',
                     callback('Error');
                 })
         };
-        
+
         services.getOffice = function (officeId, callback) {
             $http({
                 method: 'GET',
@@ -496,7 +530,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.searchOfficeByTerm = function(term, callback) {
+        services.searchOfficeByTerm = function (term, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -515,7 +549,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getRelativeOffice = function(id, callback) {
+        services.getRelativeOffice = function (id, callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -532,7 +566,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getResultRequestOffice = function(callback) {
+        services.getResultRequestOffice = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -548,7 +582,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.getRequestOffice = function(callback) {
+        services.getRequestOffice = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',
@@ -564,7 +598,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.unsubscribeRequest = function(id, callback) {
+        services.unsubscribeRequest = function (id, callback) {
             $http({
                 method: 'POST',
                 url: BACK_END_URL + '/api',
@@ -581,7 +615,7 @@ app.factory("Api", ['$http',
                 })
         };
 
-        services.amenityWeight = function(callback) {
+        services.amenityWeight = function (callback) {
             $http({
                 method: 'GET',
                 url: BACK_END_URL + '/api',

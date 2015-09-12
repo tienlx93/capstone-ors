@@ -27,13 +27,13 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
             Api.requestRental(id, rentalList, description, function(data){
                 if (data=="Success") {
                     toastr.success('Gửi yêu cầu thành công', 'Thành công');
-                    Api.account.cart = [];
+                    ShoppingCartService.resetProductList();
                     $location.path("/home");
                 } else {
                     toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
+                    $scope.clicked= false;
                 }
-            })
-            $scope.clicked= false;
+            });
         };
         $scope.calculateTotal = function() {
             var total = 0;

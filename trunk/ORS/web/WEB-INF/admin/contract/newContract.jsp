@@ -201,7 +201,7 @@
                                         </div>
 
                                         <div class="col-sm-4">
-                                            <input type="number" onkeydown="calculatePaymentFee()" id="officeArea"
+                                            <input type="number" onkeydown="calculatePaymentFee()" onchange="calculatePaymentFee()" id="officeArea"
                                                    name="officeArea" min="${office.minArea}" max="${office.area}" class="form-control"
                                                    value="${office.minArea}" required="true">
                                         </div>
@@ -288,7 +288,7 @@
                                     <div class="col-sm-4">
                                         <input type='text' class="form-control"
                                                name="startDate"
-                                               id="startDate"
+                                               id="startDate" required="true"
                                                value="${contract.startDate}"/>
                                     </div>
 
@@ -324,7 +324,7 @@
 
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu tròng vòng (ngày):
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau khi kí hợp đồng này tròng vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">
@@ -341,16 +341,16 @@
                                                id="paymentPaidDay" value="1" min="0" max="30"/>
                                     </div>
                                 </div>
-                                <div class="form-group clearfix">
-                                    <div for="latePaidDay" class="col-sm-2 control-label">Số ngày trả chậm tối đa mỗi kỳ(ngày):
-                                    </div>
+                                <%--<div class="form-group clearfix">--%>
+                                    <%--<div for="latePaidDay" class="col-sm-2 control-label">Số ngày trả chậm tối đa mỗi kỳ(ngày):--%>
+                                    <%--</div>--%>
 
-                                    <div class="col-sm-4">
-                                        <input style="display: inline-block" type='number' class="form-control"
-                                               name="latePaidDay" required="true"
-                                               id="latePaidDay" value="1" min="0" max="30"/>
-                                    </div>
-                                </div>
+                                    <%--<div class="col-sm-4">--%>
+                                        <%--<input style="display: inline-block" type='number' class="form-control"--%>
+                                               <%--name="latePaidDay" required="true"--%>
+                                               <%--id="latePaidDay" value="1" min="0" max="30"/>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
                                 <div class="form-group clearfix">
                                     <c:if test="${office.price != null}">
 
@@ -397,7 +397,7 @@
                                 </div>
                                 <div class="form-group clearfix">
                                     <div for="depositPaidDay" class="col-sm-2 control-label">Bên B thanh toán tiền đặt
-                                        cọc trong vòng (ngày):
+                                        cọc sau khi kí hợp đồng này trong vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">

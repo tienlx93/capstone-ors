@@ -56,12 +56,13 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                 } else if (data == "Error") {
                     toastr.error('Có lỗi xảy ra, xin thử lại');
                     //    alert("Có lỗi xảy ra, xin thử lại");
+                    $scope.clicked= false;
                 } else {
                     toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
                     $location.path("/contractList");
                 }
             })
-            $scope.clicked= false;
+
         };
 
 

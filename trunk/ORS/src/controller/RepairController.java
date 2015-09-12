@@ -90,8 +90,34 @@ public class RepairController extends HttpServlet {
                     }
 
                     break;
-                case "change1":
-                    dao.changeStatus(id, 1);
+                case "assign2":
+                    PrintWriter out2 = response.getWriter();
+                    Gson gson2 = new Gson();
+                    SimpleDateFormat fromAssign2 = new SimpleDateFormat("dd-MM-yyyy");
+                    Date date2 = null;
+                    ScheduleService service2 = new ScheduleService();
+                    String force2 = request.getParameter("force");
+                    try {
+                        date2 = fromAssign2.parse(assignedTime);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    AssignResultJSON staffAvailable2 = service2.isStaffAvailable(date2, assignedStaff);
+                    if (staffAvailable2.status <= 0 && (force2 == null || !force2.equals("true"))) {
+                        out2.print(gson2.toJson(staffAvailable2));
+                    } else {
+                        dao.update(id, contractId, assignedStaff, description, date2, 5);
+                        /*DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+                        sms.setPhone(phone);
+                        sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach da duoc chap nhan." +
+                                " Thoi gian du kien: " + df.format(date2));
+                        sms.send();*/
+                        out2.print(gson2.toJson("Success"));
+                    }
+
+                    break;
+                case "change2":
+                    dao.changeStatus(id, 2);
                     String phone1 = current.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getPhone();
                     String cusName = current.getAccountByCustomerUsername().getProfileByUsername().getUsername();
                     sms.setPhone(phone1);

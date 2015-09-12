@@ -109,10 +109,10 @@
                                                    role="tab" data-toggle="tab">Cần giao việc</a>
                                             </li>
 
-                                            <%--<li role="presentation">
+                                            <li role="presentation">
                                                 <a href="#assigned" aria-controls="assigned" role="tab"
                                                    data-toggle="tab">Đã giao</a>
-                                            </li>--%>
+                                            </li>
                                             <li role="presentation">
                                                 <a href="#confirm" aria-controls="confirm" role="tab"
                                                    data-toggle="tab">Chờ khách hàng xác nhận</a>
@@ -134,10 +134,10 @@
                                                    role="tab" data-toggle="tab">Cần xác nhận</a>
                                             </li>
 
-                                            <li role="presentation">
+                                            <%--<li role="presentation">
                                                 <a href="#confirm" aria-controls="confirm" role="tab"
                                                    data-toggle="tab">Chờ khách hàng xác nhận</a>
-                                            </li>
+                                            </li>--%>
                                             <li role="presentation">
                                                 <a href="#done" aria-controls="done" role="tab"
                                                    data-toggle="tab">Hoàn thành</a>
@@ -189,7 +189,7 @@
                                                 </thead>
                                                 <tbody class="list">
                                                 <c:forEach var="item" items="${list}" varStatus="index">
-                                                    <c:if test="${item.repairStatusId == 2}">
+                                                    <c:if test="${item.repairStatusId == 2 && item.assignedStaff == null}">
                                                         <tr>
                                                             <form action="repair?action=editing" method="post"
                                                                   class="assignForm">
@@ -300,9 +300,9 @@
                                         </div>
                                     </c:if>
 
-                                    <%--<c:choose>
+                                    <c:choose>
                                         <c:when test="${user.roleId == 3}">
-                                            <div role="tabpanel" class="tab-pane active" id="assigned">
+                                            <%--<div role="tabpanel" class="tab-pane active" id="assigned">
                                                 <table class="table striped">
                                                     <thead>
                                                     <tr>
@@ -337,7 +337,7 @@
                                                     </tbody>
                                                 </table>
                                                 <ul class="pagination pagination-assigned"></ul>
-                                            </div>
+                                            </div>--%>
                                         </c:when>
                                         <c:otherwise>
                                             <div role="tabpanel" class="tab-pane" id="assigned">
@@ -346,25 +346,23 @@
                                                     <tr>
                                                         <th>Tên văn phòng</th>
                                                         <th>Khách hàng</th>
-                                                        <th>Ngày sửa chữa</th>
                                                         <th>Nhân viên được giao</th>
-
+                                                        <th>Ngày sửa chữa</th>
                                                         <th></th>
                                                     </tr>
                                                     </thead>
                                                     <tbody class="list">
                                                     <c:forEach var="item" items="${list}">
-                                                        <c:if test="${item.repairStatusId == 2}">
+                                                        <c:if test="${item.repairStatusId == 2 && item.assignedStaff != null}">
                                                             <tr>
                                                                 <td>${item.contractByContractId.officeByOfficeId.name}</td>
                                                                 <td>
                                                                     <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
                                                                             ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                 </td>
+                                                                <td>${item.assignedStaff}</td>
                                                                 <td><fmt:formatDate pattern="dd-MM-yyyy"
                                                                                     value="${item.assignedTime}"/></td>
-                                                                <td>${item.assignedStaff}</td>
-
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"
                                                                        title="Chi tiết"
@@ -379,9 +377,9 @@
                                                 <ul class="pagination pagination-assigned"></ul>
                                             </div>
                                         </c:otherwise>
-                                    </c:choose>--%>
+                                    </c:choose>
 
-                                    <c:if test="${user.roleId == 5}">
+                                    <%--<c:if test="${user.roleId == 5}">
                                         <div role="tabpanel" class="tab-pane" id="confirm">
                                             <table class="table striped">
                                                 <thead>
@@ -419,7 +417,7 @@
                                             </table>
                                             <ul class="pagination pagination-confirm"></ul>
                                         </div>
-                                    </c:if>
+                                    </c:if>--%>
 
                                     <c:choose>
                                         <c:when test="${user.roleId == 3}">

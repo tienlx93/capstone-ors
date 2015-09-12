@@ -16,10 +16,10 @@ $(document).ready(function () {
 
     var repairDate = document.getElementById('repairDate').value;
     var repair = new Date(repairDate);
-    if (nowTemp.valueOf() <= repair.valueOf()) {
+    if (now.valueOf() <= repair.valueOf()) {
         $("#agree").removeAttr("disabled");
     }
-    if (nowTemp.valueOf() >= repair.valueOf()) {
+    if (now.valueOf() >= repair.valueOf()) {
         $("#happy").removeAttr("disabled");
         $("#unhappy").removeAttr("disabled");
     }

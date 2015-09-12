@@ -174,22 +174,32 @@
                                     <label for="assignedTime" class="col-sm-2 control-label" style="text-align: right">Ngày
                                         sửa chữa:</label>
                                     <c:choose>
-                                        <c:when test="${user.roleId==2 && (info.repairStatusId == 1 || info.repairStatusId == 2)}">
-                                            <div class="col-sm-4">
-                                                <fmt:formatDate value="${info.assignedTime}"
-                                                                pattern="dd-MM-yyyy" var="newDate"/>
-                                                <input type="text" name="assignedTime" id="assignedTime"
-                                                       class="form-control" value="${newDate}" required readonly>
-                                            </div>
+                                        <c:when test="${user.roleId==2 && info.repairStatusId == 2}">
+
+                                            <c:if test="${info.assignedStaff == null}">
+                                                <div class="col-sm-4">
+                                                    <fmt:formatDate value="${info.assignedTime}"
+                                                                    pattern="dd-MM-yyyy" var="newDate"/>
+                                                    <input type="text" name="assignedTime" id="assignedTime"
+                                                           class="form-control" value="${newDate}" required readonly>
+                                                </div>
+                                            </c:if>
+                                            <c:if test="${info.assignedStaff != null}">
+                                                <div class="col-sm-4">
+                                                    <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
+                                                    <input type="hidden" name="assignedTime"
+                                                           class="form-control" value="${info.assignedTime}">
+                                                </div>
+                                            </c:if>
                                         </c:when>
                                         <c:otherwise>
                                             <div class="col-sm-4">
                                                 <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
-                                                <input type="hidden" id="repairDate" value="${info.assignedTime}">
+
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
-
+                                    <input type="hidden" id="repairDate" value="${info.assignedTime}">
                                     <c:if test="${user.roleId==2}">
 
                                         <label for="assignedStaff" class="col-sm-2 control-label"
@@ -351,7 +361,7 @@
                                             <c:otherwise>
                                                 <div class="col-sm-4">
                                                     <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
-                                                    <input type="hidden" id="repairDate" value="${info.assignedTime}">
+                                                    <input type="hidden" value="${info.assignedTime}">
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>
@@ -424,20 +434,21 @@
                                         </c:if>
                                     </c:when>
                                     <c:when test="${user.roleId==2}">
-                                        <c:if test="${info.repairStatusId == 2}">
+                                        <c:if test="${info.repairStatusId == 2 && info.assignedStaff == null}">
                                             <button type="submit" value="assign" name="button" class="btn btn-primary"
                                                     onclick="return check()">
                                                 Giao việc
                                             </button>
-                                            <%--<button type="submit" value="reject" name="button" class="btn btn-danger">
-                                                Từ chối sửa chữa
-                                            </button>--%>
                                         </c:if>
-                                        <%--<c:if test="${info.repairStatusId == 2}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
+                                        <c:if test="${info.repairStatusId == 2 && info.assignedStaff != null}">
+                                            <button type="submit" value="assign2" name="button" class="btn btn-primary"
+                                                    id="agree" disabled>
                                                 Giao việc lại
                                             </button>
-                                        </c:if>--%>
+                                            <button type="submit" value="reject" name="button" class="btn btn-danger">
+                                                Từ chối sửa chữa
+                                            </button>
+                                        </c:if>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
@@ -456,7 +467,7 @@
                                                         class="btn btn-primary" id="happy" disabled>
                                                     Khách hàng hài lòng
                                                 </button>
-                                                <button type="submit" value="change1" name="button"
+                                                <button type="submit" value="change2" name="button"
                                                         class="btn btn-danger" id="unhappy" disabled>
                                                     Khách hàng không hài lòng
                                                 </button>

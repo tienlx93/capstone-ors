@@ -6,21 +6,24 @@
     <table class="table">
         <thead>
         <tr>
-            <th>Mô tả yêu cầu</th>
+            <th>Thiết bị</th>
             <th>Ngày tạo yêu cầu</th>
             <th>Tình trạng</th>
             <th>Ngày giao thiết bị</th>
+            <th>Mô tả yêu cầu</th>
             <th></th>
         </tr>
         </thead>
         <tbody>
 
         <tr ng-repeat="item in data">
-
-            <td>{{item.description}}</td>
+            <td style="max-width: 100%">
+            <span ng-repeat="rentalItem in item.list track by $index">{{rentalItem}}<span ng-if="$index < item.list.length - 1">,</span> </span>
+            </td>
             <td ng-if="item.createTime != 0">{{item.createTime | date:'dd-MM-yyyy'}}</td>
             <td>{{item.status}}</td>
             <td><span ng-show="item.assignedTime">{{item.assignedTime | date:'dd-MM-yyyy'}}</span></td>
+            <td>{{item.description}}</td>
             <td><a class="btn btn-green" ng-click="rentalDetail(item.rentalId)">Xem chi tiết</a></td>
         </tr>
 

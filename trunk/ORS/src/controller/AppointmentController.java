@@ -70,7 +70,7 @@ public class AppointmentController extends HttpServlet {
                 case "reject":
                     comment = request.getParameter("comment");
                     if (comment != null) {
-                        dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, "");
+                        dao.updateComment(Integer.parseInt(request.getParameter("id")), 5, comment);
                         String nonUTF8Comment = AccentRemover.removeAccent(comment);
                         sms.setMessage("(ORS) Lich hen cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
                         try {

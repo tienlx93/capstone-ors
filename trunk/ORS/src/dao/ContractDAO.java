@@ -65,6 +65,27 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return null;
     }
 
+    public List<Contract> getContractByOfficeOwner(int firstResult, int pageSize, String OfficeOwner) {
+        try {
+//            String sql = "from Contract where officeByOfficeId.ownerUsername = :owner";
+//            Query query = session.createQuery(sql);
+//            query.setString("owner", OfficeOwner);
+//
+//            return query.list();
+            Criteria criteria = session.createCriteria(Contract.class, "contract");
+            criteria.createAlias("contract.officeByOfficeId", "office");
+            criteria.add(Restrictions.eq("office.ownerUsername", OfficeOwner));
+            criteria.add(Restrictions.eq("contract.statusId", 1));
+            criteria.addOrder(Order.asc("id"));
+            criteria.setFirstResult(firstResult);
+            criteria.setMaxResults(pageSize);
+            return criteria.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public int getPageCount(int pageSize) {
         try {
 
@@ -189,6 +210,19 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         }
         return 0;
     }
+
+    public  long countContractByOfficeOwner(String owner) {
+        try {
+            String sql = "select count(id) from Contract where officeByOfficeId.ownerUsername = :ownerUsername and statusId = 1";
+            Query query = session.createQuery(sql);
+            query.setString("ownerUsername", owner);
+            return (long) query.uniqueResult();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
 
     public List<Integer> getYear() {
         ArrayList<Integer> years = new ArrayList<>();

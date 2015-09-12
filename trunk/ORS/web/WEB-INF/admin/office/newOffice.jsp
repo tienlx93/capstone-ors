@@ -257,7 +257,7 @@
               <div class="button-post">
                 <input type="hidden" id="amenityList" name="amenityList">
                 <input type="hidden" name="action" value="save">
-                <a href="/admin/office" class="btn btn-default">Hủy</a>
+                <%--<a href="/admin/office" class="btn btn-default">Hủy</a>--%>
               </div>
             </form>
           </div>

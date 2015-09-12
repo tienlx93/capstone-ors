@@ -304,7 +304,40 @@ public class ContractController extends HttpServlet {
         request.setAttribute("data", list);
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
-        if (account != null && (account.getRoleId() == 2)) {
+        if (account != null && (account.getRoleId() == 5)) {
+            if (action == null) {
+                int pageCount = (int) Math.ceil((double) dao.countContractByOfficeOwner(account.getUsername()) / ConstantService.PAGE_SIZE);
+                request.setAttribute("pageCount", pageCount);
+                List<Contract> list1 = dao.getContractByOfficeOwner(0, ConstantService.PAGE_SIZE, account.getUsername());
+                request.setAttribute("data", list1);
+                rd = request.getRequestDispatcher("/WEB-INF/admin/contract/viewContract.jsp");
+                rd.forward(request, response);
+            } else if (action.equals("page")) {
+                String startPage = request.getParameter("startPage");
+                int page = Integer.parseInt(startPage);
+                int startItem = (page - 1) * ConstantService.PAGE_SIZE;
+                List<Contract> list1 = dao.getContractByOfficeOwner(startItem, ConstantService.PAGE_SIZE, account.getUsername());
+                request.setAttribute("data", list1);
+                rd = request.getRequestDispatcher("/WEB-INF/partial/contractListItem.jsp");
+                rd.forward(request, response);
+            } else {
+                switch (action) {
+                    case "editing": {
+                        String ids = request.getParameter("id");
+
+                        Contract contract1 = dao.get(Integer.parseInt(ids));
+                        request.setAttribute("contract", contract1);
+
+                        request.setAttribute("paymentTermList", paymentTermList);
+
+                        rd = request.getRequestDispatcher("/WEB-INF/admin/contract/contractDetail.jsp");
+                        rd.forward(request, response);
+                        break;
+                    }
+                }
+            }
+        }
+        else if (account != null && (account.getRoleId() == 2)) {
             if (action == null) {
                 int pageCount = (int) Math.ceil((double) dao.countContractByStatus(1) / ConstantService.PAGE_SIZE);
                 request.setAttribute("pageCount", pageCount);

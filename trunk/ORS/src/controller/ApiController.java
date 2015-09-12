@@ -204,11 +204,19 @@ public class ApiController extends HttpServlet {
             case "getRequestOffice":
                 getRequestOffice(request, out);
                 break;
+            case "getCurrentTime":
+                getCurrentTime(request, out);
+                break;
             default:
                 out.print(gson.toJson("Error"));
         }
 
         out.flush();
+    }
+
+    private void getCurrentTime(HttpServletRequest request, PrintWriter out) {
+        Long now = new Date().getTime();
+        out.print(gson.toJson(now));
     }
 
     private void getOfficeName(HttpServletRequest request, PrintWriter out) {

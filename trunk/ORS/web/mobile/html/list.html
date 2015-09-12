@@ -13,9 +13,9 @@
         <div ng-if="data.length == 0" style="font-style: italic;">
             {{title}} rỗng
         </div>
-        <div class="list-item" ng-click="direction();goto(item.id)" ng-repeat="item in data track by $index">
+        <div class="list-item" ng-click="direction();goto(item.id)" ng-repeat="item in data | orderBy:'date'">
             <div class="item-image">
-                <img src="{{item.images[0]}}" style="min-height: 100px" width="100%"/>
+                <img ng-src="{{item.images[0]}}" style="min-height: 100px" width="100%"/>
             </div>
             <div class="item-description">
                 <div class="title">

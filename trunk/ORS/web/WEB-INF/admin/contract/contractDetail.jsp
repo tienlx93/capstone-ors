@@ -175,7 +175,8 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <c:forEach items="${contract.officeByOfficeId.officeAmenitiesById}" var="item">
-                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                            <span style="padding: 0;margin-bottom: 10px"
+                                                  class="col-sm-2">${item.amenityByAmenityId.name}</span>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -196,13 +197,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau khi kí hợp đồng này tròng vòng (ngày):
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau
+                                        khi kí hợp đồng này tròng vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">
                                         ${contract.firstPaymentPaidDay} ngày
                                     </div>
-                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày):
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">
+                                        Thanh toán các kỳ tiếp theo trong vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">
@@ -217,6 +220,7 @@
                                                         pattern="dd-MM-yyyy"/>
                                     </div>
                                     <input type="hidden" id="startValue" value="${contract.startDate}">
+
                                     <div for="endDate" style="text-align: right" class="col-sm-2 control-label">Ngày kết
                                         thúc:
                                     </div>
@@ -238,6 +242,7 @@
                                     </div>
                                     <input type="hidden" id="depositValue" name="depositValue"
                                            value="${contract.deposit}">
+
                                     <div class="col-sm-4" id="deposit" name="deposit">
                                         ${contract.deposit} <span>VNĐ</span>
 
@@ -251,7 +256,8 @@
                                     <div class="col-sm-4">
                                         ${contract.depositPaidDay} ngày
                                     </div>
-                                    <div for="additionalCharge" style="text-align: right" class="col-sm-2 control-label">Chi phí phụ trội:
+                                    <div for="additionalCharge" style="text-align: right"
+                                         class="col-sm-2 control-label">Chi phí phụ trội:
                                     </div>
 
                                     <div class="col-sm-4">
@@ -269,7 +275,8 @@
                                         Tổng giá trị hợp đồng:
                                     </div>
 
-                                    <div name="totalContract" id="totalContract" style="font-weight: bold" class="col-sm-4">
+                                    <div name="totalContract" id="totalContract" style="font-weight: bold"
+                                         class="col-sm-4">
                                     </div>
                                 </div>
                             </div>
@@ -288,15 +295,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="button-post">
-                                <a class="btn btn-primary" href="contract?action=edit&id=${contract.id}">Chỉnh
-                                    sửa</a>
-                                <%--<button type="submit" name="action" value="export" class="btn btn-primary">Export--%>
-                                <%--</button>--%>
-                                <a class="btn btn-info" href="contract?action=export&id=${contract.id}">Export</a>
-                                <a href="/admin/contract" class="btn btn-default">Quay về</a>
+                            <c:if test="${user.roleId == 2}">
+                                <div class="button-post">
+                                    <a class="btn btn-primary" href="contract?action=edit&id=${contract.id}">Chỉnh
+                                        sửa</a>
+                                        <%--<button type="submit" name="action" value="export" class="btn btn-primary">Export--%>
+                                        <%--</button>--%>
+                                    <a class="btn btn-info" href="contract?action=export&id=${contract.id}">Export</a>
+                                    <a href="/admin/contract" class="btn btn-default">Quay về</a>
+                                </div>
+                            </c:if>
 
-                            </div>
                         </form>
                     </div>
                 </div>
@@ -334,7 +343,7 @@
 
         var total = time * parseInt(fee) * parseFloat(area);
         var deposit = document.getElementById('depositValue').value != '' ? document.getElementById('depositValue').value : 0;
-        var contractTotal= contractTime * parseInt(fee) * parseFloat(area);
+        var contractTotal = contractTime * parseInt(fee) * parseFloat(area);
         document.getElementById('total').innerHTML = numberWithCommas(total) + ' VNĐ';
         document.getElementById('paymentFee').innerHTML = numberWithCommas(fee);
         document.getElementById('deposit').innerHTML = numberWithCommas(document.getElementById('deposit').innerText);

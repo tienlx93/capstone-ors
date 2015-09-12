@@ -145,7 +145,7 @@ public class AccountDAO extends BaseDAO<Account, String> {
 
     public List<Account> findStaff() {
         try {
-            String sql = "from Account  where roleId = 3 ";
+            String sql = "from Account  where roleId = 3 and statusId = 1";
             Query query = session.createQuery(sql);
             return query.list();
         } catch (Exception e) {

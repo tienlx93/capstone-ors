@@ -101,7 +101,7 @@ var REPAIR_STATUS = [{}, {
     'name': 'WaitingConfirm',
     'description': 'Việc của tôi'
 }];
-var DEFAULT_STATUS = [{}, {
+var DEFAULT_STATUS = [{
     'id': 1,
     'name': 'Assigned',
     'description': 'Việc hôm nay'

@@ -2,7 +2,7 @@
 <div class="content">
     <div class="item-detail">
         <div>
-            <img src="{{data.images[0]}}" width="100%" style="min-height: 120px;max-height: 200px">
+            <img ng-src="{{data.images[0]}}" width="100%" style="min-height: 120px;max-height: 200px">
         </div>
         <div class="line">
             <div class="left-side">Tên văn phòng:</div>
@@ -22,13 +22,14 @@
             <div class="right-side">{{data.customerName}}</div>
         </div>
         <div ng-show="type!='lịch hẹn'" class="line">
-            <div class="left-side">Chi tiết {{type}}: </div>
+            <div class="left-side">Chi tiết {{type}}:</div>
             <div class="right-side">{{data.detail}}</div>
         </div>
         <div class="line">
             <div class="left-side">Thời gian:</div>
             <div ng-show="type!='lịch hẹn'" class="right-side">{{data.date | toLocaleDate}}</div>
             <div ng-show="type=='lịch hẹn'" class="right-side">{{data.date | toLocaleDateTime}}</div>
+            <span ng-show="type!='sửa chữa' && !showBtn">(Còn khoảng {{diff}} đến công việc)</span>
         </div>
         <div ng-show="type!='lịch hẹn'" class="line">
             <div class="left-side">Danh sách {{type}}:</div>
@@ -48,12 +49,15 @@
             </div>
         </div>
         <div ng-show="type=='lịch hẹn'" class="buttons">
-            <div ng-show="data.status==2">
+            <div ng-show="data.status==2 && showBtn">
                 <button class="detail-button confirm" ng-click="change(3)"><i class="fa fa-check fa-2x"></i>
                     <span>Khách hàng muốn kí hợp đồng</span></button>
                 <button class="detail-button reject" ng-click="change(5)"><i class="fa fa-times fa-2x"></i>
                     <span>Khách hàng không đồng ý</span></button>
                 <br>
+            </div>
+            <div ng-show="data.status==2 && !showBtn" style="text-align: center; color: #ef4836">
+                <i class="fa fa-warning"></i> Chưa tới thời gian lịch hẹn
             </div>
         </div>
         <div ng-show="type!='lịch hẹn'" class="buttons">
@@ -64,14 +68,24 @@
                     <span>Không đồng ý</span></button>
                 <br>
             </div>
-            <div ng-show="data.status==5">
+            <div ng-show="data.status==5 && showBtn">
                 <button class="detail-button confirm" ng-click="change(3)">
                     <span><i class="fa fa-check fa-2x"></i>
                         <span>Khách hàng hài lòng</span></span></button>
-                <button class="detail-button reject" ng-click="change(1)">
+                <div ng-show="type!='sửa chữa'">
+                    <button class="detail-button reject" ng-click="change(1)">
                     <span><i class="fa fa-times fa-2x"></i>
                         <span>Khách hàng không hài lòng</span></span></button>
+                </div>
+                <div ng-show="type=='sửa chữa'">
+                    <button class="detail-button reject" ng-click="change(2)">
+                    <span><i class="fa fa-times fa-2x"></i>
+                        <span>Khách hàng không hài lòng</span></span></button>
+                </div>
                 <br>
+            </div>
+            <div ng-show="data.status==5 && !showBtn" style="text-align: center; color: #ef4836">
+                <i class="fa fa-warning"></i> Chưa tới thời gian công việc
             </div>
         </div>
     </div>

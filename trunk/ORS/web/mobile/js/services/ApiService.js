@@ -34,14 +34,6 @@ app.factory("Api", ['$http',
                 }
             })
                 .success(function (data) {
-                    for (var i = 0; i < data.length; i++) {
-                        if (type == 'appointment') {
-                            data[i].statusName = APPOINTMENT_STATUS[data[i].status - 1].name;
-                        } else {
-                            data[i].statusName = REPAIR_STATUS[data[i].status - 1].name;
-                        }
-                    }
-
                     callback(data);
                 })
                 .error(function () {
@@ -49,6 +41,21 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.getCurrentTime = function (callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getCurrentTime'
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback("Error");
+                })
+        };
 
         services.getDetail = function (type, id, callback) {
             $http({
@@ -61,14 +68,6 @@ app.factory("Api", ['$http',
                 }
             })
                 .success(function (data) {
-                    if (type == 'appointment') {
-                        data.statusClass = APPOINTMENT_STATUS[data.status - 1].name;
-                        data.statusName = APPOINTMENT_STATUS[data.status - 1].description;
-                    } else {
-                        data.statusClass = REPAIR_STATUS[data.status - 1].name;
-                        data.statusName = REPAIR_STATUS[data.status - 1].description;
-                    }
-
                     callback(data);
                 })
                 .error(function () {

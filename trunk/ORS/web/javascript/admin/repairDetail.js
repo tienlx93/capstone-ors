@@ -23,10 +23,14 @@ $(document).ready(function () {
         $("#happy").removeAttr("disabled");
         $("#unhappy").removeAttr("disabled");
     }
-    $("form").submit(function () {
-        var currentForm = $(this);
+    $("button[type='submit']").submit(function () {
+        var currentForm = $("form");
+        var button = $(this).attr("value");
+        if (button != "assign" || !currentForm.valid()) {
+            return;
+        }
+        currentForm.append("<input type='hidden' name='button' value='"+button+"'>");
         event.preventDefault();
-        var url = currentForm.attr('action');
         var url = currentForm.attr('action');
         $.ajax({
             type: "POST",
@@ -36,7 +40,7 @@ $(document).ready(function () {
                 data = JSON.parse(data);
                 if (data == "Success") {
                     bootbox.alert("Giao việc thành công", function () {
-                        window.location.reload();
+                        window.location = "/admin/repair";
                     });
                 } else {
                     var message = "";
@@ -76,7 +80,7 @@ $(document).ready(function () {
                                             data: currentForm.serialize(),
                                             success: function (data) {
                                                 bootbox.alert("Giao việc thành công", function () {
-                                                    window.location.reload();
+                                                    window.location = "/admin/repair";
                                                 });
                                             }
                                         });

@@ -34,6 +34,7 @@
             src="${pageContext.request.contextPath}/javascript/admin/appointmentDetail.js"></script>
     <script src="${pageContext.request.contextPath}/lib/jquery.validate.min.js"></script>
     <script src="${pageContext.request.contextPath}/lib/localization/messages_vi.js"></script>
+    <script src="${pageContext.request.contextPath}/lib/bootbox.min.js"></script>
     <title>Office Rental Service</title>
 </head>
 <body>

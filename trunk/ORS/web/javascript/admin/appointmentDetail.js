@@ -30,8 +30,14 @@ $(document).ready(function () {
         $("#assignTask").removeAttr("disabled");
         $("#assignAgain").removeAttr("disabled");
     }
-    $("form").submit(function () {
-        var currentForm = $(this);
+
+    $("button[type='submit']").click(function () {
+        var currentForm = $("form");
+        var button = $(this).attr("value");
+        if (button == "reject" || !currentForm.valid()) {
+            return;
+        }
+        currentForm.append("<input type='hidden' name='button' value='"+button+"'>");
         event.preventDefault();
         var url = currentForm.attr('action');
         $.ajax({

@@ -120,6 +120,21 @@ public class AppointmentController extends HttpServlet {
                                 unassignedList.get(unassignedList.size() - 1).getTime());
                         Map<Integer, String> suggestMap = service.makeAppointmentSchedule();
                         request.setAttribute("suggestMap", suggestMap);
+                        AccountDAO accountDAO = new AccountDAO();
+                        List<Account> staffList = accountDAO.findStaff();
+                        Map<Integer, List<String>> availableStaff = new HashMap<>();
+                        AssignResultJSON staffAvailable;
+                        for (Appointment appointment : unassignedList) {
+                            List<String> available = new ArrayList<>();
+                            for (Account staff : staffList) {
+                                staffAvailable = service.isStaffAvailable(appointment, staff.getUsername());
+                                if (staffAvailable.status >= 0) {
+                                    available.add(staff.getUsername());
+                                }
+                            }
+                            availableStaff.put(appointment.getId(), available);
+                        }
+                        request.setAttribute("availableMap", availableStaff);
                     }
                 } else {
                     list = dao.getAppointmentListByStaffAndOffice(account.getUsername(), "");

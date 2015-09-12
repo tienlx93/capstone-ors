@@ -183,11 +183,11 @@
                                           <option value="">(Không có đề xuất)
                                           </option>
                                           <c:forEach var="itemAcc"
-                                                     items="<%= listAcc %>">
-                                            <option value="${itemAcc.username}"
+                                                     items="${availableMap[item.id]}">
+                                            <option value="${itemAcc}"
                                                     <c:if
-                                                        test="${suggestMap[item.id] == itemAcc.username}">selected</c:if>>
-                                                ${itemAcc.username}
+                                                        test="${suggestMap[item.id] == itemAcc}">selected</c:if>>
+                                                ${itemAcc}
                                             </option>
                                           </c:forEach>
                                         </select>

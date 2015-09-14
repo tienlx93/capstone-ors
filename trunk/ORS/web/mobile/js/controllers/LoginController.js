@@ -3,10 +3,13 @@
  */
 controllers.controller('LoginController', ['$scope', '$location', 'Api',
     function ($scope, $location, Api) {
-        DEVICE_HEIGHT = $(window).height();
-        $(".black").css({
-            height: DEVICE_HEIGHT
-        });
+        setTimeout(function(){
+            DEVICE_HEIGHT = $(window).height();
+            $(".black").css({
+                height: DEVICE_HEIGHT
+            });
+        },100);
+
         $scope.login = function(form) {
             if (form.$valid) {
                 var username = $scope.username;

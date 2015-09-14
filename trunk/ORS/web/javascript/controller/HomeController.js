@@ -5,7 +5,6 @@ controllers.controller('HomeController', ['$scope', '$rootScope', '$location', '
         $scope.searchTerm = {};
         $scope.priceRange = 0;
         $scope.listNewOffice = [];
-        $rootScope.price;
         $rootScope.q = [];
         $rootScope.amenityWeight = [];
         $scope.isCollapsed = true;
@@ -26,10 +25,12 @@ controllers.controller('HomeController', ['$scope', '$rootScope', '$location', '
 
         $scope.searchListOffice = function () {
             if ($scope.searchTerm.latitude) {
-                $rootScope.searchKey = $("#place").val();
+                //$scope.searchKey = $("#place").val();
                 $location.path("/list/latitude=" + $scope.searchTerm.latitude
                 + "&longitude=" + $scope.searchTerm.longitude
-                + "&priceRange=" + $scope.priceRange);
+                + "&priceRange=" + $scope.priceRange
+                + "&price=" + $scope.price
+                + "&searchKey=" + $scope.searchKey);
             } else {
                 toastr.error("Mời nhập vào địa chỉ");
             }

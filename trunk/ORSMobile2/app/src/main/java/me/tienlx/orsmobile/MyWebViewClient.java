@@ -20,7 +20,8 @@ public class MyWebViewClient extends WebViewClient {
 
     @Override
     public boolean shouldOverrideUrlLoading(WebView view, String url) {
-        if (Uri.parse(url).getHost() != null && Uri.parse(url).getHost().equals("tienlx.me")) {
+        if (Uri.parse(url).getHost() != null && (Uri.parse(url).getHost().contains("tienlx.me")
+                ||Uri.parse(url).getHost().contains("192."))) {
             return false;
         } else {
             Intent searchAddress = new Intent(Intent.ACTION_VIEW, Uri.parse(url));

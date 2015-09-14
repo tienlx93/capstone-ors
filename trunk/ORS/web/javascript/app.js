@@ -119,6 +119,7 @@ app.directive('googleplace', function() {
             google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
                 scope.$apply(function() {
                     model.$setViewValue(element.val());
+                    scope.searchKey = element.val();
                     var place = scope.gPlace.getPlace();
                     scope.searchTerm.latitude = place.geometry.location.lat();
                     scope.searchTerm.longitude = place.geometry.location.lng();

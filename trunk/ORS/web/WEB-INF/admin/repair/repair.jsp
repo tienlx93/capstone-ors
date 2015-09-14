@@ -109,13 +109,13 @@
                                                    role="tab" data-toggle="tab">Cần giao việc</a>
                                             </li>
 
-                                            <li role="presentation">
+                                            <%--<li role="presentation">
                                                 <a href="#assigned" aria-controls="assigned" role="tab"
                                                    data-toggle="tab">Đã giao</a>
-                                            </li>
+                                            </li>--%>
                                             <li role="presentation">
                                                 <a href="#confirm" aria-controls="confirm" role="tab"
-                                                   data-toggle="tab">Chờ khách hàng xác nhận</a>
+                                                   data-toggle="tab">Việc đã giao</a>
                                             </li>
                                             <li role="presentation">
                                                 <a href="#done" aria-controls="done" role="tab"
@@ -256,6 +256,48 @@
                                                 </tbody>
                                             </table>
                                             <ul class="pagination pagination-request"></ul>
+
+                                            <h3>
+                                                Các yêu cầu cần giao lại
+                                            </h3>
+
+                                            <div id="assigned">
+                                                <table class="table striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>Tên văn phòng</th>
+                                                        <th>Khách hàng</th>
+                                                        <th>Nhân viên được giao</th>
+                                                        <th>Ngày sửa chữa</th>
+                                                        <th></th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody class="list">
+                                                    <c:forEach var="item" items="${list}">
+                                                        <c:if test="${item.repairStatusId == 2 && item.assignedStaff != null}">
+                                                            <tr>
+                                                                <td>${item.contractByContractId.officeByOfficeId.name}</td>
+                                                                <td>
+                                                                    <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
+                                                                            ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
+                                                                </td>
+                                                                <td>${item.assignedStaff}</td>
+                                                                <td><fmt:formatDate pattern="dd-MM-yyyy"
+                                                                                    value="${item.assignedTime}"/></td>
+                                                                <td>
+                                                                    <a href="repair?action=edit&id=${item.id}"
+                                                                       title="Chi tiết"
+                                                                       class="btn btn-icon btn-default"><i
+                                                                            class="fa fa-info color5"></i></a>
+                                                                </td>
+                                                            </tr>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                                <ul class="pagination pagination-assigned"></ul>
+                                            </div>
+
                                         </div>
                                     </c:if>
 
@@ -340,7 +382,7 @@
                                             </div>--%>
                                         </c:when>
                                         <c:otherwise>
-                                            <div role="tabpanel" class="tab-pane" id="assigned">
+                                            <%--<div role="tabpanel" class="tab-pane" id="assigned">
                                                 <table class="table striped">
                                                     <thead>
                                                     <tr>
@@ -375,7 +417,7 @@
                                                     </tbody>
                                                 </table>
                                                 <ul class="pagination pagination-assigned"></ul>
-                                            </div>
+                                            </div>--%>
                                         </c:otherwise>
                                     </c:choose>
 
@@ -491,8 +533,8 @@
                                                                     <td>${item.assignedStaff}</td>
                                                                 </c:if>
 
-                                                                    <td><fmt:formatDate pattern="dd-MM-yyyy"
-                                                                                        value="${item.assignedTime}"/></td>
+                                                                <td><fmt:formatDate pattern="dd-MM-yyyy"
+                                                                                    value="${item.assignedTime}"/></td>
 
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"

@@ -178,22 +178,12 @@
                                         sửa chữa:</label>
                                     <c:choose>
                                         <c:when test="${user.roleId==2 && info.repairStatusId == 2}">
-
-                                            <c:if test="${info.assignedStaff == null}">
                                             <div class="col-sm-4">
                                                 <fmt:formatDate value="${info.assignedTime}"
                                                                 pattern="dd-MM-yyyy" var="newDate"/>
                                                 <input type="text" name="assignedTime" id="assignedTime"
                                                        class="form-control" value="${newDate}" required readonly>
                                             </div>
-                                            </c:if>
-                                            <c:if test="${info.assignedStaff != null}">
-                                                <div class="col-sm-4">
-                                                    <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
-                                                    <input type="hidden" name="assignedTime"
-                                                           class="form-control" value="${info.assignedTime}">
-                                                </div>
-                                            </c:if>
                                         </c:when>
                                         <c:otherwise>
                                             <div class="col-sm-4">
@@ -211,7 +201,7 @@
                                             List<Account> listAcc = acc.findStaff();%>
                                         <div class="col-sm-4">
                                             <c:choose>
-                                                <c:when test="${info.repairStatusId == 3 || info.repairStatusId == 4 || info.repairStatusId == 5}">
+                                                <c:when test="${info.repairStatusId == 3 || info.repairStatusId == 4}">
                                                     ${info.assignedStaff}
                                                     <input type="hidden" name="assignedStaff" id="assignedStaff"
                                                            value="${info.assignedStaff}">
@@ -443,9 +433,15 @@
                                                 Giao việc
                                             </button>
                                         </c:if>
+                                        <c:if test="${info.repairStatusId == 5}">
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary"
+                                                    id="agree" disabled>
+                                                Giao việc lại
+                                            </button>
+                                        </c:if>
                                         <c:if test="${info.repairStatusId == 2 && info.assignedStaff != null}">
                                             <button type="submit" value="assign2" name="button" class="btn btn-primary"
-                                                    id="agree" disabled>
+                                                    onclick="return check()">
                                                 Giao việc lại
                                             </button>
                                             <button type="submit" value="reject" name="button" class="btn btn-danger">

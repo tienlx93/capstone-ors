@@ -63,7 +63,7 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
             $scope.clicked= true;
             if (isNaN(time.getTime())) {
                 toastr.error('Thời gian hẹn không hợp lệ');
-
+                $scope.clicked= false;
             } else {
                 time = time.getTime();
                 Api.requestAppointment(time, id, function (data) {

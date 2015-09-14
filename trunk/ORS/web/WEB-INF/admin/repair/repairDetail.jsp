@@ -421,7 +421,8 @@
                                                     onclick="return check()">
                                                 Đồng ý sửa chữa
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn btn-danger">
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="inputComment(true)">
                                                 Từ chối sửa chữa
                                             </button>
                                         </c:if>
@@ -444,7 +445,8 @@
                                                     onclick="return check()">
                                                 Giao việc lại
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn btn-danger">
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="inputComment()">
                                                 Từ chối sửa chữa
                                             </button>
                                         </c:if>
@@ -475,6 +477,30 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
+
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Nhập lí do hủy</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="comment" autocomplete="off" type="text"
+                                                   required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Quay lại
+                                            </button>
+                                            <button type="submit" class="btn btn-danger" name="button" value="reject"
+                                                    id="submit">Xác nhận hủy
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </form>
 
                     </div>
@@ -496,7 +522,21 @@
         } else {
             return true;
         }
+    };
+
+    function inputComment(sendSMS) {
+        if (sendSMS) {
+            $("#submit").val("reject");
+        }
+        $('#myModal').modal('show');
     }
+    $('#myModal').on('show.bs.modal', function (e) {
+        $("#assignedStaff").removeAttr("required");
+    }).on('hide.bs.modal', function (e) {
+        $("#assignedStaff").attr("required", true);
+    });
+    $("form").validate({});
+
 </script>
 
 </body>

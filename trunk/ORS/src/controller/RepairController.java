@@ -7,6 +7,7 @@ import json.AssignResultJSON;
 import service.ConstantService;
 import service.SMSService;
 import service.ScheduleService;
+import util.AccentRemover;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,7 +42,7 @@ public class RepairController extends HttpServlet {
             String assignedStaff = request.getParameter("assignedStaff");
             String description = request.getParameter("description");
             String assignedTime = request.getParameter("assignedTime");
-
+            String comment = request.getParameter("comment");
 
             SMSService sms = new SMSService();
             ContractDAO contractDAO = new ContractDAO();
@@ -50,9 +51,10 @@ public class RepairController extends HttpServlet {
 
             switch (button) {
                 case "reject":
+                    String nonUTF8Comment = AccentRemover.removeAccent(comment);
                     dao.changeStatus(id, 4);
                     sms.setPhone(phone);
-                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan.");
+                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
                     try {
                         sms.send();
                     } catch (IOException e) {

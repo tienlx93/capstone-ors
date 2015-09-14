@@ -7,6 +7,7 @@ import json.AssignResultJSON;
 import service.ConstantService;
 import service.SMSService;
 import service.ScheduleService;
+import util.AccentRemover;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -41,12 +42,13 @@ public class RentalController extends HttpServlet {
             int contractId = Integer.parseInt(request.getParameter("contractId"));
             String assignStaff = request.getParameter("assignStaff");
             String description = request.getParameter("description");
+            String comment = request.getParameter("comment");
 
             Rental rental = dao.get(id);
             Collection<RentalDetail> rentalDetailCollection = rental.getRentalDetailsById();
             RentalItemDAO rentalItemDAO = new RentalItemDAO();
             String assignedTime = request.getParameter("assignedTime");
-            
+
             SMSService sms = new SMSService();
             ContractDAO contractDAO = new ContractDAO();
             Contract current = contractDAO.get(contractId);
@@ -54,11 +56,12 @@ public class RentalController extends HttpServlet {
             sms.setPhone(phone);
             switch (button) {
                 case "reject":
+                    String nonUTF8Comment = AccentRemover.removeAccent(comment);
                     dao.changeStatus(id, 4);
                     for (RentalDetail rentalDetail : rentalDetailCollection) {
                         rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItemDAO.get(rentalDetail.getRentalItemId()).getQuantity() + rentalDetail.getQuantity());
                     }
-                    sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach khong duoc chap nhan.");
+                    sms.setMessage("(ORS) Yeu cau thue vat dung cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
                     try {
                         sms.send();
                     } catch (IOException e) {

@@ -522,7 +522,7 @@
         } else {
             return true;
         }
-    };
+    }
 
     function inputComment(sendSMS) {
         if (sendSMS) {

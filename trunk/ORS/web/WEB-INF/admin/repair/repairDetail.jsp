@@ -178,22 +178,12 @@
                                         sửa chữa:</label>
                                     <c:choose>
                                         <c:when test="${user.roleId==2 && info.repairStatusId == 2}">
-
-                                            <c:if test="${info.assignedStaff == null}">
                                             <div class="col-sm-4">
                                                 <fmt:formatDate value="${info.assignedTime}"
                                                                 pattern="dd-MM-yyyy" var="newDate"/>
                                                 <input type="text" name="assignedTime" id="assignedTime"
                                                        class="form-control" value="${newDate}" required readonly>
                                             </div>
-                                            </c:if>
-                                            <c:if test="${info.assignedStaff != null}">
-                                                <div class="col-sm-4">
-                                                    <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
-                                                    <input type="hidden" name="assignedTime"
-                                                           class="form-control" value="${info.assignedTime}">
-                                                </div>
-                                            </c:if>
                                         </c:when>
                                         <c:otherwise>
                                             <div class="col-sm-4">
@@ -211,7 +201,7 @@
                                             List<Account> listAcc = acc.findStaff();%>
                                         <div class="col-sm-4">
                                             <c:choose>
-                                                <c:when test="${info.repairStatusId == 3 || info.repairStatusId == 4 || info.repairStatusId == 5}">
+                                                <c:when test="${info.repairStatusId == 3 || info.repairStatusId == 4}">
                                                     ${info.assignedStaff}
                                                     <input type="hidden" name="assignedStaff" id="assignedStaff"
                                                            value="${info.assignedStaff}">
@@ -431,7 +421,8 @@
                                                     onclick="return check()">
                                                 Đồng ý sửa chữa
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn btn-danger">
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="inputComment(true)">
                                                 Từ chối sửa chữa
                                             </button>
                                         </c:if>
@@ -443,12 +434,19 @@
                                                 Giao việc
                                             </button>
                                         </c:if>
-                                        <c:if test="${info.repairStatusId == 2 && info.assignedStaff != null}">
-                                            <button type="submit" value="assign2" name="button" class="btn btn-primary"
+                                        <c:if test="${info.repairStatusId == 5}">
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary"
                                                     id="agree" disabled>
                                                 Giao việc lại
                                             </button>
-                                            <button type="submit" value="reject" name="button" class="btn btn-danger">
+                                        </c:if>
+                                        <c:if test="${info.repairStatusId == 2 && info.assignedStaff != null}">
+                                            <button type="submit" value="assign2" name="button" class="btn btn-primary"
+                                                    onclick="return check()">
+                                                Giao việc lại
+                                            </button>
+                                            <button type="button" class="btn btn-danger"
+                                                    onclick="inputComment()">
                                                 Từ chối sửa chữa
                                             </button>
                                         </c:if>
@@ -479,6 +477,30 @@
                                     </c:otherwise>
                                 </c:choose>
                             </div>
+
+                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                    aria-hidden="true">&times;</span></button>
+                                            <h4 class="modal-title">Nhập lí do hủy</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <input class="form-control" name="comment" autocomplete="off" type="text"
+                                                   required>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Quay lại
+                                            </button>
+                                            <button type="submit" class="btn btn-danger" name="button" value="reject"
+                                                    id="submit">Xác nhận hủy
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </form>
 
                     </div>
@@ -501,6 +523,20 @@
             return true;
         }
     }
+
+    function inputComment(sendSMS) {
+        if (sendSMS) {
+            $("#submit").val("reject");
+        }
+        $('#myModal').modal('show');
+    }
+    $('#myModal').on('show.bs.modal', function (e) {
+        $("#assignedStaff").removeAttr("required");
+    }).on('hide.bs.modal', function (e) {
+        $("#assignedStaff").attr("required", true);
+    });
+    $("form").validate({});
+
 </script>
 
 </body>

@@ -303,7 +303,7 @@ App Logo
 }
 .applogo .logo {
     color: #fff;
-    font-size: 30px;
+    font-size: 16px;
     font-weight: bold;
     font-family: 'Montserrat', sans-serif;
 }
@@ -2894,6 +2894,12 @@ div[data-role="editor-toolbar"] {
 }
 .panel-info > .panel-footer + .panel-collapse > .panel-body {
     border-bottom-color: #51b7a3;
+}
+
+.panel-admin {
+    border-color: #8A8A8A;
+    background: #8A8A8A;
+    color: #fff;
 }
 /* Panel Warning */
 .panel-warning {

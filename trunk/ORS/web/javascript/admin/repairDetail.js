@@ -23,10 +23,10 @@ $(document).ready(function () {
         $("#happy").removeAttr("disabled");
         $("#unhappy").removeAttr("disabled");
     }
-    $("button[type='submit']").submit(function () {
+    $("button[type='submit']").click(function () {
         var currentForm = $("form");
         var button = $(this).attr("value");
-        if (button != "assign" || !currentForm.valid()) {
+        if (button == "reject" || !currentForm.valid()) {
             return;
         }
         currentForm.append("<input type='hidden' name='button' value='"+button+"'>");

@@ -44,10 +44,63 @@
     <div class="clearfix">
         <c:if test="${user.roleId == 1}">
             <h:panel badge="${numUser}" name="Tổng người dùng" url="${pageContext.request.contextPath}/admin/user"
-                     icon="fa-user" css="panel-primary"/>
+                     icon="fa-user" css="panel-admin"/>
         </c:if>
 
-        <c:if test="${user.roleId != 1}">
+        <c:if test="${user.roleId == 3}">
+            <h:panel badge="${numAppointment}" name="Lịch hẹn mới"
+                     url="${pageContext.request.contextPath}/admin/appointment"
+                     icon="fa-calendar" css="panel-success"/>
+            <h:panel badge="${numRepair}" name="Yêu cầu sửa chữa" url="${pageContext.request.contextPath}/admin/repair"
+                     icon="fa-wrench" css="panel-success"/>
+            <h:panel badge="${numRental}" name="Yêu cầu thuê vật dụng"
+                     url="${pageContext.request.contextPath}/admin/rental"
+                     icon="fa-fax" css="panel-success"/>
+            <h:panel badge="${numRentalItem}" name="Thiết bị cho thuê"
+                     url="${pageContext.request.contextPath}/admin/rentalItem"
+                     icon="fa-cubes" css="panel-success"/>
+        </c:if>
+
+        <c:if test="${user.roleId == 5}">
+            <h:panel badge="${numOffice}" name="Tổng văn phòng"
+                     url="${pageContext.request.contextPath}/admin/office"
+                     icon="fa-building-o" css="panel-warning"/>
+            <h:panel badge="${numContract}" name="Tổng hợp đồng"
+                     url="${pageContext.request.contextPath}/admin/contract"
+                     icon="fa-file-text-o" css="panel-warning"/>
+            <h:panel badge="${numRepair}" name="Yêu cầu sửa chữa" url="${pageContext.request.contextPath}/admin/repair"
+                     icon="fa-wrench" css="panel-warning"/>
+            <h:panel badge="" name="Thống kê doanh thu" url="${pageContext.request.contextPath}/admin/incomeStatics"
+                     icon="fa-bar-chart" css="panel-warning"/>
+        </c:if>
+
+        <c:if test="${user.roleId == 2}">
+            <h:panel badge="${numOffice}" name="Tổng văn phòng"
+                     url="${pageContext.request.contextPath}/admin/office"
+                     icon="fa-building-o" css="panel-primary"/>
+            <h:panel badge="${numContract}" name="Tổng hợp đồng"
+                     url="${pageContext.request.contextPath}/admin/contract"
+                     icon="fa-file-text-o" css="panel-primary"/>
+            <h:panel badge="${numAppointment}" name="Lịch hẹn mới"
+                     url="${pageContext.request.contextPath}/admin/appointment"
+                     icon="fa-calendar" css="panel-primary"/>
+            <h:panel badge="${numReturn}" name="Hủy trước hạn"
+                     url="${pageContext.request.contextPath}/admin/contract?action=return"
+                     icon="fa-file-text-o" css="panel-primary"/>
+            <h:panel badge="${numExtend}" name="Gia hạn"
+                     url="${pageContext.request.contextPath}/admin/contract?action=extend"
+                     icon="fa-file-text-o" css="panel-primary"/>
+            <h:panel badge="${numRepair}" name="Yêu cầu sửa chữa" url="${pageContext.request.contextPath}/admin/repair"
+                     icon="fa-wrench" css="panel-primary"/>
+            <h:panel badge="${numRental}" name="Yêu cầu thuê vật dụng"
+                     url="${pageContext.request.contextPath}/admin/rental"
+                     icon="fa-fax" css="panel-primary"/>
+            <h:panel badge="${numRentalItem}" name="Thiết bị cho thuê"
+                     url="${pageContext.request.contextPath}/admin/rentalItem"
+                     icon="fa-cubes" css="panel-primary"/>
+        </c:if>
+
+        <%--<c:if test="${user.roleId != 1}">
             <c:if test="${user.roleId != 3}">
                 <h:panel badge="${numOffice}" name="Tổng văn phòng"
                          url="${pageContext.request.contextPath}/admin/office"
@@ -81,7 +134,7 @@
                          url="${pageContext.request.contextPath}/admin/rentalItem"
                          icon="fa-cubes" css="panel-primary"/>
             </c:if>
-        </c:if>
+        </c:if>--%>
     </div>
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>

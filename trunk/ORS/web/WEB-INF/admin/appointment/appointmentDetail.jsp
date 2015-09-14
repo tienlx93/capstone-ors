@@ -135,7 +135,7 @@
                                 </div>
                             </div>
 
-                            <c:if test="${user.roleId==2}">
+                            <c:if test="${user.roleId==2 && info.statusId != 5}">
                                 <div class="form-group clearfix">
                                     <label for="assignedStaff" class="col-sm-2 control-label" style="text-align: right">
                                         Nhân viên được giao:</label>

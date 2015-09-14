@@ -32,6 +32,7 @@
             <br>
             <h4>File hợp đồng</h4>
             <br>
+
             <div class="row" style="margin:auto;">
                 <div class="col-sm-6" ng-repeat="img in listImg">
                     <img style="height: 150px" width="100%" src="{{img}}">
@@ -90,6 +91,11 @@
                     <td class="textright">Ngày kết thúc hợp đồng:</td>
                     <td><span class="spanleft">{{data.endDay | date:'dd-MM-yyyy'}}</span></td>
                 </tr>
+                <tr>
+                    <td class="textright">Các tiện nghi đi kèm văn phòng:</td>
+                    <td><span class="spanleft"><span ng-repeat="amenity in amenities track by $index">{{amenity}}<span
+                            ng-if="$index < amenities.length - 1">,</span> </span></span></td>
+                </tr>
 
                 <tr>
                     <td colspan="2"><br><h4>Thông tin thanh toán:</h4><br></td>
@@ -117,12 +123,16 @@
                 <tbody>
                 <tr>
                     <td style="padding-right: 10px;"><h4>Tình trạng hợp đồng:</h4></td>
-                    <td ng-if="data.status == 3 && data.startDay < today" class="contract-status color9-bg"> Đang yêu cầu hủy hợp đồng trước
+                    <td ng-if="data.status == 3 && data.startDay < today" class="contract-status color9-bg"> Đang yêu
+                        cầu hủy hợp đồng trước
                         hạn
                     </td>
-                    <td ng-if="data.status == 2 && data.startDay < today" class="contract-status color7-bg"> Đang yêu cầu gia hạn hợp đồng</td>
-                    <td ng-if="data.status == 1 && data.startDay < today" class="contract-status color12-bg"> Khả dụng</td>
-                    <td ng-if="data.startDay > today" class="contract-status color3-bg"> Hợp đồng chưa có hiệu lực </td>
+                    <td ng-if="data.status == 2 && data.startDay < today" class="contract-status color7-bg"> Đang yêu
+                        cầu gia hạn hợp đồng
+                    </td>
+                    <td ng-if="data.status == 1 && data.startDay < today" class="contract-status color12-bg"> Khả dụng
+                    </td>
+                    <td ng-if="data.startDay > today" class="contract-status color3-bg"> Hợp đồng chưa có hiệu lực</td>
                 </tr>
                 </tbody>
             </table>

@@ -8,6 +8,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
         $scope.show = {};
         $scope.profile = {};
 
+        var officeId = 0;
         //get data
         Api.getContractById(id, function (data) {
             if (data == "Error") {
@@ -33,6 +34,11 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 $scope.Expire = false;
                 $scope.isLogin = true;
                 $scope.today = new Date();
+                officeId = data.officeId;
+
+                Api.getAmenityByOfficeId(officeId, function (amenity) {
+                    $scope.amenities = amenity;
+                });
 
                 var imgList = data.imgUrl;
                 if (imgList != undefined) {

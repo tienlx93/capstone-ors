@@ -102,6 +102,19 @@ public class ScheduleListener implements ServletContextListener {
             simpleTrigger4.setRepeatInterval(duration4);
             simpleTrigger4.setName("ForthTrigger");
 
+            //Creating Job and link to our Job class
+            JobDetailImpl jobDetail5 = new JobDetailImpl();
+            jobDetail5.setName("Fifth Job");
+            jobDetail5.setJobClass(ScheduleCheckAppointment.class);
+
+            //Creating schedule time with trigger
+            SimpleTriggerImpl simpleTrigger5 = new SimpleTriggerImpl();
+            simpleTrigger5.setStartTime(new Date(System.currentTimeMillis() + 1000));
+            simpleTrigger5.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+
+            Long duration5 = Duration.standardMinutes(1).getMillis();
+            simpleTrigger5.setRepeatInterval(duration5);
+            simpleTrigger5.setName("FifthTrigger");
             //Start scheduler
 
             scheduler.start();
@@ -109,6 +122,7 @@ public class ScheduleListener implements ServletContextListener {
             scheduler.scheduleJob(jobDetail2, simpleTrigger2);
             scheduler.scheduleJob(jobDetail3, simpleTrigger3);
             scheduler.scheduleJob(jobDetail4, simpleTrigger4);
+            scheduler.scheduleJob(jobDetail5, simpleTrigger5);
             /*DateTime now = new DateTime();
             DateTime startSchedule;
             if (now.hourOfDay().get() > 17) {

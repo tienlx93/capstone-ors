@@ -76,8 +76,16 @@
                 <span class="label label-default"></span></a>
             </li>
         </c:if>
+        <c:if test="${user.roleId == 5}">
+            <li>
+                <a href="${pageContext.request.contextPath}/admin/incomeStatics">
+                    <span class="icon color6"><i class="fa fa-bar-chart"></i></span>
+                    Thống kê doanh thu
+                </a>
+            </li>
+        </c:if>
     </ul>
-    <c:if test="${user.roleId != 1}">
+    <c:if test="${user.roleId != 1 && user.roleId != 5}">
         <ul class="sidebar-panel nav">
             <c:if test="${user.roleId != 5}">
                 <li><a href="${pageContext.request.contextPath}/admin/rentalItem">
@@ -100,7 +108,7 @@
                     <span class="label label-default"></span></a>
                 </li>
             </c:if>
-            <c:if test="${user.roleId != 3}">
+            <c:if test="${user.roleId == 2}">
                 <li>
                     <a href="#">
                         <span class="icon color6"><i class="fa fa-bar-chart"></i></span>

@@ -51,9 +51,9 @@
             <h:panel badge="${numAppointment}" name="Lịch hẹn mới"
                      url="${pageContext.request.contextPath}/admin/appointment"
                      icon="fa-calendar" css="panel-success"/>
-            <h:panel badge="${numRepair}" name="Sửa chữa mới" url="${pageContext.request.contextPath}/admin/repair"
+            <h:panel badge="${numRepair}" name="Yêu cầu sửa chữa" url="${pageContext.request.contextPath}/admin/repair"
                      icon="fa-wrench" css="panel-success"/>
-            <h:panel badge="${numRental}" name="Thuê vật dụng mới"
+            <h:panel badge="${numRental}" name="Yêu cầu thuê vật dụng"
                      url="${pageContext.request.contextPath}/admin/rental"
                      icon="fa-fax" css="panel-success"/>
             <h:panel badge="${numRentalItem}" name="Thiết bị cho thuê"
@@ -68,8 +68,10 @@
             <h:panel badge="${numContract}" name="Tổng hợp đồng"
                      url="${pageContext.request.contextPath}/admin/contract"
                      icon="fa-file-text-o" css="panel-warning"/>
-            <h:panel badge="${numRepair}" name="Sửa chữa mới" url="${pageContext.request.contextPath}/admin/repair"
+            <h:panel badge="${numRepair}" name="Yêu cầu sửa chữa" url="${pageContext.request.contextPath}/admin/repair"
                      icon="fa-wrench" css="panel-warning"/>
+            <h:panel badge="" name="Thống kê doanh thu" url="${pageContext.request.contextPath}/admin/incomeStatics"
+                     icon="fa-bar-chart" css="panel-warning"/>
         </c:if>
 
         <c:if test="${user.roleId == 2}">
@@ -88,9 +90,9 @@
             <h:panel badge="${numExtend}" name="Gia hạn"
                      url="${pageContext.request.contextPath}/admin/contract?action=extend"
                      icon="fa-file-text-o" css="panel-primary"/>
-            <h:panel badge="${numRepair}" name="Sửa chữa mới" url="${pageContext.request.contextPath}/admin/repair"
+            <h:panel badge="${numRepair}" name="Yêu cầu sửa chữa" url="${pageContext.request.contextPath}/admin/repair"
                      icon="fa-wrench" css="panel-primary"/>
-            <h:panel badge="${numRental}" name="Thuê vật dụng mới"
+            <h:panel badge="${numRental}" name="Yêu cầu thuê vật dụng"
                      url="${pageContext.request.contextPath}/admin/rental"
                      icon="fa-fax" css="panel-primary"/>
             <h:panel badge="${numRentalItem}" name="Thiết bị cho thuê"

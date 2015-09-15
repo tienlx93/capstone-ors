@@ -24,7 +24,7 @@
       </div>
     </c:if>
     <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
-
+    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
     <!-- Start Searchbox -->
       <%--<form class="searchform">
           <input type="text" class="searchbox" id="searchbox" placeholder="Search">
@@ -72,7 +72,7 @@
     <!-- End App Logo -->
 
     <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
-
+    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
     <!-- Start Searchbox -->
       <%--<form class="searchform">
           <input type="text" class="searchbox" id="searchbox" placeholder="Search">
@@ -119,7 +119,7 @@
     <!-- End App Logo -->
 
     <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
-
+    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
     <!-- Start Searchbox -->
       <%--<form class="searchform">
           <input type="text" class="searchbox" id="searchbox" placeholder="Search">
@@ -167,7 +167,7 @@
     <!-- End App Logo -->
 
     <a href="#" class="sidebar-open-button"><i class="fa fa-bars"></i></a>
-
+    <a href="#" class="sidebar-open-button-mobile"><i class="fa fa-bars"></i></a>
     <!-- Start Searchbox -->
       <%--<form class="searchform">
           <input type="text" class="searchbox" id="searchbox" placeholder="Search">

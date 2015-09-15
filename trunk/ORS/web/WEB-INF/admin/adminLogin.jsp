@@ -10,6 +10,7 @@
 
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
         <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+        <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css" type="text/css">
         <link rel="stylesheet" type="text/css" href="../../css/adminlogin.css"/>
 
         <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>

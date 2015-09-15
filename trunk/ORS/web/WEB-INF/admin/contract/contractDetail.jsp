@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css" type="text/css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
@@ -301,7 +302,8 @@
                                         sửa</a>
                                         <%--<button type="submit" name="action" value="export" class="btn btn-primary">Export--%>
                                         <%--</button>--%>
-                                    <a class="btn btn-info" href="contract?action=export&id=${contract.id}">Export</a>
+                                    <a class="btn btn-info" href="contract?action=export&id=${contract.id}"
+                                       target="_blank">Export</a>
                                     <a href="/admin/contract" class="btn btn-default">Quay về</a>
                                 </div>
                             </c:if>

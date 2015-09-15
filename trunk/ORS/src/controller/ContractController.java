@@ -14,10 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.Timestamp;
@@ -25,6 +22,7 @@ import java.text.*;
 import java.util.*;
 import java.awt.Desktop;
 import java.util.List;
+import java.util.logging.Level;
 
 /**
  * Created by xps on 6/2/2015.
@@ -432,7 +430,17 @@ public class ContractController extends HttpServlet {
                         Contract contract = dao.get(Integer.parseInt(id));
 
                         try {
-                            ExportPDF(contract);
+                            String path = ExportPDF(contract);
+                            response.setContentType("application/PDF");
+                            response.setHeader("Content-disposition", "attachment; filename=" + "Hopdong " + id + ".pdf");
+                            File pdfFile = new File(path);
+                            FileInputStream fileInputStream = new FileInputStream(pdfFile);
+                            response.setContentLength((int) pdfFile.length());
+                            OutputStream responseOutputStream = response.getOutputStream();
+                            int bytes;
+                            while ((bytes = fileInputStream.read()) != -1) {
+                                responseOutputStream.write(bytes);
+                            }
 
 //                            String pdfFile = "E:/HelloWorld.pdf";
 //                            File file = new File(pdfFile);
@@ -444,7 +452,7 @@ public class ContractController extends HttpServlet {
 //                                desktop.open(file);
 //                            }
 
-                            response.sendRedirect("/admin/contract");
+                            //response.sendRedirect("/admin/contract");
                         } catch (DocumentException e) {
                             e.printStackTrace();
                         }
@@ -458,7 +466,7 @@ public class ContractController extends HttpServlet {
         }
     }
 
-    public void ExportPDF(Contract contract) throws IOException, DocumentException {
+    public String ExportPDF(Contract contract) throws IOException, DocumentException {
         Document document = new Document();
 
         HashMap<Integer, String> paymentTerm = new HashMap<Integer, String>();
@@ -509,9 +517,15 @@ public class ContractController extends HttpServlet {
         String dayStr = String.valueOf(day);
         String monthStr = String.valueOf(month);
         String yearStr = String.valueOf(year);
+        File output = null;
         try {
-            PdfWriter.getInstance(document,
-                    new FileOutputStream("E:/Hopdong" + contract.getId() + ".pdf"));
+            String path = getServletContext().getRealPath("") + File.separator + "contract";
+            File uploadDir = new File(path);
+            if (!uploadDir.exists()) {
+                boolean mkdir = uploadDir.mkdir();
+            }
+            output = new File(path + File.separator + "Hopdong " + contract.getId() + ".pdf");
+            PdfWriter.getInstance(document, new FileOutputStream(output));
 
             document.open();
             Paragraph paragraphEmpty = new Paragraph();
@@ -728,7 +742,7 @@ public class ContractController extends HttpServlet {
 
             document.close(); // no need to close PDFwriter?
 
-            String pdfFile = "E:/Hopdong" + contract.getId() + ".pdf";
+            /*String pdfFile = "E:/Hopdong" + contract.getId() + ".pdf";
             File file = new File(pdfFile);
             if (pdfFile.toString().endsWith(".pdf")) {
                 Runtime.getRuntime().exec("rundll32 url.dll,FileProtocolHandler " + pdfFile);
@@ -736,14 +750,14 @@ public class ContractController extends HttpServlet {
                 //For cross platform use
                 Desktop desktop = Desktop.getDesktop();
                 desktop.open(file);
-            }
+            }*/
 
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
+        return output.getAbsolutePath();
     }
 
     public int getDay(Date time) {

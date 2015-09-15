@@ -76,6 +76,8 @@
 
                                     <div class="col-sm-4">
                                             ${info.contractByContractId.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}
+                                        <input type="hidden" name="phoneOwner"
+                                               value="${info.contractByContractId.officeByOfficeId.accountByOwnerUsername.profileByUsername.phone}">
                                     </div>
                                 </div>
 

@@ -48,6 +48,7 @@ public class RepairController extends HttpServlet {
             ContractDAO contractDAO = new ContractDAO();
             Contract current = contractDAO.get(contractId);
             String phone = current.getAccountByCustomerUsername().getProfileByUsername().getPhone();
+            String ownerPhone = request.getParameter("phoneOwner");
 
             switch (button) {
                 case "reject":
@@ -55,6 +56,13 @@ public class RepairController extends HttpServlet {
                     dao.changeStatus(id, 4);
                     sms.setPhone(phone);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
+                    try {
+                        sms.send();
+                    } catch (IOException e) {
+                        System.out.println("Fail to send sms");
+                    }
+                    sms.setPhone(ownerPhone);
+                    sms.setMessage("(ORS) Nguoi quan ly da huy yeu cau. Ly do: " + nonUTF8Comment);
                     try {
                         sms.send();
                     } catch (IOException e) {

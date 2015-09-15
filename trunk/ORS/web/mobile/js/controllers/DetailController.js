@@ -44,7 +44,7 @@ controllers.controller('DetailController', ['$scope', '$location', '$routeParams
                         if (days > 0) {
                             $scope.diff = days + " ngày";
                         } else {
-                            $scope.diff = Math.round((jobTime.getTime() - nowTemp.getTime())/(3600*1000)) + " giờ";
+                            $scope.diff = "khoảng " + Math.round((jobTime.getTime() - nowTemp.getTime())/(3600*1000)) + " giờ";
                         }
                     }
                 });

@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.JsPromptResult;
+import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -25,14 +26,73 @@ public class MainActivity extends Activity {
         final Context mapp = this;
         setContentView(R.layout.activity_main);
 
-        String url = "http://tienlx.me/mobile";
+        // get prompts.xml view
+        LayoutInflater li = LayoutInflater.from(mapp);
+        View promptsView = li.inflate(R.layout.javascript_prompt_dialog, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mapp);
+
+        // set prompts.xml to alertdialog builder
+        alertDialogBuilder.setView(promptsView);
+
+        final EditText userInput = (EditText) promptsView
+                .findViewById(R.id.prompt_input_field);
+        ((EditText)promptsView.findViewById(R.id.prompt_input_field)).setText("http://192.168.1.1:8080");
+
+        // set dialog message
+        alertDialogBuilder
+                .setCancelable(false)
+                .setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // get user input and set it to result
+                                // edit text
+                                //result.setText(userInput.getText());
+                                String url = userInput.getText().toString();
+                                webView.loadUrl(url);
+                            }
+                        })
+                .setNegativeButton("Cancel",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                finish();
+                            }
+                        });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+
+
         webView = (WebView) this.findViewById(R.id.webView);
         webView.setWebViewClient(new MyWebViewClient(this));
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(true);
         webView.addJavascriptInterface(new WebAppInterface(this), "Android");
-        webView.loadUrl(url);
+
         webView.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public boolean onJsAlert(WebView view, String url, String message, final JsResult result)
+            {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Office rental service")
+                        .setMessage(message)
+                        .setPositiveButton(android.R.string.ok,
+                                new AlertDialog.OnClickListener()
+                                {
+                                    public void onClick(DialogInterface dialog, int which)
+                                    {
+                                        result.confirm();
+                                    }
+                                })
+                        .setCancelable(false)
+                        .create()
+                        .show();
+
+                return true;
+            }
             @Override
             public boolean onJsPrompt(WebView view, String url, String message, String defaultValue, final JsPromptResult result)
             {
@@ -67,7 +127,7 @@ public class MainActivity extends Activity {
                         .show();
 
                 return true;
-            };
+            }
         });
     }
 

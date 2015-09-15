@@ -29,7 +29,7 @@
             <div class="left-side">Thời gian:</div>
             <div ng-show="type!='lịch hẹn'" class="right-side">{{data.date | toLocaleDate}}</div>
             <div ng-show="type=='lịch hẹn'" class="right-side">{{data.date | toLocaleDateTime}}</div>
-            <span ng-show="type!='sửa chữa' && !showBtn">(Còn khoảng {{diff}} đến công việc)</span>
+            <span ng-show="type!='sửa chữa' && !showBtn">(Còn {{diff}} đến thời gian gặp)</span>
         </div>
         <div ng-show="type!='lịch hẹn'" class="line">
             <div class="left-side">Danh sách {{type}}:</div>
@@ -51,9 +51,9 @@
         <div ng-show="type=='lịch hẹn'" class="buttons">
             <div ng-show="data.status==2 && showBtn">
                 <button class="detail-button confirm" ng-click="change(3)"><i class="fa fa-check fa-2x"></i>
-                    <span>Khách hàng muốn kí hợp đồng</span></button>
+                    <span>Muốn kí hợp đồng</span></button>
                 <button class="detail-button reject" ng-click="change(5)"><i class="fa fa-times fa-2x"></i>
-                    <span>Khách hàng không đồng ý</span></button>
+                    <span>Không đồng ý</span></button>
                 <br>
             </div>
             <div ng-show="data.status==2 && !showBtn" style="text-align: center; color: #ef4836">
@@ -71,17 +71,17 @@
             <div ng-show="data.status==5 && showBtn">
                 <button class="detail-button confirm" ng-click="change(3)">
                     <span><i class="fa fa-check fa-2x"></i>
-                        <span>Khách hàng hài lòng</span></span></button>
-                <div ng-show="type!='sửa chữa'">
+                        <span>Hài lòng</span></span></button>
+                <span ng-show="type!='sửa chữa'">
                     <button class="detail-button reject" ng-click="change(1)">
                     <span><i class="fa fa-times fa-2x"></i>
-                        <span>Khách hàng không hài lòng</span></span></button>
-                </div>
-                <div ng-show="type=='sửa chữa'">
+                        <span>Không hài lòng</span></span></button>
+                </span>
+                <span ng-show="type=='sửa chữa'">
                     <button class="detail-button reject" ng-click="change(2)">
                     <span><i class="fa fa-times fa-2x"></i>
-                        <span>Khách hàng không hài lòng</span></span></button>
-                </div>
+                        <span>Không hài lòng</span></span></button>
+                </span>
                 <br>
             </div>
             <div ng-show="data.status==5 && !showBtn" style="text-align: center; color: #ef4836">

@@ -17,6 +17,8 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
             'longitude': getParameterValue(url, "longitude"),
             'priceRange': getParameterValue(url, "priceRange")
         };
+        $scope.searchKey = getParameterValue(url, "searchKey");
+        $scope.price = getParameterValue(url, "price");
 
         function closest(num, arr) {
             var match = [];
@@ -41,6 +43,14 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
         }
 
         $scope.searchOffice = function () {
+            if ($scope.searchTerm.latitude) {
+                $location.path("/list/latitude=" + $scope.searchTerm.latitude
+                + "&longitude=" + $scope.searchTerm.longitude
+                + "&priceRange=" + $scope.searchTerm.priceRange
+                + "&price=" + $scope.price
+                + "&searchKey=" + $scope.searchKey);
+            } else {
+            }
             Api.searchOfficeByTerm($scope.searchTerm, function (data) {
                 if (data) {
                     $scope.officeList = data;

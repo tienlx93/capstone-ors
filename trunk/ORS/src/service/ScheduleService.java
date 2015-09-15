@@ -77,7 +77,12 @@ public class ScheduleService {
         weekJobCount = getWeekJobCount(startDate, endDate);
         Map<Integer, String> result = new HashMap<>();
         List<Appointment> appointmentList = appointmentDAO.getAppointmentListByStatus(1);
-
+        Collections.sort(appointmentList, new Comparator<Appointment>() {
+            @Override
+            public int compare(Appointment o1, Appointment o2) {
+                return o1.getTime().compareTo(o2.getTime());
+            }
+        });
         Date begin;
         Date end;
         List<String> availableStaff;

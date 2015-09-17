@@ -30,15 +30,17 @@ public class ScheduleCheckAppointment implements Job {
                 if(currentDate > time) {
                     SMSService sms = new SMSService();
                     String phone = appointment.getAccountByCustomerUsername().getProfileByUsername().getPhone();
-                    sms.setPhone(phone);
-                    sms.setMessage("(ORS) Lịch hẹn đã hết hạn xin quý khách vui lòng đăng ký lịch hẹn mới.");
-                    appointmentDAO.updateStatus(appointment.getId(), 5);
-//                    try {
-//                        sms.send();
-//                    } catch (IOException e) {
-//                        System.out.println("Fail to send sms");
-//                    }
-                    System.out.println(appointment.getId());
+                    if(!phone.equals("")) {
+                        sms.setPhone(phone);
+                        sms.setMessage("(ORS) Lịch hẹn đã hết hạn xin quý khách vui lòng đăng ký lịch hẹn mới.");
+                        appointmentDAO.updateStatus(appointment.getId(), 5);
+                        try {
+                            sms.send();
+                        } catch (IOException e) {
+                            System.out.println("Fail to send sms");
+                        }
+                        System.out.println(appointment.getId());
+                    }
                 }
             }
 

@@ -173,10 +173,20 @@ public class OfficeController extends HttpServlet {
             if (numContract > 0) {
                 out.print(gson.toJson("Error"));
             } else {
+                AppointmentDAO appointmentDAO = new AppointmentDAO();
+                List<Appointment> appointments;
+
+                appointments = appointmentDAO.getAppointmentListByStatusAndOffice(1, Integer.parseInt(id));
+                if (appointments != null && appointments.size() > 0) {
+                    for (Appointment appointment : appointments) {
+                        appointmentDAO.updateStatus(appointment.getId(), 5);
+                    }
+                }
                 office.setStatusId(3);
                 dao.update(Integer.parseInt(id), office);
                 out.print(gson.toJson("Success"));
             }
+
 
         }
     }

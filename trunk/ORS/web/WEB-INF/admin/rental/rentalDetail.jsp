@@ -181,10 +181,10 @@
                                     <c:otherwise>
                                         <div class="col-sm-4">
                                             <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
-                                            <input type="hidden" id="rentalDate" value="${info.assignedTime}">
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
+                                <input type="hidden" id="rentalDate" value="${info.assignedTime}">
                                 <c:if test="${user.roleId==2}">
                                     <label for="assignStaff" class="col-sm-2 control-label">Nhân viên được giao</label>
 

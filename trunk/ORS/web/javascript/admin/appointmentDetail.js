@@ -48,7 +48,7 @@ $(document).ready(function () {
                 data = JSON.parse(data);
                 if (data == "Success") {
                     bootbox.alert("Giao việc thành công", function(){
-                        window.location.reload();
+                        window.location = "/admin/appointment";
                     });
                 } else {
                     var message = "";

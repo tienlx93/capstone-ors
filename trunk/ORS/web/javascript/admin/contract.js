@@ -192,7 +192,19 @@ function validatePaymentTerm() {
             break;
     }
     if (contractTime < time) {
-        alert('Thời gian thuê không được nhỏ hơn kỳ hạn thanh toán');
+        bootbox.dialog({
+            size: 'small',
+            message: "Thời gian thuê phải lớn hơn kỳ hạn thanh toán",
+            buttons: {
+                cancel: {
+                    label: "Quay lại",
+                    className: "btn-default",
+                    callback: function () {
+
+                    }
+                }
+            }
+        });
         return false;
     }
     $('.signForm').submit(function () {

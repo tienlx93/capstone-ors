@@ -432,7 +432,7 @@ public class ContractController extends HttpServlet {
                         try {
                             String path = ExportPDF(contract);
                             response.setContentType("application/PDF");
-                            response.setHeader("Content-disposition", "attachment; filename=" + "Hopdong " + id + ".pdf");
+                            response.setHeader("Content-disposition", "attachment; filename=" + "Hopdong_" + id + ".pdf");
                             File pdfFile = new File(path);
                             FileInputStream fileInputStream = new FileInputStream(pdfFile);
                             response.setContentLength((int) pdfFile.length());
@@ -533,9 +533,14 @@ public class ContractController extends HttpServlet {
 
             Paragraph title = new Paragraph("HỢP ĐỒNG CHO THUÊ VĂN PHÒNG", boldFont);
             title.setAlignment(Element.ALIGN_CENTER);
-            title.setSpacingAfter(25);
+            title.setSpacingAfter(5);
+
+            Paragraph subTitle = new Paragraph("(Số: ……………./HĐTVP)", italicFont);
+            subTitle.setAlignment((Element.ALIGN_CENTER));
+            subTitle.setSpacingAfter(25);
 
             document.add(title);
+            document.add(subTitle);
             document.add(new Paragraph("Hôm nay, ngày " + dayStr + " tháng " + monthStr + " năm " + yearStr + ", Tại " + contract.getOfficeByOfficeId().getAddress() + ". Chúng tôi gồm có:", italicFont));
 
 
@@ -736,9 +741,9 @@ public class ContractController extends HttpServlet {
 
 
             document.add(paragraphEmpty);
-            document.add(new Paragraph("               ĐẠI DIỆN BÊN A                                                                         ĐẠI DIỆN BÊN B", boldFont));
-            document.add(new Paragraph("                   Chức vụ                                                                                        Chức vụ", font));
-            document.add(new Paragraph("              (Ký tên đóng dấu)                                                                       (Ký tên đóng dấu)", font));
+            document.add(new Paragraph("                  ĐẠI DIỆN BÊN A                                                                         ĐẠI DIỆN BÊN B", boldFont));
+            document.add(new Paragraph("                      Chức vụ                                                                                        Chức vụ", font));
+            document.add(new Paragraph("                 (Ký tên đóng dấu)                                                                       (Ký tên đóng dấu)", font));
 
             document.close(); // no need to close PDFwriter?
 

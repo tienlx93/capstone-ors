@@ -151,6 +151,21 @@ public class AppointmentDAO extends BaseDAO<Appointment, Integer> {
         return null;
     }
 
+
+    public List<Appointment> getAppointmentListByStatusAndOffice(int status, int office) {
+        try {
+            String sql = "from Appointment where statusId = :status and  officeId = :office";
+            Query query = session.createQuery(sql);
+            query.setInteger("status", status);
+            query.setInteger("office", office);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     public int countAppointment(int status, String username) {
         try {
             String sql = "SELECT COUNT(Id) AS Quantity FROM Appointment WHERE StatusId = :status";

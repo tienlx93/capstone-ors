@@ -195,7 +195,7 @@
     event.preventDefault();
     bootbox.dialog({
       size: 'small',
-      message: "Bạn đồng ý xóa văn phòng này?",
+      message: "Nếu bạn xóa văn phòng này tất cả lịch hẹn của văn phòng này sẽ bị hủy. Bạn đồng ý xóa văn phòng này?",
       buttons: {
         cancel: {
           label: "Quay lại",

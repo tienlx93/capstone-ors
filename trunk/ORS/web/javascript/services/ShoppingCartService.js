@@ -23,7 +23,7 @@ app.service('ShoppingCartService', function() {
     var removeProduct = function(oldObj) {
       for(var i = 0; i < productList.length; i++) {
           if(oldObj.rentalId === productList[i].rentalId) {
-              productList.splice(i, i + 1);
+              productList.splice(i, 1);
           }
       }
     };

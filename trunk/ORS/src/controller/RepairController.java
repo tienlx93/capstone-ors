@@ -42,6 +42,7 @@ public class RepairController extends HttpServlet {
             String assignedStaff = request.getParameter("assignedStaff");
             String description = request.getParameter("description");
             String assignedTime = request.getParameter("assignedTime");
+            String assignedTime2 = request.getParameter("assignedTime2");
             String comment = request.getParameter("comment");
 
             SMSService sms = new SMSService();
@@ -49,10 +50,12 @@ public class RepairController extends HttpServlet {
             Contract current = contractDAO.get(contractId);
             String phone = current.getAccountByCustomerUsername().getProfileByUsername().getPhone();
             String ownerPhone = request.getParameter("phoneOwner");
-
+            PrintWriter out = response.getWriter();
+            Gson gson = new Gson();
+            String nonUTF8Comment = AccentRemover.removeAccent(comment);
             switch (button) {
-                case "reject":
-                    String nonUTF8Comment = AccentRemover.removeAccent(comment);
+
+                case "reject5":
                     dao.changeStatus(id, 4);
                     sms.setPhone(phone);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
@@ -61,8 +64,19 @@ public class RepairController extends HttpServlet {
                     } catch (IOException e) {
                         System.out.println("Fail to send sms");
                     }
+                    response.sendRedirect("/admin/repair");
+                    break;
+                case "reject2":
+                    dao.changeStatus(id, 4);
                     sms.setPhone(ownerPhone);
                     sms.setMessage("(ORS) Nguoi quan ly da huy yeu cau. Ly do: " + nonUTF8Comment);
+                    try {
+                        sms.send();
+                    } catch (IOException e) {
+                        System.out.println("Fail to send sms");
+                    }
+                    sms.setPhone(phone);
+                    sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
                     try {
                         sms.send();
                     } catch (IOException e) {
@@ -72,11 +86,9 @@ public class RepairController extends HttpServlet {
                     break;
                 case "agree":
                     dao.changeStatus(id, 2);
-                    response.sendRedirect("/admin/repair");
+                    out.print(gson.toJson("Success"));
                     break;
                 case "assign":
-                    PrintWriter out = response.getWriter();
-                    Gson gson = new Gson();
                     SimpleDateFormat fromAssign = new SimpleDateFormat("dd-MM-yyyy");
                     Date date = null;
                     ScheduleService service = new ScheduleService();
@@ -107,12 +119,14 @@ public class RepairController extends HttpServlet {
                 case "assign2":
                     PrintWriter out2 = response.getWriter();
                     Gson gson2 = new Gson();
-                    SimpleDateFormat fromAssign2 = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat fromAssign1 = new SimpleDateFormat("dd-MM-yyyy");
+                    SimpleDateFormat fromAssign2 = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date1 = null;
                     Date date2 = null;
                     ScheduleService service2 = new ScheduleService();
                     String force2 = request.getParameter("force");
                     try {
-                        date2 = fromAssign2.parse(assignedTime);
+                        date2 = fromAssign2.parse(assignedTime2);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -132,12 +146,12 @@ public class RepairController extends HttpServlet {
                     break;
                 case "change2":
                     dao.changeStatus(id, 2);
-                    String phone1 = current.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getPhone();
+                    /*String phone1 = current.getOfficeByOfficeId().getAccountByOwnerUsername().getProfileByUsername().getPhone();
                     String cusName = current.getAccountByCustomerUsername().getProfileByUsername().getUsername();
                     sms.setPhone(phone1);
-                    //sms.setMessage("(ORS) Yeu cau sua chua cua " + cusName + " khong thanh cong");
+                    sms.setMessage("(ORS) Yeu cau sua chua cua " + cusName + " khong thanh cong");
                     sms.setMessage("(ORS) Yeu cau sua chua khong thanh cong");
-                    sms.send();
+                    sms.send();*/
                     response.sendRedirect("/admin/repair");
                     break;
                 case "change3":
@@ -164,8 +178,10 @@ public class RepairController extends HttpServlet {
             String action = request.getParameter("action");
             if (action == null) {
                 List<Repair> list;
-                if (account.getRoleId() == 2 || account.getRoleId() == 5) {
+                if (account.getRoleId() == 2) {
                     list = dao.findAll();
+                } else if (account.getRoleId() == 5) {
+                    list = dao.getRepairListByOwner(account.getUsername());
                 } else {
                     list = dao.getRepairListByStaff(account.getUsername());
                 }

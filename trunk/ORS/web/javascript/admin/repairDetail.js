@@ -13,8 +13,10 @@ $(document).ready(function () {
             return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf()) ? 'disabled' : '';
         }
     }).data('datepicker');
-
-    var repairDate = document.getElementById('repairDate').value;
+    var repairDate;
+    if (document.getElementById('repairDate') != null) {
+        repairDate = document.getElementById('repairDate').value;
+    }
     var repair = new Date(repairDate);
     if (now.valueOf() <= repair.valueOf()) {
         $("#agree").removeAttr("disabled");
@@ -26,7 +28,7 @@ $(document).ready(function () {
     $("button[type='submit']").click(function () {
         var currentForm = $("form");
         var button = $(this).attr("value");
-        if (button == "reject" || !currentForm.valid()) {
+        if (button == "reject2" || button == "reject5" || button == "change2" || button == "change3" || button == "change5" || !currentForm.valid()) {
             return;
         }
         currentForm.append("<input type='hidden' name='button' value='"+button+"'>");
@@ -39,9 +41,15 @@ $(document).ready(function () {
             success: function (data) {
                 data = JSON.parse(data);
                 if (data == "Success") {
+                    if (button == "agree") {
+                        bootbox.alert("Cập nhật thành công", function () {
+                            window.location = "/admin/repair";
+                        });
+                    } else {
                     bootbox.alert("Giao việc thành công", function () {
                         window.location = "/admin/repair";
                     });
+                    }
                 } else {
                     var message = "";
                     var className = "";

@@ -191,11 +191,11 @@
                                         <c:otherwise>
                                             <div class="col-sm-4">
                                                 <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
-
+                                                <input type="hidden" id="repairDate" value="${info.assignedTime}"
+                                                       name="assignedTime2">
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
-                                    <input type="hidden" id="repairDate" value="${info.assignedTime}">
                                     <c:if test="${user.roleId==2}">
 
                                         <label for="assignedStaff" class="col-sm-2 control-label"
@@ -420,8 +420,7 @@
                                 <c:choose>
                                     <c:when test="${user.roleId==5}">
                                         <c:if test="${info.repairStatusId == 1}">
-                                            <button type="submit" value="agree" name="button" class="btn btn-primary"
-                                                    onclick="return check()">
+                                            <button type="submit" value="agree" name="button" class="btn btn-primary">
                                                 Đồng ý sửa chữa
                                             </button>
                                             <button type="button" class="btn btn-danger"
@@ -438,7 +437,7 @@
                                             </button>
                                         </c:if>
                                         <c:if test="${info.repairStatusId == 5}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary"
+                                            <button type="submit" value="assign2" name="button" class="btn btn-primary"
                                                     id="agree" disabled>
                                                 Giao việc lại
                                             </button>
@@ -496,9 +495,18 @@
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-default" data-dismiss="modal">Quay lại
                                             </button>
-                                            <button type="submit" class="btn btn-danger" name="button" value="reject"
-                                                    id="submit">Xác nhận hủy
-                                            </button>
+                                            <c:if test="${user.roleId==5}">
+                                                <button type="submit" class="btn btn-danger" name="button"
+                                                        value="reject5"
+                                                        id="submit5">Xác nhận hủy
+                                                </button>
+                                            </c:if>
+                                            <c:if test="${user.roleId==2}">
+                                                <button type="submit" class="btn btn-danger" name="button"
+                                                        value="reject2"
+                                                        id="submit2">Xác nhận hủy
+                                                </button>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -529,10 +537,18 @@
 
     function inputComment(sendSMS) {
         if (sendSMS) {
-            $("#submit").val("reject");
+            $("#submit5").val("reject5");
         }
         $('#myModal').modal('show');
     }
+
+    function inputComment(sendSMS) {
+        if (sendSMS) {
+            $("#submit2").val("reject2");
+        }
+        $('#myModal').modal('show');
+    }
+
     $('#myModal').on('show.bs.modal', function (e) {
         $("#assignedStaff").removeAttr("required");
     }).on('hide.bs.modal', function (e) {

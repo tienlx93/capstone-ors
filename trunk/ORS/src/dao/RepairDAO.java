@@ -87,13 +87,11 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         return null;
     }
 
-    public List<Repair> getRepairListByStaffInRange(String username, Date startDate, Date endDate) {
+    public List<Repair> getRepairListByOwner(String username) {
         try {
-            String sql = "from Repair where assignedStaff = :username and assignedTime >= :startDate and assignedTime < :endDate";
+            String sql = "from Repair where contractByContractId.officeByOfficeId.ownerUsername = :username";
             Query query = session.createQuery(sql);
             query.setString("username", username);
-            query.setDate("startDate", startDate);
-            query.setDate("endDate", endDate);
 
             return query.list();
         } catch (Exception e) {

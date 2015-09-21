@@ -1,8 +1,11 @@
 package controller;
 
-import com.itextpdf.text.*;
-import com.itextpdf.text.pdf.BaseFont;
-import com.itextpdf.text.pdf.PdfWriter;
+//import com.itextpdf.text.*;
+//import com.itextpdf.text.pdf.BaseFont;
+//import com.itextpdf.text.pdf.PdfWriter;
+import com.lowagie.text.*;
+import com.lowagie.text.pdf.BaseFont;
+import com.lowagie.text.rtf.RtfWriter2;
 import dao.*;
 import entity.*;
 import service.ConstantService;
@@ -193,6 +196,7 @@ public class ContractController extends HttpServlet {
                 }
                 switch (button) {
                     case "confirm":
+                        contract.setStatusId(1);
                         dao.updateContract(id, contract);
                         dao.save(newContract);
                         break;
@@ -200,7 +204,7 @@ public class ContractController extends HttpServlet {
                         dao.changeStatus(id, 1);
                         break;
                 }
-                response.sendRedirect("/admin/contract");
+                response.sendRedirect("/admin/contract?action=extend");
                 break;
             }
             case "editReturn": {
@@ -254,7 +258,7 @@ public class ContractController extends HttpServlet {
                         dao.changeStatus(id, 1);
                         break;
                 }
-                response.sendRedirect("/admin/contract");
+                response.sendRedirect("/admin/contract?action=return");
                 break;
             }
             case "update": {
@@ -431,8 +435,8 @@ public class ContractController extends HttpServlet {
 
                         try {
                             String path = ExportPDF(contract);
-                            response.setContentType("application/PDF");
-                            response.setHeader("Content-disposition", "attachment; filename=" + "Hopdong_" + id + ".pdf");
+                            response.setContentType("text/rtf");
+                            response.setHeader("Content-disposition", "attachment; filename=" + "Hopdong_" + id + ".rtf");
                             File pdfFile = new File(path);
                             FileInputStream fileInputStream = new FileInputStream(pdfFile);
                             response.setContentLength((int) pdfFile.length());
@@ -524,12 +528,12 @@ public class ContractController extends HttpServlet {
             if (!uploadDir.exists()) {
                 boolean mkdir = uploadDir.mkdir();
             }
-            output = new File(path + File.separator + "Hopdong " + contract.getId() + ".pdf");
-            PdfWriter.getInstance(document, new FileOutputStream(output));
+            output = new File(path + File.separator + "Hopdong " + contract.getId() + ".rtf");
+            RtfWriter2.getInstance(document, new FileOutputStream(output));
 
             document.open();
             Paragraph paragraphEmpty = new Paragraph();
-            paragraphEmpty.setSpacingBefore(20);
+            paragraphEmpty.setSpacingBefore(10);
 
             Paragraph title = new Paragraph("HỢP ĐỒNG CHO THUÊ VĂN PHÒNG", boldFont);
             title.setAlignment(Element.ALIGN_CENTER);
@@ -574,13 +578,14 @@ public class ContractController extends HttpServlet {
 
 
             document.add(paragraphEmpty);
-            document.add(new Paragraph("ĐIỀU 1 : ĐỐI TƯỢNG VÀ MỤC ĐÍCH CHO THUÊ", boldFont));
+            document.add(new Paragraph("ĐIỀU 1: ĐỐI TƯỢNG VÀ MỤC ĐÍCH CHO THUÊ", boldFont));
             document.add(new Paragraph("Bên A đồng ý cho bên Bên B thuê diện tích như sau:", font));
             document.add(new Chunk("1.1. Địa điểm và diện tích: ", font));
             document.add(new Chunk(contract.getOfficeByOfficeId().getAddress(), italicFont));
-            document.add(new Chunk(", diện tích", font));
+            document.add(new Chunk(", diện tích ", font));
             document.add(new Chunk(String.valueOf(contract.getOfficeByOfficeId().getArea()), italicFont));
             document.add(new Chunk(" mét vuông", font));
+            document.add(paragraphEmpty);
             document.add(new Paragraph("1.2. Mục đích sử dụng: ………………………………………..………………………………………………………….", font));
             document.add(new Paragraph("1.3. Văn phòng, hệ thống cung cấp điện và nước được bàn giao cho Bên B phải trong tình trạng sử dụng tốt mà Bên B đã khảo sát và chấp nhận.", font));
 
@@ -588,13 +593,13 @@ public class ContractController extends HttpServlet {
             Long longTime = contract.getEndDate().getTime() - contract.getStartDate().getTime();
             int time = (int) Math.ceil(longTime / (86400000L * 30L));
             document.add(paragraphEmpty);
-            document.add(new Paragraph("ĐIỀU 2 : THỜI GIAN THUÊ", boldFont));
+            document.add(new Paragraph("ĐIỀU 2: THỜI GIAN THUÊ", boldFont));
             document.add(combineTwoParagraph("2.1. Thời hạn thuê văn phòng: ", String.valueOf(time) + " tháng", font, italicFont));
             document.add(new Paragraph("2.2. Điều kiện gia hạn : Sau khi hết hợp đồng, bên B được quyền ưu tiên gia hạn hoặc kí kết hợp đồng mới, nhưng phải báo trước vấn đề cho bên A bằng văn bản ít nhất ….. tháng.", font));
 
 
             document.add(paragraphEmpty);
-            document.add(new Paragraph("ĐIỀU 3 : GIÁ THUÊ & CÁC CHI PHÍ KHÁC", boldFont));
+            document.add(new Paragraph("ĐIỀU 3: GIÁ THUÊ & CÁC CHI PHÍ KHÁC", boldFont));
             document.add(combineTwoParagraph("3.1. Giá thuê: " , addDot(contract.getPaymentFee()) + " VNĐ/m2", font, italicFont));
             document.add(new Paragraph("Giá thuê bao gồm thuế VAT 10% và tất cả các loại thuế có liên quan có thể phát sinh từ hợp đồng này; và không bao gồm tiền điện, điện thoại, fax, chi phí dịch vụ vệ sinh trong văn phòng và các chi phí khác do Bên B sử dụng.", font));
             document.add(new Paragraph("Giá thuê/cho thuê nói trên sẽ ổn định trong suốt thời gian thuê theo điều 2.1.", font));
@@ -607,10 +612,10 @@ public class ContractController extends HttpServlet {
             int paymentTermPrice = (int) (contract.getPaymentFee() * contract.getPaymentTermByPaymentTerm().getPaymentTime() * contract.getOfficeByOfficeId().getArea());
             int deposit = (int) (long) contract.getDeposit();
             document.add(paragraphEmpty);
-            document.add(new Paragraph("ĐIỀU 4 : THANH TOÁN", boldFont));
-            document.add(new Paragraph("4.1. Đồng tiền tính toán:  VNĐ (Đồng Việt Nam)", font));
-            document.add(new Paragraph("4.2. Đồng tiền thanh toán : Bằng VNĐ (Đồng Việt Nam) quy đồi theo tỷ giá bán ra USD/VNĐ của Ngân hàng Ngoại Thương Việt Nam tại ………………………………………….………. tại thời điểm thanh toán.", font));
-            document.add(new Chunk("4.3. Thời hạn thanh toán tiền đặt cọc : Trong vòng ", font));
+            document.add(new Paragraph("ĐIỀU 4: THANH TOÁN", boldFont));
+            document.add(new Paragraph("4.1. Đồng tiền tính toán: VNĐ (Đồng Việt Nam)", font));
+            document.add(new Paragraph("4.2. Đồng tiền thanh toán: Bằng VNĐ (Đồng Việt Nam) quy đồi theo tỷ giá bán ra USD/VNĐ của Ngân hàng Ngoại Thương Việt Nam tại ………………………………………….………. tại thời điểm thanh toán.", font));
+            document.add(new Chunk("4.3. Thời hạn thanh toán tiền đặt cọc: Trong vòng ", font));
             document.add(new Chunk(String.valueOf(contract.getDepositPaidDay()) + " (" + paymentTerm.get(contract.getDepositPaidDay()) + ")", italicFont));
             document.add(new Chunk(" ngày làm việc sau khi kí hợp đồng này, Bên B chuyển trước cho Bên A tiền đặt cọc tương đương với ", font));
             document.add(new Chunk(String.valueOf(depositMonth), italicFont));
@@ -637,10 +642,10 @@ public class ContractController extends HttpServlet {
             document.add(new Chunk(String.valueOf(contract.getAdditionalCharge()) + "%", italicFont));
             document.add(new Chunk(" cho mỗi ngày chậm thanh toán trên tổng số tiền chậm thanh toán. Nếu chậm thanh toán vượt quá …… (……………..) ngày, Bên A có quyền đơn phương chấm dứt hợp đồng này.", font));
             document.add(new Paragraph());
-            document.add(new Paragraph("4.6. Tiền sử dụng điện sinh hoạt : Bên B thanh toán cho Bên A tiền sử dụng điện sinh hoạt hằng tháng trong vòng ….. (……….) ngày đầu tiên của tháng tiếp theo.", font));
-            document.add(new Paragraph("4.7. Phương thức thanh toán : ………………………………………..……………………………………….", font));
+            document.add(new Paragraph("4.6. Tiền sử dụng điện sinh hoạt: Bên B thanh toán cho Bên A tiền sử dụng điện sinh hoạt hằng tháng trong vòng ….. (……….) ngày đầu tiên của tháng tiếp theo.", font));
+            document.add(new Paragraph("4.7. Phương thức thanh toán: ………………………………………..……………………………………….", font));
             document.add(new Paragraph("Đơn vị thụ hưởng: ………………………………………..………………………………………………………….", font));
-            document.add(new Paragraph("Tài khoản VNĐ chi phí chuyển tiền qua ngân hàng : Do Bên ….. chịu.", font));
+            document.add(new Paragraph("Tài khoản VNĐ chi phí chuyển tiền qua ngân hàng: Do Bên ….. chịu.", font));
 
 
             document.add(paragraphEmpty);
@@ -658,7 +663,7 @@ public class ContractController extends HttpServlet {
             document.add(new Paragraph("c) Yêu cầu bên B có trách nhiệm trong việc sửa chữa phần hư hỏng, bồi thường thiệt hại do lỗi của bên B gây ra;", font));
             document.add(new Paragraph("d) Cải tạo, nâng cấp văn phòng cho thuê khi được bên B đồng ý, nhưng không được gây phiền hà cho bên B sử dụng văn phòng;", font));
             document.add(new Paragraph("e) Được lấy lại văn phòng cho thuê khi hết hạn hợp đồng thuê, nếu hợp đồng không quy định thời hạn thuê thì bên cho thuê muốn lấy lại văn phòng phải báo cho bên thuê biết trước sáu tháng.", font));
-            document.add(new Paragraph("f) Đơn phương đình chỉ thực hiện hợp đồng nhưng phải báo cho bên B biết trước một tháng nếu không có thỏa thuận khác và yêu cầu bồi thường thiệt hại nếu bên B có một trong các hành vi sau đây :", font));
+            document.add(new Paragraph("f) Đơn phương đình chỉ thực hiện hợp đồng nhưng phải báo cho bên B biết trước một tháng nếu không có thỏa thuận khác và yêu cầu bồi thường thiệt hại nếu bên B có một trong các hành vi sau đây:", font));
             document.add(new Paragraph("- Không trả tiền thuê văn phòng liên tiếp trong ……………. trở lên mà không có lý do chính đáng;", font));
             document.add(new Paragraph(" Sử dụng văn phòng không đúng mục đích thuê;", font));
             document.add(new Paragraph("- Cố ý làm văn phòng hư hỏng nghiêm trọng;", font));
@@ -685,7 +690,7 @@ public class ContractController extends HttpServlet {
             document.add(new Paragraph("b) Được đổi văn phòng đang thuê với bên thuê khác, nếu được bên A đồng ý bằng văn bản;", font));
             document.add(new Paragraph("c) Được thay đổi cấu trúc văn phòng nếu được bên A đồng ý bằng văn bản;", font));
             document.add(new Paragraph("d) Yêu cầu bên A sửa chữa kịp thời những hư hỏng để bảo đảm an toàn;", font));
-            document.add(new Paragraph("e) Được tiếp tục thuê theo các điều kiện đã thỏa thuận với bên A trong trường hợp thay đổi chủ sở hữu văn phòng;;", font));
+            document.add(new Paragraph("e) Được tiếp tục thuê theo các điều kiện đã thỏa thuận với bên A trong trường hợp thay đổi chủ sở hữu văn phòng;", font));
             document.add(new Paragraph("f) Được ưu tiên ký hợp đồng thuê tiếp, nếu đã hết hạn thuê mà nhà vẫn dùng để cho thuê;", font));
             document.add(new Paragraph("g) Được ưu tiên mua văn phòng đang thuê, khi bên A thông báo về việc bán văn phòng;", font));
             document.add(new Paragraph("h) Đơn phương đình chỉ hợp đồng thuê văn phòng nhưng phải báo cho bên A biết trước một tháng nếu không có thỏa thuận khác và yêu cầu bồi thường thiệt hại nếu bên A có một trong các hành vi sau đây:", font));
@@ -741,9 +746,9 @@ public class ContractController extends HttpServlet {
 
 
             document.add(paragraphEmpty);
-            document.add(new Paragraph("                  ĐẠI DIỆN BÊN A                                                                         ĐẠI DIỆN BÊN B", boldFont));
-            document.add(new Paragraph("                      Chức vụ                                                                                        Chức vụ", font));
-            document.add(new Paragraph("                 (Ký tên đóng dấu)                                                                       (Ký tên đóng dấu)", font));
+            document.add(new Paragraph("                  ĐẠI DIỆN BÊN A                                         ĐẠI DIỆN BÊN B", boldFont));
+            document.add(new Paragraph("                      Chức vụ                                                  Chức vụ", font));
+            document.add(new Paragraph("                 (Ký tên đóng dấu)                                            (Ký tên đóng dấu)", font));
 
             document.close(); // no need to close PDFwriter?
 

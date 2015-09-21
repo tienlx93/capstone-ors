@@ -41,7 +41,7 @@ public class ScheduleListener implements ServletContextListener {
             simpleTrigger1.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
             String time = constant.readProperty("schedule.check_request_office");
             int minute;
-            if (time.equals("error")) {
+            if (!time.equals("error")) {
                 minute = Integer.parseInt(time);
             } else {
                 minute = 1;
@@ -60,7 +60,7 @@ public class ScheduleListener implements ServletContextListener {
             simpleTrigger2.setStartTime(new Date(System.currentTimeMillis() + 1000));
             simpleTrigger2.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
             time = constant.readProperty("schedule.check_contract");
-            if (time.equals("error")) {
+            if (!time.equals("error")) {
                 minute = Integer.parseInt(time);
             } else {
                 minute = 1;
@@ -79,7 +79,7 @@ public class ScheduleListener implements ServletContextListener {
             simpleTrigger3.setStartTime(new Date(System.currentTimeMillis() + 1000));
             simpleTrigger3.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
             time = constant.readProperty("schedule.check_email");
-            if (time.equals("error")) {
+            if (!time.equals("error")) {
                 minute = Integer.parseInt(time);
             } else {
                 minute = 1;
@@ -97,8 +97,13 @@ public class ScheduleListener implements ServletContextListener {
             SimpleTriggerImpl simpleTrigger4 = new SimpleTriggerImpl();
             simpleTrigger4.setStartTime(new Date(System.currentTimeMillis() + 1000));
             simpleTrigger4.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-
-            Long duration4 = Duration.standardMinutes(1).getMillis();
+            time = constant.readProperty("schedule.send_welcome_mail");
+            if (!time.equals("error")) {
+                minute = Integer.parseInt(time);
+            } else {
+                minute = 1;
+            }
+            Long duration4 = Duration.standardMinutes(minute).getMillis();
             simpleTrigger4.setRepeatInterval(duration4);
             simpleTrigger4.setName("ForthTrigger");
 
@@ -111,8 +116,13 @@ public class ScheduleListener implements ServletContextListener {
             SimpleTriggerImpl simpleTrigger5 = new SimpleTriggerImpl();
             simpleTrigger5.setStartTime(new Date(System.currentTimeMillis() + 1000));
             simpleTrigger5.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
-
-            Long duration5 = Duration.standardMinutes(1).getMillis();
+            time = constant.readProperty("schedule.check_appointment");
+            if (!time.equals("error")) {
+                minute = Integer.parseInt(time);
+            } else {
+                minute = 1;
+            }
+            Long duration5 = Duration.standardMinutes(minute).getMillis();
             simpleTrigger5.setRepeatInterval(duration5);
             simpleTrigger5.setName("FifthTrigger");
             //Start scheduler

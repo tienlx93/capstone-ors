@@ -28,7 +28,7 @@ $(document).ready(function () {
     $("button[type='submit']").click(function () {
         var currentForm = $("form");
         var button = $(this).attr("value");
-        if (button == "reject" || !currentForm.valid()) {
+        if (button == "change1" || button == "change3" || button == "change5" || button == "reject" || !currentForm.valid()) {
             return;
         }
         currentForm.append("<input type='hidden' name='button' value='"+button+"'>");

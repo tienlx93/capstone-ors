@@ -106,18 +106,18 @@ app.config(['$routeProvider', '$httpProvider',
             });
     }]);
 
-app.directive('googleplace', function() {
+app.directive('googleplace', function () {
     return {
         require: 'ngModel',
-        link: function(scope, element, attrs, model) {
+        link: function (scope, element, attrs, model) {
             var options = {
                 types: ['geocode'],
                 componentRestrictions: {}
             };
             scope.gPlace = new google.maps.places.Autocomplete(element[0], options);
 
-            google.maps.event.addListener(scope.gPlace, 'place_changed', function() {
-                scope.$apply(function() {
+            google.maps.event.addListener(scope.gPlace, 'place_changed', function () {
+                scope.$apply(function () {
                     model.$setViewValue(element.val());
                     scope.searchKey = element.val();
                     var place = scope.gPlace.getPlace();
@@ -142,6 +142,12 @@ app.filter('m2', ['$sce', function ($sce) {
     };
 }]);
 
+app.filter('round', ['$sce', function ($sce) {
+    return function (input) {
+        return Math.round(input / 1000) * 1000;
+    };
+}]);
+
 app.directive('realTimeCurrency', function ($filter, $locale) {
     var decimalSep = $locale.NUMBER_FORMATS.DECIMAL_SEP;
     var toNumberRegex = new RegExp('[^0-9\\' + decimalSep + ']', 'g');
@@ -150,7 +156,7 @@ app.directive('realTimeCurrency', function ($filter, $locale) {
         return $filter('number')(value);
     };
 
-    function getCaretPosition(input){
+    function getCaretPosition(input) {
         if (!input) return 0;
         if (input.selectionStart !== undefined) {
             return input.selectionStart;
@@ -164,7 +170,7 @@ app.directive('realTimeCurrency', function ($filter, $locale) {
         return 0;
     }
 
-    function setCaretPosition(input, pos){
+    function setCaretPosition(input, pos) {
         if (!input) return 0;
         if (input.offsetWidth === 0 || input.offsetHeight === 0) {
             return; // Input's hidden

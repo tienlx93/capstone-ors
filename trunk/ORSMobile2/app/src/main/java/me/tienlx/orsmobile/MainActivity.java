@@ -37,7 +37,7 @@ public class MainActivity extends Activity {
 
         final EditText userInput = (EditText) promptsView
                 .findViewById(R.id.prompt_input_field);
-        ((EditText)promptsView.findViewById(R.id.prompt_input_field)).setText("http://192.168.1.1:8080");
+        ((EditText)promptsView.findViewById(R.id.prompt_input_field)).setText("http://192.168.137.1:8080/mobile");
 
         // set dialog message
         alertDialogBuilder

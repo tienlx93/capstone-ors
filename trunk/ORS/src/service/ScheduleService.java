@@ -53,8 +53,11 @@ public class ScheduleService {
 
     public ScheduleService(Date start, Date end) {
         session = util.HibernateUtil.getSession();
-        startDate = getStartOfDay(start);
-        endDate = addDays(getStartOfDay(end), 1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(start);
+        startDate = getStartOfWeek(calendar);
+        calendar.setTime(end);
+        endDate = addDays(getStartOfWeek(calendar), 7);
 
         staffList = new AccountDAO().findStaff();
         appointmentDAO = new AppointmentDAO();

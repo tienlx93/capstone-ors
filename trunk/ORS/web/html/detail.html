@@ -9,8 +9,22 @@
         <div id="mid">
             <h4 style="padding-bottom: 10px">{{officeDetail.category}}</h4>
             <div><label>Giá:</label>
-                <span ng-if="officeDetail.price">{{officeDetail.price | currency:'VND':0}}</span>
-                <span ng-bind-html="officeDetail.price ? officeDetail.priceTerm + ' / Tháng' : 'Liên hệ' | m2"></span>
+                <div ng-if="!officeDetail.price">Liên hệ</div>
+                <div ng-if="officeDetail.price">
+                    <div ng-if="officeDetail.priceTerm=='Nguyên căn'">
+                        {{officeDetail.price | currency:'VND':0}}
+                        <span>Nguyên căn / Tháng</span>
+                        <div>
+                            ({{officeDetail.price / officeDetail.area | round | currency:'VND':0}}
+                            <span>Trên m<sup>2</sup> / Tháng</span>)
+                        </div>
+                    </div>
+                    <div ng-if="officeDetail.priceTerm!='Nguyên căn'">
+                        {{officeDetail.price | currency:'VND':0}}
+                        <span ng-if="officeDetail.price"
+                             ng-bind-html="officeDetail.priceTerm+' / Tháng' | m2"></span>
+                    </div>
+                </div>
             </div>
             <div><label>Số tầng:</label> {{officeDetail.floorNumber}}</div>
             <div><label>Diện tích:</label> {{officeDetail.area | number:0}} m<sup>2</sup></div>

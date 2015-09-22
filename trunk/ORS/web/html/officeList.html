@@ -75,15 +75,17 @@
                 </div>
                 <div class="col-md-3 item-price">
                     <div class="item-category">{{office.category}}</div>
-                    <div class="item-price-money" ng-if="office.priceTerm=='Nguyên căn'">{{office.price | currency:'VND':0}}
-                        <div class="item-price-term">Trên {{office.area}} m<sup>2</sup> / Tháng</div>
-                    </div>
-                    <div class="item-price-money" ng-if="office.priceTerm!='Nguyên căn'">
-                        <span ng-if="office.price">{{office.price | currency:'VND':0}}</span>
-                        <span ng-if="!office.price">Liên hệ</span>
-
-                        <div class="item-price-term" ng-if="office.price"
-                             ng-bind-html="office.priceTerm+' / Tháng' | m2"></div>
+                    <div ng-if="!office.price">Liên hệ</div>
+                    <div ng-if="office.price">
+                        <div class="item-price-money" ng-if="office.priceTerm=='Nguyên căn'">
+                            {{office.price / office.area | round | currency:'VND':0}}
+                            <div class="item-price-term">Trên m<sup>2</sup> / Tháng</div>
+                        </div>
+                        <div class="item-price-money" ng-if="office.priceTerm!='Nguyên căn'">
+                            <span ng-if="office.price">{{office.price | currency:'VND':0}}</span>
+                            <div class="item-price-term" ng-if="office.price"
+                                 ng-bind-html="office.priceTerm+' / Tháng' | m2"></div>
+                        </div>
                     </div>
                     <div class="item-detail-button"><a href="#/detail/{{office.id}}">Chi tiết</a></div>
                     <!--<div class="item-price-term">{{office.priceTerm}}</div>-->

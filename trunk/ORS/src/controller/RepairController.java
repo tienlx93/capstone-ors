@@ -43,7 +43,6 @@ public class RepairController extends HttpServlet {
             String description = request.getParameter("description");
             String assignedTime = request.getParameter("assignedTime");
             String assignedTime2 = request.getParameter("assignedTime2");
-            String comment = request.getParameter("comment");
 
             SMSService sms = new SMSService();
             ContractDAO contractDAO = new ContractDAO();
@@ -52,10 +51,12 @@ public class RepairController extends HttpServlet {
             String ownerPhone = request.getParameter("phoneOwner");
             PrintWriter out = response.getWriter();
             Gson gson = new Gson();
-            String nonUTF8Comment = AccentRemover.removeAccent(comment);
+            String comment = request.getParameter("comment");
+            String nonUTF8Comment;
             switch (button) {
 
                 case "reject5":
+                    nonUTF8Comment = AccentRemover.removeAccent(comment);
                     dao.changeStatus(id, 4);
                     sms.setPhone(phone);
                     sms.setMessage("(ORS) Yeu cau sua chua cua Quy khach khong duoc chap nhan. Ly do: " + nonUTF8Comment);
@@ -67,6 +68,7 @@ public class RepairController extends HttpServlet {
                     response.sendRedirect("/admin/repair");
                     break;
                 case "reject2":
+                    nonUTF8Comment = AccentRemover.removeAccent(comment);
                     dao.changeStatus(id, 4);
                     sms.setPhone(ownerPhone);
                     sms.setMessage("(ORS) Nguoi quan ly da huy yeu cau. Ly do: " + nonUTF8Comment);

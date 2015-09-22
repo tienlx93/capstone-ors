@@ -175,6 +175,8 @@ public class RepairController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
         RequestDispatcher rd;
+        Date date = new Date();
+        request.setAttribute("date", date);
         if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3 || account.getRoleId() == 5)) {
             RepairDAO dao = new RepairDAO();
             String action = request.getParameter("action");
@@ -197,6 +199,9 @@ public class RepairController extends HttpServlet {
             } else if (action.equals("filter")) {
                 String sId = request.getParameter("officeId");
                 String staff = request.getParameter("staff");
+                if (staff == null) {
+                    staff = account.getUsername();
+                }
                 String officeName = "";
                 int id = -1;
                 OfficeDAO officeDAO = new OfficeDAO();

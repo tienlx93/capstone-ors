@@ -284,7 +284,11 @@
                                                                 </td>
                                                                 <td>${item.assignedStaff}</td>
                                                                 <td><fmt:formatDate pattern="dd-MM-yyyy"
-                                                                                    value="${item.assignedTime}"/></td>
+                                                                                    value="${item.assignedTime}"/>
+                                                                    <c:if test="${date > item.assignedTime}">
+                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                    </c:if>
+                                                                </td>
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"
                                                                        title="Chi tiết"
@@ -490,9 +494,13 @@
                                                                     <td>${item.assignedStaff}</td>
                                                                 </c:if>
 
-                                                                <td><fmt:formatDate pattern="dd-MM-yyyy"
-                                                                                    value="${item.assignedTime}"/></td>
-
+                                                                <td>
+                                                                    <fmt:formatDate pattern="dd-MM-yyyy"
+                                                                                    value="${item.assignedTime}"/>
+                                                                    <c:if test="${date > item.assignedTime}">
+                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                    </c:if>
+                                                                </td>
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"
                                                                        title="Chi tiết"
@@ -535,8 +543,11 @@
                                                                 </c:if>
 
                                                                 <td><fmt:formatDate pattern="dd-MM-yyyy"
-                                                                                    value="${item.assignedTime}"/></td>
-
+                                                                                    value="${item.assignedTime}"/>
+                                                                    <c:if test="${date > item.assignedTime}">
+                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                    </c:if>
+                                                                </td>
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"
                                                                        title="Chi tiết"

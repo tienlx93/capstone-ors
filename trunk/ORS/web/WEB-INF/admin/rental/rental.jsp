@@ -246,7 +246,11 @@
                                                                             ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                 </td>
                                                                 <td><fmt:formatDate value="${item.assignedTime}"
-                                                                                    pattern="dd-MM-yyyy"/></td>
+                                                                                    pattern="dd-MM-yyyy"/>
+                                                                    <c:if test="${date > item.assignedTime}">
+                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                    </c:if>
+                                                                </td>
                                                                 <c:if test="${user.roleId == 2}">
                                                                     <td>${item.assignStaff}</td>
                                                                 </c:if>
@@ -291,7 +295,11 @@
                                                                             ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                                 </td>
                                                                 <td><fmt:formatDate value="${item.assignedTime}"
-                                                                                    pattern="dd-MM-yyyy"/></td>
+                                                                                    pattern="dd-MM-yyyy"/>
+                                                                    <c:if test="${date > item.assignedTime}">
+                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                    </c:if>
+                                                                </td>
                                                                 <c:if test="${user.roleId == 2}">
                                                                     <td>${item.assignStaff}</td>
                                                                 </c:if>
@@ -340,7 +348,8 @@
                                                         </c:if>
 
                                                             <td><fmt:formatDate pattern="dd-MM-yyyy"
-                                                                                value="${item.assignedTime}"/></td>
+                                                                                value="${item.assignedTime}"/>
+                                                            </td>
 
                                                         <td>
                                                             <a href="rental?action=edit&id=${item.id}"

@@ -193,6 +193,9 @@
                                                 <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
                                                 <input type="hidden" id="repairDate" value="${info.assignedTime}"
                                                        name="assignedTime2">
+                                                <c:if test="${date > info.assignedTime &&  info.repairStatusId == 5}">
+                                                    <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                </c:if>
                                             </div>
                                         </c:otherwise>
                                     </c:choose>
@@ -358,6 +361,9 @@
                                                 <div class="col-sm-4">
                                                     <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
                                                     <input type="hidden" value="${info.assignedTime}">
+                                                    <c:if test="${date > info.assignedTime &&  info.repairStatusId == 5}">
+                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                    </c:if>
                                                 </div>
                                             </c:otherwise>
                                         </c:choose>

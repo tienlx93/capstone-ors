@@ -122,6 +122,8 @@ public class RentalController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
+        Date date = new Date();
+        request.setAttribute("date", date);
         if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
             RentalDAO dao = new RentalDAO();
             String action = request.getParameter("action");
@@ -152,6 +154,9 @@ public class RentalController extends HttpServlet {
                 String office = new String(request.getParameter("office").getBytes(
                         "iso-8859-1"), "UTF-8");
                 String staff = request.getParameter("staff");
+                if (staff == null) {
+                    staff = account.getUsername();
+                }
                 List<Rental> list;
                 list = dao.getRentalListByFilter(office, staff);
                 request.setAttribute("office", office);

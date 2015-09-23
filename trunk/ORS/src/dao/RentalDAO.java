@@ -43,6 +43,22 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
         }
     }
 
+    public void updateContractId(int id, int contractId) {
+
+        Transaction trans = session.beginTransaction();
+        try {
+            Rental rt = (Rental) session.get(Rental.class, id);
+            rt.setContractId(contractId);
+            session.update(rt);
+            trans.commit();
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+    }
+
     public List<Rental> getRentalListByStaff(String username) {
         try {
             String sql = "from Rental where assignStaff = ?";
@@ -120,6 +136,18 @@ public class RentalDAO extends BaseDAO<Rental, Integer> {
             String sql = "from Rental where statusId = :status";
             Query query = session.createQuery(sql);
             query.setInteger("status", status);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public List<Rental> getRentalListHasStatusOneAndTwo() {
+        try {
+            String sql = "from Rental where statusId = 1 or statusId = 2";
+            Query query = session.createQuery(sql);
 
             return query.list();
         } catch (Exception e) {

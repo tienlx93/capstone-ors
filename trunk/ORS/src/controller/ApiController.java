@@ -768,7 +768,6 @@ public class ApiController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
 
-        String category = request.getParameter("category");
         String price = request.getParameter("price");
         String area = request.getParameter("area");
         String district = new String(request.getParameter("district").getBytes(
@@ -788,7 +787,6 @@ public class ApiController extends HttpServlet {
 
             RequestOffice reOff = new RequestOffice();
             reOff.setCustomerUsername(account.getUsername());
-            reOff.setCategoryId(Integer.parseInt(category));
             reOff.setPrice(Integer.parseInt(price));
             reOff.setArea(Double.parseDouble(area));
             reOff.setDistrict(district);

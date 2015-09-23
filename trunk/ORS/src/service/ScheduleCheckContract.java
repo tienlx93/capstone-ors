@@ -56,18 +56,49 @@ public class ScheduleCheckContract implements Job {
                     RentalDAO rentalDAO = new RentalDAO();
                     List<Rental> rentals = rentalDAO.getRentalListByContract(contract.getId());
 
-                    RentalDetailDAO rentalDetailDAO = new RentalDetailDAO();
-                    RentalItemDAO rentalItemDAO = new RentalItemDAO();
-                    if (rentals != null) {
-                        for (Rental rental : rentals) {
-                            List<RentalDetail> rentalDetailList = rentalDetailDAO.getRentalDetailByRental(rental.getId());
-                            for (RentalDetail rentalDetail : rentalDetailList) {
-                                RentalItem rentalItem = rentalItemDAO.get(rentalDetail.getRentalItemId());
-                                rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItem.getQuantity() + rentalDetail.getQuantity());
+                    RepairDAO repairDAO = new RepairDAO();
+                    List<Repair> repairList = repairDAO.getRepairListByContract(contract.getId());
+
+                    List<Contract> subcontract = dao.getContractListByParentContractId(contract.getId());
+
+                    if(subcontract != null && subcontract.size() > 0) {
+                        if (rentals != null && rentals.size() > 0) {
+                            for (Rental rental : rentals) {
+                                if(rental.getStatusId() == 1 || rental.getStatusId() == 2) {
+                                    rentalDAO.updateContractId(rental.getId(), subcontract.get(0).getId());
+                                }
+                            }
+                        }
+
+                        if (repairList != null && repairList.size() > 0) {
+                            for (Repair repair : repairList) {
+                                if(repair.getRepairStatusId() == 1 || repair.getRepairStatusId() == 2) {
+                                    repairDAO.updateContractId(repair.getId(), subcontract.get(0).getId());
+                                }
+                            }
+                        }
+                    } else {
+                        RentalDetailDAO rentalDetailDAO = new RentalDetailDAO();
+                        RentalItemDAO rentalItemDAO = new RentalItemDAO();
+                        if (rentals != null && rentals.size() > 0) {
+                            for (Rental rental : rentals) {
+                                List<RentalDetail> rentalDetailList = rentalDetailDAO.getRentalDetailByRental(rental.getId());
+                                for (RentalDetail rentalDetail : rentalDetailList) {
+                                    RentalItem rentalItem = rentalItemDAO.get(rentalDetail.getRentalItemId());
+                                    rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItem.getQuantity() + rentalDetail.getQuantity());
+                                }
+                                rentalDAO.changeStatus(rental.getId(), 5);
+                            }
+                        }
+
+                        // Update repair request when contract expired
+
+                        if (repairList != null && repairList.size() > 0) {
+                            for (Repair repair : repairList) {
+                                repairDAO.changeStatus(repair.getId(), 5);
                             }
                         }
                     }
-
                 } else if (dayTime == 7) {
 //                System.out.println(contract.getId());
                     sendEmail(contract.getId(), contract.getStatusId(), contract.getCustomerUsername());

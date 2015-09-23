@@ -188,6 +188,7 @@ public class ContractController extends HttpServlet {
                 newContract.setPaymentPaidDay(contract.getPaymentPaidDay());
                 newContract.setDepositPaidDay(contract.getDepositPaidDay());
                 newContract.setAdditionalCharge(contract.getAdditionalCharge());
+                newContract.setParentContractId(contract.getId());
                 try {
                     String reformattedEnd = myFormat.format(fromUser.parse(endDate));
                     newContract.setEndDate(Date.valueOf(reformattedEnd));
@@ -250,9 +251,17 @@ public class ContractController extends HttpServlet {
                                     RentalItem rentalItem = rentalItemDAO.get(rentalDetail.getRentalItemId());
                                     rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItem.getQuantity() + rentalDetail.getQuantity());
                                 }
+                                rentalDAO.changeStatus(rental.getId(), 5);
                             }
                         }
-
+                        // Update repair request when contract expired
+                        RepairDAO repairDAO = new RepairDAO();
+                        List<Repair> repairList = repairDAO.getRepairListByContract(contract.getId());
+                        if (repairList != null && repairList.size() > 0) {
+                            for (Repair repair : repairList) {
+                                repairDAO.changeStatus(repair.getId(), 5);
+                            }
+                        }
                         break;
                     case "cancel":
                         dao.changeStatus(id, 1);

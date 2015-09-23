@@ -31,13 +31,10 @@ public class ScheduleCheckRequestOffice implements Job {
             Date date = new Date();
             long currentDate = date.getTime();
 
-
-
             Collection<RequestAmenity> amenities = request.getRequestAmenitiesById();
 
             List<Office> officeAmenities = checkAmenity(offices, amenities);
-            List<Office> officeCategories = checkCategory(officeAmenities, request);
-            List<Office> officePrices = checkPrice(officeCategories, request);
+            List<Office> officePrices = checkPrice(officeAmenities, request);
             List<Office> officeAreas = checkArea(officePrices, request);
             List<Office> officeSuggest = checkDistrict(officeAreas, request);
 
@@ -97,18 +94,6 @@ public class ScheduleCheckRequestOffice implements Job {
         return officeAmenities;
     }
 
-    private List<Office> checkCategory(List<Office> offices, RequestOffice request) {
-        List<Office> officeCategories = new ArrayList<>();
-
-        for (Office office : offices) {
-            if (office.getCategoryId() == request.getCategoryId()) {
-                officeCategories.add(office);
-            }
-        }
-
-        return officeCategories;
-    }
-
     private List<Office> checkPrice(List<Office> offices, RequestOffice request) {
         List<Office> officePrices = new ArrayList<>();
 
@@ -157,17 +142,4 @@ public class ScheduleCheckRequestOffice implements Job {
         return officeDistricts;
     }
 
-    private List<Office> findDuplicate(List<Office> list_1, List<Office> list_2) {
-        List<Office> officeDuplicates = new ArrayList<>();
-
-        for (Office office1 : list_1) {
-            for (Office office2 : list_2) {
-                if (office1.getId() == office2.getId()) {
-                    officeDuplicates.add(office1);
-                }
-            }
-        }
-
-        return officeDuplicates;
-    }
 }

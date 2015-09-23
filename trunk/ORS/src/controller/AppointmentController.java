@@ -99,6 +99,8 @@ public class AppointmentController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("user");
+        Date date = new Date();
+        request.setAttribute("date", date);
         if (account != null && (account.getRoleId() == 2 || account.getRoleId() == 3)) {
             AppointmentDAO dao = new AppointmentDAO();
             String action = request.getParameter("action");

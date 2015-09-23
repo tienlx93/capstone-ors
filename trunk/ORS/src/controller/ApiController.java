@@ -128,6 +128,9 @@ public class ApiController extends HttpServlet {
             case "getContractList":
                 getContractList(request, out);
                 break;
+            case "getContractHistoryList":
+                getContractHistoryList(request, out);
+                break;
             case "checkContractReturn":
                 checkContractReturn(request, out);
                 break;
@@ -1018,6 +1021,36 @@ public class ApiController extends HttpServlet {
         }
     }
 
+    private void getContractHistoryList(HttpServletRequest request, PrintWriter out) {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+
+        if (account != null) {
+            ContractDAO dao = new ContractDAO();
+            List<ContractJSON> list = new ArrayList<>();
+            for (Contract contract : dao.getContractListByCus(account.getUsername())) {
+                Office office = contract.getOfficeByOfficeId();
+                Profile owner = office.getAccountByOwnerUsername().getProfileByUsername();
+                PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
+                if (contract.getStatusId() == 4) {
+
+                    list.add(new ContractJSON(contract.getId(), office.getId(), office.getName(),
+                            contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
+                            paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
+                            owner.getFullName(), owner.getPhone(), owner.getAddress(), null));
+                }
+            }
+            if (list.size() > 0) {
+                out.print(gson.toJson(list));
+            } else {
+                out.print(gson.toJson("Error"));
+            }
+        } else {
+            out.print(gson.toJson("Wrong"));
+        }
+    }
+
     private void getProfile(HttpServletRequest request, PrintWriter out) {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("account");
@@ -1118,9 +1151,9 @@ public class ApiController extends HttpServlet {
             List<RentalListJSON> list = new ArrayList<>();
 
             for (Rental rental : rentalDAO.getRentalListByContract(id)) {
-                for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
-                    RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
-                    if (rental.getStatusId() == 3) {
+                if (rental.getStatusId() == 3) {
+                    for (RentalDetail rentalDetail : rental.getRentalDetailsById()) {
+                        RentalItem rentalItem = rentalDetail.getRentalItemByRentalItemId();
                         double price = rentalDetail.getUnitPrice() * rentalDetail.getQuantity();
                         list.add(new RentalListJSON(rental.getId(), rentalItem.getName(), rentalItem.getDescription(),
                                 rentalDetail.getUnitPrice(), rentalDetail.getQuantity(), null,
@@ -1226,26 +1259,16 @@ public class ApiController extends HttpServlet {
         ContractDAO dao = new ContractDAO();
         Contract contract = dao.get(id);
         Office office = contract.getOfficeByOfficeId();
-        OfficeDAO officeDAO = new OfficeDAO();
-        /*Office office1 = (Office) officeDAO.getAllChildOffice();
-        if (office1.getParentOfficeId() == office.getId()) {
-            out.print(gson.toJson("A"));
-        }*/
         PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
         if (account != null) {
             if (account.getUsername().equals(contract.getCustomerUsername())) {
-                if (contract.getStatusId() != 4) {
-                    Profile owner = office.getAccountByOwnerUsername().getProfileByUsername();
-                    ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
-                            contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
-                            paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
-                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
-                            owner.getFullName(), owner.getPhone(), owner.getAddress(), contract.getImageUrl());
-                    out.print(gson.toJson(json));
-
-                } else {
-                    out.print(gson.toJson("Expire"));
-                }
+                Profile owner = office.getAccountByOwnerUsername().getProfileByUsername();
+                ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                        contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
+                        paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+                        office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
+                        owner.getFullName(), owner.getPhone(), owner.getAddress(), contract.getImageUrl());
+                out.print(gson.toJson(json));
             } else {
                 out.print(gson.toJson("Error"));
             }

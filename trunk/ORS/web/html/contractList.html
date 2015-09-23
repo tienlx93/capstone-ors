@@ -10,6 +10,7 @@
             <th>Ngày bắt đầu</th>
             <th>Ngày kết thúc</th>
             <th>Thời hạn thanh toán</th>
+            <th>Tình trạng</th>
             <th></th>
 
         </tr>
@@ -22,13 +23,18 @@
                 <td>{{item.startDay | date:'dd-MM-yyyy'}}</td>
                 <td>{{item.endDay | date:'dd-MM-yyyy'}}</td>
                 <td>{{item.paymentTerm}}</td>
+                <td ng-if="item.status == 1">Khả dụng</td>
+                <td ng-if="item.status == 2">Đang gia hạn</td>
+                <td ng-if="item.status == 3">Đang yêu cầu hủy</td>
                 <td><a class="btn btn-green" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
-                <td><a class="btn btn-green" href="#/repairList/{{item.contractId}}">Danh sách sửa chữa</a></td>
-                <td><a class="btn btn-green" href="#/rentalList/{{item.contractId}}">Danh sách thuê thiết bị</a></td>
+                <!--<td><a class="btn btn-green" href="#/repairList/{{item.contractId}}">Danh sách sửa chữa</a></td>
+                <td><a class="btn btn-green" href="#/rentalList/{{item.contractId}}">Danh sách thuê thiết bị</a></td>-->
             </tr>
 
         </tbody>
     </table>
+    <br>
+    <a class="btn btn-green" href="#/contractHistory">Xem lịch sử hợp đồng</a>
 </div>
 
 <div class="container" ng-show="exist1">

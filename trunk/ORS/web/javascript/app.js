@@ -52,6 +52,14 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/contractDetail.html',
                 controller: 'ContractDetailController'
             }).
+            when('/contractHistory', {
+                templateUrl: 'html/contractHistory.html',
+                controller: 'ContractController'
+            }).
+            /*when('/contractHistory/:id', {
+                templateUrl: 'html/contractHistoryDetail.html',
+                controller: 'ContractDetailController'
+            }).*/
             when('/repairHistory/:id', {
                 templateUrl: 'html/repairHistory.html',
                 controller: 'RepairHistoryController'

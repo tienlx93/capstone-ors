@@ -285,9 +285,7 @@
                                                                 <td>${item.assignedStaff}</td>
                                                                 <td><fmt:formatDate pattern="dd-MM-yyyy"
                                                                                     value="${item.assignedTime}"/>
-                                                                    <c:if test="${date > item.assignedTime}">
-                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
-                                                                    </c:if>
+                                                                    
                                                                 </td>
                                                                 <td>
                                                                     <a href="repair?action=edit&id=${item.id}"
@@ -498,7 +496,7 @@
                                                                     <fmt:formatDate pattern="dd-MM-yyyy"
                                                                                     value="${item.assignedTime}"/>
                                                                     <c:if test="${date > item.assignedTime}">
-                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                        <i class="fa fa-warning color10" title="Đã đến hạn"></i>
                                                                     </c:if>
                                                                 </td>
                                                                 <td>
@@ -545,7 +543,7 @@
                                                                 <td><fmt:formatDate pattern="dd-MM-yyyy"
                                                                                     value="${item.assignedTime}"/>
                                                                     <c:if test="${date > item.assignedTime}">
-                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                        <i class="fa fa-warning color10" title="Đã đến hạn"></i>
                                                                     </c:if>
                                                                 </td>
                                                                 <td>

@@ -15,25 +15,26 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 $scope.WrongCus = true;
                 $scope.RightCus = false;
                 $scope.isLogin = true;
-                $scope.Expire = false;
-            } else if (data == "Expire") {
-                $scope.Expire = true;
-                $scope.RightCus = false;
-                $scope.WrongCus = false;
-                $scope.isLogin = true;
-                $scope.error = "Hợp đồng đã hết hạn";
+
             } else if (data == "Wrong") {
                 $scope.RightCus = false;
                 $scope.WrongCus = false;
-                $scope.Expire = false;
+
                 $scope.isLogin = false;
             } else {
                 $scope.data = data;
                 $scope.RightCus = true;
                 $scope.WrongCus = false;
-                $scope.Expire = false;
+
                 $scope.isLogin = true;
                 $scope.today = new Date();
+
+                var time30 = new Date();
+                time30.setDate(time30.getDate()+30);
+                if (time30 < data.endDay) {
+                    $scope.month = 1;
+                }
+
                 officeId = data.officeId;
 
                 Api.getAmenityByOfficeId(officeId, function (amenity) {

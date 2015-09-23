@@ -1,0 +1,49 @@
+
+<div class="container" ng-show="rightCus2">
+    <h2>Danh sách hợp đồng</h2>
+    <br>
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>Tên văn phòng</th>
+            <th>Ngày bắt đầu</th>
+            <th>Ngày kết thúc</th>
+            <th>Thời hạn thanh toán</th>
+            <th>Tình trạng</th>
+            <th></th>
+
+        </tr>
+        </thead>
+        <tbody>
+
+        <tr ng-repeat="item in data2">
+
+            <td>{{item.officeName}}</td>
+            <td>{{item.startDay | date:'dd-MM-yyyy'}}</td>
+            <td>{{item.endDay | date:'dd-MM-yyyy'}}</td>
+            <td>{{item.paymentTerm}}</td>
+            <td ng-if="item.status == 4">Đã hết hạn</td>
+            <td><a class="btn btn-green" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+</div>
+
+<div class="container" ng-show="exist3">
+    <h2>Bạn chưa tạo hợp đồng với chúng tôi</h2>
+    <br>
+    <br>
+    <div class="button-post">
+        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
+    </div>
+</div>
+<div class="container" ng-show="exist4">
+    <h2>Vui lòng đăng nhập để xem thông tin</h2>
+    <br>
+    <br>
+    <div class="button-post">
+        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
+    </div>
+</div>

@@ -33,6 +33,7 @@ public class Contract {
     private Integer paymentPaidDay;
     private Integer additionalCharge;
     private Integer latePaidDay;
+    private Contract contractByParrentContractId;
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -304,5 +305,15 @@ public class Contract {
 
     public void setLatePaidDay(Integer latePaidDay) {
         this.latePaidDay = latePaidDay;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "ParrentContractId", referencedColumnName = "Id")
+    public Contract getContractByParrentContractId() {
+        return contractByParrentContractId;
+    }
+
+    public void setContractByParrentContractId(Contract contractByParrentContractId) {
+        this.contractByParrentContractId = contractByParrentContractId;
     }
 }

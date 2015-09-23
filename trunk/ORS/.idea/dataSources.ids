@@ -104,14 +104,14 @@
       <column name="PaymentPaidDay" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="AdditionalCharge" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="LatePaidDay" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
-      <column name="ParrentContractId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ParentContractId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PK_Contract" columns="Id"/>
       <foreign-key name="FK_Contract_Account" columns="CustomerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
-      <foreign-key name="FK_Contract_Contract" columns="ParrentContractId" ref-table="Contract" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK_Contract_Contract" columns="ParentContractId" ref-table="Contract" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_ContractStatus" columns="StatusId" ref-table="ContractStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_Office" columns="OfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_PaymentTerm" columns="PaymentTerm" ref-table="PaymentTerm" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
-      <exported-key name="FK_Contract_Contract" table="Contract" schema="dbo" catalog="ors" columns="ParrentContractId"/>
+      <exported-key name="FK_Contract_Contract" table="Contract" schema="dbo" catalog="ors" columns="ParentContractId"/>
       <exported-key name="FK_Rental_Contract" table="Rental" schema="dbo" catalog="ors" columns="ContractId"/>
       <exported-key name="FK_Repair_Contract" table="Repair" schema="dbo" catalog="ors" columns="ContractId"/>
     </table>

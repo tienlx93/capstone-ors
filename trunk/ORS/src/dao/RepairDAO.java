@@ -44,6 +44,22 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
 
     }
 
+    public void updateContractId(int id, int contractId) {
+
+        Transaction trans = session.beginTransaction();
+        try {
+            Repair rp = (Repair) session.get(Repair.class, id);
+            rp.setContractId(contractId);
+            session.update(rp);
+            trans.commit();
+
+        } catch (Exception e) {
+            if (trans.isActive()) {
+                trans.rollback();
+            }
+        }
+    }
+
     public List<Repair> getRepairListByStaff(String username) {
         try {
             String sql = "from Repair where assignedStaff = ?";
@@ -188,4 +204,15 @@ public class RepairDAO extends BaseDAO<Repair, Integer> {
         return null;
     }
 
+    public List<Repair> getRepairListHasStatusOneAndTwo() {
+        try {
+            String sql = "from Repair where repairStatusId = 1 OR  repairStatusId = 2";
+            Query query = session.createQuery(sql);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

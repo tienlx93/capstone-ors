@@ -104,11 +104,14 @@
       <column name="PaymentPaidDay" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="AdditionalCharge" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="LatePaidDay" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
+      <column name="ParentContractId" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <primary-key name="PK_Contract" columns="Id"/>
       <foreign-key name="FK_Contract_Account" columns="CustomerUsername" ref-table="Account" ref-schema="dbo" ref-catalog="ors" ref-columns="Username" update-rule="1" delete-rule="1" deferrability="2"/>
+      <foreign-key name="FK_Contract_Contract" columns="ParentContractId" ref-table="Contract" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_ContractStatus" columns="StatusId" ref-table="ContractStatus" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_Office" columns="OfficeId" ref-table="Office" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
       <foreign-key name="FK_Contract_PaymentTerm" columns="PaymentTerm" ref-table="PaymentTerm" ref-schema="dbo" ref-catalog="ors" ref-columns="Id" update-rule="1" delete-rule="1" deferrability="2"/>
+      <exported-key name="FK_Contract_Contract" table="Contract" schema="dbo" catalog="ors" columns="ParentContractId"/>
       <exported-key name="FK_Rental_Contract" table="Rental" schema="dbo" catalog="ors" columns="ContractId"/>
       <exported-key name="FK_Repair_Contract" table="Repair" schema="dbo" catalog="ors" columns="ContractId"/>
     </table>
@@ -329,7 +332,7 @@
       <column name="diagram_id" sqlType="int identity" precision="10" scale="0" nullable="false" jdbcType="4" autoIncrement="true"/>
       <column name="version" sqlType="int" precision="10" scale="0" nullable="true" jdbcType="4"/>
       <column name="definition" sqlType="varbinary" precision="2147483647" scale="0" nullable="true" jdbcType="-3"/>
-      <primary-key name="PK__sysdiagr__C2B05B6159063A47" columns="diagram_id"/>
+      <primary-key name="PK__sysdiagr__C2B05B615CD6CB2B" columns="diagram_id"/>
       <index name="UK_principal_name" unique="true" columns="principal_id,name"/>
     </table>
     <procedure name="CalculateIncome" schema="dbo" catalog="ors" type="2">

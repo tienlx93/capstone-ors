@@ -212,7 +212,7 @@
                     <span ng-show="requestOfficeForm.district.$error.required">Bắt buộc</span>
                     </span>
             </div>
-            <div class="form-group clearfix">
+            <div class="form-group clearfix" style="margin-bottom: 5px">
                 <label for="amenity">Danh sách tiện nghi</label><br>
 
                 <div class="clear-float" id="amenity-list">
@@ -234,7 +234,7 @@
             <div class="button-post">
 
                 <ul>
-                    <li class="amenity-item" ng-repeat="amenityList in reOffice.amenityList" ng-click="remove(idx)">{{amenityList}}</li>
+                    <li class="amenity-item" ng-repeat="amenityList in reOffice.amenityList">{{amenityList}}<span class="fa fa-remove" style="color: red; margin-left: 5px;cursor: pointer" ng-click="remove(idx)"></span></li>
                 </ul>
 
                 <button type="submit" ng-disabled="requestOfficeForm.$invalid" ng-click="requestOffice(requestOfficeForm)" class="btn btn-green" value="save"

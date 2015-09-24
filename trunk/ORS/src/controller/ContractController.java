@@ -548,7 +548,7 @@ public class ContractController extends HttpServlet {
             title.setAlignment(Element.ALIGN_CENTER);
             title.setSpacingAfter(5);
 
-            Paragraph subTitle = new Paragraph("(Số: ……………./HĐTVP)", italicFont);
+            Paragraph subTitle = new Paragraph("(Số: " + contract.getId() + " /HĐTVP)", italicFont);
             subTitle.setAlignment((Element.ALIGN_CENTER));
             subTitle.setSpacingAfter(25);
 

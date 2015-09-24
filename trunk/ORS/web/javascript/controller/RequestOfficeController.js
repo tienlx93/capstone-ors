@@ -10,9 +10,11 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
             var cut = index >= 0 ? url.substring(index + parameter.length + 1) : "";
             return cut != "" ? cut.substring(0, cut.indexOf("&") >= 0 ? cut.indexOf("&") : cut.length) : "";
         };
-        var district = getParameterValue(url, "district");
-        var price = getParameterValue(url, "price");
-        var amenities = getParameterValue(url, "amenities");
+        if (url) {
+            var district = getParameterValue(url, "district");
+            var price = getParameterValue(url, "price");
+            var amenities = getParameterValue(url, "amenities");
+        }
         var verifyCallback = function (response) {
             $scope.user.captcha3 = response;
             $scope.$$phase || $scope.$apply();

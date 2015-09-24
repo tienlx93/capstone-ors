@@ -182,7 +182,10 @@
                                         <div class="col-sm-4">
                                             <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
                                             <c:if test="${date > info.assignedTime && info.statusId == 2}">
-                                                <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                <i class="fa fa-warning color10" title="Đã đến hạn"></i>
+                                            </c:if>
+                                            <c:if test="${date > info.assignedTime && info.statusId == 5}">
+                                                <i class="fa fa-warning color10" title="Đã đến hạn"></i>
                                             </c:if>
                                         </div>
                                     </c:otherwise>

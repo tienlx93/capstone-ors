@@ -127,7 +127,7 @@
                                     <fmt:formatDate value="${info.time}"
                                                     pattern="dd-MM-YYYY"/>
                                     <c:if test="${date > info.time && info.statusId == 2}">
-                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                        <i class="fa fa-warning color10" title="Đã đến hạn"></i>
                                     </c:if>
                                 </div>
                                 <input type="hidden" id="meetDate" value="${info.time}">

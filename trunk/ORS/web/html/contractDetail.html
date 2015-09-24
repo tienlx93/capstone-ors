@@ -19,7 +19,7 @@
                     <td class="textright">Địa chỉ:</td>
                     <td><span class="spanleft">{{data.ownerAddress}}</span></td>
                 </tr>
-		<tr>
+                <tr>
                     <td class="textright">Số điện thoại:</td>
                     <td><span class="spanleft">{{data.ownerPhone}}</span></td>
                 </tr>
@@ -123,6 +123,9 @@
                 <tbody>
                 <tr>
                     <td style="padding-right: 10px;"><h4>Tình trạng hợp đồng:</h4></td>
+                    <td ng-if="data.status == 4 && data.startDay < today" class="contract-status color10-bg"
+                        style="color: white"> Hợp đồng đã hết hạn
+                    </td>
                     <td ng-if="data.status == 3 && data.startDay < today" class="contract-status color9-bg"> Đang yêu
                         cầu hủy hợp đồng trước hạn
                     </td>
@@ -145,7 +148,6 @@
                     <thead>
                     <tr>
                         <th>Tên thiết bị</th>
-                        <th>Mô tả</th>
                         <th>Giá thuê (trên tháng)</th>
                         <th>Số lượng (cái)</th>
                         <th>Thành tiền</th>
@@ -155,13 +157,12 @@
 
                     <tr ng-repeat="item in rentalList">
                         <td>{{item.name}}</td>
-                        <td>{{item.description}}</td>
                         <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
                         <td>{{item.quantity}}</td>
                         <td>{{item.price | currency:"VNĐ":0}}</td>
                     </tr>
                     <tr>
-                        <td colspan="4" class="sum"><b>Tổng cộng</b></td>
+                        <td colspan="3" class="sum"><b>Tổng cộng</b></td>
                         <td>{{total | currency:"VNĐ":0}}</td>
                     </tr>
                     </tbody>
@@ -172,9 +173,11 @@
 
     </div>
     <div class="row" style="margin: auto; text-align: right;">
-        <a ng-if="data.status == 1 && data.startDay < today" href="#/rental/{{data.contractId}}" class="btn btn-green">
+        <a ng-if="((data.status == 1 || data.status == 2) && data.startDay < today) && month == 1"
+           href="#/rental/{{data.contractId}}" class="btn btn-green">
             Yêu cầu thuê thiết bị</a>
-        <a ng-if="data.status == 1 && data.startDay < today" href="#/requestRepair/{{data.contractId}}"
+        <a ng-if="(data.status == 1 || data.status == 2) && data.startDay < today"
+           href="#/requestRepair/{{data.contractId}}"
            class="btn btn-green">
             Yêu cầu sửa chữa</a>
             <span ng-if="data.status == 1 && data.startDay < today">
@@ -246,15 +249,6 @@
 </div>
 <div class="container" ng-show="WrongCus">
     <h2>Bạn không sở hữu hợp đồng này!</h2>
-    <br>
-    <br>
-
-    <div class="button-post">
-        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
-    </div>
-</div>
-<div class="container" ng-show="Expire">
-    <h2 class="error">{{error}}</h2>
     <br>
     <br>
 

@@ -128,11 +128,11 @@
                                aria-controls="Assigned" role="tab"
                                data-toggle="tab">Được Giao</a>
                           </li>
-                          <li role="presentation" class="">
+                          <%--<li role="presentation" class="">
                             <a href="#accepted"
                                aria-controls="Accepted" role="tab"
                                data-toggle="tab">Chấp Nhận</a>
-                          </li>
+                          </li>--%>
                           <li role="presentation" class="">
                             <a href="#done" aria-controls="done"
                                role="tab" data-toggle="tab">Hoàn Thành</a>
@@ -251,7 +251,7 @@
                                       <td><fmt:formatDate value="${item.time}"
                                                           pattern="dd-MM-yyyy hh:mm a"/>
                                         <c:if test="${date > item.time}">
-                                          <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                          <i class="fa fa-warning color10" title="Đã đến hạn"></i>
                                         </c:if>
                                       </td>
 
@@ -300,7 +300,7 @@
                                       <td><fmt:formatDate value="${item.time}"
                                                           pattern="dd-MM-yyyy hh:mm a"/>
                                         <c:if test="${date > item.time}">
-                                          <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                          <i class="fa fa-warning color10" title="Đã đến hạn"></i>
                                         </c:if>
                                       </td>
 

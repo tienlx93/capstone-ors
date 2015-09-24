@@ -125,6 +125,44 @@ public class ScheduleListener implements ServletContextListener {
             Long duration5 = Duration.standardMinutes(minute).getMillis();
             simpleTrigger5.setRepeatInterval(duration5);
             simpleTrigger5.setName("FifthTrigger");
+
+            //Creating Job and link to our Job class
+            JobDetailImpl jobDetail6 = new JobDetailImpl();
+            jobDetail6.setName("Sixth Job");
+            jobDetail6.setJobClass(ScheduleCheckRequestRental.class);
+
+            //Creating schedule time with trigger
+            SimpleTriggerImpl simpleTrigger6 = new SimpleTriggerImpl();
+            simpleTrigger6.setStartTime(new Date(System.currentTimeMillis() + 1000));
+            simpleTrigger6.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+            time = constant.readProperty("schedule.check_appointment");
+            if (!time.equals("error")) {
+                minute = Integer.parseInt(time);
+            } else {
+                minute = 1;
+            }
+            Long duration6 = Duration.standardMinutes(minute).getMillis();
+            simpleTrigger6.setRepeatInterval(duration6);
+            simpleTrigger6.setName("SixthTrigger");
+
+            //Creating Job and link to our Job class
+            JobDetailImpl jobDetail7 = new JobDetailImpl();
+            jobDetail7.setName("Seventh Job");
+            jobDetail7.setJobClass(ScheduleCheckRequestRepair.class);
+
+            //Creating schedule time with trigger
+            SimpleTriggerImpl simpleTrigger7 = new SimpleTriggerImpl();
+            simpleTrigger7.setStartTime(new Date(System.currentTimeMillis() + 1000));
+            simpleTrigger7.setRepeatCount(SimpleTrigger.REPEAT_INDEFINITELY);
+            time = constant.readProperty("schedule.check_appointment");
+            if (!time.equals("error")) {
+                minute = Integer.parseInt(time);
+            } else {
+                minute = 1;
+            }
+            Long duration7 = Duration.standardMinutes(minute).getMillis();
+            simpleTrigger7.setRepeatInterval(duration7);
+            simpleTrigger7.setName("SeventhTrigger");
             //Start scheduler
 
             scheduler.start();
@@ -133,6 +171,8 @@ public class ScheduleListener implements ServletContextListener {
             scheduler.scheduleJob(jobDetail3, simpleTrigger3);
             scheduler.scheduleJob(jobDetail4, simpleTrigger4);
             scheduler.scheduleJob(jobDetail5, simpleTrigger5);
+            scheduler.scheduleJob(jobDetail6, simpleTrigger6);
+            scheduler.scheduleJob(jobDetail7, simpleTrigger7);
             /*DateTime now = new DateTime();
             DateTime startSchedule;
             if (now.hourOfDay().get() > 17) {

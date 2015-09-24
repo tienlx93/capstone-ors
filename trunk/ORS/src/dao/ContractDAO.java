@@ -48,6 +48,18 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return null;
     }
 
+    public  List<Contract> getContractListByParentContractId(int contractId) {
+        try {
+            String sql = "from Contract where parentContractId = :parentContractId";
+            Query query = session.createQuery(sql);
+            query.setInteger("parentContractId", contractId);
+
+            return query.list();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public List<Contract> getContractByPage(int firstResult, int pageSize) {
 
         try {

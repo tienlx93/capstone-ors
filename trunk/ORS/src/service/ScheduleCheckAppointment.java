@@ -32,7 +32,7 @@ public class ScheduleCheckAppointment implements Job {
                     String phone = appointment.getAccountByCustomerUsername().getProfileByUsername().getPhone();
                     if(!phone.equals("")) {
                         sms.setPhone(phone);
-                        sms.setMessage("(ORS) Lịch hẹn đã hết hạn xin quý khách vui lòng đăng ký lịch hẹn mới.");
+                        sms.setMessage("(ORS) Lich hen da het han. Xin quy khach vui long dat lich hen moi.");
                         appointmentDAO.updateStatus(appointment.getId(), 5);
                         try {
                             sms.send();

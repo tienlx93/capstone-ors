@@ -20,7 +20,8 @@
           type="text/css">
     <%--<link rel="stylesheet" href="${pageContext.request.contextPath}/lib/datepicker/css/datepicker.css"
           type="text/css">--%>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/lib/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker3.css"
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/lib/bootstrap-datepicker-1.4.0-dist/css/bootstrap-datepicker3.css"
           type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/core.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
@@ -173,7 +174,8 @@
                                                                            value="${item.description}">
                                                                     <input type="hidden" id="endDate" class="endDate"
                                                                            value="${item.contractByContractId.endDate}">
-                                                                    <input type="hidden" id="startDate" class="startDate"
+                                                                    <input type="hidden" id="startDate"
+                                                                           class="startDate"
                                                                            value="${item.contractByContractId.startDate}">
                                                                     <select name="assignStaff"
                                                                             class="form-control" required>
@@ -192,7 +194,8 @@
                                                                             value="${suggestMap[item.id].assignedTime}"
                                                                             pattern="dd-MM-yyyy" var="newDate"/>
                                                                     <input type="text" name="assignedTime"
-                                                                           class="datetime" value="${newDate}" readonly required>
+                                                                           class="datetime" value="${newDate}" readonly
+                                                                           required>
                                                                 </td>
                                                                 <td>
                                                                     <div class="btn-group" role="group">
@@ -248,7 +251,8 @@
                                                                 <td><fmt:formatDate value="${item.assignedTime}"
                                                                                     pattern="dd-MM-yyyy"/>
                                                                     <c:if test="${date > item.assignedTime}">
-                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                        <i class="fa fa-warning color10"
+                                                                           title="Đã đến hạn"></i>
                                                                     </c:if>
                                                                 </td>
                                                                 <c:if test="${user.roleId == 2}">
@@ -297,7 +301,8 @@
                                                                 <td><fmt:formatDate value="${item.assignedTime}"
                                                                                     pattern="dd-MM-yyyy"/>
                                                                     <c:if test="${date > item.assignedTime}">
-                                                                        <i class="fa fa-warning color10" title="Quá hạn"></i>
+                                                                        <i class="fa fa-warning color10"
+                                                                           title="Đã đến hạn"></i>
                                                                     </c:if>
                                                                 </td>
                                                                 <c:if test="${user.roleId == 2}">
@@ -327,10 +332,10 @@
                                             <tr>
                                                 <th>Tên văn phòng</th>
                                                 <th>Khách hàng</th>
+                                                <th>Ngày giao thiết bị</th>
                                                 <c:if test="${user.roleId == 2}">
                                                     <th>Nhân viên được giao</th>
                                                 </c:if>
-                                                <th>Ngày giao thiết bị</th>
                                                 <th></th>
                                             </tr>
                                             </thead>
@@ -343,14 +348,16 @@
                                                             <a href="repair?action=viewProfile&username=${item.contractByContractId.customerUsername}">
                                                                     ${item.contractByContractId.accountByCustomerUsername.profileByUsername.fullName}</a>
                                                         </td>
+                                                        <td><fmt:formatDate pattern="dd-MM-yyyy"
+                                                                            value="${item.assignedTime}"/>
+                                                            <c:if test="${date > item.assignedTime}">
+                                                                <i class="fa fa-warning color10"
+                                                                   title="Đã đến hạn"></i>
+                                                            </c:if>
+                                                        </td>
                                                         <c:if test="${user.roleId == 2}">
                                                             <td>${item.assignStaff}</td>
                                                         </c:if>
-
-                                                            <td><fmt:formatDate pattern="dd-MM-yyyy"
-                                                                                value="${item.assignedTime}"/>
-                                                            </td>
-
                                                         <td>
                                                             <a href="rental?action=edit&id=${item.id}"
                                                                title="Chi tiết"

@@ -60,10 +60,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/contractHistoryDetail.html',
                 controller: 'ContractDetailController'
             }).*/
-            when('/repairHistory/:id', {
+            /*when('/repairHistory/:id', {
                 templateUrl: 'html/repairHistory.html',
                 controller: 'RepairHistoryController'
-            }).
+            }).*/
             when('/repairList/:id', {
                 templateUrl: 'html/repairList.html',
                 controller: 'RepairController'
@@ -87,6 +87,10 @@ app.config(['$routeProvider', '$httpProvider',
             when('/register', {
                 templateUrl: 'html/register.html',
                 controller: 'RegisterController'
+            }).
+            when('/requestOffice/:query', {
+                templateUrl: 'html/requestOffice.html',
+                controller: 'RequestOfficeController'
             }).
             when('/requestOffice', {
                 templateUrl: 'html/requestOffice.html',
@@ -131,6 +135,12 @@ app.directive('googleplace', function () {
                     var place = scope.gPlace.getPlace();
                     scope.searchTerm.latitude = place.geometry.location.lat();
                     scope.searchTerm.longitude = place.geometry.location.lng();
+                    for (var i = 0; i < place.address_components.length; ++i) {
+                        var component = place.address_components[i];
+                        if (component.types.indexOf("administrative_area_level_2")>= 0) {
+                            scope.searchTerm.district = component.long_name;
+                        }
+                    }
                 });
             });
         }

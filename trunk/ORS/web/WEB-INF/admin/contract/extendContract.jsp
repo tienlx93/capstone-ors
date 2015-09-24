@@ -264,7 +264,7 @@
                                         <input style="display: inline-block" type='number' min="0" class="form-control"
                                                name="extendTime"
                                                id="extendTime" onchange="calculateEndDate()"
-                                               value=""/>
+                                               value="" required/>
                                     </div>
                                 </div>
 

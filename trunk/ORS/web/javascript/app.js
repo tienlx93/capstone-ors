@@ -52,6 +52,10 @@ app.config(['$routeProvider', '$httpProvider',
                 templateUrl: 'html/contractDetail.html',
                 controller: 'ContractDetailController'
             }).
+            when('/contractList/:id/:tab', {
+                templateUrl: 'html/contractDetail.html',
+                controller: 'ContractDetailController'
+            }).
             when('/contractHistory', {
                 templateUrl: 'html/contractHistory.html',
                 controller: 'ContractController'

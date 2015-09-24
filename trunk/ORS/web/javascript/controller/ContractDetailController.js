@@ -4,6 +4,10 @@
 controllers.controller('ContractDetailController', ['$scope', '$location', '$routeParams', '$route', 'Api', '$modal',
     function ($scope, $location, $routeParams, $route, Api, $modal) {
         var id = $routeParams.id;
+        var tab = $routeParams.tab;
+        if (tab && tab < 2) {
+            $scope.tab = tab;
+        }
         $scope.data = {};
         $scope.show = {};
         $scope.profile = {};
@@ -11,6 +15,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
         var officeId = 0;
         //get data
         Api.getContractById(id, function (data) {
+
             if (data == "Error") {
                 $scope.WrongCus = true;
                 $scope.RightCus = false;

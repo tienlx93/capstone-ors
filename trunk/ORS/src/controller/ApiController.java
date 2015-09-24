@@ -183,6 +183,13 @@ public class ApiController extends HttpServlet {
                     out.print(gson.toJson("Error"));
                 }
                 break;
+            case "getContractChildById":
+                try {
+                    getContractChildById(request, out);
+                } catch (ParseException e) {
+                    out.print(gson.toJson("Error"));
+                }
+                break;
             case "amenity":
                 getAmenityList(request, out);
                 break;
@@ -1274,7 +1281,37 @@ public class ApiController extends HttpServlet {
         } else {
             out.print(gson.toJson("Wrong"));
         }
+    }
 
+    private void getContractChildById(HttpServletRequest request, PrintWriter out) throws ParseException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        String contractId = request.getParameter("id");
+        int id = Integer.parseInt(contractId);
+        ContractDAO dao = new ContractDAO();
+        Contract contract = dao.get(id);
+        Office office = contract.getOfficeByOfficeId();
+        PaymentTerm paymentTerm = contract.getPaymentTermByPaymentTerm();
+        List<Contract> test = dao.getContractListByParentContractId(contract.getId());
+        if (test.size() > 0) {
+            if (account != null) {
+                if (account.getUsername().equals(contract.getCustomerUsername())) {
+                    Profile owner = office.getAccountByOwnerUsername().getProfileByUsername();
+                    ContractJSON json = new ContractJSON(id, office.getId(), office.getName(),
+                            contract.getStartDate().getTime(), contract.getEndDate().getTime(), contract.getPaymentFee(),
+                            paymentTerm.getDescription(), contract.getStatusId(), office.getAddress(),
+                            office.getArea(), contract.getDeposit(), office.getCategoryByCategoryId().getDescription(),
+                            owner.getFullName(), owner.getPhone(), owner.getAddress(), contract.getImageUrl());
+                    out.print(gson.toJson(json));
+                } else {
+                    out.print(gson.toJson("Error"));
+                }
+            } else {
+                out.print(gson.toJson("Wrong"));
+            }
+        } else {
+            out.print(gson.toJson("Error"));
+        }
     }
 
     private void getAmenityList(HttpServletRequest request, PrintWriter out) {
@@ -1431,7 +1468,7 @@ public class ApiController extends HttpServlet {
 
         if (account != null) {
             RequestOfficeDAO requestOfficeDAO = new RequestOfficeDAO();
-                List<RequestOffice> requestOfficeList = requestOfficeDAO.getAllRequestOfficeByUsername(account.getUsername());
+            List<RequestOffice> requestOfficeList = requestOfficeDAO.getAllRequestOfficeByUsername(account.getUsername());
             List<RequestOfficeJSON> requestOfficeJSONs = new ArrayList<>();
 
             for (RequestOffice requestOffice : requestOfficeList) {

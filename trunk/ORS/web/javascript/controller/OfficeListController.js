@@ -62,7 +62,7 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
                     }
                     $scope.filter = $scope.officeList;
                     $scope.totalItems = $scope.filter.length;
-                    updatePage();
+                    //updatePage();
                     /*$rootScope.q = [];
                      for (var j = 0; j < $rootScope.amenityWeight.length; j ++) {
                      $rootScope.q.push(false);

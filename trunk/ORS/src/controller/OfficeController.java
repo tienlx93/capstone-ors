@@ -288,6 +288,14 @@ public class OfficeController extends HttpServlet {
                         count = count + 1;
                     }
                 }
+                boolean hasContract = false;
+                for (Contract contract : office.getContractsById()) {
+                    if (contract.getStatusId() == 1) {
+                        hasContract = true;
+                    }
+                }
+                request.setAttribute("hasContract", hasContract);
+
                 request.setAttribute("count", count);
                 request.setAttribute("statusId", status);
 

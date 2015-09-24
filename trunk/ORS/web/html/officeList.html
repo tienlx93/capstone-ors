@@ -54,7 +54,8 @@
         </div>
         <div id="quat" style= margin:auto;" class="">
             <div ng-show="filteredOffices.length==0">
-                <h2>Không có văn phòng phù hợp</h2>
+                <h3>Không có văn phòng phù hợp</h3>
+                <br>
                 <a ng-click="requestOffice()" class="btn btn-green">Đặt văn phòng?</a>
             </div>
             <div ng-repeat="office in filteredOffices" class="row item">
@@ -91,45 +92,12 @@
                     <!--<div class="item-price-term">{{office.priceTerm}}</div>-->
                 </div>
             </div>
-            <!--end left-wrapper-->
-            <pagination total-items="totalItems" ng-model="currentPage" items-per-page="numPerPage"
+            <pagination ng-show="filteredOffices.length>0" total-items="totalItems" ng-model="currentPage"
+                        items-per-page="numPerPage"
                         previous-text="&laquo;" next-text="&raquo;"></pagination>
         </div>
+        <!--end left-wrapper-->
 
-        <div id="right-wrapper" class="hidden">
-            <div id="one">
-                <input type="text" placeholder="tìm kiếm...">
-                <select>
-                    <option>Viet Nam</option>
-                    <option>Binh Duong</option>
-                    <option>Viet Nam</option>
-                </select>
-            </div>
-            <div id="two">
-                <p>Danh sách tiện nghi</p>
-                <label>
-                    <input type="checkbox" id="inlineCheckbox1" value="option1"> Furnished offices (3)
-                </label>
-                <label>
-                    <input type="checkbox" id="inlineCheckbox2" value="option1"> Furnished offices (3)
-                </label>
-                <label>
-                    <input type="checkbox" id="inlineCheckbox3" value="option1"> Furnished offices (3)
-                </label>
-                <label>
-                    <input type="checkbox" id="inlineCheckbox4" value="option1"> Furnished offices (3)
-                </label>
-                <label>
-                    <input type="checkbox" id="inlineCheckbox5" value="option1"> Furnished offices (3)
-                </label>
-
-                <div id="more"><a href="#">Thêm tiện nghi</a></div>
-                <div id="up"><a href="#">Tìm kiếm</a></div>
-            </div>
-            <div id="three"></div>
-            <div id="four"></div>
-        </div>
-        <!--end right-wrapper-->
     </div>
     <!--end main-wrapper-->
 </div>

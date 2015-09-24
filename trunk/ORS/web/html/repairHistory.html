@@ -1,8 +1,9 @@
-<div class="container" style="padding: 15px;" ng-show="RightCus">
+<div ng-show="RightCus">
 
-    <h2>Lịch sử sửa chữa </h2>
-    <br>
-    <div ng-show="data.length==0">(Chưa có sửa chữa nào)</div>
+    <div class="modal-header">
+        <h3 class="modal-title">Lịch sử sửa chữa</h3>
+    </div>
+    <div ng-show="data.length==0" style="padding: 15px;">(Chưa có sửa chữa nào)</div>
     <table class="table" ng-show="data.length>0">
         <thead>
         <tr>
@@ -33,16 +34,12 @@
     <h2>Bạn không sở hữu hợp đồng này!</h2>
     <br>
     <br>
-    <div class="button-post">
-        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
-    </div>
+
 </div>
 
 <div class="container" ng-show="!isLogin">
     <h2>Vui lòng đăng nhập để xem thông tin</h2>
     <br>
     <br>
-    <div class="button-post">
-        <a href="#/home" class="btn btn-green">Quay về trang chủ</a> <br>
-    </div>
+
 </div>

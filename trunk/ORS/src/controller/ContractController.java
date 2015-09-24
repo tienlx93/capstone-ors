@@ -259,7 +259,9 @@ public class ContractController extends HttpServlet {
                         List<Repair> repairList = repairDAO.getRepairListByContract(contract.getId());
                         if (repairList != null && repairList.size() > 0) {
                             for (Repair repair : repairList) {
-                                repairDAO.changeStatus(repair.getId(), 5);
+                                if (repair.getRepairStatusId() != 3) {
+                                    repairDAO.changeStatus(repair.getId(), 4);
+                                }
                             }
                         }
                         break;

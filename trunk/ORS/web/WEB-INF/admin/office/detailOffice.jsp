@@ -119,6 +119,7 @@
               </div>
               <c:if test="${user.roleId != 5}">
                 <h3>Thông tin chủ văn phòng</h3>
+
                 <div class="form-group clearfix">
                   <label class="col-sm-3">Tên chủ sở hữu:</label>
                   <span class="col-sm-7">${info.accountByOwnerUsername.profileByUsername.fullName}</span>
@@ -168,12 +169,29 @@
                     chữa</a>
                 </c:if>
 
-                <c:if test="${user.roleId != 5}">
-                  <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
-                </c:if>
-                <input type="hidden" name="id" value="${info.id}"/>
                 <input type="hidden" name="action" value="delete">
-                <button type="submit" class="btn btn-danger" >Xóa văn phòng</button>
+
+                <c:if test="${hasContract==true}">
+                  <c:if test="${user.roleId != 5}">
+                    <div style="display: inline-block;" data-toggle="tooltip" data-placement="top"
+                       title="Không thể chỉnh sửa do văn phòng đang có hợp đồng">
+                      <a href="" class="btn btn-primary disabled">Chỉnh sửa</a>
+                    </div>
+                  </c:if>
+                  <div data-toggle="tooltip" data-placement="top" style="display: inline-block;"
+                        title="Không thể xóa do văn phòng đang có hợp đồng">
+                    <button type="submit" class="btn btn-danger" disabled>Xóa văn phòng</button>
+                  </div>
+                </c:if>
+                <c:if test="${hasContract==false}">
+                  <c:if test="${user.roleId != 5}">
+                    <a class="btn btn-primary" href="office?action=edit&id=${info.id}">Chỉnh sửa</a>
+                  </c:if>
+                  <button type="submit" class="btn btn-danger">Xóa văn phòng</button>
+                </c:if>
+
+                <input type="hidden" name="id" value="${info.id}"/>
+
                 <a href="${pageContext.request.contextPath}/admin/office"
                    class="btn btn-default">Quay về</a>
               </div>
@@ -188,7 +206,8 @@
 
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/loadImg.js" charset="UTF-8"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/loadImg.js"
+        charset="UTF-8"></script>
 <script>
   $('.form').submit(function () {
     var currentForm = $(this);
@@ -215,7 +234,7 @@
               success: function (data) {
                 data = JSON.parse(data);
                 if (data == "Success") {
-                  bootbox.alert("Xóa văn phòng thành công", function(){
+                  bootbox.alert("Xóa văn phòng thành công", function () {
                     window.location.href = "/admin/office";
                   });
                 } else {

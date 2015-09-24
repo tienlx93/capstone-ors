@@ -18,7 +18,7 @@ $(document).ready(function () {
     var time = new Date().getTime();
     imageUrls = $("#imageUrls").val();
     renderImg();
-
+    //$('[data-toggle="tooltip"]').tooltip();
 });
 
 

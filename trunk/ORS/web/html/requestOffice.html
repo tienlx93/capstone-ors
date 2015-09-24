@@ -234,7 +234,9 @@
             <div class="button-post">
 
                 <ul>
-                    <li class="amenity-item" ng-repeat="amenityList in reOffice.amenityList">{{amenityList}}<span class="fa fa-remove" style="color: red; margin-left: 5px;cursor: pointer" ng-click="remove(idx)"></span></li>
+                    <li class="amenity-item" ng-repeat="amenityList in reOffice.amenityList">{{amenityList}}
+                        <span class="fa fa-remove" style="color: red; margin-left: 5px;cursor: pointer" ng-click="remove(amenityList)">
+                        </span></li>
                 </ul>
 
                 <button type="submit" ng-disabled="requestOfficeForm.$invalid" ng-click="requestOffice(requestOfficeForm)" class="btn btn-green" value="save"

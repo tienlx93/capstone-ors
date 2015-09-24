@@ -131,8 +131,12 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                 toastr.error('Tiện nghi chưa tồn tại');
             }
         };
-        $scope.remove = function (idx) {
-            $scope.reOffice.amenityList.splice(idx, 1);
+        $scope.remove = function (amenity) {
+            for (var i = 0; i < $scope.reOffice.amenityList.length; i++) {
+                if ($scope.reOffice.amenityList[i] == amenity) {
+                    $scope.reOffice.amenityList.splice(i, 1);
+                }
+            }
         };
 
     }]);

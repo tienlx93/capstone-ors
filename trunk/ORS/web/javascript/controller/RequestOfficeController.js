@@ -66,7 +66,7 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                         $scope.error = "Có lỗi xảy ra. Xin thử lại";
                         $scope.clicked= false;
                     } else if (data) {
-                        $location.path("#/home");
+                        $location.path("/resultRequestOffice");
                         toastr.success('Đặt yêu cầu thành công');
                     }
                 });

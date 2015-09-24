@@ -789,6 +789,7 @@ public class ApiController extends HttpServlet {
         if (account != null) {
 
             RequestOffice reOff = new RequestOffice();
+            reOff.setCategoryId(1);
             reOff.setCustomerUsername(account.getUsername());
             reOff.setPrice(Integer.parseInt(price));
             reOff.setArea(Double.parseDouble(area));
@@ -1430,7 +1431,7 @@ public class ApiController extends HttpServlet {
 
         if (account != null) {
             RequestOfficeDAO requestOfficeDAO = new RequestOfficeDAO();
-            List<RequestOffice> requestOfficeList = requestOfficeDAO.getAllRequestOfficeByUsername(account.getUsername());
+                List<RequestOffice> requestOfficeList = requestOfficeDAO.getAllRequestOfficeByUsername(account.getUsername());
             List<RequestOfficeJSON> requestOfficeJSONs = new ArrayList<>();
 
             for (RequestOffice requestOffice : requestOfficeList) {

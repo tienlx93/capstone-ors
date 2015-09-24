@@ -187,15 +187,6 @@
         </div>
         <form name="requestOfficeForm">
             <div class="form-group">
-                <label for="category">Loại văn phòng</label>
-                <select ng-model="reOffice.category" class="form-control" id="category" required>
-                    <option value=""></option>
-                    <option value="1">Văn phòng nguyên căn</option>
-                    <option value="2">Tòa nhà văn phòng</option>
-                </select>
-
-            </div>
-            <div class="form-group">
                 <label for="price">Giá thuê/m<sup>2</sup> (VNĐ)</label>
                 <input type="text" real-time-currency ng-model="reOffice.price" class="form-control" id="price" required name="price" min="0">
                 <span class="error" ng-show="requestOfficeForm.price.$dirty && requestOfficeForm.price.$invalid">

@@ -489,6 +489,23 @@ app.factory("Api", ['$http',
                 })
         };
 
+        services.getContractChildById = function (id, callback) {
+            $http({
+                method: 'GET',
+                url: BACK_END_URL + '/api',
+                params: {
+                    'action': 'getContractChildById',
+                    'id': id
+                }
+            })
+                .success(function (data) {
+                    callback(data);
+                })
+                .error(function () {
+                    callback('Error');
+                })
+        };
+
         services.getOffice = function (officeId, callback) {
             $http({
                 method: 'GET',

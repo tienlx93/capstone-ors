@@ -52,14 +52,14 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
             Api.requestRepair(id, amenities, description, phone, function (data) {
                 if (data == "Success") {
                     toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
-                    $location.path("/contractList");
+                    $location.path("/contractList/" + id);
                 } else if (data == "Error") {
                     toastr.error('Có lỗi xảy ra, xin thử lại');
                     //    alert("Có lỗi xảy ra, xin thử lại");
                     $scope.clicked= false;
                 } else {
                     toastr.success('Đã gửi yêu cầu sửa chữa', 'Thành công');
-                    $location.path("/contractList");
+                    $location.path("/contractList/" + id);
                 }
             })
 

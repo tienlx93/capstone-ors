@@ -28,7 +28,7 @@ controllers.controller('OfficeRentalCartController', ['$scope','$location', 'Api
                 if (data=="Success") {
                     toastr.success('Gửi yêu cầu thành công', 'Thành công');
                     ShoppingCartService.resetProductList();
-                    $location.path("/home");
+                    $location.path("/contractList/" + id);
                 } else {
                     toastr.error('Có lỗi xảy ra, xin thử lại', 'Không thành công');
                     $scope.clicked= false;

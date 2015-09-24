@@ -250,10 +250,10 @@
                                                                 </td>
                                                                 <td><fmt:formatDate value="${item.assignedTime}"
                                                                                     pattern="dd-MM-yyyy"/>
-                                                                    <c:if test="${date > item.assignedTime}">
+                                                                    <%--<c:if test="${date > item.assignedTime}">
                                                                         <i class="fa fa-warning color10"
                                                                            title="Đã đến hạn"></i>
-                                                                    </c:if>
+                                                                    </c:if>--%>
                                                                 </td>
                                                                 <c:if test="${user.roleId == 2}">
                                                                     <td>${item.assignStaff}</td>

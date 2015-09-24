@@ -123,7 +123,7 @@
                 <tbody>
                 <tr>
                     <td style="padding-right: 10px;"><h4>Tình trạng hợp đồng:</h4></td>
-                    <td ng-if="data.status == 4 && data.startDay < today" class="contract-status color10-bg"
+                    <td ng-if="data.status == 4" class="contract-status color10-bg"
                         style="color: white"> Hợp đồng đã hết hạn
                     </td>
                     <td ng-if="data.status == 3 && data.startDay < today" class="contract-status color9-bg"> Đang yêu
@@ -134,7 +134,7 @@
                     </td>
                     <td ng-if="data.status == 1 && data.startDay < today" class="contract-status color12-bg"> Khả dụng
                     </td>
-                    <td ng-if="data.startDay > today" class="contract-status color3-bg"> Hợp đồng chưa có hiệu lực</td>
+                    <td ng-if="data.startDay > today && data.status != 4" class="contract-status color3-bg"> Hợp đồng chưa có hiệu lực</td>
                 </tr>
                 </tbody>
             </table>
@@ -142,13 +142,31 @@
             <h4>Phụ lục hợp đồng:</h4><br>
             <!--<span ng-show="Rentaled" style="width: 50%">{{display}}</span>-->
             <div ng-show="!Rentaled">
-                <b>Danh sách những vật dụng đang thuê:</b>
+                <!--<b>Bảng giá những vật dụng đang thuê: (trong 1 tháng)</b>
                 <br>
                 <table class="table">
                     <thead>
                     <tr>
                         <th>Tên thiết bị</th>
                         <th>Giá thuê (trên tháng)</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr ng-repeat="item in rentalList">
+                        <td>{{item.name}}</td>
+                        <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
+                    </tr>
+                    </tbody>
+                </table>-->
+
+                <b>Danh sách những vật dụng đang thuê: </b>
+                <br>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th>Tên thiết bị</th>
+                        <th>Giá thuê</th>
                         <th>Số lượng (cái)</th>
                         <th>Thành tiền</th>
                     </tr>
@@ -182,7 +200,7 @@
             Yêu cầu sửa chữa</a>
             <span ng-if="data.status == 1 && data.startDay < today">
             <a ng-click="contractReturn()" class="btn btn-color9">Hủy hợp đồng trước hạn</a>
-            <a ng-click="contractExtend()" class="btn btn-color7">Gia hạn hợp đồng</a>
+            <a ng-click="contractExtend()" class="btn btn-color7" ng-if="child == 1">Gia hạn hợp đồng</a>
             </span>
     </div>
 

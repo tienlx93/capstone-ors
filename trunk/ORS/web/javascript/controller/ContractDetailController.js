@@ -22,6 +22,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
 
                 $scope.isLogin = false;
             } else {
+
                 $scope.data = data;
                 $scope.RightCus = true;
                 $scope.WrongCus = false;
@@ -29,11 +30,21 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 $scope.isLogin = true;
                 $scope.today = new Date();
 
-                var time30 = new Date();
-                time30.setDate(time30.getDate()+30);
-                if (time30 < data.endDay) {
-                    $scope.month = 1;
-                }
+                Api.getContractChildById(id, function (data2) {
+                    if (data2 == "Error") {
+                        var time30 = new Date();
+                        time30.setDate(time30.getDate() + 30);
+                        if (time30 < data.endDay) {
+                            $scope.month = 1;
+                        }
+                        $scope.child = 1;
+                    } else {
+                        $scope.child = 0;
+                        $scope.month = 1;
+                    }
+                });
+
+
 
                 officeId = data.officeId;
 
@@ -52,7 +63,7 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
                 } else if (data.paymentTerm == "6 tháng") {
                     $scope.Term = 6;
                 } else $scope.Term = 1;
-                $scope.totalPrice = Math.ceil((data.endDay - data.startDay)/ (86400000 * 30)) * $scope.data.area * $scope.data.price;
+                $scope.totalPrice = Math.ceil((data.endDay - data.startDay) / (86400000 * 30)) * $scope.data.area * $scope.data.price;
             }
         });
 

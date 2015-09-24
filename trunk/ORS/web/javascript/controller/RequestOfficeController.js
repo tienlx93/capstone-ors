@@ -34,7 +34,7 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
             'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12'
         ];
 
-        if (price) {
+        if (url && price) {
             $scope.reOffice.price = price;
             $scope.reOffice.district = district;
             $scope.reOffice.amenityList = [];
@@ -44,6 +44,8 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                     $scope.reOffice.amenityList.push(list[i]);
                 }
             }
+        } else {
+            $scope.reOffice.amenityList = [];
         }
 
         $scope.login = function (form) {

@@ -195,7 +195,6 @@ function checkPercent() {
 checkPercent();
 function onChangeBasePrice() {
     var basePrice = $("#basePrice");
-    var price = $("#price");
     if (isPercent[0].checked && dropdown[0].selectedIndex != 2) {
         price.val(basePrice.val());
     }

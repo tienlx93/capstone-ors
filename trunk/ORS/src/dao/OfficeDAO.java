@@ -69,6 +69,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         }
         return false;
     }
+
     public boolean update(int id, Office newOffice) {
         Transaction trans = session.beginTransaction();
         try {
@@ -203,7 +204,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             criteriaCount.add(Restrictions.isNull("parentOfficeId"));
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();
-            return (int) Math.ceil((double)count / pageSize);
+            return (int) Math.ceil((double) count / pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -220,7 +221,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             criteriaCount.add(Restrictions.isNull("parentOfficeId"));
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();
-            return (int) Math.ceil((double)count / pageSize);
+            return (int) Math.ceil((double) count / pageSize);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -253,6 +254,20 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         return result;
     }
 
+    public List<String> allDistrict(String owner) {
+        List<String> result = null;
+        try {
+            String sql = "SELECT DISTINCT (district) FROM Office WHERE ownerUsername = :owner";
+            Query query = session.createQuery(sql);
+            query.setString("owner", owner);
+            result = query.list();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
+
     public Long calculateIncome(Date startDate, Date endDate, String district) {
         Long result = 0L;
         try {
@@ -265,7 +280,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             Object o = query.uniqueResult();
             double percent = 0;
             if (o != null) {
-                percent = (Long) o * 5 /100;
+                percent = (Long) o * 5 / 100;
             }
             result += Math.round(percent);
 
@@ -309,6 +324,7 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
         }
         return null;
     }
+
     public List<Office> getAllOfficeByStatus(int status, String ownerUsername) {
         try {
             String sql = "from Office where statusId = :status  and parentOfficeId = NULL and ownerUsername = :owner";
@@ -320,5 +336,40 @@ public class OfficeDAO extends BaseDAO<Office, Integer> {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public long calculateIncome(Date startDate, Date endDate, String district, String owner) {
+        Long result = 0L;
+        try {
+
+            String sql = "from Contract where startDate < :endDate and endDate >= :startDate " +
+                    "and officeByOfficeId.ownerUsername = :owner";
+            if (!district.equals("")) {
+                sql += " and officeByOfficeId.district = :district";
+            }
+            Query query = session.createQuery(sql);
+            query.setString("owner", owner);
+            if (!district.equals("")) {
+                query.setString("district", district);
+            }
+            query.setDate("startDate", startDate);
+            query.setDate("endDate", endDate);
+            List<Contract> list = query.list();
+            float sum = 0;
+            Office office;
+            for (Contract contract : list) {
+                office = contract.getOfficeByOfficeId();
+                if (Objects.equals(office.getBasePrice(), office.getPrice())) {
+                    sum += contract.getPaymentFee() * office.getArea() * (100 - office.getCommission()) / 100;
+                } else {
+                    sum += office.getBasePrice() * office.getArea();
+                }
+            }
+            result += Math.round(sum);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

@@ -29,15 +29,19 @@ public class ClusteringService {
             Office office = allOffice.get(i);
             officeIdList[i] = office.getId();
             //Normalize price
+            Long officePrice = office.getPrice();
+            if (officePrice == null) {
+                officePrice = 0L;
+            }
             switch (office.getPriceTerm()) {
                 case 4:
                     price = 0;
                     break;
                 case 1:
-                    price = office.getPrice() / office.getArea();
+                    price = officePrice / office.getArea();
                     break;
                 default:
-                    price = office.getPrice();
+                    price = officePrice;
                     break;
             }
             if (price < 100000) {

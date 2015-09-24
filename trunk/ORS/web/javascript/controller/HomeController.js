@@ -30,6 +30,7 @@ controllers.controller('HomeController', ['$scope', '$rootScope', '$location', '
                 + "&longitude=" + $scope.searchTerm.longitude
                 + "&priceRange=" + $scope.priceRange
                 + "&price=" + $scope.price
+                + "&district=" + $scope.searchTerm.district
                 + "&searchKey=" + $scope.searchKey);
             } else {
                 toastr.error("Mời nhập vào địa chỉ");

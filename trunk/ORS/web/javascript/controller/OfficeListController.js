@@ -15,7 +15,8 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
         $scope.searchTerm = {
             'latitude': getParameterValue(url, "latitude"),
             'longitude': getParameterValue(url, "longitude"),
-            'priceRange': getParameterValue(url, "priceRange")
+            'priceRange': getParameterValue(url, "priceRange"),
+            'district': getParameterValue(url, "district")
         };
         $scope.searchKey = getParameterValue(url, "searchKey");
         $scope.price = getParameterValue(url, "price");
@@ -48,6 +49,7 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
                 + "&longitude=" + $scope.searchTerm.longitude
                 + "&priceRange=" + $scope.searchTerm.priceRange
                 + "&price=" + $scope.price
+                + "&district=" + $scope.searchTerm.district
                 + "&searchKey=" + $scope.searchKey);
             } else {
             }
@@ -165,6 +167,19 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
             } else {
                 $scope.searchTerm.priceRange = 5;
             }
-        })
+        });
+
+        $scope.requestOffice = function() {
+            var amenities = "";
+            for (var k = 0; k < $rootScope.q.length; k++) {
+                if ($rootScope.q[k] == true) {
+                    amenities += ($rootScope.amenityWeight[k].amenity + ",");
+                }
+            }
+            $location.path("/requestOffice/"
+            + "district=" + $scope.searchTerm.district
+            + "&price=" + $scope.price
+            + "&amenities=" + amenities);
+        }
 
     }]);

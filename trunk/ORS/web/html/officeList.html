@@ -55,7 +55,7 @@
         <div id="quat" style= margin:auto;" class="">
             <div ng-show="filteredOffices.length==0">
                 <h2>Không có văn phòng phù hợp</h2>
-                <a href="#requestOffice">Đặt văn phòng?</a>
+                <a ng-click="requestOffice()" class="btn btn-green">Đặt văn phòng?</a>
             </div>
             <div ng-repeat="office in filteredOffices" class="row item">
 

@@ -307,7 +307,7 @@
     }
   });
   jQuery.validator.addMethod("smaller", function(value, element, params) {
-    return this.optional(element) || value <= $(params).val();
+    return value*1 <= $(params).val()*1;
   }, jQuery.validator.format("Diện tích thuê tối thiểu phải nhỏ hơn tổng diện tích"));
 
   $("#minArea").rules("add", {

@@ -49,7 +49,7 @@
                         <h2 style="margin-top: 5px; text-align: center">Sửa thông tin văn phòng</h2>
                     </div>
                     <div>
-                        <form action="office" method="post" id="form" onsubmit="return validateform()">
+                        <form action="office" method="post" id="form">
                             <input type="hidden" name="id" class="form-control" id="id"
                                    value="${office.id}">
 
@@ -155,7 +155,8 @@
                                 <label for="category" class="col-sm-2">Loại văn phòng *</label>
 
                                 <div class="col-sm-4">
-                                    <select name="category" class="form-control" id="category" disabled>
+                                    <input type="hidden" name="category" value="${office.categoryId}">
+                                    <select class="form-control" id="category" disabled>
                                         <c:forEach var="item" items="${categoryList}">
                                             <option value="${item.id}"
                                                     <c:if test="${office.categoryId==item.id}">selected</c:if> >

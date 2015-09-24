@@ -126,7 +126,9 @@ public class OfficeController extends HttpServlet {
                 office.setPrice(Long.valueOf(price));
                 if (isPercent != null) {
                     office.setBasePrice(Long.valueOf(price));
+                    office.setCommission(Integer.valueOf(commission));
                 } else {
+                    office.setCommission(0);
                     office.setBasePrice(Long.valueOf(basePrice));
                 }
             } else {

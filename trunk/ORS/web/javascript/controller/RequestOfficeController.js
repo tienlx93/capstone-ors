@@ -2,8 +2,19 @@
  * Created by Thành on 08/07/2015.
  */
 
-controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api', 'toastr',
-    function ($scope, $location, Api, toastr) {
+controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api', 'toastr', '$routeParams',
+    function ($scope, $location, Api, toastr, $routeParams) {
+        var url = $routeParams.query;
+        var getParameterValue = function (url, parameter) {
+            var index = url.lastIndexOf(parameter);
+            var cut = index >= 0 ? url.substring(index + parameter.length + 1) : "";
+            return cut != "" ? cut.substring(0, cut.indexOf("&") >= 0 ? cut.indexOf("&") : cut.length) : "";
+        };
+        if (url) {
+            var district = getParameterValue(url, "district");
+            var price = getParameterValue(url, "price");
+            var amenities = getParameterValue(url, "amenities");
+        }
         var verifyCallback = function (response) {
             $scope.user.captcha3 = response;
             $scope.$$phase || $scope.$apply();
@@ -22,6 +33,20 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
             'Quận 1', 'Quận 2', 'Quận 3', 'Quận 4', 'Quận 5', 'Quận 6',
             'Quận 7', 'Quận 8', 'Quận 9', 'Quận 10', 'Quận 11', 'Quận 12'
         ];
+
+        if (url && price) {
+            $scope.reOffice.price = price;
+            $scope.reOffice.district = district;
+            $scope.reOffice.amenityList = [];
+            var list = amenities.split(",");
+            for (var i = 0; i < list.length; i ++) {
+                if (list[i]) {
+                    $scope.reOffice.amenityList.push(list[i]);
+                }
+            }
+        } else {
+            $scope.reOffice.amenityList = [];
+        }
 
         $scope.login = function (form) {
             if (form.$valid) {
@@ -80,8 +105,6 @@ controllers.controller('RequestOfficeController', ['$scope', '$location', 'Api',
                 $scope.amenities = data;
             }
         });
-
-        $scope.reOffice.amenityList = [];
 
         $scope.add = function () {
             var error = true;

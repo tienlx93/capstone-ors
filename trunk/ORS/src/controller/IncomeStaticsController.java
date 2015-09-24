@@ -3,6 +3,7 @@ package controller;
 import com.google.gson.Gson;
 import dao.ContractDAO;
 import dao.OfficeDAO;
+import entity.Account;
 import org.joda.time.DateTime;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -26,6 +28,8 @@ public class IncomeStaticsController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
         response.setContentType("application/json;charset=UTF-8");
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
         PrintWriter out = response.getWriter();
         Gson gson = new Gson();
 
@@ -43,7 +47,11 @@ public class IncomeStaticsController extends HttpServlet {
         for (int i = 0; i < 12; i++) {
             startDate = startDate.withMonthOfYear(i + 1);
             endDate = startDate.plusMonths(1);
-            income = dao.calculateIncome(startDate.toDate(), endDate.toDate(), district);
+            if (account.getRoleId() == 5) {
+                income = dao.calculateIncome(startDate.toDate(), endDate.toDate(), district, account.getUsername());
+            } else {
+                income = dao.calculateIncome(startDate.toDate(), endDate.toDate(), district);
+            }
             result.add(income);
         }
         out.print(gson.toJson(result));
@@ -51,10 +59,21 @@ public class IncomeStaticsController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        OfficeDAO dao = new OfficeDAO();
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("user");
+
         ContractDAO contractDAO = new ContractDAO();
-        List<String> districts = dao.allDistrict();
-        List<Integer> year = contractDAO.getYear();
+        OfficeDAO dao = new OfficeDAO();
+        List<String> districts;
+        List<Integer> year;
+        if (account.getRoleId() == 5) {
+            districts = dao.allDistrict(account.getUsername());
+            year = contractDAO.getYear(account.getUsername());
+        } else {
+            districts = dao.allDistrict();
+            year = contractDAO.getYear();
+        }
+
         request.setAttribute("years", year);
         request.setAttribute("districts", districts);
         RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/admin/statics/income.jsp");

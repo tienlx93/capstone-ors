@@ -64,7 +64,7 @@ public class ScheduleCheckContract implements Job {
                     if(subcontract != null && subcontract.size() > 0) {
                         if (rentals != null && rentals.size() > 0) {
                             for (Rental rental : rentals) {
-                                if(rental.getStatusId() == 1 || rental.getStatusId() == 2) {
+                                if(rental.getStatusId() == 1 || rental.getStatusId() == 2 || rental.getStatusId() == 3) {
                                     rentalDAO.updateContractId(rental.getId(), subcontract.get(0).getId());
                                 }
                             }

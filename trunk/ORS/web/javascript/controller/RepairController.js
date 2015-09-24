@@ -1,8 +1,8 @@
 /**
  * Created by Thành on 19/06/2015.
  */
-controllers.controller('RepairController', ['$scope', '$location', '$routeParams', '$route', 'Api',
-    function ($scope, $location, $routeParams, $route, Api) {
+controllers.controller('RepairController', ['$scope', '$location', '$routeParams', '$route', 'Api', '$modal',
+    function ($scope, $location, $routeParams, $route, Api, $modal) {
         var id = $routeParams.id;
         $scope.data = {};
 
@@ -34,5 +34,14 @@ controllers.controller('RepairController', ['$scope', '$location', '$routeParams
                 $scope.RightCus = true;
                 $scope.WrongCus = false;
             }
-        })
+        });
+
+        $scope.showHistory = function (id) {
+            $modal.open({
+                animation: true,
+                size: 'lg',
+                templateUrl: 'html/repairHistory.html',
+                controller: 'RepairHistoryController'
+            });
+        };
     }]);

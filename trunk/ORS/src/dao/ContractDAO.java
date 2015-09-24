@@ -36,7 +36,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return null;
     }
 
-    public  List<Contract> getContractListAvailable() {
+    public List<Contract> getContractListAvailable() {
         try {
             String sql = "from Contract where statusId = 1";
             Query query = session.createQuery(sql);
@@ -105,7 +105,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
             Criteria criteriaCount = session.createCriteria(Contract.class);
             criteriaCount.setProjection(Projections.rowCount());
             Long count = (Long) criteriaCount.uniqueResult();
-            return (int) Math.ceil((double)count / pageSize);
+            return (int) Math.ceil((double) count / pageSize);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,6 +113,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
 
         return 0;
     }
+
     public boolean changeStatus(int id, int status) {
         Transaction trans = session.beginTransaction();
         try {
@@ -175,6 +176,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         }
         return false;
     }
+
     public void update(Integer id, String customerUsername, int officeId, Date startDate, Date endDate,
                        int paymentFee, int paymentTerm, int statusId) {
 
@@ -212,7 +214,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return null;
     }
 
-    public  long countContractByStatus(int status) {
+    public long countContractByStatus(int status) {
         try {
             String sql = "select count(id) from Contract where statusId = :status";
             Query query = session.createQuery(sql);
@@ -224,7 +226,7 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
         return 0;
     }
 
-    public  long countContractByOfficeOwner(String owner) {
+    public long countContractByOfficeOwner(String owner) {
         try {
             String sql = "select count(id) from Contract where officeByOfficeId.ownerUsername = :ownerUsername and statusId = 1";
             Query query = session.createQuery(sql);
@@ -245,7 +247,25 @@ public class ContractDAO extends BaseDAO<Contract, Integer> {
             Object[] o = (Object[]) query.uniqueResult();
             DateTime start = new DateTime(o[0]);
             DateTime end = new DateTime(o[1]);
-            for (int i = start.getYear(); i <= end.getYear(); i ++) {
+            for (int i = start.getYear(); i <= end.getYear(); i++) {
+                years.add(i);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return years;
+    }
+
+    public List<Integer> getYear(String owner) {
+        ArrayList<Integer> years = new ArrayList<>();
+        try {
+            String sql = "select min(startDate), max(endDate) from Contract where officeByOfficeId.ownerUsername = :owner";
+            Query query = session.createQuery(sql);
+            query.setString("owner", owner);
+            Object[] o = (Object[]) query.uniqueResult();
+            DateTime start = new DateTime(o[0]);
+            DateTime end = new DateTime(o[1]);
+            for (int i = start.getYear(); i <= end.getYear(); i++) {
                 years.add(i);
             }
         } catch (Exception e) {

@@ -210,7 +210,6 @@ app.factory("Api", ['$http',
                 url: BACK_END_URL + '/api',
                 params: {
                     'action': 'requestOffice',
-                    'category': reOffice.category,
                     'price': reOffice.price,
                     'area': reOffice.area,
                     'district': reOffice.district,

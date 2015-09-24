@@ -116,7 +116,7 @@ public class ScheduleCheckRequestOffice implements Job {
         List<Office> officeAreas = new ArrayList<>();
 
         for (Office office : offices) {
-            if (request.getCategoryId() == 1) {
+            if (office.getCategoryId() == 1) {
                 if (((office.getArea() - (office.getArea() / 5)) <= request.getArea()) && ((office.getArea() + (office.getArea() / 5)) >= request.getArea())) {
                     officeAreas.add(office);
                 }
@@ -126,7 +126,6 @@ public class ScheduleCheckRequestOffice implements Job {
                 }
             }
         }
-
         return officeAreas;
     }
 

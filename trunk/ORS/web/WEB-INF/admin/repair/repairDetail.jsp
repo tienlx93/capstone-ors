@@ -443,8 +443,7 @@
                                             </button>
                                         </c:if>
                                         <c:if test="${info.repairStatusId == 5}">
-                                            <button type="submit" value="assign2" name="button" class="btn btn-primary"
-                                                    id="agree" disabled>
+                                            <button type="submit" value="assign2" name="button" class="btn btn-primary">
                                                 Giao việc lại
                                             </button>
                                         </c:if>
@@ -472,12 +471,29 @@
                                                 </button>--%>
                                             </c:when>
                                             <c:when test="${info.repairStatusId == 5}">
+                                                <div style="display: inline-block;" data-toggle="tooltip" data-placement="top"
+                                                     title="Chưa tới thời gian công việc" id="happy" class="hidden">
+                                                    <button type="submit" value="change3" name="button"
+                                                            class="btn btn-primary" disabled>
+                                                        Khách hàng hài lòng
+                                                    </button>
+                                                </div>
+
                                                 <button type="submit" value="change3" name="button"
-                                                        class="btn btn-primary" id="happy" disabled>
+                                                        class="btn btn-primary hidden" id="happy2">
                                                     Khách hàng hài lòng
                                                 </button>
+
+                                                <div style="display: inline-block;" data-toggle="tooltip" data-placement="top"
+                                                     title="Chưa tới thời gian công việc" id="unhappy" class="hidden">
+                                                    <button type="submit" value="change2" name="button"
+                                                            class="btn btn-danger" disabled>
+                                                        Khách hàng không hài lòng
+                                                    </button>
+                                                </div>
+
                                                 <button type="submit" value="change2" name="button"
-                                                        class="btn btn-danger" id="unhappy" disabled>
+                                                        class="btn btn-danger hidden" id="unhappy2">
                                                     Khách hàng không hài lòng
                                                 </button>
                                             </c:when>

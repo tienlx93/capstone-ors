@@ -217,8 +217,8 @@
                                 <c:choose>
                                     <c:when test="${user.roleId == 2 && info.statusId == 1}">
                                         <c:if test="${info.officeByOfficeId.statusId == 1}">
-                                            <button type="submit" name="button" value="assign" class="btn btn-primary"
-                                                    disabled id="assignTask">Giao việc
+                                            <button type="submit" name="button" value="assign" class="btn btn-primary">
+                                                Giao việc
                                             </button>
                                         </c:if>
                                         <button class="btn btn-danger" type="button" onclick="inputComment(true)">
@@ -226,27 +226,43 @@
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 2}">
-                                        <button class="btn btn-primary" type="submit" name="button" value="assign"
-                                                disabled id="assignAgain">Giao việc lại
+                                        <button class="btn btn-primary" type="submit" name="button" value="assign">
+                                            Giao việc lại
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 3 && user.roleId == 2}">
                                         <c:if test="${info.officeByOfficeId.statusId != 2}">
                                             <a href="${pageContext.request.contextPath}/admin/contract?action=new&id=${info.id}"
-                                               class="btn btn-primary" disabled id="createContract">Tạo hợp đồng</a>
+                                               class="btn btn-primary">Tạo hợp đồng</a>
                                         </c:if>
-                                        <button class="btn btn-danger" type="button" onclick="inputComment()"
-                                                disabled id="cancelContract"> Hủy kí hợp đồng
+                                        <button class="btn btn-danger" type="button" onclick="inputComment()">
+                                            Hủy kí hợp đồng
                                         </button>
                                     </c:when>
                                     <c:when test="${info.statusId == 2 && user.roleId == 3}">
-                                        <button class="btn btn-primary" type="submit" name="button" value="update3"
-                                                disabled id="agree">
-                                            Khách hàng muốn kí hợp đồng
+
+                                        <div style="display: inline-block;" data-toggle="tooltip"
+                                             data-placement="top"
+                                             title="Chưa tới thời gian công việc" id="agree" class="hidden">
+                                            <button class="btn btn-primary" type="submit" name="button" value="update3"
+                                                    disabled>Khách hàng muốn kí hợp đồng
+                                            </button>
+                                        </div>
+
+                                        <button class="btn btn-primary hidden" type="submit" name="button"
+                                                value="update3" id="agree2">Khách hàng muốn kí hợp đồng
                                         </button>
-                                        <button class="btn btn-danger" type="button" onclick="inputComment()" disabled
-                                                id="disagree">
-                                            Khách hàng không đồng ý
+
+                                        <div style="display: inline-block;" data-toggle="tooltip"
+                                             data-placement="top"
+                                             title="Chưa tới thời gian công việc" id="disagree" class="hidden">
+                                            <button class="btn btn-danger" type="button"
+                                                    onclick="inputComment()" disabled>Khách hàng không đồng ý
+                                            </button>
+                                        </div>
+
+                                        <button class="btn btn-danger hidden" type="button" onclick="inputComment()"
+                                                id="disagree2">Khách hàng không đồng ý
                                         </button>
                                     </c:when>
                                 </c:choose>

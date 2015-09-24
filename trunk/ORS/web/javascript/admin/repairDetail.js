@@ -18,12 +18,13 @@ $(document).ready(function () {
         repairDate = document.getElementById('repairDate').value;
     }
     var repair = new Date(repairDate);
-    if (now.valueOf() <= repair.valueOf()) {
-        $("#agree").removeAttr("disabled");
-    }
+
     if (now.valueOf() >= repair.valueOf()) {
-        $("#happy").removeAttr("disabled");
-        $("#unhappy").removeAttr("disabled");
+        $("#happy2").removeClass("hidden");
+        $("#unhappy2").removeClass("hidden");
+    } else {
+        $("#happy").removeClass("hidden");
+        $("#unhappy").removeClass("hidden");
     }
     $("button[type='submit']").click(function () {
         var currentForm = $("form");

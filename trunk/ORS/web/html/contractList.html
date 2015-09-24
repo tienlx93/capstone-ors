@@ -23,9 +23,18 @@
                 <td>{{item.startDay | date:'dd-MM-yyyy'}}</td>
                 <td>{{item.endDay | date:'dd-MM-yyyy'}}</td>
                 <td>{{item.paymentTerm}}</td>
-                <td ng-if="item.status == 1">Khả dụng</td>
-                <td ng-if="item.status == 2">Đang gia hạn</td>
-                <td ng-if="item.status == 3">Đang yêu cầu hủy</td>
+                <td ng-if="item.status == 1 && item.startDay < today">
+                    <span class="color12-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Khả dụng</span>
+                </td>
+                <td ng-if="item.startDay > today && item.status != 4">
+                    <span class="color3-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Chưa có hiệu lực</span>
+                </td>
+                <td ng-if="item.status == 2">
+                    <span class="color7-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Đang gia hạn</span>
+                </td>
+                <td ng-if="item.status == 3">
+                    <span class="color9-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Đang yêu cầu hủy</span>
+                </td>
                 <td><a class="btn btn-green" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
                 <!--<td><a class="btn btn-green" href="#/repairList/{{item.contractId}}">Danh sách sửa chữa</a></td>
                 <td><a class="btn btn-green" href="#/rentalList/{{item.contractId}}">Danh sách thuê thiết bị</a></td>-->

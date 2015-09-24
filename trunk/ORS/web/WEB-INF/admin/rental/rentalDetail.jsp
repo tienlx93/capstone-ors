@@ -280,31 +280,68 @@
                                             </button>
                                         </c:if>
                                         <c:if test="${info.statusId == 2}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary"
-                                                    disabled id="assignTask"> Giao việc lại
+                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
+                                                Giao việc lại
                                             </button>
                                         </c:if>
                                     </c:when>
                                     <c:otherwise>
                                         <c:choose>
                                             <c:when test="${info.statusId == 2}">
+
+                                                <div style="display: inline-block;" data-toggle="tooltip"
+                                                     data-placement="top"
+                                                     title="Đã quá hạn" id="agree" class="hidden">
+                                                    <button type="submit" value="change5" name="button"
+                                                            class="btn btn-primary" disabled>Đồng ý giao hàng
+                                                    </button>
+                                                </div>
+
                                                 <button type="submit" value="change5" name="button"
-                                                        class="btn btn-primary" id="agree" disabled>Đồng ý giao hàng
+                                                        class="btn btn-primary hidden" id="agree2">Đồng ý giao hàng
                                                 </button>
+
+                                                <div style="display: inline-block;" data-toggle="tooltip"
+                                                     data-placement="top"
+                                                     title="Đã quá hạn" id="disagree" class="hidden">
+                                                    <button type="submit" value="change1" name="button"
+                                                            class="btn btn-danger" disabled>Không đồng ý giao hàng
+                                                    </button>
+                                                </div>
+
                                                 <button type="submit" value="change1" name="button"
-                                                        class="btn btn-danger" id="disagree" disabled>Không đồng ý giao
+                                                        class="btn btn-danger hidden" id="disagree2">Không đồng ý giao
                                                     hàng
                                                 </button>
                                             </c:when>
                                             <c:when test="${info.statusId == 5}">
+                                                <div style="display: inline-block;" data-toggle="tooltip"
+                                                     data-placement="top"
+                                                     title="Chưa tới thời gian công việc" id="happy" class="hidden">
+                                                    <button type="submit" value="change3" name="button"
+                                                            class="btn btn-primary" disabled>
+                                                        Khách hàng hài lòng
+                                                    </button>
+                                                </div>
                                                 <button type="submit" value="change3" name="button"
-                                                        class="btn btn-primary" disabled id="happy">Khách
-                                                    hàng hài lòng
+                                                        class="btn btn-primary hidden" id="happy2">
+                                                    Khách hàng hài lòng
                                                 </button>
+
+                                                <div style="display: inline-block;" data-toggle="tooltip"
+                                                     data-placement="top"
+                                                     title="Chưa tới thời gian công việc" id="unhappy" class="hidden">
+                                                    <button type="submit" value="change1" name="button"
+                                                            class="btn btn-danger" disabled>
+                                                        Khách hàng không hài lòng
+                                                    </button>
+                                                </div>
+
                                                 <button type="submit" value="change1" name="button"
-                                                        class="btn btn-danger" disabled id="unhappy">Khách
-                                                    hàng không hài lòng
+                                                        class="btn btn-danger hidden" id="unhappy2">
+                                                    Khách hàng không hài lòng
                                                 </button>
+
                                             </c:when>
                                         </c:choose>
                                     </c:otherwise>

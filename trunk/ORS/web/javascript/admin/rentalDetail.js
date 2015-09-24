@@ -16,14 +16,19 @@ $(document).ready(function () {
 
     var rentalDate = document.getElementById('rentalDate').value;
     var rental = new Date(rentalDate);
-    if (nowTemp.valueOf() <= rental.valueOf()) {
-        $("#agree").removeAttr("disabled");
-        $("#disagree").removeAttr("disabled");
-        $("#assignTask").removeAttr("disabled");
+    if (now.valueOf() <= rental.valueOf()) {
+        $("#agree2").removeClass("hidden");
+        $("#disagree2").removeClass("hidden");
+    } else {
+        $("#agree").removeClass("hidden");
+        $("#disagree").removeClass("hidden");
     }
-    if (nowTemp.valueOf() >= rental.valueOf()) {
-        $("#happy").removeAttr("disabled");
-        $("#unhappy").removeAttr("disabled");
+    if (now.valueOf() >= rental.valueOf()) {
+        $("#happy2").removeClass("hidden");
+        $("#unhappy2").removeClass("hidden");
+    } else {
+        $("#happy").removeClass("hidden");
+        $("#unhappy").removeClass("hidden");
     }
     $("button[type='submit']").click(function () {
         var currentForm = $("form");

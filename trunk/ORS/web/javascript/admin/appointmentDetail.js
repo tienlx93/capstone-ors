@@ -21,15 +21,18 @@ $(document).ready(function () {
      $("#agree").removeAttr("disabled");
      }*/
     if (nowTemp.valueOf() >= meet.valueOf()) {
-        $("#agree").removeAttr("disabled");
-        $("#disagree").removeAttr("disabled");
-        $("#createContract").removeAttr("disabled");
-        $("#cancelContract").removeAttr("disabled");
+        $("#agree2").removeClass("hidden");
+        $("#disagree2").removeClass("hidden");
+        /*$("#createContract").removeAttr("disabled");
+        $("#cancelContract").removeAttr("disabled");*/
+    } else {
+        $("#agree").removeClass("hidden");
+        $("#disagree").removeClass("hidden");
     }
-    if (nowTemp.valueOf() <= meet.valueOf()) {
+    /*if (nowTemp.valueOf() <= meet.valueOf()) {
         $("#assignTask").removeAttr("disabled");
         $("#assignAgain").removeAttr("disabled");
-    }
+    }*/
 
     $("button[type='submit']").click(function () {
         var currentForm = $("form");

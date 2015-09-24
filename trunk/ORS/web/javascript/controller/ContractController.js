@@ -23,7 +23,7 @@ controllers.controller('ContractController', ['$scope', '$location', '$routePara
                 $scope.exist2 = false;
             }
         });
-
+        $scope.today = new Date();
         Api.getContractHistoryList(function (data) {
             if (data == "Error") {
                 $scope.exist3 = true;

@@ -23,7 +23,9 @@
             <td>{{item.startDay | date:'dd-MM-yyyy'}}</td>
             <td>{{item.endDay | date:'dd-MM-yyyy'}}</td>
             <td>{{item.paymentTerm}}</td>
-            <td ng-if="item.status == 4">Đã hết hạn</td>
+            <td ng-if="item.status == 4">
+                <span class="color10-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0; color: white;">Đã hết hạn</span>
+            </td>
             <td><a class="btn btn-green" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
         </tr>
 

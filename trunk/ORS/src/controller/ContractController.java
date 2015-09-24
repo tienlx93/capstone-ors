@@ -429,6 +429,8 @@ public class ContractController extends HttpServlet {
                     case "viewExtend":
                         request.setAttribute("paymentTermList", paymentTermList);
                         request.setAttribute("info", dao.get(Integer.parseInt(request.getParameter("id"))));
+                        List<Contract> subcontract = dao.getContractListByParentContractId(Integer.parseInt(request.getParameter("id")));
+                        request.setAttribute("subContract",subcontract );
                         rd = request.getRequestDispatcher("/WEB-INF/admin/contract/extendContract.jsp");
                         rd.forward(request, response);
                         break;

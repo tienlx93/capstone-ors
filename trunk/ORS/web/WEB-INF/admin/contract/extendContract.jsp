@@ -165,7 +165,8 @@
                                     </div>
                                     <div class="col-sm-10">
                                         <c:forEach items="${info.officeByOfficeId.officeAmenitiesById}" var="item">
-                                            <span style="padding: 0;margin-bottom: 10px" class="col-sm-2">${item.amenityByAmenityId.name}</span>
+                                            <span style="padding: 0;margin-bottom: 10px"
+                                                  class="col-sm-2">${item.amenityByAmenityId.name}</span>
                                         </c:forEach>
                                     </div>
                                 </div>
@@ -188,13 +189,15 @@
 
                                 </div>
                                 <div class="form-group clearfix">
-                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau khi kí hợp đồng này tròng vòng (ngày):
+                                    <div for="firstPaymentPaidDay" class="col-sm-2 control-label">Thanh toán kỳ đầu sau
+                                        khi kí hợp đồng này tròng vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">
                                         ${info.firstPaymentPaidDay} ngày
                                     </div>
-                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">Thanh toán các kỳ tiếp theo trong vòng (ngày):
+                                    <div for="paymentPaidDay" style="text-align: right" class="col-sm-2 control-label">
+                                        Thanh toán các kỳ tiếp theo trong vòng (ngày):
                                     </div>
 
                                     <div class="col-sm-4">
@@ -231,6 +234,7 @@
                                     </div>
                                     <input type="hidden" id="depositValue" name="depositValue"
                                            value="${info.deposit}">
+
                                     <div class="col-sm-4" id="deposit" name="deposit">
                                         ${info.deposit} <span>VNĐ</span>
 
@@ -244,7 +248,8 @@
                                     <div class="col-sm-4">
                                         ${info.depositPaidDay} ngày
                                     </div>
-                                    <div for="additionalCharge" style="text-align: right" class="col-sm-2 control-label">Chi phí phụ trội:
+                                    <div for="additionalCharge" style="text-align: right"
+                                         class="col-sm-2 control-label">Chi phí phụ trội:
                                     </div>
 
                                     <div class="col-sm-4">
@@ -265,12 +270,23 @@
 
                             </div>
                             <div class="button-post">
-                                <button type="submit" value="confirm" name="button" class="btn btn-primary">Xác nhận
-                                </button>
+                                <c:if test="${subContract.size() > 0}">
+                                    <div style="color: red;">Hợp đồng này đã được gia hạn, Không thể gia hạn nữa</div>
+                                </c:if>
+                                <c:choose>
+                                    <c:when test="${subContract.size() > 0}">
+                                        <button type="submit" value="confirm" disabled name="button" class="btn btn-primary">Xác nhận
+                                        </button>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <button type="submit" value="confirm" name="button" class="btn btn-primary">Xác nhận
+                                        </button>
+                                    </c:otherwise>
+                                </c:choose>
                                 <button type="submit" value="cancel" name="button" class="btn btn-success">Hủy yêu cầu
                                 </button>
                                 <%--<a href="${pageContext.request.contextPath}/admin/contract?action=return"--%>
-                                   <%--class="btn btn-default">Quay về</a>--%>
+                                <%--class="btn btn-default">Quay về</a>--%>
                             </div>
                         </form>
                     </div>

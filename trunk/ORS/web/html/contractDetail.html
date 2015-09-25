@@ -193,14 +193,14 @@
 
     </div>
     <div class="row" style="margin: auto; text-align: right;">
-        <a ng-if="((data.status == 1 || data.status == 2) && data.startDay < today) && month == 1"
+        <a ng-if="((data.status == 1 || data.status == 2) && (data.startDay < today && today < data.endDay)) && month == 1"
            href="#/rental/{{data.contractId}}" class="btn btn-green">
             Yêu cầu thuê thiết bị</a>
-        <a ng-if="(data.status == 1 || data.status == 2) && data.startDay < today"
+        <a ng-if="(data.status == 1 || data.status == 2) && data.startDay < today && today < data.endDay"
            href="#/requestRepair/{{data.contractId}}"
            class="btn btn-green">
             Yêu cầu sửa chữa</a>
-            <span ng-if="data.status == 1 && data.startDay < today">
+            <span ng-if="data.status == 1 && today < data.endDay && data.startDay < today">
             <a ng-click="contractReturn()" class="btn btn-color9">Hủy hợp đồng trước hạn</a>
             <a ng-click="contractExtend()" class="btn btn-color7" ng-if="child == 1">Gia hạn hợp đồng</a>
             </span>

@@ -271,7 +271,7 @@
                             </div>
                             <div class="button-post">
                                 <c:if test="${subContract.size() > 0}">
-                                    <div style="color: red;">Hợp đồng này đã được gia hạn, Không thể gia hạn nữa</div>
+                                    <div style="color: red; font-weight: bold; font-size: 16px">Hợp đồng này đã được gia hạn, không thể gia hạn nữa</div>
                                 </c:if>
                                 <c:choose>
                                     <c:when test="${subContract.size() > 0}">

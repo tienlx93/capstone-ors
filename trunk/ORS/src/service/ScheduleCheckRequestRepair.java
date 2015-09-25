@@ -39,7 +39,7 @@ public class ScheduleCheckRequestRepair implements Job {
                     if (!phone.equals("")) {
                         sms.setPhone(phone);
                         sms.setMessage("(ORS) Yeu cau sua chua cua quy khach da het han.");
-                        repairDAO.changeStatus(repair.getId(),5);
+                        repairDAO.changeStatus(repair.getId(),4);
                         try {
                             sms.send();
                         } catch (IOException e) {

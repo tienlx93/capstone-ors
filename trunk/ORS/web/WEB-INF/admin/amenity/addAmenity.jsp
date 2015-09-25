@@ -18,6 +18,7 @@
     <link rel="stylesheet/less" href="${pageContext.request.contextPath}/css/office.less" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/main.css" type="text/css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/responsive.css" type="text/css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/rentalItem.css" type="text/css">
 
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/lib/less-1.5.0.min.js"></script>
@@ -48,7 +49,7 @@
                         <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
 
                             <div class="form-group clearfix">
-                                <label for="name" class="col-sm-2">Tên tiện nghi</label>
+                                <label for="name" class="col-sm-2">Tên tiện nghi *</label>
 
                                 <div class="col-sm-10">
                                     <input type="text" name="name" class="" id="name" required>
@@ -66,7 +67,7 @@
 
 
                             <div class="form-group clearfix">
-                                <label for="weight" class="col-sm-2">Trọng số</label>
+                                <label for="weight" class="col-sm-2">Trọng số *</label>
 
                                 <div class="col-sm-10">
                                     <input type="number" min="1" name="weight" class="" id="weight" required>
@@ -74,7 +75,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="priority" class="col-sm-2">Độ ưu tiên</label>
+                                <label for="priority" class="col-sm-2">Độ ưu tiên *</label>
 
                                 <div class="col-sm-10">
                                     <select name="priority" id="priority" required>
@@ -86,7 +87,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="group" class="col-sm-2">Nhóm thiết bị</label>
+                                <label for="group" class="col-sm-2">Nhóm thiết bị *</label>
 
                                 <div class="col-sm-10">
                                     <select name="group" class="" id="group" required>
@@ -99,11 +100,23 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="weight" class="col-sm-2">Có thể sửa chữa</label>
+                                <label class="col-sm-2">Có thể sửa chữa</label>
 
-                                <div class="col-sm-10">
-                                    <input type="checkbox" value="True" name="repairable" class="checkbox">
+                                <%--<div class="slideThree col-sm-10">
+                                    <input type="checkbox" value="True" id="slideThree" name="repairable" />
+                                    <label for="slideThree"></label>
+                                </div>--%>
+
+                                <div class="col-sm-2">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="repairable" value="True" class="onoffswitch-checkbox" id="isPercent" checked>
+                                        <label class="onoffswitch-label" for="isPercent">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
                                 </div>
+
                             </div>
 
                             <div class="button-post">
@@ -122,8 +135,8 @@
 
 </div>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/upload.js"
-        charset="UTF-8"></script>
+        charset="UTF-8"></script>--%>
 </body>
 </html>

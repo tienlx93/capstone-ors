@@ -15,9 +15,10 @@ controllers.controller('RequestController', ['$scope', '$rootScope', '$routePara
         }, 100);
 
         var id = $routeParams.id;
+        var nowTemp = new Date();
         var date = $('#date').datetimepicker({
             sideBySide: true,
-            minDate: new Date(),
+            minDate: new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate() + 1, 0, 0, 0, 0),
             daysOfWeekDisabled: [0],
             disabledHours: [0, 1, 2, 3, 4, 5, 6, 7, 18, 19, 20, 21, 22, 23, 24]
         });

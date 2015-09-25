@@ -151,13 +151,19 @@ public class ScheduleService {
                 assigned = addDays(endDate, -2);
             }
 
+            Date endContract = repair.getContractByContractId().getEndDate();
+            if (assigned.after(endContract)) {
+                assigned = endContract;
+            }
+            availableStaff = new ArrayList<>();
             //get available date
-            do {
+            while (assigned.before(addDays(endDate,1)) && assigned.before(addDays(endContract,1))
+                    && availableStaff.size() == 0) {
                 availableStaff = getAvailableStaffInDate(assigned, addDays(assigned, 1));
                 if (availableStaff.size() == 0) {
                     assigned = addDays(assigned, 1);
                 }
-            } while (assigned.after(endDate) || availableStaff.size() == 0);
+            }
 
             int min = Integer.MAX_VALUE;
 
@@ -186,17 +192,24 @@ public class ScheduleService {
         Map<Integer, Rental> result = new HashMap<>();
         List<Rental> rentalList = rentalDAO.getRentalListByStatus(1);
         Date begin = addDays(endDate, -2);
+
         List<String> availableStaff;
         String suggest = "";
 
         for (Rental rental : rentalList) {
+            Date endContract = rental.getContractByContractId().getEndDate();
+            if (begin.after(endContract)) {
+                begin = endContract;
+            }
             //get available date
-            do {
+            availableStaff = new ArrayList<>();
+            while (begin.before(addDays(endDate,1)) && begin.before(addDays(endContract,1))
+                    && availableStaff.size() == 0)  {
                 availableStaff = getAvailableStaffInDate(begin, addDays(begin, 1));
                 if (availableStaff.size() == 0) {
                     begin = addDays(begin, 1);
                 }
-            } while (begin.after(endDate) || availableStaff.size() == 0);
+            }
 
             int min = Integer.MAX_VALUE;
             for (String staff : availableStaff) {

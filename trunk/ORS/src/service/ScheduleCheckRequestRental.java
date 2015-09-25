@@ -38,7 +38,7 @@ public class ScheduleCheckRequestRental implements Job {
                     if (!phone.equals("")) {
                         sms.setPhone(phone);
                         sms.setMessage("(ORS) Yeu cau thue vat dung cua quy khach da het han.");
-                        rentalDAO.changeStatus(rental.getId(), 5);
+                        rentalDAO.changeStatus(rental.getId(), 4);
                         try {
                             sms.send();
                         } catch (IOException e) {

@@ -176,6 +176,12 @@
                                                     pattern="dd-MM-yyyy" var="newDate"/>
                                             <input type="text" name="assignedTime" id="assignedTime"
                                                    class="form-control" value="${newDate}" required readonly>
+                                            <i class="fa fa-calendar" style="
+                                                    position: absolute;
+                                                    right: 25px;
+                                                    top: 10px;
+                                                    z-index: 2;
+                                                "></i>
                                         </div>
                                     </c:when>
                                     <c:otherwise>

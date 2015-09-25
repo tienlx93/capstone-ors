@@ -186,6 +186,12 @@
                                                                 pattern="dd-MM-yyyy" var="newDate"/>
                                                 <input type="text" name="assignedTime" id="assignedTime"
                                                        class="form-control" value="${newDate}" required readonly>
+                                                <i class="fa fa-calendar" style="
+                                                    position: absolute;
+                                                    right: 25px;
+                                                    top: 10px;
+                                                    z-index: 2;
+                                                "></i>
                                             </div>
                                         </c:when>
                                         <c:otherwise>
@@ -355,6 +361,12 @@
                                                             pattern="dd-MM-yyyy" var="newDate"/>
                                                     <input type="text" name="assignedTime" id="assignedTime"
                                                            class="form-control" value="${newDate}" required readonly>
+                                                    <i class="fa fa-calendar" style="
+                                                    position: absolute;
+                                                    right: 25px;
+                                                    top: 10px;
+                                                    z-index: 2;
+                                                "></i>
                                                 </div>
                                             </c:when>
                                             <c:otherwise>
@@ -471,7 +483,8 @@
                                                 </button>--%>
                                             </c:when>
                                             <c:when test="${info.repairStatusId == 5}">
-                                                <div style="display: inline-block;" data-toggle="tooltip" data-placement="top"
+                                                <div style="display: inline-block;" data-toggle="tooltip"
+                                                     data-placement="top"
                                                      title="Chưa tới thời gian công việc" id="happy" class="hidden">
                                                     <button type="submit" value="change3" name="button"
                                                             class="btn btn-primary" disabled>
@@ -484,7 +497,8 @@
                                                     Khách hàng hài lòng
                                                 </button>
 
-                                                <div style="display: inline-block;" data-toggle="tooltip" data-placement="top"
+                                                <div style="display: inline-block;" data-toggle="tooltip"
+                                                     data-placement="top"
                                                      title="Chưa tới thời gian công việc" id="unhappy" class="hidden">
                                                     <button type="submit" value="change2" name="button"
                                                             class="btn btn-danger" disabled>

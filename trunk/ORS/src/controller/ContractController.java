@@ -251,7 +251,7 @@ public class ContractController extends HttpServlet {
                                     RentalItem rentalItem = rentalItemDAO.get(rentalDetail.getRentalItemId());
                                     rentalItemDAO.updateQuantity(rentalDetail.getRentalItemId(), rentalItem.getQuantity() + rentalDetail.getQuantity());
                                 }
-                                rentalDAO.changeStatus(rental.getId(), 5);
+                                rentalDAO.changeStatus(rental.getId(), 4);
                             }
                         }
                         // Update repair request when contract expired

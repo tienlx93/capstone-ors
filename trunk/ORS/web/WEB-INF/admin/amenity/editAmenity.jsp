@@ -48,11 +48,10 @@
                         <form action="${pageContext.request.contextPath}/admin/amenity" method="post">
 
                             <div class="form-group clearfix">
-                                <label for="name" class="col-sm-2">Tên tiện nghi</label>
+                                <label for="name" class="col-sm-2">Tên tiện nghi *</label>
 
                                 <div class="col-sm-10">
-                                    <span>${amenity.name}</span>
-                                    <input type="hidden" name="name" class="" value="${amenity.name}" id="name"
+                                    <input name="name" class="" value="${amenity.name}" id="name"
                                            required>
                                 </div>
                             </div>
@@ -66,7 +65,7 @@
                             </div>--%>
 
                             <div class="form-group clearfix">
-                                <label for="weight" class="col-sm-2">Trọng số</label>
+                                <label for="weight" class="col-sm-2">Trọng số *</label>
 
                                 <div class="col-sm-10">
                                     <input type="number" min="1" name="weight" class="" id="weight"
@@ -75,7 +74,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="priority" class="col-sm-2">Độ ưu tiên</label>
+                                <label for="priority" class="col-sm-2">Độ ưu tiên *</label>
 
                                 <div class="col-sm-10">
                                     <select name="priority" id="priority" required>
@@ -103,7 +102,7 @@
                             </div>
 
                             <div class="form-group clearfix">
-                                <label for="group" class="col-sm-2">Nhóm thiết bị</label>
+                                <label for="group" class="col-sm-2">Nhóm thiết bị *</label>
 
                                 <div class="col-sm-10">
                                     <select name="group" class="" id="group" required>
@@ -120,9 +119,20 @@
                             <div class="form-group clearfix">
                                 <label for="weight" class="col-sm-2">Có thể sửa chữa</label>
 
-                                <div class="col-sm-10">
+                                <%--<div class="col-sm-10">
                                     <input type="checkbox" value="True" name="repairable" class="checkbox"
                                     <c:if test="${amenity.repairable == true}"> checked </c:if>>
+                                </div>--%>
+
+                                <div class="col-sm-2">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="repairable" value="True" class="onoffswitch-checkbox" id="isPercent"
+                                        <c:if test="${amenity.repairable == true}"> checked </c:if>>
+                                        <label class="onoffswitch-label" for="isPercent">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
 
@@ -150,8 +160,8 @@
     </div>
     <jsp:include page="/WEB-INF/admin/bottom.jsp"/>
 </div>
-<script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
+<%--<script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/upload.js"
-        charset="UTF-8"></script>
+        charset="UTF-8"></script>--%>
 </body>
 </html>

@@ -134,12 +134,13 @@ $("#area, #floor, #minArea, #minTime, #price, #ownerPhone ").keydown(function (e
 var dropdown = $("#priceTerm");
 var priceTermName = $("#priceTermName");
 var minArea = $("#divMinArea");
-dropdown.find("option[value=1]").show();
-dropdown.find("option[value=2]").hide();
-dropdown.find("option[value=4]").show();
+var price = $("#price");
+var isPercent = $("#isPercent");
+var commission = $("#commission");
+
 function changeCategory() {
     if ($("#category").val() == 1) {
-        dropdown[0].selectedIndex = 0;
+        //dropdown[0].selectedIndex = 0;
         if (priceTermName.length >0) {
             priceTermName[0].innerHTML = "Nguyên căn";
         }
@@ -148,7 +149,7 @@ function changeCategory() {
         dropdown.find("option[value=4]").show();
         minArea.hide();
     } else {
-        dropdown[0].selectedIndex = 1;
+        //dropdown[0].selectedIndex = 1;
         if (priceTermName.length >0) {
             priceTermName[0].innerHTML = "Trên m<sup>2</sup>";
         }
@@ -157,27 +158,28 @@ function changeCategory() {
         dropdown.find("option[value=4]").show();
         minArea.show();
     }
+    checkPercent();
+    changeDropdown();
 }
 $("#category").change(function(){
     changeCategory();
 });
 changeCategory();
-var price = $("#price");
+
 function changeDropdown() {
     if (dropdown[0].selectedIndex == 2) {
         price.val("");
-        price[0].disabled = true;
+        document.getElementById('priceValue2').value = "";
+        price[0].readOnly = true;
     } else {
-        price[0].disabled = false;
+        price[0].readOnly = false;
     }
 }
-changeDropdown();
 dropdown.change(function(){
     changeDropdown();
     onChangeBasePrice();
 });
-var isPercent = $("#isPercent");
-var commission = $("#commission");
+
 isPercent.click( function(){
     checkPercent();
 });
@@ -192,10 +194,11 @@ function checkPercent() {
         price[0].readOnly = false;
     }
 }
-checkPercent();
+
 function onChangeBasePrice() {
     var basePrice = $("#basePrice");
     if (isPercent[0].checked && dropdown[0].selectedIndex != 2) {
-        price.val(basePrice.val());
+        price.val(numberWithCommas(document.getElementById('priceValue').value));
+        document.getElementById('priceValue2').value = parseFloat(price.val().replace(/\./g, ''));
     }
 }

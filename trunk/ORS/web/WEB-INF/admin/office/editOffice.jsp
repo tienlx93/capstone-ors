@@ -243,9 +243,10 @@
                                 <label for="price" class="col-sm-2">Giá thuê (VND)</label>
 
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" id="price" onkeyup="formatPrice()">
+                                    <input type="text" name="inputPrice" class="form-control" id="price" onkeyup="formatPrice()">
                                     <input type="hidden" name="price" id="priceValue2" min="0"
-                                           value="${office.price}" step="1" title="Xin nhập giá hợp lệ">
+                                           value="${office.price}" step="1">
+
                                 </div>
                             </div>
                             <div class="form-group clearfix">
@@ -264,11 +265,11 @@
 
                             <div class="button-post">
                                 <input type="hidden" id="amenityList" name="amenityList">
-                                <c:if test="${info.statusId != 4}">
+                                <c:if test="${office.statusId != 4}">
                                     <button type="submit" value="update" class="btn btn-primary" name="action">Cập nhật
                                     </button>
                                 </c:if>
-                                <c:if test="${info.statusId == 4}">
+                                <c:if test="${office.statusId == 4}">
                                     <button type="submit" value="update" class="btn btn-primary" name="action">Xác nhận văn phòng
                                     </button>
                                 </c:if>
@@ -286,24 +287,57 @@
 
 </div>
 
+<script>
+  function formatPrice() {
+    var price = document.getElementById('price').value != '' ? document.getElementById('price').value : "0";
+    document.getElementById('priceValue2').value = parseFloat(price.replace(/\./g, ''));
+    document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue2').value);
+  }
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+  $(document).ready(function () {
+    document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue2').value);
+    document.getElementById('basePrice').value = numberWithCommas(document.getElementById('priceValue').value);
+    jQuery.validator.addMethod("smaller", function(value, element, params) {
+      return value*1 <= $(params).val()*1;
+    }, jQuery.validator.format("Diện tích thuê tối thiểu phải nhỏ hơn tổng diện tích"));
+    jQuery.validator.addMethod("larger", function(value, element, params) {
+      return $("#priceValue2").val()*1 >= $(params).val()*1;
+    }, jQuery.validator.format("Giá thuê phải lớn hơn giá thuê gốc"));
+    $("#form").validate({
+      rules: {
+        latitude: {
+          required: {
+            depends: function (element) {
+              return $("#name").val() != "";
+            }
+          }
+        }, minArea: {
+          required: {
+            depends: function(element) {
+              return $("#category").val() == 2;
+            }
+          },
+          smaller: {
+            param: '#area'
+          }
+        }, inputPrice: {
+          larger: {
+            param: '#priceValue',
+            depends: function(element) {
+              return $("#priceTerm").val() != "4";
+            }
+          }
+        }
+      }
+    });
+  });
+</script>
+
 <script type="text/javascript" src="${pageContext.request.contextPath}/lib/jquery.ajaxfileupload.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/upload.js" charset="UTF-8"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath}/javascript/admin/street.js"></script>
-<script>
-    function formatPrice() {
-        var price = document.getElementById('price').value != '' ? document.getElementById('price').value : 0;
-        if (price != 0) {
-            document.getElementById('priceValue2').value = parseFloat(price.replace(/\./g, ''));
-            document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue2').value);
-        }
-    }
-    function numberWithCommas(x) {
-        return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-    $(document).ready(function () {
-        document.getElementById('price').value = numberWithCommas(document.getElementById('priceValue2').value);
-        document.getElementById('basePrice').value = numberWithCommas(document.getElementById('priceValue').value);
-    });
-</script>
+
 </body>
 </html>

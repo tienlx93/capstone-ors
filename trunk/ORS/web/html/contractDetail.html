@@ -2,7 +2,7 @@
 
 <div class="container" ng-show="RightCus">
     <tabset>
-        <tab heading="Chi tiết hợp đồng">
+        <tab heading="Chi tiết hợp đồng" active="tabs[0].active">
     <h2 style="padding-top: 20px;">Chi tiết hợp đồng</h2>
     <br>
 
@@ -206,10 +206,10 @@
             </span>
     </div>
         </tab>
-        <tab heading="Danh sách sửa chữa">
+        <tab heading="Danh sách sửa chữa" active="tabs[1].active">
             <div ng-include="'html/repairList.html'" ng-controller="RepairController"></div>
         </tab>
-        <tab heading="Danh sách thuê thiết bị">
+        <tab heading="Danh sách thuê thiết bị" active="tabs[2].active">
             <div ng-include="'html/rentalList.html'" ng-controller="RentalController"></div>
 
         </tab>

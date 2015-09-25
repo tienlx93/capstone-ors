@@ -5,8 +5,11 @@ controllers.controller('ContractDetailController', ['$scope', '$location', '$rou
     function ($scope, $location, $routeParams, $route, Api, $modal) {
         var id = $routeParams.id;
         var tab = $routeParams.tab;
-        if (tab && tab < 2) {
+        $scope.tabs=[{},{},{}];
+        if (tab && tab <= 2) {
             $scope.tab = tab;
+            $scope.tabs = [{active:false},{active:false},{active:false}];
+            $scope.tabs[tab].active = true;
         }
         $scope.data = {};
         $scope.show = {};

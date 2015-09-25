@@ -451,7 +451,7 @@
                                 </div>
 
                             </div>
-                            <div class="row" style="margin: 20px auto; ">
+                            <div class="row" style="margin: 20px auto;display: none">
                                 <div style="text-align:center; border-bottom:2px solid #000000"><h3>Hình ảnh văn bản
                                     hợp đồng</h3></div>
                                 <div class="form-group clearfix">

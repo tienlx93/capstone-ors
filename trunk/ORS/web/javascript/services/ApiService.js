@@ -249,6 +249,7 @@ app.factory("Api", ['$http',
                 }
             })
                 .success(function (data) {
+                    localStorage.clear();
                     callback(data);
                 })
                 .error(function () {

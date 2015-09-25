@@ -17,6 +17,10 @@ controllers.controller('LoginController', ['$scope', '$location', 'Api','toastr'
                         toastr.error('Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại');
 
                     } else if (data) {
+                        if ($scope.remember) {
+                            localStorage.setItem("username", username);
+                            localStorage.setItem("password", password);
+                        }
                         Api.account.username = username;
                         Api.account.fullName = data;
                         Api.updateAccount();

@@ -21,6 +21,20 @@ controllers.controller('MenuController', ['$scope', '$rootScope', '$location', '
                 Api.account.username = data[0];
                 Api.account.fullName = data[1];
                 Api.updateAccount();
+            } else {
+                if (localStorage.getItem("username")) {
+                    var username = localStorage.getItem("username");
+                    var password = localStorage.getItem("password");
+                    Api.login(username, password, function (data) {
+                        if (data == "Error" || data == "Wrong") {
+                            //toastr.error('Tên đăng nhập hoặc mật khẩu không chính xác, xin thử lại');
+                        } else if (data) {
+                            Api.account.username = username;
+                            Api.account.fullName = data;
+                            Api.updateAccount();
+                        }
+                    });
+                }
             }
         });
 

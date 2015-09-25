@@ -62,6 +62,7 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
                     }
                     $scope.filter = $scope.officeList;
                     $scope.totalItems = $scope.filter.length;
+                    filter();
                     //updatePage();
                     /*$rootScope.q = [];
                      for (var j = 0; j < $rootScope.amenityWeight.length; j ++) {
@@ -72,7 +73,13 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
         };
         $scope.searchOffice();
 
-        function filter(selected) {
+        function filter() {
+            var selected = 0;
+            for (var j = 0; j < $rootScope.q.length; j++) {
+                if ($rootScope.q[j] == true) {
+                    selected++;
+                }
+            }
             $scope.filter = [];
             var matching = selected * 100;
             var matchingPoint;
@@ -124,7 +131,7 @@ controllers.controller('OfficeListController', ['$scope', '$rootScope', '$locati
                 return selected;
             }
         }, function (selected) {
-            filter(selected);
+            filter();
         });
 
         if (!$rootScope.amenityWeight || !$rootScope.q || $rootScope.amenityWeight.length == 0 || $rootScope.q.length == 0) {

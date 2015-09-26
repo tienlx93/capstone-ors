@@ -22,9 +22,11 @@ controllers.controller('RequestRepairController', ['$scope', '$location', '$rout
                             $scope.amenities = "Văn phòng này không có thiết bị có thể sửa chữa";
                             $scope.have = false;
                         } else {
-                            $scope.amenities = data.amenities;
+
                             $scope.have = true;
                         }*/
+                        //hien tien nghi
+                        $scope.amenities = data.amenities;
                         $scope.img = data.images[0];
                     }
                 });

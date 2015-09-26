@@ -1208,7 +1208,7 @@ public class ApiController extends HttpServlet {
                     } else if (repair.getRepairStatusId() == 5) {
                         list.add(new RepairListJSON(repair.getId(), repair.getDescription(), repair.getCreateTime(),
                                 repair.getAssignedStaff(), repair.getAssignedTime(),
-                                "Chờ xác nhận", contract.getOfficeByOfficeId().getName(), listA));
+                                "Đang tiến hành xử lý", contract.getOfficeByOfficeId().getName(), listA));
                     }
                 }
                 if (list.size() == 0) {

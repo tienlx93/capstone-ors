@@ -83,14 +83,14 @@ $(document).ready(function () {
                                     var className = "";
                                     if (data.status == 0) {
                                         if (data.jobCount >= 4) {
-                                            message = "Nhân viên đã có " + data.jobCount + " trong ngày.<br>";
+                                            message = "Nhân viên đã có " + data.jobCount + " việc trong ngày.<br>";
                                         }
                                         message += "Bạn vẫn muốn giao việc cho nhân viên?";
                                         currentForm.append("<input type='hidden' name='force' value='true'>");
                                         className = "btn-primary";
                                     } else {
                                         if (data.status == -1 || data.status == -3) {
-                                            message += "Nhân viên đã có " + data.jobCount + " trong ngày.<br>";
+                                            message += "Nhân viên đã có " + data.jobCount + " việc trong ngày.<br>";
                                         }
                                         message += "Không thể giao việc cho nhân viên.";
                                         className = "btn-primary disabled";

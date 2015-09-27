@@ -66,7 +66,7 @@ $('.assignForm').submit(function () {
                                 var className = "";
                                 if (data.status == 0) {
                                     if (data.jobCount >= 4) {
-                                        message = "Nhân viên đã có " + data.jobCount + " trong ngày.<br>";
+                                        message = "Nhân viên đã có " + data.jobCount + " việc trong ngày.<br>";
                                     }
                                     if (data.nearJob) {
                                         message += "Lịch hẹn gần nhất của nhân viên tại thời điểm " + data.nearJob + ", thời gian cách " +
@@ -77,7 +77,7 @@ $('.assignForm').submit(function () {
                                     className = "btn-primary";
                                 } else {
                                     if (data.status == -1 || data.status == -3) {
-                                        message += "Nhân viên đã có " + data.jobCount + " trong ngày.<br>";
+                                        message += "Nhân viên đã có " + data.jobCount + " việc trong ngày.<br>";
                                     }
                                     if (data.status == -2 || data.status == -3) {
                                         message += "Lịch hẹn gần nhất của nhân viên tại thời điểm " + data.nearJob + ", thời gian cách " +

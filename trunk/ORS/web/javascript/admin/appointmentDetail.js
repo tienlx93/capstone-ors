@@ -61,7 +61,8 @@ $(document).ready(function () {
                             message = "Nhân viên đã có " + data.jobCount + " việc trong ngày.<br>";
                         }
                         if (data.nearJob) {
-                            message += "Lịch hẹn gần nhất của nhân viên tại thời điểm " + data.nearJob + ", thời gian cách " +
+                            message += "Lịch hẹn gần nhất của nhân viên tại thời điểm " +
+                                formatDate(data.nearJob) + ", thời gian cách " +
                                 "lịch hẹn hiện tại ít hơn 2 tiếng.<br>";
                         }
                         message += "Bạn vẫn muốn giao việc cho nhân viên?";
@@ -72,7 +73,8 @@ $(document).ready(function () {
                             message += "Nhân viên đã có " + data.jobCount + " việc trong ngày.<br>";
                         }
                         if (data.status == -2 || data.status == -3) {
-                            message += "Lịch hẹn gần nhất của nhân viên tại thời điểm " + data.nearJob + ", thời gian cách " +
+                            message += "Lịch hẹn gần nhất của nhân viên tại thời điểm " +
+                                formatDate(data.nearJob) + ", thời gian cách " +
                                 "lịch hẹn hiện tại ít hơn 1 tiếng.<br>";
                         }
                         message += "Không thể giao việc cho nhân viên.";

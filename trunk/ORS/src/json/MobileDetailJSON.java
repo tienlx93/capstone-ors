@@ -19,6 +19,7 @@ public class MobileDetailJSON {
     private double latitude;
     private double longitude;
     private String customerName;
+    private String customerPhone;
     private String detail;
     private String date;
     private int status;
@@ -135,5 +136,13 @@ public class MobileDetailJSON {
 
     public void setImages(List<String> images) {
         this.images = images;
+    }
+
+    public String getCustomerPhone() {
+        return customerPhone;
+    }
+
+    public void setCustomerPhone(String customerPhone) {
+        this.customerPhone = customerPhone;
     }
 }

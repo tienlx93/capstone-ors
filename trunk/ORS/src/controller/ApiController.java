@@ -374,13 +374,14 @@ public class ApiController extends HttpServlet {
                     detail.setLatitude(office.getLatitude() != null ? office.getLatitude() : 0);
                     detail.setLongitude(office.getLongitude() != null ? office.getLongitude() : 0);
                     detail.setCustomerName(profile.getFullName());
+                    detail.setCustomerPhone(profile.getPhone());
                     detail.setDetail("");
                     detail.setDate(appointment.getTime().toString());
                     detail.setStatus(appointment.getStatusId());
                     detail.setList(new ArrayList<String>());
                     String images = office.getImageUrls();
                     detail.setImages(new ArrayList<String>());
-                    if (!images.equals("") || images != null) {
+                    if (images != null && !images.equals("")) {
                         detail.setImages(Arrays.asList(images.split("\\s*,\\s*")));
                     }
                 }
@@ -402,6 +403,7 @@ public class ApiController extends HttpServlet {
                     detail.setLatitude(office.getLatitude() != null ? office.getLatitude() : 0);
                     detail.setLongitude(office.getLongitude() != null ? office.getLongitude() : 0);
                     detail.setCustomerName(profile.getFullName());
+                    detail.setCustomerPhone(profile.getPhone());
                     detail.setDetail(rental.getDescription());
                     detail.setDate(rental.getAssignedTime().toString());
                     detail.setStatus(rental.getStatusId());
@@ -414,7 +416,7 @@ public class ApiController extends HttpServlet {
                     detail.setList(list);
                     String images = office.getImageUrls();
                     detail.setImages(new ArrayList<String>());
-                    if (!images.equals("") || images != null) {
+                    if (images != null && !images.equals("")) {
                         detail.setImages(Arrays.asList(images.split("\\s*,\\s*")));
                     }
                 }
@@ -436,6 +438,7 @@ public class ApiController extends HttpServlet {
                     detail.setLatitude(office.getLatitude() != null ? office.getLatitude() : 0);
                     detail.setLongitude(office.getLongitude() != null ? office.getLongitude() : 0);
                     detail.setCustomerName(profile.getFullName());
+                    detail.setCustomerPhone(profile.getPhone());
                     detail.setDetail(repair.getDescription());
                     detail.setDate(repair.getAssignedTime().toString());
                     detail.setStatus(repair.getRepairStatusId());
@@ -447,7 +450,7 @@ public class ApiController extends HttpServlet {
                     detail.setList(list);
                     String images = office.getImageUrls();
                     detail.setImages(new ArrayList<String>());
-                    if (!images.equals("") || images != null) {
+                    if (images != null && !images.equals("")) {
                         detail.setImages(Arrays.asList(images.split("\\s*,\\s*")));
                     }
                 }

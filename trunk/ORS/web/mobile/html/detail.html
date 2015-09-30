@@ -29,7 +29,7 @@
             <div class="left-side">Thời gian:</div>
             <div ng-show="type!='lịch hẹn'" class="right-side">{{data.date | toLocaleDate}}</div>
             <div ng-show="type=='lịch hẹn'" class="right-side">{{data.date | toLocaleDateTime}}</div>
-            <span ng-show="type!='sửa chữa' && !showBtn">(Còn {{diff}} đến thời gian gặp)</span>
+            <span ng-show="!(data.status==2 && type=='thuê thiết bị') && !showBtn">(Còn {{diff}} đến thời gian gặp)</span>
         </div>
         <div ng-show="type!='lịch hẹn'" class="line">
             <div class="left-side">Danh sách {{type}}:</div>

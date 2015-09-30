@@ -1,6 +1,9 @@
 .descriptionRepair {
     padding: 5px;
 }
+.descriptionRepair td {
+    vertical-align: middle;
+}
 .labelleft {
     width: 15%;
 }

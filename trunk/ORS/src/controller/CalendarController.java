@@ -67,7 +67,7 @@ public class CalendarController extends HttpServlet {
                 item = new CalendarItemJSON();
                 item.setId(rental.getId());
                 item.setStaff(staff.getUsername());
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 if (rental.getAssignedTime()!= null) {
                     item.setStart(format.format(rental.getAssignedTime()));
                     item.setTitle("Thuê thiết bị");
@@ -81,7 +81,7 @@ public class CalendarController extends HttpServlet {
                 item = new CalendarItemJSON();
                 item.setId(repair.getId());
                 item.setStaff(staff.getUsername());
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                 if (repair.getAssignedTime() != null) {
                     item.setStart(format.format(repair.getAssignedTime()));
                     item.setTitle("Sửa chữa");
@@ -126,7 +126,7 @@ public class CalendarController extends HttpServlet {
                         item = new CalendarItemJSON();
                         item.setId(rental.getId());
                         item.setStaff(staff.getUsername());
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                         if (rental.getAssignedTime()!= null) {
                             item.setStart(format.format(rental.getAssignedTime()));
                             item.setTitle("Thuê thiết bị");
@@ -141,7 +141,7 @@ public class CalendarController extends HttpServlet {
                         item = new CalendarItemJSON();
                         item.setId(repair.getId());
                         item.setStaff(staff.getUsername());
-                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+                        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
                         if (repair.getAssignedTime() != null) {
                             item.setStart(format.format(repair.getAssignedTime()));
                             item.setTitle("Sửa chữa");

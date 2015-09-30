@@ -42,7 +42,8 @@
                     right: 'month,basicWeek,basicDay'
                 },
                 editable: false,
-                eventLimit: true
+                eventLimit: true,
+                timeFormat: 'H:mm'
             });
             var colors = ['#9A80B9', '#E99844', '#EF4836', '#71B8FF'];
             var legend = $("#legend");

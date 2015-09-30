@@ -760,8 +760,8 @@ public class ContractController extends HttpServlet {
 
             document.add(paragraphEmpty);
             document.add(new Paragraph("                  ĐẠI DIỆN BÊN A                                         ĐẠI DIỆN BÊN B", boldFont));
-            document.add(new Paragraph("                      Chức vụ                                                  Chức vụ", font));
-            document.add(new Paragraph("                 (Ký tên đóng dấu)                                            (Ký tên đóng dấu)", font));
+            document.add(new Paragraph("                      Chức vụ                                                         Chức vụ", font));
+            document.add(new Paragraph("                   (Ký tên đóng dấu)                                              (Ký tên đóng dấu)", font));
 
             document.close(); // no need to close PDFwriter?
 

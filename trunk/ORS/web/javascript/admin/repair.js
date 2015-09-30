@@ -2,6 +2,10 @@ $(document).ready(function () {
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
 
+    if (nowTemp.getHours() > 12) {
+        now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate() + 1, 0, 0, 0, 0);
+    }
+
     var datepicker = $('.datetime ');
     var endDate = $('.endDate');
     var startDate = $('.startDate');

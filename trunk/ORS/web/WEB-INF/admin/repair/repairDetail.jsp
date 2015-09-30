@@ -177,14 +177,28 @@
                                 </div>
 
                                 <div class="form-group clearfix">
-                                    <label for="assignedTime" class="col-sm-2 control-label" style="text-align: right">Ngày
-                                        sửa chữa:</label>
+                                    <label for="assignedTime" class="col-sm-2 control-label" style="text-align: right">
+                                        Ngày sửa chữa:</label>
                                     <c:choose>
-                                        <c:when test="${user.roleId==2 && info.repairStatusId == 2}">
+                                        <c:when test="${user.roleId==2 && info.repairStatusId == 2 && info.assignedStaff == null}">
                                             <div class="col-sm-4">
                                                 <fmt:formatDate value="${info.assignedTime}"
                                                                 pattern="dd-MM-yyyy" var="newDate"/>
                                                 <input type="text" name="assignedTime" id="assignedTime"
+                                                       class="form-control" value="${newDate}" required readonly>
+                                                <i class="fa fa-calendar" style="
+                                                    position: absolute;
+                                                    right: 25px;
+                                                    top: 10px;
+                                                    z-index: 2;
+                                                "></i>
+                                            </div>
+                                        </c:when>
+                                        <c:when test="${user.roleId==2 && info.repairStatusId == 2 && info.assignedStaff != null}">
+                                            <div class="col-sm-4">
+                                                <fmt:formatDate value="${info.assignedTime}"
+                                                                pattern="dd-MM-yyyy" var="newDate"/>
+                                                <input type="text" name="assignedTime2" id="assignedTime"
                                                        class="form-control" value="${newDate}" required readonly>
                                                 <i class="fa fa-calendar" style="
                                                     position: absolute;
@@ -455,7 +469,7 @@
                                             </button>
                                         </c:if>
                                         <c:if test="${info.repairStatusId == 5}">
-                                            <button type="submit" value="assign2" name="button" class="btn btn-primary">
+                                            <button type="submit" value="assign3" name="button" class="btn btn-primary">
                                                 Giao việc lại
                                             </button>
                                         </c:if>

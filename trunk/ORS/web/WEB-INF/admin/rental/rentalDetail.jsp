@@ -193,7 +193,7 @@
                                         </div>
                                     </c:otherwise>
                                 </c:choose>
-                                <input type="hidden" id="rentalDate" value="${info.assignedTime}">
+                                <input type="hidden" id="rentalDate" value="${info.assignedTime}" name="assignedTime">
                                 <c:if test="${user.roleId==2}">
                                     <label for="assignStaff" class="col-sm-2 control-label">Nhân viên được giao</label>
 
@@ -286,7 +286,7 @@
                                             </button>
                                         </c:if>
                                         <c:if test="${info.statusId == 2}">
-                                            <button type="submit" value="assign" name="button" class="btn btn-primary">
+                                            <button type="submit" value="assign2" name="button" class="btn btn-primary">
                                                 Giao việc lại
                                             </button>
                                         </c:if>

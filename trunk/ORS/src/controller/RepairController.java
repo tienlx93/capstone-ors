@@ -121,9 +121,7 @@ public class RepairController extends HttpServlet {
                 case "assign2":
                     PrintWriter out2 = response.getWriter();
                     Gson gson2 = new Gson();
-                    SimpleDateFormat fromAssign1 = new SimpleDateFormat("dd-MM-yyyy");
-                    SimpleDateFormat fromAssign2 = new SimpleDateFormat("yyyy-MM-dd");
-                    Date date1 = null;
+                    SimpleDateFormat fromAssign2 = new SimpleDateFormat("dd-MM-yyyy");
                     Date date2 = null;
                     ScheduleService service2 = new ScheduleService();
                     String force2 = request.getParameter("force");
@@ -143,6 +141,28 @@ public class RepairController extends HttpServlet {
                                 " Thoi gian du kien: " + df.format(date2));
                         sms.send();*/
                         out2.print(gson2.toJson("Success"));
+                    }
+
+                    break;
+
+                case "assign3":
+                    PrintWriter out3 = response.getWriter();
+                    Gson gson3 = new Gson();
+                    SimpleDateFormat fromAssign3 = new SimpleDateFormat("yyyy-MM-dd");
+                    Date date3 = null;
+                    ScheduleService service3 = new ScheduleService();
+                    String force3 = request.getParameter("force");
+                    try {
+                        date3 = fromAssign3.parse(assignedTime2);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    AssignResultJSON staffAvailable3 = service3.isStaffAvailable(date3, assignedStaff);
+                    if (staffAvailable3.status <= 0 && (force3 == null || !force3.equals("true"))) {
+                        out3.print(gson3.toJson(staffAvailable3));
+                    } else {
+                        dao.update(id, contractId, assignedStaff, description, date3, 5);
+                        out3.print(gson3.toJson("Success"));
                     }
 
                     break;

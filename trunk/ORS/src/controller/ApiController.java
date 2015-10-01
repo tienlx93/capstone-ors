@@ -925,7 +925,7 @@ public class ApiController extends HttpServlet {
 
             try {
                 sms.send();
-            } catch (MalformedURLException e) {
+            } catch (IOException e) {
                 e.printStackTrace();
             }
             out.print(gson.toJson("Success"));

@@ -183,7 +183,8 @@
 
                   <div class="col-sm-4">
                     <input type="number" name="minTime" class="form-control" id="minTime"
-                           value="${office.minTime}" required min="0" step="1">
+                           value="${office.minTime}" required min="0" step="1"
+                           onkeyup="this.value=this.value.replace(/[^\d]/,'')">
                   </div>
                   <div id="divMinArea">
                     <label for="minArea" class="col-sm-2" style="text-align: right">

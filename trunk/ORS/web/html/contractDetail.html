@@ -3,208 +3,213 @@
 <div class="container" ng-show="RightCus">
     <tabset>
         <tab heading="Chi tiết hợp đồng" active="tabs[0].active">
-    <h2 style="padding-top: 20px;">Chi tiết hợp đồng</h2>
-    <br>
-
-    <div class="form-group row">
-        <div class="left-img">
-            <table style="width: 90%" border="1">
-                <tbody>
-                <tr>
-                    <td colspan="2"><h4>Bên cho thuê văn phòng (Bên A):</h4><br></td>
-                </tr>
-                <tr>
-                    <td class="textright">Ông (Bà):</td>
-                    <td><span class="spanleft">{{data.ownerName}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Địa chỉ:</td>
-                    <td><span class="spanleft">{{data.ownerAddress}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Số điện thoại:</td>
-                    <td><span class="spanleft">{{data.ownerPhone}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Là chủ của văn phòng:</td>
-                    <td><span class="spanleft">{{data.officeName}}</span></td>
-                </tr>
-                </tbody>
-            </table>
-            <br>
-            <h4>File hợp đồng</h4>
+            <h2 style="padding-top: 20px;">Chi tiết hợp đồng</h2>
             <br>
 
-            <div class="row" style="margin:auto;">
-                <div class="col-sm-6" ng-repeat="img in listImg">
-                    <img style="height: 150px" width="100%" src="{{img}}">
+            <div class="form-group row">
+                <div class="left-img">
+                    <table style="width: 90%" border="1">
+                        <tbody>
+                        <tr>
+                            <td colspan="2"><h4>Bên cho thuê văn phòng (Bên A):</h4><br></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Ông (Bà):</td>
+                            <td><span class="spanleft">{{data.ownerName}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Địa chỉ:</td>
+                            <td><span class="spanleft">{{data.ownerAddress}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Số điện thoại:</td>
+                            <td><span class="spanleft">{{data.ownerPhone}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Là chủ của văn phòng:</td>
+                            <td><span class="spanleft">{{data.officeName}}</span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <h4>File hợp đồng</h4>
+                    <br>
+
+                    <div class="row" style="margin:auto;">
+                        <div class="col-sm-6" ng-repeat="img in listImg">
+                            <img style="height: 150px" width="100%" src="{{img}}">
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="right-info">
-            <table style="width: 100%">
-                <tbody>
-                <tr>
-                    <td colspan="2"><h4>Bên thuê văn phòng (Bên B):</h4><br></td>
-                </tr>
+                <div class="right-info">
+                    <table style="width: 100%">
+                        <tbody>
+                        <tr>
+                            <td colspan="2"><h4>Bên thuê văn phòng (Bên B):</h4><br></td>
+                        </tr>
 
-                <tr>
-                    <td class="textright">Ông (Bà):</td>
-                    <td><span class="spanleft">{{profile.fullName}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Địa chỉ:</td>
-                    <td><span class="spanleft">{{profile.address}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Số điện thoại:</td>
-                    <td><span class="spanleft">{{profile.phone}}</span></td>
-                </tr>
+                        <tr>
+                            <td class="textright">Ông (Bà):</td>
+                            <td><span class="spanleft">{{profile.fullName}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Địa chỉ:</td>
+                            <td><span class="spanleft">{{profile.address}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Số điện thoại:</td>
+                            <td><span class="spanleft">{{profile.phone}}</span></td>
+                        </tr>
 
-                <tr>
-                    <td colspan="2"><br><h4>Thông tin thuê:</h4><br></td>
-                </tr>
+                        <tr>
+                            <td colspan="2"><br><h4>Thông tin thuê:</h4><br></td>
+                        </tr>
 
-                <tr>
-                    <td class="textright">Tên văn phòng:</td>
-                    <td><span class="spanleft">{{data.officeName}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Loại văn phòng:</td>
-                    <td><span class="spanleft">{{data.category}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Địa chỉ văn phòng:</td>
-                    <td><span class="spanleft">{{data.address}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Diện tích thuê:</td>
-                    <td><span class="spanleft">{{data.area}} m<sup>2</sup></span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Giá thuê:</td>
-                    <td><span class="spanleft">{{data.price | currency:"VNĐ":0}} trên m<sup>2</sup>/tháng</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Ngày bắt đầu hợp đồng:</td>
-                    <td><span class="spanleft">{{data.startDay | date:'dd-MM-yyyy'}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Ngày kết thúc hợp đồng:</td>
-                    <td><span class="spanleft">{{data.endDay | date:'dd-MM-yyyy'}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Các tiện nghi đi kèm văn phòng:</td>
-                    <td><span class="spanleft"><span ng-repeat="amenity in amenities track by $index">{{amenity}}<span
-                            ng-if="$index < amenities.length - 1">,</span> </span></span></td>
-                </tr>
+                        <tr>
+                            <td class="textright">Tên văn phòng:</td>
+                            <td><span class="spanleft">{{data.officeName}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Loại văn phòng:</td>
+                            <td><span class="spanleft">{{data.category}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Địa chỉ văn phòng:</td>
+                            <td><span class="spanleft">{{data.address}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Diện tích thuê:</td>
+                            <td><span class="spanleft">{{data.area}} m<sup>2</sup></span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Giá thuê:</td>
+                            <td><span class="spanleft">{{data.price | currency:"VNĐ":0}} trên m<sup>2</sup>/tháng</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Ngày bắt đầu hợp đồng:</td>
+                            <td><span class="spanleft">{{data.startDay | date:'dd-MM-yyyy'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Ngày kết thúc hợp đồng:</td>
+                            <td><span class="spanleft">{{data.endDay | date:'dd-MM-yyyy'}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Các tiện nghi đi kèm văn phòng:</td>
+                            <td><span class="spanleft"><span ng-repeat="amenity in amenities track by $index">{{amenity}}<span
+                                    ng-if="$index < amenities.length - 1">,</span> </span></span></td>
+                        </tr>
 
-                <tr>
-                    <td colspan="2"><br><h4>Thông tin thanh toán:</h4><br></td>
-                </tr>
-                <tr>
-                    <td class="textright">Số tiền đặt cọc:</td>
-                    <td><span class="spanleft">{{data.deposit | currency:"VNĐ":0}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Kỳ hạn thanh toán:</td>
-                    <td><span class="spanleft">{{data.paymentTerm}}</span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Số tiền thanh toán mỗi kỳ:</td>
-                    <td><span class="spanleft">{{data.price * data.area * Term | currency:"VNĐ":0}} </span></td>
-                </tr>
-                <tr>
-                    <td class="textright">Tổng giá trị hợp đồng:</td>
-                    <td><span class="spanleft">{{totalPrice | currency:"VNĐ":0}} </span></td>
-                </tr>
-                </tbody>
-            </table>
-            <br>
-            <table>
-                <tbody>
-                <tr>
-                    <td style="padding-right: 10px;"><h4>Tình trạng hợp đồng:</h4></td>
-                    <td ng-if="data.status == 4" class="contract-status color10-bg"
-                        style="color: white"> Hợp đồng đã hết hạn
-                    </td>
-                    <td ng-if="data.status == 3 && data.startDay < today" class="contract-status color9-bg"> Đang yêu
-                        cầu hủy hợp đồng trước hạn
-                    </td>
-                    <td ng-if="data.status == 2 && data.startDay < today" class="contract-status color7-bg"> Đang yêu
-                        cầu gia hạn hợp đồng
-                    </td>
-                    <td ng-if="data.status == 1 && data.startDay < today" class="contract-status color12-bg"> Khả dụng
-                    </td>
-                    <td ng-if="data.startDay > today && data.status != 4" class="contract-status color3-bg"> Hợp đồng chưa có hiệu lực</td>
-                </tr>
-                </tbody>
-            </table>
-            <br>
-            <h4>Phụ lục hợp đồng:</h4><br>
-            <!--<span ng-show="Rentaled" style="width: 50%">{{display}}</span>-->
-            <div ng-show="!Rentaled">
-                <!--<b>Bảng giá những vật dụng đang thuê: (trong 1 tháng)</b>
-                <br>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Tên thiết bị</th>
-                        <th>Giá thuê (trên tháng)</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                        <tr>
+                            <td colspan="2"><br><h4>Thông tin thanh toán:</h4><br></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Số tiền đặt cọc:</td>
+                            <td><span class="spanleft">{{data.deposit | currency:"VNĐ":0}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Kỳ hạn thanh toán:</td>
+                            <td><span class="spanleft">{{data.paymentTerm}}</span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Số tiền thanh toán mỗi kỳ:</td>
+                            <td><span class="spanleft">{{data.price * data.area * Term | currency:"VNĐ":0}} </span></td>
+                        </tr>
+                        <tr>
+                            <td class="textright">Tổng giá trị hợp đồng:</td>
+                            <td><span class="spanleft">{{totalPrice | currency:"VNĐ":0}} </span></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table>
+                        <tbody>
+                        <tr>
+                            <td style="padding-right: 10px;"><h4>Tình trạng hợp đồng:</h4></td>
+                            <td ng-if="data.status == 4" class="contract-status color10-bg"
+                                style="color: white"> Hợp đồng đã hết hạn
+                            </td>
+                            <td ng-if="data.status == 3 && data.startDay < today" class="contract-status color9-bg">
+                                Đang yêu
+                                cầu hủy hợp đồng trước hạn
+                            </td>
+                            <td ng-if="data.status == 2 && data.startDay < today" class="contract-status color7-bg"
+                                    style="color: white;"> Đang yêu cầu gia hạn hợp đồng
+                            </td>
+                            <td ng-if="data.status == 1 && data.startDay < today" class="contract-status color12-bg">
+                                Khả dụng
+                            </td>
+                            <td ng-if="data.startDay > today && data.status != 4" class="contract-status color3-bg"> Hợp
+                                đồng chưa có hiệu lực
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <h4>Phụ lục hợp đồng:</h4><br>
+                    <!--<span ng-show="Rentaled" style="width: 50%">{{display}}</span>-->
+                    <div ng-show="!Rentaled">
+                        <!--<b>Bảng giá những vật dụng đang thuê: (trong 1 tháng)</b>
+                        <br>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Tên thiết bị</th>
+                                <th>Giá thuê (trên tháng)</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                    <tr ng-repeat="item in rentalList">
-                        <td>{{item.name}}</td>
-                        <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
-                    </tr>
-                    </tbody>
-                </table>-->
+                            <tr ng-repeat="item in rentalList">
+                                <td>{{item.name}}</td>
+                                <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
+                            </tr>
+                            </tbody>
+                        </table>-->
 
                         <b>Danh sách những vật dụng đang thuê:</b>
-                <br>
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th>Tên thiết bị</th>
-                        <th>Giá thuê</th>
-                        <th>Số lượng (cái)</th>
-                        <th>Thành tiền</th>
-                    </tr>
-                    </thead>
-                    <tbody>
+                        <br>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Tên thiết bị</th>
+                                <th>Giá thuê</th>
+                                <th>Số lượng (cái)</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
-                    <tr ng-repeat="item in rentalList">
-                        <td>{{item.name}}</td>
-                        <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
-                        <td>{{item.quantity}}</td>
-                        <td>{{item.price | currency:"VNĐ":0}}</td>
-                    </tr>
-                    <tr>
-                        <td colspan="3" class="sum"><b>Tổng cộng</b></td>
-                        <td>{{total | currency:"VNĐ":0}}</td>
-                    </tr>
-                    </tbody>
-                </table>
+                            <tr ng-repeat="item in rentalList">
+                                <td>{{item.name}}</td>
+                                <td>{{item.unitPrice | currency:"VNĐ":0}}</td>
+                                <td>{{item.quantity}}</td>
+                                <td>{{item.price | currency:"VNĐ":0}}</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" class="sum"><b>Tổng cộng</b></td>
+                                <td>{{total | currency:"VNĐ":0}}</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
             </div>
-
-        </div>
-
-    </div>
-    <div class="row" style="margin: auto; text-align: right;">
-        <a ng-if="((data.status == 1 || data.status == 2) && (data.startDay < today && today < data.endDay)) && month == 1"
-           href="#/rental/{{data.contractId}}" class="btn btn-green">
-            Yêu cầu thuê thiết bị</a>
-        <a ng-if="(data.status == 1 || data.status == 2) && data.startDay < today && today < data.endDay"
-           href="#/requestRepair/{{data.contractId}}"
-           class="btn btn-green">
-            Yêu cầu sửa chữa</a>
+            <div class="row" style="margin: auto; text-align: right;">
+                <a ng-if="((data.status == 1 || data.status == 2) && (data.startDay < today && today < data.endDay)) && month == 1"
+                   href="#/rental/{{data.contractId}}" class="btn btn-green">
+                    Yêu cầu thuê thiết bị</a>
+                <a ng-if="(data.status == 1 || data.status == 2) && data.startDay < today && today < data.endDay"
+                   href="#/requestRepair/{{data.contractId}}"
+                   class="btn btn-green">
+                    Yêu cầu sửa chữa</a>
             <span ng-if="data.status == 1 && today < data.endDay && data.startDay < today">
             <a ng-click="contractReturn()" class="btn btn-color9">Hủy hợp đồng trước hạn</a>
             <a ng-click="contractExtend()" class="btn btn-color7" ng-if="child == 1">Gia hạn hợp đồng</a>
             </span>
-    </div>
+            </div>
         </tab>
         <tab heading="Danh sách sửa chữa" active="tabs[1].active">
             <div ng-include="'html/repairList.html'" ng-controller="RepairController"></div>
@@ -216,8 +221,7 @@
     </tabset>
 
 
-
-    </div>
+</div>
 <div class="container" ng-show="WrongCus">
     <h2>Bạn không sở hữu hợp đồng này!</h2>
     <br>

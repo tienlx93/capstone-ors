@@ -1,4 +1,4 @@
-
+<link rel="stylesheet" type="text/css" href="../css/contract.css"/>
 <div class="container" ng-show="rightCus1">
     <h2>Danh sách hợp đồng</h2>
     <br>
@@ -24,16 +24,16 @@
                 <td>{{item.endDay | date:'dd-MM-yyyy'}}</td>
                 <td>{{item.paymentTerm}}</td>
                 <td ng-if="item.status == 1 && item.startDay < today">
-                    <span class="color12-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Khả dụng</span>
+                    <span class="color12-bg contract-list">Khả dụng</span>
                 </td>
                 <td ng-if="item.startDay > today && item.status != 4">
-                    <span class="color3-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Chưa có hiệu lực</span>
+                    <span class="color3-bg contract-list">Chưa có hiệu lực</span>
                 </td>
                 <td ng-if="item.status == 2">
-                    <span class="color7-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Đang gia hạn</span>
+                    <span class="color7-bg contract-list" style="color: white;">Đang gia hạn</span>
                 </td>
                 <td ng-if="item.status == 3">
-                    <span class="color9-bg" style="display: inline-block; padding: 3px 6px; margin-bottom: 0;">Đang yêu cầu hủy</span>
+                    <span class="color9-bg contract-list">Đang yêu cầu hủy</span>
                 </td>
                 <td><a class="btn btn-green" href="#/contractList/{{item.contractId}}">Chi tiết</a></td>
                 <!--<td><a class="btn btn-green" href="#/repairList/{{item.contractId}}">Danh sách sửa chữa</a></td>

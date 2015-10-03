@@ -208,6 +208,20 @@
                                                 "></i>
                                             </div>
                                         </c:when>
+                                        <c:when test="${user.roleId==2 && info.repairStatusId == 5}">
+                                            <div class="col-sm-4">
+                                                <fmt:formatDate value="${info.assignedTime}"
+                                                                pattern="dd-MM-yyyy" var="newDate"/>
+                                                <input type="text" name="assignedTime2" id="assignedTime"
+                                                       class="form-control" value="${newDate}" required readonly>
+                                                <i class="fa fa-calendar" style="
+                                                    position: absolute;
+                                                    right: 25px;
+                                                    top: 10px;
+                                                    z-index: 2;
+                                                "></i>
+                                            </div>
+                                        </c:when>
                                         <c:otherwise>
                                             <div class="col-sm-4">
                                                 <fmt:formatDate value="${info.assignedTime}" pattern="dd-MM-yyyy"/>
@@ -469,7 +483,10 @@
                                             </button>
                                         </c:if>
                                         <c:if test="${info.repairStatusId == 5}">
-                                            <button type="submit" value="assign3" name="button" class="btn btn-primary">
+                                            <%--<button type="submit" value="assign3" name="button" class="btn btn-primary">
+                                                Giao việc lại
+                                            </button>--%>
+                                            <button type="submit" value="assign2" name="button" class="btn btn-primary">
                                                 Giao việc lại
                                             </button>
                                         </c:if>

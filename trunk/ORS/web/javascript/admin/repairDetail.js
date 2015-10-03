@@ -13,6 +13,14 @@ $(document).ready(function () {
             return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf()) ? 'disabled' : '';
         }
     }).data('datepicker');
+
+    $('#assignedTime2').datepicker({
+        format: 'dd-mm-yyyy',
+        onRender: function (date) {
+            return ((date.valueOf() < start.valueOf() || date.valueOf() < now.valueOf()) || date.valueOf() > end.valueOf()) ? 'disabled' : '';
+        }
+    }).data('datepicker');
+
     var repairDate;
     if (document.getElementById('repairDate') != null) {
         repairDate = document.getElementById('repairDate').value;
